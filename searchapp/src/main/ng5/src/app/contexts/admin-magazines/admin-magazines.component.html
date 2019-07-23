@@ -1,0 +1,58 @@
+<section class="app-content">
+  <div class="container">
+    <h5>Adminstration : 
+    <a (click)="edit('journals')" [class.active]="editing === 'journals'">Journals</a>
+    | <a (click)="edit('editors')" [class.active]="editing === 'editors'">Editors</a></h5>
+
+    <ng-container  *ngIf="editing === 'journals'">
+    
+    <div class="row" >
+      <div class="col-xs-12"> 
+        <ul class="app-admin-nav list-unstyled nav-pills">
+          <li >|</li>
+          <li *ngFor="let ctx of state.ctxs" [class.active]="currentMag && ctx.ctx === currentMag.ctx" >
+            &#160;<a (click)="editCtx(ctx)">&#160;{{ctx.ctx || ctx.title}}&#160;</a>&#160;|
+          </li>
+          <li >
+            &#160;&#160;&#160;&#160;<a (click)="addJournal()"><i mz-icon-mdi [icon]="'plus-circle-outline'" title="add journal" [size]="'small'"></i></a>
+          </li>
+          <li >
+            &#160;&#160;&#160;&#160;<a (click)="removeJournal()"><i mz-icon-mdi [icon]="'minus-circle-outline'" title="delete journal" [size]="'small'"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="currentMag">
+      <app-magazine-edit [mag]="currentMag"></app-magazine-edit>
+
+      <button type="button" class="btn app-btn app-btn-default" (click)="save()">Save</button>
+      <button type="button" class="btn app-btn app-btn-default" (click)="cancel()">Cancel</button>
+
+    </div>
+
+    </ng-container>
+    <ng-container  *ngIf="editing === 'editors'">
+      <div class="row" >
+      <ul class="app-admin-nav list-unstyled nav-pills">
+          <li >|</li>
+          <li *ngFor="let editor of editors" [class.active]="currentEditor && currentEditor.id === editor.id" >
+            &#160;<a (click)="editEditor(editor)">&#160;{{editor.id}}&#160;</a>&#160;|
+          </li>
+          <li >
+            &#160;&#160;&#160;&#160;<a (click)="addEditor()"><i mz-icon-mdi [icon]="'plus-circle-outline'" title="add editor" [size]="'small'"></i></a>
+          </li>
+          <li >
+            &#160;&#160;&#160;&#160;<a (click)="removeEditor()"><i mz-icon-mdi [icon]="'minus-circle-outline'" title="delete editor" [size]="'small'"></i></a>
+          </li>
+        </ul>
+      </div>
+      <div class="row" *ngIf="currentEditor">
+        <app-editor-edit [editor]="currentEditor"></app-editor-edit>
+        <button type="button" class="btn app-btn app-btn-default" (click)="saveEditor()">Save</button>
+        <button type="button" class="btn app-btn app-btn-default" (click)="cancel()">Cancel</button>
+      </div>
+    </ng-container>
+
+  </div><!--/.container -->
+</section>

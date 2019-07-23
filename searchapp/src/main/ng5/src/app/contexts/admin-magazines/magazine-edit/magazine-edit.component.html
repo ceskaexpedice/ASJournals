@@ -1,0 +1,79 @@
+<div class="section">
+  <div class="row">
+    <mz-input-container class="col s12 m2">
+      <input mz-input [label]="'Context' | translate" id="ctx" name="ctx" type="text" [(ngModel)]="mag.ctx" required><span class="validity"></span>
+    </mz-input-container>
+    <mz-input-container class="col s12 m4">
+      <input mz-input [label]="'URL Kramerius' | translate" id="k5url" name="k5url" type="text" [(ngModel)]="mag.k5url">
+    </mz-input-container>
+    <mz-input-container class="col s12 m6">
+      <input mz-input [label]="'journal_uuid' | translate" id="journal_uuid" name="journal_uuid" type="text" [(ngModel)]="mag.journal">
+    </mz-input-container>
+  </div>
+  <div class="row">
+    <mz-input-container  class="col s12 m4">
+      <i mz-icon-mdi mz-input-prefix [style.color]="'#'+mag.color" [size]="'small'"
+         [icon]="'application'">
+    </i>
+    <input mz-input [label]="'Color' | translate" id="color" name="color" type="text" [(ngModel)]="mag.color">
+  </mz-input-container>
+  <mz-input-container class="col s12 m4">
+    <input mz-input [label]="'Licence' | translate" id="licence" name="licence" type="text" [(ngModel)]="mag.licence">
+  </mz-input-container>
+  <mz-checkbox-container class="col s12 m4">
+    <input mz-checkbox
+           [label]="'showTitleLabel' | translate"
+           id="showTitleLabel"
+           type="checkbox" [(ngModel)]="mag.showTitleLabel">
+  </mz-checkbox-container>
+</div>
+<div class="row">
+  <mz-input-container >
+    <input mz-input [label]="'Title' | translate" id="title" type="text" [(ngModel)]="mag.title">
+  </mz-input-container>
+  <mz-input-container >
+    <input mz-input [label]="'Image' | translate" type="text" [(ngModel)]="mag.img" id="img"  name="img"  />
+  </mz-input-container>
+</div>
+<div class="row">
+  <mz-input-container  class="col s12 m4">
+    <input mz-input [label]="'issn' | translate" type="text" [(ngModel)]="mag.issn" id="issn"  name="issn"  />
+  </mz-input-container>
+  <mz-input-container  class="col s12 m8">
+    <input mz-input [label]="'vydavatel' | translate" type="text" [(ngModel)]="mag.vydavatel" id="vydavatel"  name="vydavatel"  />
+  </mz-input-container>
+</div>
+<div class="row">
+  <div class="col s12 m4">
+    <mz-input-container>
+      <input mz-input [label]="'oblast' | translate" type="text" [(ngModel)]="mag.oblast" id="oblast"  name="oblast"  />
+    </mz-input-container>
+    <mz-input-container>
+      <input mz-input [label]="'pristup' | translate" type="text" [(ngModel)]="mag.pristup" id="pristup"  name="pristup"  />
+    </mz-input-container>
+    <mz-input-container>
+      <input mz-input [label]="'kontakt' | translate" type="text" [(ngModel)]="mag.kontakt" id="kontakt"  name="kontakt"  />
+    </mz-input-container>
+  </div>
+  <div  class="col s12 m8">
+    <label for="keywords" class="active">{{'Keywords' | translate}}</label>
+    <mz-collection id="keywords">
+      <mz-collection-item *ngFor="let k of mag.keywords; let idx = index;">
+        {{k}}
+        <a (click)="removeKeyword(idx)" mz-secondary-content><i mz-icon-mdi [icon]="'close'" title="remove keyword"></i></a>
+      </mz-collection-item>
+      <mz-collection-item>
+        <input id="newKeyword" [(ngModel)]="newKeyword"  class="col s12 m8"/>
+        <a (click)="addKeyword()" mz-secondary-content><i mz-icon-mdi [icon]="'plus'" title="add keyword"></i></a>
+      </mz-collection-item>
+    </mz-collection>
+  </div>  
+</div>
+
+<div class="row">
+  <mz-textarea-container >
+    <textarea mz-textarea [label]="'Description' | translate" [(ngModel)]="mag.desc" id="desc"></textarea>
+  </mz-textarea-container>
+</div>
+
+</div>
