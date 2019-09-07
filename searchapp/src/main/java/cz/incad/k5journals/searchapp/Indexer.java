@@ -504,12 +504,14 @@ public class Indexer {
       //Test name
 //      idoc.addField("keywords", subject.optString(prefix + "name"));
       JSONObject joName = subject.optJSONObject(prefix + "name");
-      Object np = joName.get(prefix + "namePart");
-      if (np instanceof JSONArray) {
-        JSONArray janp = (JSONArray) np;
-        addUniqueToDoc(idoc, "keywords", janp.getString(0) + ", " + janp.getJSONObject(1).optString("content"));
-      } else {
-        addUniqueToDoc(idoc, "keywords", np);
+      Object np = joName.opt(prefix + "namePart");
+      if (np != null) {
+        if (np instanceof JSONArray) {
+          JSONArray janp = (JSONArray) np;
+          addUniqueToDoc(idoc, "keywords", janp.getString(0) + ", " + janp.getJSONObject(1).optString("content"));
+        } else {
+          addUniqueToDoc(idoc, "keywords", np);
+        }
       }
 
     }
