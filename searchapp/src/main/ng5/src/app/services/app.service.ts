@@ -39,7 +39,7 @@ export class AppService {
   ) {}
 
   getJournalConfig(ctx: Magazine) {
-    return this.http.get("texts?action=GET_CONFIG&ctx=" + ctx.ctx).map(res => {
+    return this.http.get('texts?action=GET_CONFIG&ctx=' + ctx.ctx).map(res => {
       this.state.ctx = ctx;
       this.state.setConfig(res);
       this.state.config['color'] = ctx.color;
@@ -53,10 +53,10 @@ export class AppService {
       return res;
     });
   }
-  
+
   addJournal(ctx: Magazine) {
     this.state.ctxs.push(ctx);
-    return this.http.get("texts?action=ADD_JOURNAL&ctxs=" + JSON.stringify(this.state.ctxs)).map(res => {
+    return this.http.get('texts?action=ADD_JOURNAL&ctxs=' + JSON.stringify(this.state.ctxs)).map(res => {
       this.state.ctx = ctx;
       this.state.setConfig(res);
       this.state.config['color'] = ctx.color;
@@ -70,22 +70,22 @@ export class AppService {
       return res;
     });
   }
-  
+
 
   getCtx(ctx: string) {
-    for (var i = 0; i < this.state.ctxs.length; i++) {
-      if(this.state.ctxs[i].ctx === ctx){
+    for (let i = 0; i < this.state.ctxs.length; i++) {
+      if (this.state.ctxs[i].ctx === ctx) {
         return this.state.ctxs[i];
       }
     }
     return null;
   }
-  
+
   setStyles() {
-    
-    for (var i = 0; i < this.state.ctxs.length; i++) {
-      if (!this.findStyle(this.state.ctxs[i].ctx)){
-        let link = document.createElement('link');
+
+    for (let i = 0; i < this.state.ctxs.length; i++) {
+      if (!this.findStyle(this.state.ctxs[i].ctx)) {
+        const link = document.createElement('link');
         link.href = 'theme?ctx=' + this.state.ctxs[i].ctx + '&color=' + this.state.ctxs[i]['color'] ;
         link.rel = 'stylesheet';
         link.id = 'css-theme-' + this.state.ctxs[i].ctx;
@@ -95,15 +95,15 @@ export class AppService {
       }
     }
   }
-  
+
   findStyle(theme) {
-    var links = document.getElementsByTagName('link');
-    for (var i = 0; i < links.length; i++) {
-      var link = links[i];
+    let links = document.getElementsByTagName('link');
+    for (let i = 0; i < links.length; i++) {
+      let link = links[i];
       if (link.rel.indexOf('stylesheet') != -1 && link.title) {
         if (link.title === theme) {
           return true;
-        } 
+        }
       }
     }
     return false;
@@ -112,7 +112,7 @@ export class AppService {
   switchStyle() {
     let exists: boolean = this.findStyle(this.state.ctx.ctx);
     if (!exists) {
-      let link = document.createElement('link');
+      const link = document.createElement('link');
       link.href = 'theme?ctx=' + this.state.ctx.ctx + '&color=' + this.state.config['color'] ; // insert url in between quotes
       link.rel = 'stylesheet';
       link.id = 'css-theme-' + this.state.ctx.ctx;
@@ -120,10 +120,10 @@ export class AppService {
       link.disabled = false;
       document.getElementsByTagName('head')[0].appendChild(link);
     }
-    
-    var links = document.getElementsByTagName('link');
-    for (var i = 0; i < links.length; i++) {
-      var link = links[i];
+
+    let links = document.getElementsByTagName('link');
+    for (let i = 0; i < links.length; i++) {
+      let link = links[i];
       if (link.rel.indexOf('stylesheet') != -1 && link.title) {
         if (link.title === this.state.ctx.ctx) {
           link.disabled = false;
@@ -131,17 +131,17 @@ export class AppService {
         } else {
           link.disabled = true;
         }
-      } else if(link.rel.indexOf('stylesheet') != -1 && link.href.indexOf('magazines') != -1){
+      } else if (link.rel.indexOf('stylesheet') != -1 && link.href.indexOf('magazines') != -1) {
         link.disabled = true;
-      } else if(link.rel.indexOf('stylesheet') != -1 && link.href.indexOf('styles') != -1){
+      } else if (link.rel.indexOf('stylesheet') != -1 && link.href.indexOf('styles') != -1) {
         link.disabled = false;
       }
     }
   }
 
   getMagazines(): Observable<any> {
-    var url = 'search/magazines/select';
-    let params = new HttpParams()
+    let url = 'search/magazines/select';
+    const params = new HttpParams()
     .set('q', '*')
     .set('wt', 'json')
     .set('rows', '50')
@@ -157,20 +157,20 @@ export class AppService {
   }
 
   getJournals() {
-    return this.http.get("texts?action=GET_JOURNALS");
+    return this.http.get('texts?action=GET_JOURNALS');
   }
 
   saveJournalConfig() {
-    
+
       this.state.config['color'] = this.state.ctx.color;
       this.state.config['journal'] = this.state.ctx.journal;
       this.state.config['showTitleLabel'] = this.state.ctx.showTitleLabel;
-      
-    let params = new HttpParams()
-      .set('journals', JSON.stringify({"journals":this.state.ctxs}))
+
+    const params = new HttpParams()
+      .set('journals', JSON.stringify({'journals': this.state.ctxs}))
       .set('cfg', JSON.stringify(this.state.config))
       .set('ctx', this.state.ctx.ctx);
-    return this.http.get("texts?action=SAVE_JOURNALS", {params: params});
+    return this.http.get('texts?action=SAVE_JOURNALS', {params: params});
   }
 
   searchFired(criteria: Criterium[]) {
@@ -179,8 +179,8 @@ export class AppService {
 
   changeLang(lang: string) {
     this.state.currentLang = lang;
-    
-    this.translate.use(lang).subscribe(()=>{
+
+    this.translate.use(lang).subscribe(() => {
       this._langSubject.next(lang);
     });
   }
@@ -190,8 +190,8 @@ export class AppService {
   }
 
   getItem(pid: string): Observable<any> {
-    var url = this.state.config['context'] + 'search/journal/select';
-    let params = new HttpParams()
+    let url = this.state.config['context'] + 'search/journal/select';
+    const params = new HttpParams()
       .set('q', 'pid:"' + pid + '"')
       .set('wt', 'json');
 
@@ -202,20 +202,20 @@ export class AppService {
   }
 
   getItemK5(pid: string): Observable<any> {
-    var url = this.state.config['api_point'] + '/item/' + pid;
+    let url = this.state.config['api_point'] + '/item/' + pid;
 
     return this.http.get(url);
   }
 
   getChildrenApi(pid: string): Observable<any> {
-    var url = this.state.config['api_point'] + '/item/' + pid + '/children';
+    let url = this.state.config['api_point'] + '/item/' + pid + '/children';
 
     return this.http.get(url);
   }
 
   getChildren(pid: string, dir: string = 'desc'): Observable<any> {
-    var url = this.state.config['context'] + 'search/journal/select';
-    let params = new HttpParams().set('q', '*:*').set('fq', 'parents:"' + pid + '"')
+    let url = this.state.config['context'] + 'search/journal/select';
+    const params = new HttpParams().set('q', '*:*').set('fq', 'parents:"' + pid + '"')
       .set('wt', 'json').set('sort', 'idx ' + dir).set('rows', '500');
 
     return this.http.get(url, {params: params})
@@ -230,17 +230,17 @@ export class AppService {
 
   getJournal(pid: string): Observable<Journal> {
 
-    var url = this.state.config['context'] + 'search/journal/select';
-    let params = new HttpParams()
+    let url = this.state.config['context'] + 'search/journal/select';
+    const params = new HttpParams()
       .set('q', 'pid:"' + pid + '"')
       .set('wt', 'json')
       .set('rows', '1');
 
 
     return this.http.get(url, {params: params}).map((response) => {
-      let j = response['response']['docs'][0];
+      const j = response['response']['docs'][0];
 
-      let ret = new Journal();
+      const ret = new Journal();
       ret.pid = j['pid'];
       ret.parent = j['parents'][0];
       ret.title = j['title'];
@@ -260,14 +260,14 @@ export class AppService {
 
   getJournalK5(pid: string): Observable<Journal> {
 
-    var url = this.state.config['api_point'] + '/item/' + pid;
+    let url = this.state.config['api_point'] + '/item/' + pid;
 
 
     return this.http.get(url).map((response) => {
       //console.log(response);
-      let j = response;
+      const j = response;
 
-      let ret = new Journal();
+      const ret = new Journal();
       ret.pid = j['pid'];
       ret.title = j['title'];
       ret.root_title = j['root_title'];
@@ -314,18 +314,18 @@ export class AppService {
   //  }
 
   setArticles1(ret: Journal, res1) {
-    let res = res1['response']['docs'];
-    for (let i in res) {
-      let art = res[i];
+    const res = res1['response']['docs'];
+    for (const i in res) {
+      const art = res[i];
       if (art && art['pid']) {
         this.getMods(art['pid']).subscribe(mods => {
           art['mods'] = mods;
           //let mods = bmods["mods:modsCollection"]["mods:mods"];
-          let genre = Utils.getJsonValue(mods, "mods:genre");
+          const genre = Utils.getJsonValue(mods, 'mods:genre');
           if (genre.hasOwnProperty('type')) {
             art['genre'] = genre['type'];
           } else if (genre.hasOwnProperty('length')) {
-            for (let i in genre) {
+            for (const i in genre) {
               art['genre'] = genre[i]['type'];
             }
           }
@@ -355,8 +355,8 @@ export class AppService {
   getArticles(pid: string): Observable<any[]> {
     const getRange = (pid: string): Observable<any> => {
 
-      var url = this.state.config['context'] + 'search/journal/select';
-      let params = new HttpParams()
+      let url = this.state.config['context'] + 'search/journal/select';
+      const params = new HttpParams()
         .set('q', '*:*')
         .set('fq', 'parents:"' + pid + '"')
         .set('wt', 'json')
@@ -368,14 +368,14 @@ export class AppService {
 
     return getRange(pid).expand((res) => {
 
-      let articles = [];
+      const articles = [];
       let childs: any[];
       if (res.json) {
         childs = res.json()['response']['docs'];
       } else {
         childs = res;
       }
-      for (let ch in childs) {
+      for (const ch in childs) {
         if (childs[ch]['model'] === 'article') {
           articles.push(childs[ch]);
         }
@@ -405,8 +405,8 @@ export class AppService {
     if (this.modsCache.hasOwnProperty(pid)) {
       return Observable.of(this.modsCache[pid]);
     }
-    let url = this.state.config['context'] + 'search/journal/select';
-    let params = new HttpParams()
+    const url = this.state.config['context'] + 'search/journal/select';
+    const params = new HttpParams()
       .set('q', '*:*')
       .set('fq', 'pid:"' + pid + '"')
       .set('wt', 'json').set('fl', 'mods');
@@ -419,8 +419,8 @@ export class AppService {
   }
 
   setViewed(pid: string): Observable<any> {
-    let url = this.state.config['context'] + 'index';
-    let params = new HttpParams()
+    const url = this.state.config['context'] + 'index';
+    const params = new HttpParams()
       .set('action', 'SET_VIEW')
       .set('pid', pid);
     return this.http.get(url, {params: params});
@@ -442,8 +442,8 @@ export class AppService {
   }
 
   getViewed(pid: string): Observable<number> {
-    let url = this.state.config['context'] + 'search/views/select';
-    let params = new HttpParams().set('q', '*:*')
+    const url = this.state.config['context'] + 'search/views/select';
+    const params = new HttpParams().set('q', '*:*')
       .set('fq', 'pid:"' + pid + '"')
       .set('wt', 'json')
       .set('fl', 'views');
@@ -461,29 +461,29 @@ export class AppService {
 
 
   getModsK5(pid: string): Observable<any> {
-    let url = this.state.config['api_point'] + '/item/' + pid + '/streams/BIBLIO_MODS';
+    const url = this.state.config['api_point'] + '/item/' + pid + '/streams/BIBLIO_MODS';
     return this.http.get(url).map((res: Response) => {
 
-      return JSON.parse(xml2json(res.text(), ''))["mods:modsCollection"]["mods:mods"];
+      return JSON.parse(xml2json(res.text(), ''))['mods:modsCollection']['mods:mods'];
     });
   }
 
   getSiblings(pid: string): Observable<any> {
-    let url = this.state.config['context'] + 'search/journal/select';
-    let params = new HttpParams()
+    const url = this.state.config['context'] + 'search/journal/select';
+    const params = new HttpParams()
       .set('q', 'pid:"' + pid + '"')
       .set('wt', 'json')
       .set('fl', 'parents');
 
     return this.http.get(url, {params: params})
       .map((response) => {
-        let parent = response['response']['docs'][0]['parents'][0];
+        const parent = response['response']['docs'][0]['parents'][0];
         return this.getChildren(parent).subscribe();
       });
   }
 
   getSiblingsk5(pid: string): Observable<any> {
-    let url = this.state.config['api_point'] + '/item/' + pid + '/siblings';
+    const url = this.state.config['api_point'] + '/item/' + pid + '/siblings';
     return this.http.get(url).map((res) => {
 
       return res[0]['siblings'];
@@ -491,35 +491,34 @@ export class AppService {
   }
 
   getUploadedFiles(): Observable<any> {
-    var url = 'lf?action=LIST&ctx=' + this.state.ctx.ctx;
+    let url = 'lf?action=LIST&ctx=' + this.state.ctx.ctx;
 
-    return this.http.get(url).catch(error => {return Observable.of('error gettting content: ' + error);});
+    return this.http.get(url).catch(error =>Observable.of('error gettting content: ' + error));
   }
 
   getText(id: string): Observable<string> {
-    var url = 'texts?action=LOAD&id=' + id + '&lang=' + this.state.currentLang + '&ctx=' + this.state.ctx.ctx;
-
+    let url = 'texts?action=LOAD&id=' + id + '&lang=' + this.state.currentLang + '&ctx=' + this.state.ctx.ctx;
 
     return this.http.get(url, {responseType: 'text'}).map((response) => {
       return response;
-    }).catch(error => {return Observable.of('error gettting content: ' + error);});
+    }).catch(error =>Observable.of('error gettting content: ' + error));
   }
 
   getCitace(uuid: string): Observable<string> {
-    var url = 'index?action=CITATION&uuid=' + uuid ;
+    let url = 'index?action=CITATION&uuid=' + uuid ;
 
 
     return this.http.get(url, {responseType: 'text'}).map((response) => {
       return response;
-    }).catch(error => {return Observable.of('error gettting citation: ' + error);});
+    }).catch(error =>Observable.of('error gettting citation: ' + error));
   }
 
   saveText(id: string, text: string, menu: string = null): Observable<string> {
 
     //var url = 'texts?action=SAVE&id=' + id + '&lang=' + this.state.currentLang;
-    var url = 'texts';
+    let url = 'texts';
 
-    var params = new HttpParams()
+    let params = new HttpParams()
       .set('user', this.state.loginuser)
       .set('id', id)
       .set('action', 'SAVE')
@@ -531,7 +530,7 @@ export class AppService {
       //url += '&menu=' + menu;
     }
 
-    let headers = new HttpHeaders({'Content-Type': 'text/plain;charset=UTF-8'});
+    const headers = new HttpHeaders({'Content-Type': 'text/plain;charset=UTF-8'});
     const options = {headers: headers, params: params};
 
     return this.http.post<string>(url, text, options);
@@ -542,9 +541,9 @@ export class AppService {
   saveMenu(menu: string) {
 
     //var url = 'texts?action=SAVE&id=' + id + '&lang=' + this.state.currentLang;
-    var url = 'texts';
+    let url = 'texts';
 
-    var params = new HttpParams()
+    let params = new HttpParams()
       .set('action', 'SAVE_MENU')
       .set('ctx', this.state.ctx.ctx)
       .set('menu', menu);
@@ -565,13 +564,13 @@ export class AppService {
   }
 
   index(uuid: string) {
-    var url = 'index?action=INDEX_DEEP&pid=' + uuid;
+    let url = 'index?action=INDEX_DEEP&pid=' + uuid;
 
     return this.http.get(url)
       .map((response: Response) => {
         return response.json();
 
-      }).catch(error => {return Observable.of('error indexing uuid: ' + error);});
+      }).catch(error =>Observable.of('error indexing uuid: ' + error));
 
   }
 
@@ -587,12 +586,12 @@ export class AppService {
         this.state.loginuser = '';
         this.state.loginpwd = '';
         this.state.logged = true;
-        
+
         if (this.state.redirectUrl) {
           if (this.state.redirectUrl.startsWith('/')) {
-            this.router.navigate([this.state.redirectUrl], {queryParamsHandling: "preserve"});
+            this.router.navigate([this.state.redirectUrl], {queryParamsHandling: 'preserve'});
           } else {
-            this.router.navigate([this.state.ctx ? this.state.ctx.ctx : '/admin'], {queryParamsHandling: "preserve"});
+            this.router.navigate([this.state.ctx ? this.state.ctx.ctx : '/admin'], {queryParamsHandling: 'preserve'});
           }
         }
       }
@@ -604,8 +603,8 @@ export class AppService {
   }
 
   doLogin() {
-    var url = 'login'
-    var params = new HttpParams()
+    let url = 'login';
+    let params = new HttpParams()
       .set('user', this.state.loginuser)
       .set('pwd', this.state.loginpwd)
       .set('ctx', this.state.ctx.ctx)
@@ -620,22 +619,22 @@ export class AppService {
         console.log(res['error']);
       }
       this.state.logged = false;
-      this.router.navigate(['home'], {queryParamsHandling: "preserve"});
+      this.router.navigate(['home'], {queryParamsHandling: 'preserve'});
     });
   }
 
   doLogout() {
 
-    var url = 'login';
+    let url = 'login';
     //console.log(this.loginuser, this.loginpwd, url);
-    var params = new HttpParams().set('action', 'LOGOUT');
+    let params = new HttpParams().set('action', 'LOGOUT');
     return this.http.get(url, {params: params});
 
   }
 
   isHiddenByGenre(genres: string[]) {
     //console.log(this.state.config['hiddenGenres'], genres);
-    for (let g in genres) {
+    for (const g in genres) {
       //console.log(g);
       if (this.state.config['hiddenGenres'].indexOf(genres[g]) > -1) {
         return true;
@@ -643,21 +642,21 @@ export class AppService {
     }
     return false;
   }
-  
-  
+
+
   pidActual: string;
-  findActual(){
+  findActual() {
     this.pidActual = null;
     this.findActualByPid(this.state.config['journal']);
   }
-  
-  findActualByPid(pid: string){
+
+  findActualByPid(pid: string) {
     this.getChildren(pid).subscribe(res => {
-      if(res.length === 0){
+      if (res.length === 0) {
         this.state.setActual(null);
         this.pidActual = null;
         console.log('ERROR. Cannot find actual number', pid);
-      } else if(res[0]['datanode']){
+      } else if (res[0]['datanode']) {
         this.pidActual = pid;
         this.getJournal(pid).subscribe(a => {
           this.state.setActual(a);
@@ -672,9 +671,9 @@ export class AppService {
       }
     });
   }
-  
-  getKeywords(){
-    var params = new HttpParams()
+
+  getKeywords() {
+    let params = new HttpParams()
     .set('q', '*:*')
     .set('rows', '0')
     .set('facet', 'true')
@@ -683,26 +682,26 @@ export class AppService {
     .set('facet.limit', '-1')
     .set('facet.sort', 'index');
       this.search.search(params).subscribe(res => {
-        this.state.keywords= [];
-        
-        for(let i in res['facet_counts']['facet_fields']['keywords_facet']){
-          let val: string = res['facet_counts']['facet_fields']['keywords_facet'][i][0];
-          if(val && val !== ''){
-            let val_lower: string = val.toLocaleLowerCase(); 
-            this.state.keywords.push({val: val, val_lower: val_lower, valq: '"'+val+'"'});
+        this.state.keywords = [];
+
+        for (const i in res['facet_counts']['facet_fields']['keywords_facet']) {
+          const val: string = res['facet_counts']['facet_fields']['keywords_facet'][i][0];
+          if (val && val !== '') {
+            const val_lower: string = val.toLocaleLowerCase();
+            this.state.keywords.push({val: val, val_lower: val_lower, valq: '"' + val + '"'});
           }
         }
-        
+
         this.state.keywords.sort((a, b) => {
           return a.val_lower.localeCompare(b.val_lower, 'cs');
         });
 
       });
   }
-  
+
   getGenres() {
       //Rok jako stats
-      var params = new HttpParams()
+      let params = new HttpParams()
       .set('q', '*:*')
       .set('fq', '-genre:""')
       .set('fq', 'model:article')
@@ -713,21 +712,21 @@ export class AppService {
       .set('facet.sort', 'index');
       this.search.search(params).subscribe(res => {
 
-        this.state.genres= [];
-        for(let i in res['facet_counts']['facet_fields']['genre']){
-          let genre = res['facet_counts']['facet_fields']['genre'][i][0];
-          if(!this.isHiddenByGenre([genre])){
+        this.state.genres = [];
+        for (const i in res['facet_counts']['facet_fields']['genre']) {
+          const genre = res['facet_counts']['facet_fields']['genre'][i][0];
+          if (!this.isHiddenByGenre([genre])) {
             //this.state.genres.push(genre);
-            let tr: string = this.translateKey('genre.' + genre);
-            this.state.genres.push({val: genre, tr: tr, valq: '"'+genre+'"'});
+            const tr: string = this.translateKey('genre.' + genre);
+            this.state.genres.push({val: genre, tr: tr, valq: '"' + genre + '"'});
           }
         }
         this.state.genres.sort((a, b) => {
           return a.tr.localeCompare(b.tr, 'cs');
         });
-        
+
       });
-    
+
   }
 
 

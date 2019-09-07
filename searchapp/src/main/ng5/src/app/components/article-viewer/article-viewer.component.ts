@@ -268,13 +268,6 @@ magazine;
     return false;
   }
 
-  googlePlusShare() {
-    const share = 'https://plus.google.com/share?url=' + this._socialUrl();
-    window.open(share, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
-    this.toggleShare();
-    return false;
-  }
-
   linkShare() {
     this.linkModal.show();
     this.toggleShare();

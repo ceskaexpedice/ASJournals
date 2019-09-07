@@ -301,13 +301,15 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.selectedFile = f;
 
     this.childModal.hide();
-    this.editor.insertContent('&nbsp;<a target="_blank" href="lf?action=GET_FILE&ctx=' + this.state.ctx.ctx + '&filename=' + this.selectedFile + '">' + this.selectedFile + '</a>&nbsp;');
+    const link = this.state.config['context'] + 'lf?action=GET_FILE&ctx=' + this.state.ctx.ctx;
+    console.log(link);
+    this.editor.insertContent('&nbsp;<a target="_blank" href="' + link + '&filename=' + this.selectedFile + '">' + this.selectedFile + '</a>&nbsp;');
   }
 
   public browseFiles() {
     this.service.getUploadedFiles().subscribe(res => {
       this.fileList = res['files'];
-    })
+    });
 
     this.childModal.show();
   }
