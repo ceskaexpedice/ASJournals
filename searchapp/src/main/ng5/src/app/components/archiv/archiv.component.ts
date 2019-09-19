@@ -77,6 +77,9 @@ export class ArchivComponent implements OnInit {
   goToRoot() {
     this.parentItems = [];
     this.setItems(this.state.config['journal']);
+    let p = {};
+    p['pid'] = this.state.config['journal'];
+    this.router.navigate(['.', p], {queryParamsHandling: "preserve", relativeTo: this.route });
   }
   setSort(s) {
     this.currentSort = s;
@@ -103,7 +106,7 @@ export class ArchivComponent implements OnInit {
   }
 
   setItems(pid: string) {
-    //let parent = this.currentPid;
+    
     this.currentPid = pid;
 
     this.setMainClass();
@@ -113,7 +116,7 @@ export class ArchivComponent implements OnInit {
         this.currentItem = { pid: this.currentPid, parents: null, model: 'periodical' };
       } else {
         this.currentItem = res;
-        //let ctx = res['context'][0];
+        
         if (res['parents'].length > 0) {
           this.currentParent = res['parents'][0];
         } else {
@@ -125,9 +128,7 @@ export class ArchivComponent implements OnInit {
       if (!this.cache.hasOwnProperty(this.currentPid)) {
         this.service.getChildren(this.currentPid).subscribe(res => {
           this.isDataNode = res[0]['datanode'];
-          //if (res[0]['datanode']) {
-          //this.router.navigate(['/article', res[0]['pid']]);
-          //} else {
+          
           this.cache[this.currentPid] = { items: res, parent: this.currentParent };
           this.items = res;
 
@@ -135,26 +136,21 @@ export class ArchivComponent implements OnInit {
             this.parentItems = [];
           } else if (this.cache.hasOwnProperty(this.currentParent)) {
             this.parentItems = this.cache[this.currentParent]['items'];
-            //this.currentParent = parent;
           } else {
             this.parentItems = [];
-            //this.currentParent = parent;
             this.service.getChildren(this.currentParent).subscribe(res => {
               this.parentItems = res;
-              //this.cache[this.currentParent] = {};
               this.cache[this.currentParent] = { items: res };
+              this.setVisibleParentsItems();
             });
           }
           
-          
-          
-          
-          //}
           if (this.isDataNode) {
             this.items.sort((a, b) => {
               return a['idx'] - b['idx'];
             });
           }
+          this.setVisibleParentsItems();
 
         });
       } else {
@@ -170,16 +166,24 @@ export class ArchivComponent implements OnInit {
         }
       }
       
-      this.visibleParentItems = [];
-      if(this.parentItems && this.parentItems.length > 0){
+      this.setVisibleParentsItems();
+
+
+    });
+    this.setFocus();
+  }
+
+  setVisibleParentsItems() {
+    this.visibleParentItems = [];
+      if (this.parentItems && this.parentItems.length > 0) {
         let start = 0;
-        for (let idx = 0; idx < this.parentItems.length; idx++){
-          if (this.parentItems[idx].pid === this.currentPid){
+        for (let idx = 0; idx < this.parentItems.length; idx++) {
+          if (this.parentItems[idx].pid === this.currentPid) {
             start = idx;
           }
         }
 
-        //visibleItems should be odd
+        // visibleItems should be odd
 
         start = Math.max(0, start - Math.floor(this.visibleItems/2));
 
@@ -188,13 +192,7 @@ export class ArchivComponent implements OnInit {
         for (let i = start; i < end; i++){
           this.visibleParentItems.push(this.parentItems[i]);
         }
-
-//        console.log(start, end, this.visibleParentItems);
       }
-
-
-    });
-    this.setFocus();
   }
 
   initData() {

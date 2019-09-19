@@ -91,11 +91,11 @@
   "/texts": {
     "target": "http://localhost:8080/k5journals/texts",
     "logLevel": "debug",
-    "pathRewrite": {
-      "^/texts=":""
-    },
     "ignorePath": false,
-    "changeOrigin": true,
+    "pathRewrite": {
+      "^/texts":""
+    },
+    "changeOrigin": false,
     "secure": false
   },
   "/journals": {
