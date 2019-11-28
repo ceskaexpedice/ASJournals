@@ -51,10 +51,16 @@ export class HomeComponent implements OnInit {
     
     if (this.actual.mods) {
       let mods = this.actual.mods;
+      console.log(this.actual.model, mods);
       if (this.actual.model === 'periodicalvolume') {
         
         if(mods['mods:originInfo']){
-          this.actualInfo = mods['mods:originInfo']['mods:dateIssued'];
+          if (mods['mods:originInfo']['mods:dateIssued']['content']) {
+            this.actualInfo = mods['mods:originInfo']['mods:dateIssued']['content'];
+          } else {
+            this.actualInfo = mods['mods:originInfo']['mods:dateIssued'];
+          }
+          
           if (mods['mods:titleInfo']) {
             this.actualInfo = mods['mods:titleInfo']['mods:partNumber'] + '/' + this.actualInfo;
           }
@@ -78,7 +84,11 @@ export class HomeComponent implements OnInit {
         
       
         if (mods['mods:originInfo']) {
-          this.actualInfo = mods['mods:originInfo']['mods:dateIssued'];
+          if (mods['mods:originInfo']['mods:dateIssued']['content']) {
+            this.actualInfo = mods['mods:originInfo']['mods:dateIssued']['content'];
+          } else {
+            this.actualInfo = mods['mods:originInfo']['mods:dateIssued'];
+          }
           if (mods['mods:titleInfo']['mods:partNumber']) {
             this.actualInfo += ' ' + mods['mods:titleInfo']['mods:partNumber'] ;
           }
