@@ -171,7 +171,7 @@ export class SearchAuthorsComponent implements OnInit, OnDestroy {
       this.state.resetDates();
     let c = new Criterium();
     c.field = 'autor';
-    c.value = '"' + s + '"~3';
+    c.value = s;
     this.router.navigate(['../cokoliv', { criteria: JSON.stringify([c]), start: 0}], {relativeTo: this.route, queryParamsHandling: "preserve" });
   }
 
