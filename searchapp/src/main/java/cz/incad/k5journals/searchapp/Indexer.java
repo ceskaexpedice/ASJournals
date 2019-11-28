@@ -509,7 +509,7 @@ public class Indexer {
         if (np instanceof JSONArray) {
           JSONArray janp = (JSONArray) np;
           addUniqueToDoc(idoc, "keywords", janp.getString(0) + ", " + janp.getJSONObject(1).optString("content"));
-        } else {
+        } else if (np instanceof String){
           addUniqueToDoc(idoc, "keywords", np);
         }
       }
