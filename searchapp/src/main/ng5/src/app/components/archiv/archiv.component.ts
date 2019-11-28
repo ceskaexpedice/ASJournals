@@ -16,8 +16,8 @@ export class ArchivComponent implements OnInit {
   currentItem: any;
   items: any[];
   parentItems: any[];
-  
-  visibleItems:number = 3;
+
+  visibleItems: number = 3;
   visibleParentItems: any[];
   currentParent: string = null;
   cache: any = {};
@@ -79,7 +79,7 @@ export class ArchivComponent implements OnInit {
     this.setItems(this.state.config['journal']);
     let p = {};
     p['pid'] = this.state.config['journal'];
-    this.router.navigate(['.', p], {queryParamsHandling: "preserve", relativeTo: this.route });
+    this.router.navigate(['.', p], { queryParamsHandling: "preserve", relativeTo: this.route });
   }
   setSort(s) {
     this.currentSort = s;
@@ -94,7 +94,7 @@ export class ArchivComponent implements OnInit {
     let p = {};
     p['pid'] = pid;
     //this.router.navigate(['/archiv', p]);
-    this.router.navigate(['.', p], {queryParamsHandling: "preserve", relativeTo: this.route });
+    this.router.navigate(['.', p], { queryParamsHandling: "preserve", relativeTo: this.route });
     //    this.setItems(pid);
   }
 
@@ -106,7 +106,7 @@ export class ArchivComponent implements OnInit {
   }
 
   setItems(pid: string) {
-    
+
     this.currentPid = pid;
 
     this.setMainClass();
@@ -116,7 +116,7 @@ export class ArchivComponent implements OnInit {
         this.currentItem = { pid: this.currentPid, parents: null, model: 'periodical' };
       } else {
         this.currentItem = res;
-        
+
         if (res['parents'].length > 0) {
           this.currentParent = res['parents'][0];
         } else {
@@ -128,7 +128,7 @@ export class ArchivComponent implements OnInit {
       if (!this.cache.hasOwnProperty(this.currentPid)) {
         this.service.getChildren(this.currentPid).subscribe(res => {
           this.isDataNode = res[0]['datanode'];
-          
+
           this.cache[this.currentPid] = { items: res, parent: this.currentParent };
           this.items = res;
 
@@ -144,7 +144,7 @@ export class ArchivComponent implements OnInit {
               this.setVisibleParentsItems();
             });
           }
-          
+
           if (this.isDataNode) {
             this.items.sort((a, b) => {
               return a['idx'] - b['idx'];
@@ -165,7 +165,7 @@ export class ArchivComponent implements OnInit {
           this.currentParent = null;
         }
       }
-      
+
       this.setVisibleParentsItems();
 
 
@@ -175,24 +175,24 @@ export class ArchivComponent implements OnInit {
 
   setVisibleParentsItems() {
     this.visibleParentItems = [];
-      if (this.parentItems && this.parentItems.length > 0) {
-        let start = 0;
-        for (let idx = 0; idx < this.parentItems.length; idx++) {
-          if (this.parentItems[idx].pid === this.currentPid) {
-            start = idx;
-          }
-        }
-
-        // visibleItems should be odd
-
-        start = Math.max(0, start - Math.floor(this.visibleItems/2));
-
-        let end = Math.min(start + this.visibleItems, this.parentItems.length);
-        start = Math.max(0, end - this.visibleItems);
-        for (let i = start; i < end; i++){
-          this.visibleParentItems.push(this.parentItems[i]);
+    if (this.parentItems && this.parentItems.length > 0) {
+      let start = 0;
+      for (let idx = 0; idx < this.parentItems.length; idx++) {
+        if (this.parentItems[idx].pid === this.currentPid) {
+          start = idx;
         }
       }
+
+      // visibleItems should be odd
+
+      start = Math.max(0, start - Math.floor(this.visibleItems / 2));
+
+      let end = Math.min(start + this.visibleItems, this.parentItems.length);
+      start = Math.max(0, end - this.visibleItems);
+      for (let i = start; i < end; i++) {
+        this.visibleParentItems.push(this.parentItems[i]);
+      }
+    }
   }
 
   initData() {

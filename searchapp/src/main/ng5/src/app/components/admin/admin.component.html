@@ -10,18 +10,18 @@
               <div class="form-group">
                 <input type="text" class="form-control" id="indexUUID"  name="indexUUID" placeholder="uuid" [(ngModel)]="indexUUID">
               </div>
-              <button type="button" class="btn app-btn app-btn-default" (click)="index()">{{'Pridat uuid' | translate}}</button>
+              <button type="button" class="btn app-btn app-btn-default" (click)="index()">{{'admin.add_uuid' | translate}}</button>
               &nbsp;&nbsp;&nbsp;
-              <span>{{'obalka' | translate}}</span>:
+              <span>{{'admin.cover' | translate}}</span>:
               <div class="form-group">
                 <input type="file"  ng2FileSelect [uploader]="coverUploader" [title]="'nahrát obrázek' | translate">
               </div>
-              <button type="button" class="btn app-btn app-btn-default" (click)="uploadCover()">{{'nahrát' | translate}}</button>
+              <button type="button" class="btn app-btn app-btn-default" (click)="uploadCover()">{{'admin.Upload' | translate}}</button>
               {{coverMsg}}
 
             </div>
             <div *ngIf="working" >
-              <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Indexing ...
+              <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {{'admin.Indexing' | translate}} ...
             </div>
           </div>
           <div *ngIf="indexed" class="row">
@@ -56,7 +56,7 @@
                   </ul>
                 </li>
               </ul>
-              <button type="button" class="btn app-btn app-btn-default" (click)="saveMenu()">{{'Uložit výběr stran' | translate}}</button>
+              <button type="button" class="btn app-btn app-btn-default" (click)="saveMenu()">{{'admin.Save_selected_pages' | translate}}</button>
             </div><!--/.col -->
             <div class="col-xs-9">
               <h3>{{selected}} <span class="app-brand-text text-darken-1">({{state.currentLang}})</span>
@@ -84,7 +84,7 @@
      <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left">{{'Files' | translate}}</h4>
+        <h4 class="modal-title pull-left">{{'admin.Files' | translate}}</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="closeFiles()">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -93,7 +93,7 @@
         <span><input type="file" ng2FileSelect [uploader]="uploader" (onCompleteAll)="uploaded()" />
                      <button type="button" class="btn btn-success btn-s"
                      (click)="uploadFile()" [disabled]="!uploader.getNotUploadedItems().length">
-            <span class="glyphicon glyphicon-upload"></span>Upload</button>
+            <span class="glyphicon glyphicon-upload"></span>{{'admin.Upload' | translate}}</button>
 
         </span>
         <ul>
