@@ -75,7 +75,7 @@ export class FreePageComponent implements OnInit {
 
 
   print() {
-   const mywindow = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+   const mywindow = window.open('', '_blank', 'top=0,left=0,height=800px,width=auto');
 
     mywindow.document.write('<html><head><title>' + document.title  + '</title>');
     mywindow.document.write('</head><body >');
