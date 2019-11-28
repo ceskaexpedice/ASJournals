@@ -303,11 +303,13 @@
       </div>
       <div class="modal-body">
         <p>
-          URL: <input [value]="url()" type="text" [size]="url().length" />
+          <span style="width: 8%;">URL: </span>
+          <input [value]="url()" type="text" [size]="url().length" style="width: 90%;" />
         </p>
         
         <p *ngIf="doi">
-          DOI: <input [value]="'dx.doi.org/' + doi" type="text" [size]="url().length" />
+            <span style="width: 8%;">DOI: </span>
+            <input [value]="'dx.doi.org/' + doi" type="text" [size]="url().length" style="width: 90%;" />
         </p>
       </div>
     </div>

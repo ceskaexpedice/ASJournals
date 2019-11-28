@@ -113,6 +113,7 @@
                 <include>*.*</include>
               </includes>
               <excludes>
+                <exclude>.gitignore</exclude>
                 <exclude>index.jsp</exclude>
                 <exclude>_app.scss</exclude>
               </excludes>
