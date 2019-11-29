@@ -618,8 +618,12 @@ export class AppService {
       if (res.hasOwnProperty('error')) {
         console.log(res['error']);
       }
+
+      this.state.loginError = false;
+      this.state.loginuser = '';
+      this.state.loginpwd = '';
       this.state.logged = false;
-      this.router.navigate(['home'], {queryParamsHandling: 'preserve'});
+      this.router.navigate([this.state.ctx ? this.state.ctx.ctx : '/home'], {queryParamsHandling: 'preserve'});
     });
   }
 

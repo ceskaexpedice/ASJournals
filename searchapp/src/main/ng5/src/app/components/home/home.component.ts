@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
     
     if (this.actual.mods) {
       let mods = this.actual.mods;
-      console.log(this.actual.model, mods);
+      
       if (this.actual.model === 'periodicalvolume') {
         
         if(mods['mods:originInfo']){

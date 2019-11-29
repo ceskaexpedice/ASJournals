@@ -8,14 +8,12 @@ package cz.incad.k5journals.searchapp;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 
 /**
@@ -105,28 +103,23 @@ public class LoginServlet extends HttpServlet {
     LOGOUT {
       @Override
       void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        resp.setContentType("application/json;charset=UTF-8");
 
         PrintWriter out = resp.getWriter();
         JSONObject jo = new JSONObject();
         try {
+          req.getSession().removeAttribute("login");
           req.getSession().invalidate();
           jo.put("msg", "logged out");
 
         } catch (Exception ex) {
           jo.put("error", ex.toString());
         }
-        if (req.getParameter("json.wrf") != null) {
-          out.println(req.getParameter("json.wrf") + "(" + jo.toString() + ")");
-        } else {
-          out.println(jo.toString(2));
-        }
+        out.println(jo.toString());
       }
     },
     TESTLOGIN {
       @Override
       void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        resp.setContentType("application/json;charset=UTF-8");
 
         PrintWriter out = resp.getWriter();
         JSONObject jo = new JSONObject();

@@ -19,7 +19,6 @@ package cz.incad.k5journals.searchapp;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -28,9 +27,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  *
@@ -52,12 +49,10 @@ public class SearchServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
     try {
-
-      response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
       response.setContentType("application/json;charset=UTF-8");
       //PrintWriter out = response.getWriter();
-      response.addHeader("Access-Control-Allow-Methods", "GET, POST");
-      response.addHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+//      response.addHeader("Access-Control-Allow-Methods", "GET, POST");
+//      response.addHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
       Options opts = Options.getInstance();
       int handlerIdx = request.getRequestURI().lastIndexOf("/") + 1;
