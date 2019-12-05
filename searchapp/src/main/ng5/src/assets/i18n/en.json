@@ -163,5 +163,15 @@
     },
     "Available from": "Available also from",
     "print": "print page",
+    "admin" : {
+        "Upload": "Upload",
+        "Files": "Files",
+        "Save_selected_pages": "Save selected pages",
+        "add_uuid": "Add uuid",
+        "cover": "Cover",
+        "Indexing": "Indexing"
+    },
+    "a zároveň": "AND",
+    "nebo": "OR",
     "dummy": ""
 }

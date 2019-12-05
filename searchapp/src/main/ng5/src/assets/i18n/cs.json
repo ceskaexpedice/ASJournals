@@ -149,5 +149,15 @@
     },
     "Available from": "Dostupné také z",
     "print": "tisk",
+    "admin" : {
+        "Upload": "Nahrát",
+        "Files": "Soubory",
+        "Save_selected_pages": "Uložit výběr stran",
+        "add_uuid": "Přidat uuid",
+        "cover": "Obálka",
+        "Indexing": "Indexing"
+    },
+    "a zároveň": "a zároveň",
+    "nebo": "nebo",
     "dummy": ""
 }

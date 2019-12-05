@@ -126,6 +126,7 @@
     <field name="title" type="string" indexed="true" stored="true" multiValued="false" />
     <field name="titleCS" type="collatedCS" indexed="true" stored="true" multiValued="false" docValues="true" />
     <field name="img" type="string" indexed="false" stored="true" multiValued="false" />
+    <field name="k5url" type="string" indexed="false" stored="true" multiValued="false" />
     <field name="vydavatel" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="vydavatel_id" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="issn" type="string" indexed="true" stored="true" multiValued="false"/>

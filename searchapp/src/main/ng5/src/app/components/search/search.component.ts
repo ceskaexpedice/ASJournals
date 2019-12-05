@@ -163,6 +163,8 @@ export class SearchComponent implements OnInit, OnDestroy {
           if (criteria[i].field) {
             if (criteria[i].field === 'genre' && !criteria[i].value.startsWith('"')) {
               fq += criteria[i].field + ':"' + criteria[i].value + '" ';
+            } else if (criteria[i].field === 'autor') {
+              fq += criteria[i].field + ':"' + criteria[i].value + '"~3';
             } else {
               fq += criteria[i].field + ':' + criteria[i].value + ' ';
             }

@@ -26,9 +26,9 @@
     <div class="app-col-right text-right">
       <ul *ngIf="!last" class="list-unstyled app-clean-mg app-select">
         <li dropdown class="dropdown">
-          <a dropdownToggle class="dropdown-toggle" role="button" >{{getOperator(criterium)}} <span class="caret"></span></a>
+          <a dropdownToggle class="dropdown-toggle" role="button" >{{getOperator(criterium) | translate}} <span class="caret"></span></a>
           <ul *dropdownMenu class="dropdown-menu app-clean-border">
-            <li *ngFor="let op of operators"><a (click)="setOperator(criterium, op.val)">{{op.label}}</a></li>
+            <li *ngFor="let op of operators"><a (click)="setOperator(criterium, op.val)">{{op.label | translate}}</a></li>
           </ul>
         </li>
       </ul>

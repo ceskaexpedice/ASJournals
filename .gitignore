@@ -1,4 +1,8 @@
 /searchapp/nb-configuration.xml
+<<<<<<< HEAD
 /searchapp/nbactions.xml
 /searchapp/src/main/webapp/assets/
 /searchapp/target/
+=======
+/searchapp/nbactions.xml
+>>>>>>> d14ae0188da0aff8d567f0fe584276db3f7568e7
