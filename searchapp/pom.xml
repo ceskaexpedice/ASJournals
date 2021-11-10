@@ -81,7 +81,7 @@
             <configuration>
               <skip>${skipNg}</skip>
               <executable>npm</executable>
-              <workingDirectory>${project.basedir}/src/main/ng5</workingDirectory>  
+              <workingDirectory>${project.basedir}/src/main/client</workingDirectory>  
               <arguments>
                 <argument>run</argument>
                 <argument>build.prod</argument>
@@ -139,7 +139,7 @@
               <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
               <resources>
                 <resource>
-                  <directory>src/main/ng5/dist</directory>
+                  <directory>src/main/client/dist</directory>
                   <includes>
                     <include>*/**</include>
                   </includes>
@@ -158,7 +158,7 @@
               <outputDirectory>${project.basedir}/src/main/webapp/assets/sass</outputDirectory>
               <resources>
                 <resource>
-                  <directory>src/main/ng5/node_modules/bootstrap-sass/assets/stylesheets</directory>
+                  <directory>src/main/client/node_modules/bootstrap-sass/assets/stylesheets</directory>
                   <includes>
                     <include>*/**</include>
                   </includes>
@@ -177,7 +177,7 @@
               <outputDirectory>${project.basedir}/src/main/webapp/assets/sass</outputDirectory>
               <resources>
                 <resource>
-                  <directory>src/main/ng5/node_modules/nouislider/distribute</directory>
+                  <directory>src/main/client/node_modules/nouislider/distribute</directory>
                   <includes>
                     <include>*/**</include>
                   </includes>
