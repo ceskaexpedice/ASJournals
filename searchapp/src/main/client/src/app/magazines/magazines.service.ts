@@ -7,6 +7,7 @@ import {MagazineState} from './magazine.state';
 import {Router} from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Magazine } from '../models/magazine';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class MagazinesService {
@@ -18,6 +19,7 @@ export class MagazinesService {
   constructor(
     public state: MagazineState,
     private translate: TranslateService,
+    private snackBar: MatSnackBar,
     private router: Router,
     private http: HttpClient) {}
 
@@ -27,6 +29,15 @@ export class MagazinesService {
     this._langSubject.next(lang);
   }
 
+  showSnackBar(s: string, r: string = '', error: boolean = false) {
+    const right = r !== '' ? this.translate.instant(r) : '';
+    const clazz = error ? 'app-snack-error' : 'app-snack-success';
+    this.snackBar.open(this.translate.instant(s), right, {
+      duration: 2000,
+      verticalPosition: 'top',
+      panelClass: clazz
+    });
+  }
 
   getText(id: string): Observable<string> {
     var url = 'texts?action=LOAD&ctx=magazines&id=' + id + '&lang=' + this.state.currentLang;
@@ -57,13 +68,7 @@ export class MagazinesService {
 
     this.state.clear();
 
-    return this.http.get(url, {params: params}).pipe(
-      map((response: any) => {
-        this.state.magazines = response['response']['docs'];
-        this.state.setFacets(response['facet_counts']['facet_fields']);
-        return this.state;
-      })
-    )
+    return this.http.get(url, {params: params});
   }
 
   getEditorMagazines(id: string): Observable<any> {

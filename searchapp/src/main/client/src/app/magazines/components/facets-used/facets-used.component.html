@@ -1,0 +1,18 @@
+<ng-container *ngIf="state.filters.length > 0">
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+      <strong>{{'used_filters' | translate}}</strong>
+      <mat-icon [class]="'app-clean-mg'" [matTooltip]="'Zrušit všechny filtry'"
+        matTooltipPosition="above" (click)="removeAllFilters()">close-circle</mat-icon>
+    </mat-expansion-panel-header>
+    <div *ngFor="let facetUsed of state.filters; let idx = index;">
+      <span class="app-row">
+        <a (click)="removeFilter(idx)">{{facetUsed.field | translate}}: {{facetUsed.value}}</a>
+        <span>
+          <mat-icon (click)="removeFilter(idx)"  [class]="'app-clean-mg app-cursor-pointer right red-text'" [matTooltip]="'Zrušit tento filtr'"
+            matTooltipPosition="above">close</mat-icon>
+        </span>
+      </span>
+    </div>
+  </mat-expansion-panel>
+</ng-container>

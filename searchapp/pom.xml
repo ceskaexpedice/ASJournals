@@ -12,8 +12,8 @@
   <properties>
     <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <context2.name>/</context2.name>
-    <context.name>/k5journals/</context.name>
+    <context2.name>/k5journals/</context2.name>
+    <context.name>/</context.name>
     <skipNg>false</skipNg>
   </properties>
     
@@ -139,7 +139,7 @@
               <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
               <resources>
                 <resource>
-                  <directory>src/main/client/dist</directory>
+                  <directory>src/main/client/dist/client</directory>
                   <includes>
                     <include>*/**</include>
                   </includes>

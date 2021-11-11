@@ -1,20 +1,20 @@
-export interface Magazine {
-  ctx: string | undefined;
-  journal: string;
-  color: string;
-  showTitleLabel: boolean;
-  licence:string;
+export class Magazine {
+  ctx: string | null = null;
+  journal: string | null = null;
+  color: string | null = null;
+  showTitleLabel: boolean = false;
+  licence:string | null = null;
   
-  title: string;
-  img: string;
-  k5url: string;
-  vydavatel: string;
-  vydavatel_id: string;
-  oblast: string;
-  issn: string;
-  pristup: string;
-  kontakt: string;
-  keywords: string[];
-  desc: string;
-  web: string;
+  title: string | null = null;
+  img: string | null = null;
+  k5url: string | null = null;
+  vydavatel: string | null = null;
+  vydavatel_id: string | null = null;
+  oblast: string | null = null;
+  issn: string | null = null;
+  pristup: string | null = null;
+  kontakt: string | null = null;
+  keywords: string[] = [];
+  desc: string | null = null;
+  web: string | null = null;
 }

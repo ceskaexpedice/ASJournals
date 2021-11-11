@@ -27,14 +27,6 @@ export class HeaderComponent implements OnInit {
     this.state.filters = [];
     this.state.clear();
     this.router.navigate([''], {queryParamsHandling: "preserve"});
-//    if (this.route.snapshot.firstChild.url[0].path.indexOf('seznam-casopisu') > -1){
-//      this.service.getMagazines().subscribe();
-//    } else {
-//      setTimeout(() => {
-//        this.router.navigate(['/seznam-casopisu']);
-//      }, 100);
-//      
-//    }
     
   }
 
