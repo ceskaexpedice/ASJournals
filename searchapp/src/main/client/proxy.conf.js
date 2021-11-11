@@ -20,7 +20,7 @@ const PROXY_CONFIG = {
     "secure": false
   },
   "/img": {
-    "target0": "http://localhost:8080/img",
+    "target0": "http://localhost:8080/k5journals/img",
     "target": "https://kramerius.lib.cas.cz/search/img",
     "target1": "http://cdk.lib.cas.cz/search/api/v5.0",
     "target2": "http://kramerius.lib.cas.cz/search/api/v5.0",
@@ -32,7 +32,7 @@ const PROXY_CONFIG = {
     "secure": false
   },
   "/texts/**": {
-    "target": "http://localhost:8080/texts",
+    "target": "http://localhost:8080/k5journals/texts",
     "target2": "http://localhost:4200/assets/test",
     "logLevel": "debug",
     "bypass": function (req, res, proxyOptions) {
@@ -54,6 +54,7 @@ const PROXY_CONFIG = {
         }
       }
     },
+    "logLevel": "debug",
     "changeOrigin": false,
     "secure": false
   },

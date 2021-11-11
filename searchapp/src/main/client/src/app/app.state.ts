@@ -63,9 +63,9 @@ export class AppState {
   public docs: any[] | undefined;
 
   //Aktualni cislo
-  public actualNumber: Journal | undefined | null;
-  public imgSrc: string | undefined | null;
-  public krameriusUrl: string | undefined | null;
+  public actualNumber: Journal | null = null;
+  public imgSrc: string | null = null;
+  public krameriusUrl: string | null = null;
 
   public mainClass: string | null = '';
 
