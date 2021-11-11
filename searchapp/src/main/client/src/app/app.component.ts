@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
     this.service.getMagazines().subscribe((res: any) => {
       this.state.setJournals(res);
       this.service.setStyles();
-      //this.getConfig();
+      // this.getConfig();
     });
     
   }

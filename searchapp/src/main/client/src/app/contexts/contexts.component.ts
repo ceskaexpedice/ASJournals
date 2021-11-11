@@ -1,3 +1,4 @@
+import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY_PROVIDER_FACTORY } from '@angular/cdk/overlay/overlay-directives';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router, NavigationEnd, NavigationStart} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
@@ -28,6 +29,7 @@ export class ContextsComponent implements OnInit {
   };
   
   noctx: boolean = false;
+  theClass: string = '';
 
   constructor(
     public state: AppState,
@@ -36,18 +38,17 @@ export class ContextsComponent implements OnInit {
     private route: ActivatedRoute) {}
 
   ngOnInit() {
-
     
     this.route.params
       .subscribe((params: Params) => {
-        console.log(this.state.ctxs)
-          if (this.state.ctxs) {
+          if (this.state.ctxs && this.state.ctxs.length > 0) {
             this.state.ctx = this.service.getCtx(params.ctx);
             this.getConfig();
           } else {
             this.subscription = this.state.journalsInitilized.subscribe(cf => {
               this.state.ctx = this.service.getCtx(params.ctx);
               this.getConfig();
+              this.theClass = this.state?.mainClass!;
               this.subscription.unsubscribe();
             });
           }

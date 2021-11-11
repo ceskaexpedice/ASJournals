@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { Journal } from './models/journal.model';
 import { Magazine } from './models/magazine';
 
@@ -67,7 +67,7 @@ export class AppState {
   public imgSrc: string | null = null;
   public krameriusUrl: string | null = null;
 
-  public mainClass: string | null = '';
+  public mainClass: string | null = null;
 
   //Controls full screen viewer
   public isFull: boolean = false;
