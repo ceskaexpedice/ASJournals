@@ -5,7 +5,7 @@ import { MagazinesComponent } from './pages/magazines/magazines.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MagazinesRoutingModule } from './magazines-routing.module';
-import { AuthGuard } from '../services/auth-guard';
+import { AuthGuard } from './auth-guard';
 import { MagazineState } from './magazine.state';
 import { MagazinesService } from './magazines.service';
 import { FacetsUsedComponent } from './components/facets-used/facets-used.component';
@@ -25,6 +25,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { OProjektuComponent } from './pages/o-projektu/o-projektu.component';
 import { VydavateleDetailComponent } from './pages/vydavatele/vydavatele-detail/vydavatele-detail.component';
 import { VydavateleComponent } from './pages/vydavatele/vydavatele.component';
+import { AppState } from '../app.state';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {

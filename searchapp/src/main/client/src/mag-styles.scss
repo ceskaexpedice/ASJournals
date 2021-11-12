@@ -1,4 +1,7 @@
 // --- ROOT STYLE ---
+@use '@angular/material' as mat;
+
+$my-palette: mat.$indigo-palette;
 
 @import "mag-sass/app-pallete";
 @import "mag-sass/app-color";

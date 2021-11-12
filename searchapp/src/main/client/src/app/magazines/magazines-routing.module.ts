@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SeznamCasopisuComponent } from './pages/seznam-casopisu/seznam-casopisu.component';
 import { MagazinesComponent } from './pages/magazines/magazines.component';
-import { AuthGuard } from '../services/auth-guard';
+import { AuthGuard } from './auth-guard';
 import { AdminMagazinesComponent } from './pages/admin-magazines/admin-magazines.component';
 import { KontaktComponent } from './pages/kontakt/kontakt.component';
 import { LoginComponent } from './pages/login/login.component';
