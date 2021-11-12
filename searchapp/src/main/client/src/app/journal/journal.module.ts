@@ -9,6 +9,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { ContextsComponent } from '../contexts/contexts.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -92,6 +93,7 @@ export function createTranslateLoader(http: HttpClient) {
     AlertModule.forRoot(),
     TypeaheadModule.forRoot(),
     ModalModule.forRoot(), 
+    BsDropdownModule.forRoot(),
     FileUploadModule,
     PdfViewerModule,
     TranslateModule.forChild({
