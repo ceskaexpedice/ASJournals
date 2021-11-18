@@ -57,6 +57,8 @@ export class AdminComponent implements OnInit, OnDestroy {
   newctx: string = '';
   
   currentMag : Magazine | null = null;
+  tinyConfig: any;
+  tinyInited = false;
 
   ngOnInit() {
     this.subscriptions.push(this.state.configSubject.subscribe(val => {
@@ -80,65 +82,6 @@ export class AdminComponent implements OnInit, OnDestroy {
     }
   }
   
-/*
-  
-//  editJournal(){
-//    const initialState = {
-//      mag: this.state.ctx
-//    };
-//    let bsModalRef = this.modalService.show(MagazineEditComponent, {initialState});
-//    //bsModalRef.content.closeBtnName = 'Close';
-//  }
-
-  deleteJournal() {
-    var c = confirm('Delete journal "'+this.state.ctx.ctx+'"?');
-    if (c == true) {
-      let idx = -1;
-      for (let i = 0; i < this.state.ctxs.length; i++){
-        if(this.state.ctxs[i].ctx === this.state.ctx.ctx){
-          idx = i;
-          break;
-        }
-      }
-      if(idx > -1){
-        this.state.ctxs.splice(idx, 1);
-        this.service.saveJournalConfig().subscribe(res => {
-          this.newctx = '';
-          this.service.getJournalConfig(this.state.ctxs[0]).subscribe(res => {
-            //this.save();
-            this.router.navigate([this.state.ctxs[0].ctx, 'admin']);
-          });
-        });
-      }
-
-    } else {
-      console.log('cancel');
-    }
-  }
-
-  renameJournal() {
-    var c = prompt('New name for context of journal "'+this.state.ctx.ctx+'"?');
-    if (c !== null) {
-      this.state.ctx.ctx = c;
-      
-        this.service.saveJournalConfig().subscribe(res => {
-          this.newctx = '';
-          this.service.getJournalConfig(this.state.ctx).subscribe(res => {
-            //this.save();
-            this.router.navigate([this.state.ctx.ctx, 'admin']);
-          });
-        });
-      
-
-    } else {
-      console.log('cancel');
-    }
-  }
-
-  setCtx(ctx: {ctx: string; color: string; journal: string; showTitleLabel: boolean;}) {
-    this.router.navigate([ctx['ctx'], 'admin']);
-  }
-*/
 
   initData() {
 
@@ -151,25 +94,28 @@ export class AdminComponent implements OnInit, OnDestroy {
   initTiny() {
 
     var that = this;
-    tinymce.init({
-      selector: '#' + this.elementId,
+    this.tinyConfig = {
+
+      base_url: '/tinymce', 
+                  suffix: '.min' ,
+
+      // selector: '#' + this.elementId,
       menubar: false,
       plugins: ['link', 'paste', 'table', 'save', 'code', 'image'],
       toolbar: 'save | undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code mybutton',
-      skin_url: this.state.config['context'] + 'assets/skins/lightgray',
+      // skin_url: this.state.config['context'] + 'assets/skins/lightgray',
       images_upload_url: 'lf?action=UPLOAD&isImage=true&ctx=' + this.state.ctx?.ctx,
       automatic_uploads: true, 
       relative_urls : false,
       setup: (editor: any) => {
         this.editor = editor;
         this.initData();
-        editor.addButton('mybutton', {
+        editor.ui.registry.addButton('mybutton', {
           tooltip: 'Insert link to file',
           icon: 'upload',
           //icon: false,
-          onclick: function () {
+          onAction: function () {
             that.browseFiles();
-            //editor.insertContent('&nbsp;<b>It\'s my button!</b>&nbsp;');
           }
         });
       },
@@ -178,7 +124,11 @@ export class AdminComponent implements OnInit, OnDestroy {
 
       save_oncancelcallback: function () {console.log('Save canceled');},
       save_onsavecallback: () => this.save()
-    });
+    };
+
+    // tinymce.init(this.tinyConfig);
+
+    this.tinyInited = true;
   }
 
 
@@ -204,7 +154,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   getText() {
     this.service.getText(this.selected).subscribe(t => {
       this.text = t;
-      this.editor.setContent(this.text);
+      // this.editor.setContent(this.text);
     });
   }
 

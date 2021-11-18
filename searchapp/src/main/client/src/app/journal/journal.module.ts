@@ -33,6 +33,8 @@ import { PokynyComponent } from './pages/pokyny/pokyny.component';
 import { SearchComponent } from './pages/search/search.component';
 import { FormsModule } from '@angular/forms';
 import { NouisliderModule } from 'ng2-nouislider';
+import { EditorModule } from '@tinymce/tinymce-angular';
+
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { SearchAuthorsComponent } from './pages/search-authors/search-authors.component';
 import { SearchCriteriaComponent } from './pages/search-criteria/search-criteria.component';
@@ -96,6 +98,7 @@ export function createTranslateLoader(http: HttpClient) {
     BsDropdownModule.forRoot(),
     FileUploadModule,
     PdfViewerModule,
+    EditorModule,
     TranslateModule.forChild({
       defaultLanguage: 'cs',
       extend: true,

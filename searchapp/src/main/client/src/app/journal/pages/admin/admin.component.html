@@ -66,7 +66,14 @@
                 {{'text.save-note-1' | translate}} <strong>{{selected}} ({{state.currentLang}})</strong> {{'text.save-note-2' | translate}}!
               </div>
               <form class="clearfix">
-                <textarea class="form-control" rows="28" [id]="elementId"></textarea>
+                <!-- <textarea class="form-control" rows="28" [id]="elementId"></textarea> -->
+                <editor *ngIf="tinyInited"
+                name="editor"
+                [(ngModel)]="text"
+                [init]="tinyConfig"></editor>
+
+
+
 
               </form><!--/.clearfix -->
             </div><!--/.col -->
