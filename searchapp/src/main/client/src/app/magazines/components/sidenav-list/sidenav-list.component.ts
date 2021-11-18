@@ -1,4 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { AppState } from 'src/app/app.state';
+import { MagazinesService } from '../../magazines.service';
 
 @Component({
   selector: 'app-sidenav-list',
@@ -16,7 +18,9 @@ export class SidenavListComponent implements OnInit {
   // sidenav
   @Output() public sidenavToggle = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    public state: AppState,
+    public service: MagazinesService) { }
 
   ngOnInit(): void {
   }
@@ -24,6 +28,10 @@ export class SidenavListComponent implements OnInit {
   // sidenav fuction
   public onToggleSidenav = () => {
     this.sidenavToggle.emit();
+  }
+
+  logout(){
+    this.service.logout();
   }
 
 }
