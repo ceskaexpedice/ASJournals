@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SeznamCasopisuComponent } from './pages/seznam-casopisu/seznam-casopisu.component';
 import { MagazinesComponent } from './pages/magazines/magazines.component';
-import { HeaderComponent } from './components/header/header.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MagazinesRoutingModule } from './magazines-routing.module';
 import { AuthGuard } from './auth-guard';
@@ -25,6 +25,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { OProjektuComponent } from './pages/o-projektu/o-projektu.component';
 import { VydavateleDetailComponent } from './pages/vydavatele/vydavatele-detail/vydavatele-detail.component';
 import { VydavateleComponent } from './pages/vydavatele/vydavatele.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppState } from '../app.state';
 
 // AoT requires an exported function for factories
@@ -44,7 +45,7 @@ export function createTranslateLoader(http: HttpClient) {
     OProjektuComponent,
     VydavateleComponent,
     KontaktComponent,
-    HeaderComponent,
+    NavbarComponent,
     FooterComponent,
     FacetsComponent,
     SeznamItemComponent,
@@ -61,6 +62,7 @@ export function createTranslateLoader(http: HttpClient) {
     FormsModule,
     MagazinesRoutingModule,
     MagazinesMaterialModule,
+    FlexLayoutModule,
     TranslateModule.forChild({
       defaultLanguage: 'cs',
       extend: true,

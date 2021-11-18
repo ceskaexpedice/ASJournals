@@ -1,0 +1,42 @@
+// --- NAVBAR ---
+
+app-navbar {
+  .mat-toolbar {
+    box-shadow: 0 8px 8px 0 rgb(0 0 0 / 4%);
+    border-bottom: 1px solid $app-brand-border-color;
+    height: $app-navbar-height;
+    background-color: $app-color-lightnes;
+  }
+
+  .app-left {
+    .app-logo {
+      width: 130px;
+      height: 30px;
+      //background-image: url(#{$app-logo});
+    }
+  }
+
+  .app-right {
+    a {
+      &.mat-stroked-button {
+        border-color: transparent;
+        margin: 0 4px;
+
+        &.app-active {
+          color: $app-color-primary;
+          border-color: transparent;
+        }
+
+        .mat-icon {
+          &:not(.app-menu .mat-icon) {
+            @include setIcon($size: 20, $position: sub);
+          }
+        }
+      }
+
+      &.app-active {
+        border: 1px solid $app-color-primary;
+      }
+    }
+  }
+}

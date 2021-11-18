@@ -1,22 +1,8 @@
 // --- ROOT STYLE ---
-@use '@angular/material' as mat;
 
-$my-palette: mat.$indigo-palette;
+@import "sass-magazines/app-theme-default";
+@import "sass-magazines/app-variables";
+@import "sass-magazines/app-mixins";
+@import "sass-magazines/app-gaps";
+@import "sass-magazines/app-layout";
 
-@import "mag-sass/app-pallete";
-@import "mag-sass/app-color";
-
-@import "mag-sass/app-variables";
-
-//magazines-root {
-//@import "../node_modules/materialize-css/sass/materialize.scss";
-//}
-//@import "../node_modules/mdi/scss/materialdesignicons.scss";
-
-@import "mag-sass/app-mixins";
-@import "mag-sass/app-mdi";
-@import "mag-sass/app-global";
-// @import "mag-sass/app-header";
-@import "mag-sass/app-facets";
-@import "mag-sass/app-seznam-item"  ;
-@import "mag-sass/app-footer";
