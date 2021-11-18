@@ -75,10 +75,13 @@
     <field name="issn" type="string" indexed="true" stored="true" multiValued="true"/>
     
     <field name="title" type="text_cz" indexed="true" stored="true" multiValued="false"/>
+    <field name="title_cze" type="text_cz" indexed="true" stored="true" multiValued="false"/>
     <field name="title_sort" type="collatedCS" indexed="true" stored="true" sortMissingLast="true" />
     
     <field name="subtitle" type="text_cz" indexed="true" stored="true" multiValued="false"/>
+    <field name="subtitle_cze" type="text_cz" indexed="true" stored="true" multiValued="false"/>
     <field name="non_sort_title" type="text_cz" indexed="true" stored="true" multiValued="false"/>
+    <field name="non_sort_title_cze" type="text_cz" indexed="true" stored="true" multiValued="false"/>
     <field name="autor" type="text_lowercase" indexed="true" stored="true" multiValued="true"/>
     <field name="autor_facet" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="keywords" type="lowercase" indexed="true" stored="true" multiValued="true"/>
@@ -97,6 +100,12 @@
     <field name="_text_nolemmas" type="text_lowercase" indexed="true" stored="false" multiValued="true"/>
     
     <field name="abstract" type="text_cz" indexed="true" stored="true" multiValued="false"/>
+    <field name="abstract_cze" type="text_cz" indexed="true" stored="true" multiValued="false"/>
+	
+    <dynamicField name="title_*" type="text_general" indexed="true" stored="true" multiValued="false"/>
+    <dynamicField name="subtitle_*" type="text_general" indexed="true" stored="true" multiValued="false"/>
+    <dynamicField name="non_sort_title_*" type="text_general" indexed="true" stored="true" multiValued="false"/>
+    <dynamicField name="abstract_*" type="text_general" indexed="true" stored="true" multiValued="false"/>
     
     
     <!-- Only enabled in the "schemaless" data-driven example (assuming the client

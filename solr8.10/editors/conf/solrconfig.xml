@@ -778,11 +778,6 @@
       <str name="echoParams">explicit</str>
       <int name="rows">10</int>
       <str name="wt">json</str>
-      <str name="indent">true</str>
-      <str name="df">_text_</str>
-      <str name="defType">edismax</str>
-      <str name="qf">_text_</str>/str>
-      <str name="json.nl">arrarr</str>
     </lst>
     <!-- In addition to defaults, "appends" params can be specified
          to identify values which should be appended to the list of
