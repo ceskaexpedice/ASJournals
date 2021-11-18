@@ -9,3 +9,9 @@
 /solr8.10/userfiles/
 
 .DS_Store
+searchapp/src/main/webapp/tinymce/bower.json
+searchapp/src/main/webapp/tinymce/CHANGELOG.md
+searchapp/src/main/webapp/tinymce/composer.json
+searchapp/src/main/webapp/tinymce/README.md
+searchapp/src/main/webapp/tinymce/tinymce.d.ts
+searchapp/src/main/webapp/tinymce/package.json
