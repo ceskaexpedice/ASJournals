@@ -4,12 +4,12 @@ import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
 })
-export class HeaderComponent implements OnInit {
-
+export class NavbarComponent implements OnInit {
+  
   constructor(
   private route: ActivatedRoute,
   private router: Router, 

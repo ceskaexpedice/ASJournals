@@ -1,9 +1,10 @@
 // --- HEADER ---
 app-root magazines-root {
-app-header {
+app-navbar {
   nav {
     margin-bottom: 20px;
     @extend .z-depth-0;
+    background-color: $app-color-primary;
     
     .brand-logo {
       font-size: 1.6rem;

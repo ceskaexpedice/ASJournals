@@ -1,8 +1,33 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
+  <div fxLayout="row" fxFlexFill fxLayoutAlign="start center" fxLayoutGap="32px" class="app-container-fluid">
+    <div fxFlex>
+      <a (click)="goHome()" class="brand-logo">
+        Digitální knihovna AV ČR <span class="cyan-text text-lighten-4">|</span> <span class="cyan-text text-lighten-4">online časopisy</span>
+      </a>
+    </div>
+    <div>navigation</div>
+  </div>
+  <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>My App</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <mat-icon>share</mat-icon>
+  </button> -->
+</mat-toolbar>
+
+
+
+
+<!-- <mat-toolbar>
   <div class="container">
     <a (click)="goHome()" class="brand-logo">
       Digitální knihovna AV ČR <span class="cyan-text text-lighten-4">|</span> <span class="cyan-text text-lighten-4">online časopisy</span>
-    </a><!--/.brand-logo -->
+    </a>
     <div [align]="'right'">
       <div routerLinkActive="active" queryParamsHandling="preserve" #seznamCasopisu="routerLinkActive" >
         <a (click)="goHome()" title="Seznam časopisů">Seznam časopisů</a>
@@ -28,8 +53,8 @@
     <a [id]="'app-btn-sidenav'" class="right">
       <mat-icon>menu</mat-icon>
     </a>
-  </div><!--/.container -->
-  <mat-toolbar>
+  </div>
+  <mat-toolbar> -->
 
 <!-- Sidenav for responsive behavior -->
 <!-- <mz-sidenav [id]="'app-sidenav'" [collapseButtonId]="'app-btn-sidenav'">

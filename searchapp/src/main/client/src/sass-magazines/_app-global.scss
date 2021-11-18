@@ -1,0 +1,291 @@
+// --- GLOBAL ---
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: $app-color-primary;
+
+  &:hover {
+    //color: darken($app-color-primary, 10);
+    text-decoration: none;
+  }
+
+  &.app-disabled-link {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.3;
+    text-decoration: none;
+  }
+}
+
+// cleaners
+.app-cleanfix {
+  @include cleanfix();
+}
+
+.app-clean-mg {
+  margin: 0 !important;
+}
+
+.app-clean-pd {
+  padding: 0 !important;
+}
+
+.app-clean-bg {
+  background-color: transparent !important;
+}
+
+.app-clean-radius {
+  border-radius: 0 !important;
+}
+
+.app-clean-border {
+  border: 0 !important;
+}
+
+.app-clean-shadow {
+  box-shadow: none !important;
+}
+
+.app-dn {
+  display: none;
+}
+
+// colors
+.app-color-warning {
+  color: $app-color-warning !important;
+}
+
+.app-color-info {
+  color: $app-color-info !important;
+}
+
+.app-color-fav {
+  color: $app-color-fav !important;
+}
+
+.app-color-success {
+  color: $app-color-success !important;
+}
+
+
+// common
+.app-pipe {
+  border-left: 1px solid $app-gray-4;
+  margin: 0 calc(#{$app-gap} / 2);
+
+  &:last-child {
+    @extend .app-dn;
+  }
+}
+
+.app-cursor-pointer {
+  cursor: pointer;
+}
+
+.app-results-wrapper {
+  border-width: 1px 1px 0 1px;
+  border-style: solid;
+  border-color: $app-brand-border-color;
+}
+
+.app-fx-facets {
+  padding-top: 12px;
+}
+
+.app-metadata {
+  color: $app-gray-6;
+
+  .mat-icon {
+    @include setIcon($position: sub);
+  }
+}
+
+.app-input {
+  border: 1px solid $app-brand-border-color;
+  border-radius: $app-border-radius;
+}
+
+.app-break-w {
+  word-break: break-all;
+}
+
+table {
+  // import table
+  &.app-table-import {
+    @extend .app-w-100;
+    $app-tbc: $app-gray-3;
+    border-width: 1px 0 0 1px;
+    border-style: solid;
+    border-color: $app-tbc;
+  
+    tbody {
+      tr {
+        &:hover {
+          td {
+            background-color: $app-gray-2;
+          }
+        }
+  
+        td {
+          @include setStateColor(bglight);
+          border-width: 0 1px 1px 0;
+          border-style: solid;
+          border-color: $app-tbc;
+          background-color: $app-gray-1;
+          padding: 4px 8px;
+          vertical-align: top;
+  
+          span {
+            @include setStateColor(color);
+
+            &.app-text-cutter {
+              display: inline-block;
+              vertical-align: bottom;
+            }
+          }
+  
+          &.app-cell-action {
+            @include setStateColor(color);
+            width: 180px;
+            font-weight: 500;
+  
+            a {
+              color: initial;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // standart table
+  &.app-table {
+    @extend .app-w-100;
+    $app-tbc: $app-gray-3;
+    border-width: 1px 0 0 1px;
+    border-style: solid;
+    border-color: $app-tbc;
+
+    tr {
+      td, th {
+        border-width: 0 1px 1px 0;
+        border-style: solid;
+        border-color: $app-tbc;
+        padding: 4px 8px;
+        vertical-align: top;
+        text-align: left;
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          &.app-col-action {
+            color: $app-color-primary;
+
+            .mat-icon {
+              @include setIcon(18, $position: sub)
+            }
+          }
+          &.app-col-remove {
+            color: $app-color-warning;
+
+            a {
+              @include setLinkColor($app-color-warning);
+            } 
+          }
+        }
+
+        &:hover {
+          td {
+            background-color: $app-gray-2;
+          }
+        }
+        &:nth-child(odd) {
+          background-color: $app-gray-1;
+        }
+
+        .app-input {
+          width: calc(100% - 4px);
+        }
+      }
+    }
+  }
+}
+
+
+// utility
+.app-font-bold {
+  font-weight: 700;
+}
+
+.app-label {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px;
+  //font-weight: 500;
+}
+
+
+.app-badge {
+  @include setStateColor(badge);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  display: inline-flex;
+  align-self: end;
+  padding: 0 8px;
+  height: 20px;
+  align-items: center;
+  border-radius: $app-badge-height;
+  min-width: 15px;
+  justify-content: center;
+
+  &.app-icon-in {
+    vertical-align: bottom;
+
+    .mat-icon {
+      margin-right: 2px;
+      @include setIcon(16);
+
+      .mat-card & {
+        @include setIcon(16);
+      }
+    }
+  }
+
+  .mat-icon {
+    margin-right: $app-gap-icon;
+  }
+}
+
+
+.app-text-icon {
+  .mat-icon {
+    @include setIcon($position: bottom);
+  }
+}
+
+.app-pa {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.app-text-left {
+  text-align: left;
+}
+
+.app-text-right {
+  text-align: right;
+}
+
+.app-text-center {
+  text-align: center;
+}
+
+.app-text-cutter {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
