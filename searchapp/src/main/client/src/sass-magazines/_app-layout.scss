@@ -10,58 +10,62 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-// sidenav
-mat-sidenav-container, 
-mat-sidenav-content, 
-mat-sidenav {
-  height: 100%;
-}
- 
-mat-sidenav {
-  @import "./app-sidenav-list";
-  width: $app-sidenav-width;
-}
+app-root {
+  magazines-root {
+    // sidenav
+    mat-sidenav-container, 
+    mat-sidenav-content, 
+    mat-sidenav {
+      height: 100%;
+    }
+    
+    mat-sidenav {
+      @import "./app-sidenav-list";
+      width: $app-sidenav-width;
+    }
 
-// header
-header {
-  //@import "./app-navbar";
-}
+    // header
+    header {
+      @import "./app-navbar";
+    }
 
-main {
-  height: calc(100% - #{$app-navbar-height});
-  overflow: auto;
-  background-color: $app-color-lightnes;
-  position: relative;
-  z-index: -1;
-  background-color: $app-gray-0;
+    main {
+      height: calc(100% - #{$app-navbar-height});
+      overflow: auto;
+      background-color: $app-color-lightnes;
+      position: relative;
+      z-index: -1;
+      background-color: $app-gray-0;
 
-  .app-page-wrapper {
-    @extend .app-p-4;
-    //padding: $app-gap-double $app-gap;
+      .app-page-wrapper {
+        @extend .app-p-4;
+        //padding: $app-gap-double $app-gap;
 
-    /* @import "app-facets";
-    @import "app-facets-used";
-    @import "app-home";
-    @import "app-search";
-    @import "app-paginator";
-    @import "app-admin"; */
+        /* @import "app-facets";
+        @import "app-facets-used";
+        @import "app-home";
+        @import "app-search";
+        @import "app-paginator";
+        @import "app-admin"; */
+      }
+
+      .mat-icon {
+        color: $app-color-primary;
+      }
+    }
+
+    @import "./app-footer";
+
+    // container
+    .app-container {
+      margin: 0 auto;
+      max-width: $app-container;
+      width: 100%;
+      min-width: auto !important;
+    }
+
+    .app-container-fluid {
+      max-width: 100%;
+    }   
   }
-
-  .mat-icon {
-    color: $app-color-primary;
-  }
-}
-
-//@import "./app-footer";
-
-// container
-.app-container {
-  margin: 0 auto;
-  max-width: $app-container;
-  width: 100%;
-  min-width: auto !important;
-}
-
-.app-container-fluid {
-  max-width: 100%;
 }

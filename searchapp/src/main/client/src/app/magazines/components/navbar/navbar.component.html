@@ -1,7 +1,11 @@
 <mat-toolbar color="primary">
-  <div fxLayout="row" fxLayoutGap="32px" style="width: 100%;">
-    <div fxFlex>hovno</div>
-    <div>vpravp</div>
+  <div fxLayout="row" fxFlexFill fxLayoutAlign="start center" fxLayoutGap="32px" class="app-container-fluid">
+    <div fxFlex>
+      <a (click)="goHome()" class="brand-logo">
+        Digitální knihovna AV ČR <span class="cyan-text text-lighten-4">|</span> <span class="cyan-text text-lighten-4">online časopisy</span>
+      </a>
+    </div>
+    <div>navigation</div>
   </div>
   <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>

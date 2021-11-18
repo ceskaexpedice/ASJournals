@@ -27,6 +27,7 @@ import { VydavateleDetailComponent } from './pages/vydavatele/vydavatele-detail/
 import { VydavateleComponent } from './pages/vydavatele/vydavatele.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppState } from '../app.state';
+import { SidenavListComponent } from './components/sidenav-list/sidenav-list.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -55,7 +56,8 @@ export function createTranslateLoader(http: HttpClient) {
     AdminMagazinesComponent,
     MagazineEditComponent,
     EditorEditComponent,
-    LoginComponent
+    LoginComponent,
+    SidenavListComponent
   ],
   imports: [
     CommonModule,

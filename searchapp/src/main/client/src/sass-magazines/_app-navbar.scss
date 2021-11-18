@@ -2,17 +2,13 @@
 
 app-navbar {
   .mat-toolbar {
-    box-shadow: 0 8px 8px 0 rgb(0 0 0 / 4%);
-    border-bottom: 1px solid $app-brand-border-color;
     height: $app-navbar-height;
-    background-color: $app-color-lightnes;
   }
 
   .app-left {
     .app-logo {
       width: 130px;
       height: 30px;
-      //background-image: url(#{$app-logo});
     }
   }
 

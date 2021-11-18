@@ -9,22 +9,12 @@ app-footer {
   .app-left {
     a {
       @extend .app-ml-1;
-      
-      img {
-        @extend .app-mr-2;
-        max-height: 20px;
-        vertical-align: bottom;
-      }
     }
   }
 
-  .app-right {
-    .app-build {
-      opacity: .7;
-    }
-    
+  .app-right {  
     .app-logo-inovatika {
-      height: getGap(4);
+      height: 16px;
       vertical-align: text-bottom;
     }
   }
