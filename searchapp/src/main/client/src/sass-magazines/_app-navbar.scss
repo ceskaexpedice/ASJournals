@@ -30,7 +30,7 @@ app-navbar {
     .app-right {
       a {
         &.mat-flat-button {
-          @extend .app-clean-border, .app-ml-2, .app-mr-2;
+          @extend .app-clean-border;
 
           &.app-active {
             background-color: rgba($app-color-lightnes, .15);
