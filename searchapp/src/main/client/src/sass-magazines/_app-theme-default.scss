@@ -14,7 +14,7 @@ $app-theme:  mat-light-theme($app-primary, $app-accent, $app-warn);
 
 // theme colors
 $app-color-primary: mat-color($app-primary);
-$app-color-primary-darker: mat-color($app-primary, 600);
+$app-color-primary-darker: mat-color($app-primary, 800);
 $app-color-accent: mat-color($app-accent);
 $app-color-lightnes: #ffffff!default;
 $app-color-darknes: #000000 !default;

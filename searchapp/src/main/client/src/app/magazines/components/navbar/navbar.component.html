@@ -1,23 +1,20 @@
 <mat-toolbar color="primary">
   <div fxLayout="row" fxFlexFill fxLayoutAlign="start center" fxLayoutGap="32px" class="app-container-fluid">
-    <div fxFlex>
-      <a (click)="goHome()" class="brand-logo">
-        Digitální knihovna AV ČR <span class="cyan-text text-lighten-4">|</span> <span class="cyan-text text-lighten-4">online časopisy</span>
+    <div fxFlex class="app-left">
+      <a (click)="goHome()" class="app-logo">
+        Digitální knihovna AV ČR<span class="app-pipe"></span> <span>online časopisy</span>
       </a>
     </div>
-    <div>navigation</div>
+    <div class="app-right">
+      <a mat-flat-button routerLink="magazines" routerLinkActive="app-active" color="primary" title="Seznam časopisů">Seznam časopisů</a>
+      <a mat-flat-button routerLink="o-projektu" routerLinkActive="app-active" color="primary" title="O projektu">O projektu</a>
+      <a mat-flat-button routerLink="vydavatele" routerLinkActive="app-active" color="primary" title="Vydavatelé">Vydavatelé</a>
+      <a mat-flat-button routerLink="kontakt" routerLinkActive="app-active" color="primary" title="Kontakt">Kontakt</a>
+      <a mat-flat-button *ngIf="state.logged" routerLink="admin" routerLinkActive="app-active" color="primary" title="Admin">Admin</a>
+      <a mat-flat-button *ngIf="!state.logged" routerLink="prihlaseni" routerLinkActive="app-active" color="primary" title="Login">{{'Přihlásit' | translate}}</a>
+      <a mat-flat-button *ngIf="state.logged" (click)="logout()" color="primary" title="logout">{{'Odhlásit' | translate}}</a>
+    </div>
   </div>
-  <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span>My App</span>
-  <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
-  </button> -->
 </mat-toolbar>
 
 
