@@ -5,7 +5,10 @@
         Digitální knihovna AV ČR<span class="app-pipe"></span> <span>online časopisy</span>
       </a>
     </div>
-    <div class="app-right">
+    <div class="app-right" fxHide.gt-md>
+      <a mat-flat-button color="primary" (click)="onToggleSidenav()" title="Kontakt"><mat-icon>menu</mat-icon></a> 
+    </div>
+    <div class="app-right" fxHide.md fxHide.sm fxHide.xs>
       <a mat-flat-button routerLink="magazines" routerLinkActive="app-active" color="primary" title="Seznam časopisů">Seznam časopisů</a>
       <a mat-flat-button routerLink="o-projektu" routerLinkActive="app-active" color="primary" title="O projektu">O projektu</a>
       <a mat-flat-button routerLink="vydavatele" routerLinkActive="app-active" color="primary" title="Vydavatelé">Vydavatelé</a>

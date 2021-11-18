@@ -33,7 +33,7 @@ app-navbar {
           @extend .app-clean-border, .app-ml-2, .app-mr-2;
 
           &.app-active {
-            background-color: rgba($app-color-lightnes, .2);
+            background-color: rgba($app-color-lightnes, .15);
           }
   
           .mat-icon {

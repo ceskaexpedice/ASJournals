@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
@@ -9,6 +9,9 @@ import { MagazinesService } from '../../magazines.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+
+  // sidenav
+  @Output() public sidenavToggle = new EventEmitter();
   
   constructor(
   private route: ActivatedRoute,
@@ -27,7 +30,11 @@ export class NavbarComponent implements OnInit {
     this.state.filters = [];
     this.state.clear();
     this.router.navigate([''], {queryParamsHandling: "preserve"});
-    
+  }
+
+  // sidenav fuction
+  public onToggleSidenav = () => {
+    this.sidenavToggle.emit();
   }
 
 }
