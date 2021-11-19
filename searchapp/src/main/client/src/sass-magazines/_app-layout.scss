@@ -38,8 +38,7 @@ app-root {
       background-color: $app-gray-0;
 
       .app-page-wrapper {
-        @extend .app-p-4;
-        //padding: $app-gap-double $app-gap;
+        @extend .app-pt-8, .app-pb-8, .app-pl-4, .app-pr-4;
 
         /* @import "app-facets";
         @import "app-facets-used";

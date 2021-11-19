@@ -1,12 +1,10 @@
-<ng-container *ngIf="active">
+<mat-accordion *ngIf="active" multi>
   <mat-expansion-panel [expanded]="active" *ngFor="let facet of state.facets">
     <mat-expansion-panel-header>
       <strong>{{facet.field | translate}}</strong>
-      <mat-icon [class]="'app-clean-mg'">chevron-down</mat-icon>
-      <mat-icon [class]="'app-clean-mg'">chevron-left</mat-icon>
     </mat-expansion-panel-header>
     <div *ngFor="let facetItem of facet.values">
-          <a (click)="addFilter(facet.field, facetItem[0])">{{facetItem[0]}}</a>
+      <a (click)="addFilter(facet.field, facetItem[0])">{{facetItem[0]}}</a>
     </div>
   </mat-expansion-panel>
-</ng-container>
+</mat-accordion>

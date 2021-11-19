@@ -29,9 +29,6 @@ $gaps: (
 $app-gap-icon: getGap("1") !default;
 $app-gap-button: getGap("2") !default;
 $app-gap-card: getGap("4") !default;
-$app-gap-table: getGap("8") !default;
-$app-gap-item: getGap("4") !default;
-$app-gap-zero: getGap("0")!default;
 $app-container: 1280px !default;
 $app-border-radius: getGap("1") !default;
 
@@ -43,16 +40,6 @@ $app-navbar-height: 64px !default;
 
 // sidenav
 $app-sidenav-width: 350px !default;
-
-// logo
-$app-logo-width: 120px !default;
-
-// searchbar
-$app-searchbar-field-width: 220px  !default;
-$app-searchbar-field-max-width: 100% !default;
-$app-searchbar-field-color: $app-color-darknes !default;
-$app-searchbar-field-bg: $app-gray-2 !default;
-$app-searchbar-field-icon-gap: calc(#{$app-gap-icon} * 2) !default;
 
 // field
 $app-field-height: 36px !default;
