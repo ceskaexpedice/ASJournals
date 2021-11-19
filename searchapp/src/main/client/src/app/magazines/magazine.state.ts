@@ -101,10 +101,12 @@ import { Observable, Subject } from 'rxjs';
   
   addFilter(field: string, value: string){
     this.filters.push({field: field, value: value});
+    this.paramsChanged();
   }
   
   removeFilter(idx: number){
     this.filters.splice(idx,1);
+    this.paramsChanged();
   }
   
 }

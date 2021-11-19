@@ -33,7 +33,7 @@ export class FacetsUsedComponent implements OnInit {
   
   removeAllFilters(){
     this.state.filters = [];
-    this.service.getMagazines().subscribe();
+    // this.service.getMagazines().subscribe();
   }
 
 }

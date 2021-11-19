@@ -48,7 +48,7 @@ export class FacetsComponent implements OnInit {
   addFilter(field: string, value: string){
     if (!this.state.isFacetUsed(field, value)){
       this.state.addFilter(field, value);
-      this.service.getMagazines().subscribe();
+      // this.service.getMagazines().subscribe();
     }
   }
 
