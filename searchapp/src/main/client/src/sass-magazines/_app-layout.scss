@@ -40,12 +40,7 @@ app-root {
       .app-page-wrapper {
         @extend .app-pt-8, .app-pb-8, .app-pl-4, .app-pr-4;
 
-        /* @import "app-facets";
-        @import "app-facets-used";
-        @import "app-home";
-        @import "app-search";
-        @import "app-paginator";
-        @import "app-admin"; */
+        @import "app-facets";
       }
 
       .mat-icon {

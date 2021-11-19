@@ -37,23 +37,6 @@
   }
 }
 
-// set state color
-@mixin setStateColor($type: null) {
-  @each $state, $color in $states {
-    @if ($type == "card") {
-      &.app-#{$state} {
-        .mat-card-title {
-          color: $color;
-        }
-      }
-    } @else if ($type == "color") {
-      &.#{$state} {
-        color: $color;
-      }
-    }
-  }
-}
-
 // set alert card
 @mixin setAlertCard() {
   @each $alert, $color in $alerts {
@@ -65,35 +48,6 @@
 
       .mat-icon {
         color: $color;
-      }
-    }
-  }
-}
-
-// legends
-@mixin setLegend() {
-  @each $legend, $color in $legends {
-    &.app-#{$legend} {
-      .app-legend-circle {
-        background-color: $color;
-      }
-      &.app-text {
-        color: $color;
-      }
-    }
-  }
-}
-
-// legends
-@mixin setScoringType() {
-  @each $type, $color in $scoringType {
-    &.app-#{$type} {
-      .app-circle {
-        background-color: $color;
-
-        .mat-icon {
-          color: $app-color-lightnes;
-        }
       }
     }
   }
