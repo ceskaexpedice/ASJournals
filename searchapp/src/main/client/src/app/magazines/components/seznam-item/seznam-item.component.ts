@@ -41,11 +41,7 @@ export class SeznamItemComponent implements OnInit {
     return str.replace(/[^a-z0-9]/gi, '');
   }
 
-  // toggle content function by id
-  toggleDetail(id: string) {
-    
+  showDetail() {
     this.showingDetail = !this.showingDetail;
-    // $('#' + id + '-btn').toggleClass('active');
-    // $('#' + id).slideToggle("fast");
   }
 }

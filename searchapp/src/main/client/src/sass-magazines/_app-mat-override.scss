@@ -61,60 +61,13 @@
 }
 
 // card
-/* .mat-card {
-  &:not(.app-card-home) {
-    @extend .app-clean-bg, .app-clean-shadow, .app-clean-radius;
-    border-bottom: 1px solid $app-brand-border-color;
-
-    &.app-alert {
-      text-align: center;
-      border: 1px solid;
-      @include setAlertCard();
-
-      .mat-icon {
-        @extend .app-mr-2;
-        @include setIcon($position: sub)
-      }
-    }
-    
-    .mat-card-header-text {
-      @extend .app-m-0;
-
-      .mat-card-title {
-        font-size: 16px;
-        display: flex;
-        align-items: flex-start;
-
-        .mat-checkbox {
-          display: flex;
-        }
-      }
-    }
-
-    .mat-card-content {
-      @extend .app-m-0;
-    }
-
-    .mat-card-actions {
-      padding: 8px;
-      margin-bottom: 0 !important;
-
-      .mat-button-base {
-        @extend .app-m-0, .app-ml-2;
-      }
-    }
-
-    .mat-icon {
-      @include setIcon($size: 20);
-    }
-
-    &.app-view-import {
-      .mat-icon {
-        @include setIcon($position: middle);
-      }
+.mat-card {
+  .mat-divider {
+    &.mat-divider-horizontal {
+      position: relative;
     }
   }
-} */
+}
 
 // table
 .mat-table {

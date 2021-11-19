@@ -1,56 +1,54 @@
-<mat-card [class]="'grey-text text-darken-1'">
-  <mat-card-content>
-    <div class="row app-clean-mg">
-      <div class="col s2">
-        <a routerLink="/{{resultItem.ctx}}" queryParamsHandling="preserve" [matTooltip]="resultItem.title" matTooltipPosition="above" class="left cyan-text text-darken-1" >
-        <img [src]="resultItem.img" alt="thumb" class="responsive-img" />
-        </a>
-      </div>
-      <div class="col s10">
-        <h5 class="grey-text text-darken-4">{{resultItem.title}}</h5>
-        <div>
-          <label>Vydavatel:</label>
-          <a [routerLink]="['/vydavatel', resultItem.vydavatel_id]" queryParamsHandling="preserve" title="{{resultItem.vydavatel}}">{{resultItem.vydavatel}}</a>
-        </div>
-        <div>
-          <label>Oblast:</label>
-          <a (click)="addFilter('oblast', resultItem.oblast)" title="{{resultItem.oblast}}">{{resultItem.oblast}}</a>
-        </div>
-        <div>
-          <label>ISSN:</label>
-          {{resultItem.issn}}
-        </div>
-        <div>
-          <label>Klíčová slova:</label>
-          <span *ngFor="let keyword of resultItem.keywords">
-            <a (click)="addFilter('keywords', keyword)" title="{{keyword}}">{{keyword}}</a>, 
-          </span>
-        </div>
-        <div>
-          <label>Přístup:</label>
-          <a (click)="addFilter('pristup', resultItem.pristup)" title="{{resultItem.pristup}}">{{resultItem.pristup}}</a>
-        </div>
-        <div>
-          <label>Kontakt:</label>
-          <a href="mailto: {{resultItem.kontakt}}" title="{{resultItem.kontakt}}">{{resultItem.kontakt}}</a>
-        </div>
-      </div><!--/.col -->
-    </div><!--/.row -->
-    
-    <div class="app-card-detail" [attr.id]="'app-card-detail-' + id" style="display:none;">
-      {{resultItem.desc}}
+<mat-card class="app-mb-4">
+  <div fxLayout="row" fxLayoutGap="16px">
+    <div class="app-left">
+      <a routerLink="/{{resultItem.ctx}}" queryParamsHandling="preserve" [matTooltip]="resultItem.title" matTooltipPosition="above" >
+        <img [src]="resultItem.img" alt="thumb" />
+      </a>
     </div>
+    <div class="app-right">
+      <mat-card-title>{{ resultItem.title }}</mat-card-title>
+      <div>
+        <label class="app-label">Vydavatel: </label>
+        <a [routerLink]="['/vydavatel', resultItem.vydavatel_id]" queryParamsHandling="preserve" [title]="resultItem.vydavatel">{{ resultItem.vydavatel }}</a>
+      </div>
+      <div>
+        <label class="app-label">Oblast: </label>
+        <a (click)="addFilter('oblast', resultItem.oblast)" [title]="resultItem.oblast">{{ resultItem.oblast }}</a>
+      </div>
+      <div>
+        <label class="app-label">ISSN: </label>
+        {{ resultItem.issn }}
+      </div>
+      <div>
+        <label class="app-label">Klíčová slova: </label>
+        <span *ngFor="let keyword of resultItem.keywords">
+          <a (click)="addFilter('keywords', keyword)" [title]="keyword">{{ keyword }}</a>, 
+        </span>
+      </div>
+      <div>
+        <label class="app-label">Přístup: </label>
+        <a (click)="addFilter('pristup', resultItem.pristup)" [title]="resultItem.pristup">{{ resultItem.pristup }}</a>
+      </div>
+      <div>
+        <label class="app-label">Kontakt: </label>
+        <a [href]="'mailto:' + resultItem.kontakt" [title]="resultItem.kontakt">{{ resultItem.kontakt }}</a>
+      </div>
+    </div>
+  </div>
+  <mat-card-content *ngIf="showingDetail">
+    <mat-divider class="app-mt-4 app-mb-4"></mat-divider>
+    {{ resultItem.desc }}
   </mat-card-content>
-  <mat-card-actions class="clearfix">
-    <a href="{{resultItem.ctx}}" mz-tooltip [matTooltip]="resultItem.ctx" matTooltipPosition="above" class="left cyan-text text-darken-1" target="_blank">
-      <i class="app-mdi-open-in-new"></i>
-      Vstup na web
-    </a>
-    <a *ngIf="showingDetail" class="right app-clean-mg" (click)="toggleDetail('app-card-detail-' + id)">
-      Méně informací
-    </a>
-    <a *ngIf="!showingDetail" class="right app-clean-mg" (click)="toggleDetail('app-card-detail-' + id)">
-      Více informací
-    </a>
+  <mat-card-actions fxLayout="row" fxLayoutGap="32px">
+    <div fxFlex>
+      <a mat-flat-button [href]="resultItem.ctx" [matTooltip]="resultItem.ctx" matTooltipPosition="above" target="_blank">
+        <mat-icon>link</mat-icon> Vstup na web
+      </a>
+    </div>
+    <div>
+      <button mat-flat-button (click)="showDetail()" [class]="showingDetail ? 'app-rotate-up' : 'app-rotate-down'">
+        <mat-icon>expand_more</mat-icon> {{ showingDetail ? 'Skrýt detail' : 'Zobrazit detail' }}
+      </button>
+    </div>
   </mat-card-actions>
 </mat-card>
