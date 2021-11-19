@@ -599,6 +599,18 @@ export class AppService {
 
   }
 
+  delete(uuid: string) {
+    let url = 'index?action=DELETE_PID&pid=' + uuid;
+
+    return this.http.get(url).pipe(
+      map((response: any) => {
+        return response.json();
+      }),
+      catchError((error: any) => of('deleting uuid: ' + error))
+    )
+
+  }
+
   login() {
     this.state.loginError = false;
     return this.doLogin().subscribe(res => {

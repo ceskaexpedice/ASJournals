@@ -5,11 +5,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,8 +21,10 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -249,6 +249,28 @@ public class Indexer {
     } else {
       return 0;
     }
+  }
+
+  /**
+   * Delete doc from index and his children 
+   *
+   * @param pid
+   */
+  public JSONObject deletePidAndChildren(String pid) {
+
+    JSONObject ret = new JSONObject();
+    try (SolrClient solr = getClient("journal")) {
+      String q = "pid_paths:*" + ClientUtils.escapeQueryChars(pid) + "*";
+      long num = solr.query(new SolrQuery(q)).getResults().getNumFound();
+      ret = new JSONObject(solr.deleteByQuery(q).jsonStr());
+      solr.commit();
+      ret.put("success", "deleted " + num + " documents");
+    } catch (SolrServerException | IOException ex) {
+      ret.put("error", ex);
+      LOGGER.log(Level.SEVERE, null, ex);
+    }
+    return ret;
+
   }
 
   /**
@@ -508,7 +530,7 @@ public class Indexer {
       if (np != null) {
         if (np instanceof JSONArray) {
           JSONArray janp = (JSONArray) np;
-          addUniqueToDoc(idoc, "keywords", janp.getString(0) + ", " + janp.getJSONObject(1).optString("content"));
+          addUniqueToDoc(idoc, "keywords", janp.optString(0) + ", " + janp.getJSONObject(1).optString("content"));
         } else if (np instanceof String){
           addUniqueToDoc(idoc, "keywords", np);
         }

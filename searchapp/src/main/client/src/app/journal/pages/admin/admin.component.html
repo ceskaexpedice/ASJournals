@@ -1,27 +1,32 @@
-
 <section class="app-content">
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
         <ng-container *ngIf="state.ctx">
-          
+
           <div class="row">
             <div class="form-inline pull-left">
               <div class="form-group">
-                <input type="text" class="form-control" id="indexUUID"  name="indexUUID" placeholder="uuid" [(ngModel)]="indexUUID">
+                <input type="text" class="form-control" id="indexUUID" name="indexUUID" placeholder="uuid"
+                  [(ngModel)]="indexUUID">
               </div>
-              <button type="button" class="btn app-btn app-btn-default" (click)="index()">{{'admin.add_uuid' | translate}}</button>
+              <button type="button" class="btn app-btn app-btn-default" (click)="index()">{{'admin.add_uuid' |
+                translate}}</button>
+              <button type="button" class="btn app-btn app-btn-default" (click)="openConfirm()">{{'admin.delete_uuid' |
+                translate}}</button>
               &nbsp;&nbsp;&nbsp;
               <span>{{'admin.cover' | translate}}</span>:
               <div class="form-group">
-                <input type="file"  ng2FileSelect [uploader]="coverUploader" [title]="'nahrát obrázek' | translate">
+                <input type="file" ng2FileSelect [uploader]="coverUploader" [title]="'nahrát obrázek' | translate">
               </div>
-              <button type="button" class="btn app-btn app-btn-default" (click)="uploadCover()">{{'admin.Upload' | translate}}</button>
+              <button type="button" class="btn app-btn app-btn-default" (click)="uploadCover()">{{'admin.Upload' |
+                translate}}</button>
               {{coverMsg}}
 
             </div>
-            <div *ngIf="working" >
-              <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {{'admin.Indexing' | translate}} ...
+            <div *ngIf="working">
+              <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {{'admin.Indexing' |
+              translate}} ...
             </div>
           </div>
           <div *ngIf="indexed" class="row">
@@ -29,66 +34,94 @@
               {{indexUUID}} {{'text.indexed-note' | translate}}!
             </div>
           </div>
+          <div *ngIf="deleted" class="row">
+            <div class="alert alert-success" role="alert">
+              {{indexUUID}} {{'text.deleted-note' | translate}}!
+            </div>
+          </div>
           <hr />
           <div class="row">
             <div class="col-xs-3">
               <ul class="list-unstyled app-admin-nav" *ngIf="menu.length > 0">
-                <li role="app-page-nav"  [class.active]="selected === 'home'" >
+                <li role="app-page-nav" [class.active]="selected === 'home'">
                   <strong>
                     <a (click)="select('home', null)">{{'menu.home_' | translate}}</a>
                   </strong>
                 </li>
-                <li role="app-page-nav"  [class.active]="selected === 'footer'" >
+                <li role="app-page-nav" [class.active]="selected === 'footer'">
                   <strong>
                     <a (click)="select('footer', null)">{{'menu.footer' | translate}}</a>
                   </strong>
                 </li>
-                <li role="app-page-nav"  *ngFor="let m of menu" [class.active]="selected === m.label">
-                    <strong>
+                <li role="app-page-nav" *ngFor="let m of menu" [class.active]="selected === m.label">
+                  <strong>
                     <a (click)="select(m.label, null)">{{'menu.'+m.label+'_' | translate}}</a>
                     <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" />
                   </strong>
                   <ul class="nav-pills nav-stacked">
-                    <li role="app-page-nav"  *ngFor="let m1 of m.menu" [class.active]="selected === m.label + '/' +m1.route">
-                        <a (click)="select(m.label, m1.route)">{{'menu.'+m.label+'.'+m1.route+'_' | translate}}</a> 
+                    <li role="app-page-nav" *ngFor="let m1 of m.menu"
+                      [class.active]="selected === m.label + '/' +m1.route">
+                      <a (click)="select(m.label, m1.route)">{{'menu.'+m.label+'.'+m1.route+'_' | translate}}</a>
                       <input type="checkbox" [(ngModel)]="m1.visible" (change)="changeVisible()" />
                     </li>
                   </ul>
                 </li>
               </ul>
-              <button type="button" class="btn app-btn app-btn-default" (click)="saveMenu()">{{'admin.Save_selected_pages' | translate}}</button>
-            </div><!--/.col -->
+              <button type="button" class="btn app-btn app-btn-default"
+                (click)="saveMenu()">{{'admin.Save_selected_pages' | translate}}</button>
+            </div>
+            <!--/.col -->
             <div class="col-xs-9">
               <h3>{{selected}} <span class="app-brand-text text-darken-1">({{state.currentLang}})</span>
 
               </h3>
               <div *ngIf="saved" class="alert alert-success" role="alert">
-                {{'text.save-note-1' | translate}} <strong>{{selected}} ({{state.currentLang}})</strong> {{'text.save-note-2' | translate}}!
+                {{'text.save-note-1' | translate}} <strong>{{selected}} ({{state.currentLang}})</strong>
+                {{'text.save-note-2' | translate}}!
               </div>
               <form class="clearfix">
                 <!-- <textarea class="form-control" rows="28" [id]="elementId"></textarea> -->
-                <editor *ngIf="tinyInited"
-                name="editor"
-                [(ngModel)]="text"
-                [init]="tinyConfig"></editor>
+                <editor *ngIf="tinyInited" name="editor" [(ngModel)]="text" [init]="tinyConfig"></editor>
 
 
 
 
-              </form><!--/.clearfix -->
-            </div><!--/.col -->
-          </div><!--/.row -->
+              </form>
+              <!--/.clearfix -->
+            </div>
+            <!--/.col -->
+          </div>
+          <!--/.row -->
         </ng-container>
-      </div><!--/.col -->
-    </div><!--/.row -->
-  </div><!--/.container -->
+      </div>
+      <!--/.col -->
+    </div>
+    <!--/.row -->
+  </div>
+  <!--/.container -->
 </section>
 
 <ng-template #filesModal>
 </ng-template>
 
-<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-     <div class="modal-dialog modal-sm">
+<div bsModal #comfirmTemplate="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">{{'admin.confirm_delete' | translate}} {{ indexUUID }}</h4>
+      </div>
+      <div class="modal-body">
+        <button type="button" class="btn btn-default" (click)="confirmDelete()">Yes</button>
+        <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title pull-left">{{'admin.Files' | translate}}</h4>
@@ -98,8 +131,8 @@
       </div>
       <div class="modal-body">
         <span><input type="file" ng2FileSelect [uploader]="uploader" (onCompleteAll)="uploaded()" />
-                     <button type="button" class="btn btn-success btn-s"
-                     (click)="uploadFile()" [disabled]="!uploader.getNotUploadedItems().length">
+          <button type="button" class="btn btn-success btn-s" (click)="uploadFile()"
+            [disabled]="!uploader.getNotUploadedItems().length">
             <span class="glyphicon glyphicon-upload"></span>{{'admin.Upload' | translate}}</button>
 
         </span>

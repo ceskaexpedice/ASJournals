@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy, TemplateRef, ViewChild} from '@angular/cor
 import {Subscription} from 'rxjs';
 
 
-import {BsModalService, ModalDirective} from 'ngx-bootstrap/modal';
+import {BsModalRef, BsModalService, ModalDirective} from 'ngx-bootstrap/modal';
 //import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import {FileUploader} from 'ng2-file-upload';
 import { Router } from '@angular/router';
@@ -28,6 +28,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   @ViewChild('filesModal') filesModal: any;
   @ViewChild('childModal') public childModal: ModalDirective | null = null;
+  @ViewChild('comfirmTemplate') public comfirmTemplate: ModalDirective | null = null;
 
 
   subscriptions: Subscription[] = [];
@@ -35,7 +36,6 @@ export class AdminComponent implements OnInit, OnDestroy {
   public uploader: FileUploader = new FileUploader({url: 'lf?action=UPLOAD'});
   public coverUploader: FileUploader = new FileUploader({url: 'lf?action=UPLOAD&cover=true'});
 
-  //public modalRef: BsModalRef;
 
   menu: any[] = [];
   selected: string = 'home';
@@ -52,6 +52,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   working: boolean = false;
   indexUUID: string | null = null;
   indexed: boolean = false;
+  deleted: boolean = false;
   coverMsg: string | null = null;
 
   newctx: string = '';
@@ -166,6 +167,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     }
     this.saved = false;
     this.indexed = false;
+    this.deleted = false;
     this.getText();
   }
   
@@ -216,10 +218,27 @@ export class AdminComponent implements OnInit, OnDestroy {
   index() {
     this.working = true;
     this.service.index(this.indexUUID!).subscribe(res => {
-      console.log(res);
       this.indexed = !res.hasOwnProperty('error');
       this.working = false;
     });
+  }
+
+  openConfirm() {
+    this.comfirmTemplate?.show();
+  }
+ 
+  confirmDelete(): void {
+    
+    this.working = true;
+    this.service.delete(this.indexUUID!).subscribe(res => {
+      this.deleted = !res.hasOwnProperty('error');
+      this.working = false;
+    });
+    this.comfirmTemplate?.hide();
+  }
+ 
+  decline(): void {
+    this.comfirmTemplate?.hide();
   }
 
   uploadFile() {
