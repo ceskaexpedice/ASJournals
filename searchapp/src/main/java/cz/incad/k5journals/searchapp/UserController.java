@@ -7,10 +7,13 @@ package cz.incad.k5journals.searchapp;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -42,6 +45,19 @@ public class UserController {
     }
   }
 
+  public static String hashPassword(String password, String salt) {
+    char[] passwordChars = password.toCharArray();
+    byte[] saltBytes = salt.getBytes();
+    PBEKeySpec spec = new PBEKeySpec(passwordChars, saltBytes, 1000, 192);
+    try {
+      SecretKeyFactory key = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
+      byte[] hashedPassword = key.generateSecret(spec).getEncoded();
+      return String.format("%x", new BigInteger(hashedPassword));
+    } catch (Exception var7) {
+      throw new RuntimeException(var7);
+    }
+  }
+
   public static void logout(HttpServletRequest req) {
     req.getSession().invalidate();
   }
@@ -64,7 +80,7 @@ public class UserController {
       }
 
       SolrQuery q = new SolrQuery("username:\"" + ClientUtils.escapeQueryChars(username) + "\"")
-              .addFilterQuery("pwd:\"" + pwd + "\"")
+              .addFilterQuery("pwd:\"" + ClientUtils.escapeQueryChars(hashPassword(pwd, username)) + "\"")
               .setFields("name, username, ctxs");
       SolrDocumentList docs = solr.query("users", q).getResults();
       solr.close();
@@ -114,7 +130,7 @@ public class UserController {
       SolrInputDocument idoc = new SolrInputDocument();
       idoc.setField("username", username);
       Map<String, String> newPwd = new HashMap<>();
-      newPwd.put("set", pwd);
+      newPwd.put("set", hashPassword(pwd, username));
       idoc.setField("pwd", newPwd);
       solr.add("users", idoc);
       solr.commit("users");
