@@ -62,6 +62,17 @@
 
 // card
 .mat-card {
+  &.app-alert {
+    @include setAlertCard();
+    @extend .app-clean-shadow;
+    border: 1px solid;
+
+    .mat-icon {
+      @extend .app-mr-1;
+      @include setIcon($position: sub);
+    }
+  }
+
   .mat-divider {
     &.mat-divider-horizontal {
       position: relative;
