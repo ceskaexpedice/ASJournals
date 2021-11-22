@@ -1,89 +1,98 @@
-<div class="section">
-  <div class="row">
-    <mat-form-field class="col s12 m2">
-      <mat-label>{{'Context' | translate}}</mat-label>
+<div fxLayout="row wrap" class="app-layout-wrap-16">
+  <div fxFlex="calc(33.3333% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.context' | translate }}</mat-label>
       <input matInput id="ctx" name="ctx" type="text" [(ngModel)]="mag.ctx" required><span class="validity"></span>
     </mat-form-field>
-    <mat-form-field class="col s12 m4">
-      <mat-label>{{'URL Kramerius' | translate}}</mat-label>
+  </div>
+  <div fxFlex="calc(33.3333% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.url_kramerius' | translate }}</mat-label>
       <input matInput id="k5url" name="k5url" type="text" [(ngModel)]="mag.k5url">
     </mat-form-field>
-    <mat-form-field class="col s12 m6">
-      <mat-label>{{'journal_uuid' | translate}}</mat-label>
+  </div>
+  <div fxFlex="calc(33.3333% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.root_uuid_titulu' | translate }}</mat-label>
       <input matInput id="journal_uuid" name="journal_uuid" type="text" [(ngModel)]="mag.journal">
     </mat-form-field>
   </div>
-  <div class="row">
-    <mat-form-field  class="col s12 m4">
-      <mat-icon matInput-prefix [style.color]="'#'+mag.color" >application</mat-icon>
-    <mat-label>{{'Color' | translate}}</mat-label>
-    <input matInput id="color" name="color" type="text" [(ngModel)]="mag.color">
-  </mat-form-field>
-  <mat-form-field class="col s12 m4">
-    <mat-label>{{'Licence' | translate}}</mat-label>
-    <input matInput id="licence" name="licence" type="text" [(ngModel)]="mag.licence">
-  </mat-form-field>
-    <mat-checkbox
-           id="showTitleLabel"  [(ngModel)]="mag.showTitleLabel">{{'showTitleLabel' | translate}}
-  </mat-checkbox>
-</div>
-<div class="row">
-  <mat-form-field >
-    <mat-label>{{'Title' | translate}}</mat-label>
-    <input matInput id="title" type="text" [(ngModel)]="mag.title">
-  </mat-form-field>
-  <mat-form-field >
-    <mat-label>{{'Image' | translate}}</mat-label>
-    <input matInput type="text" [(ngModel)]="mag.img" id="img"  name="img"  />
-  </mat-form-field>
-</div>
-<div class="row">
-  <mat-form-field  class="col s12 m4">
-    <mat-label>{{'issn' | translate}}</mat-label>
-    <input matInput type="text" [(ngModel)]="mag.issn" id="issn"  name="issn"  />
-  </mat-form-field>
-  <mat-form-field  class="col s12 m8">
-    <mat-label>{{'vydavatel' | translate}}</mat-label>
-    <input matInput type="text" [(ngModel)]="mag.vydavatel" id="vydavatel"  name="vydavatel"  />
-  </mat-form-field>
-</div>
-<div class="row">
-  <div class="col s12 m4">
-    <mat-form-field>
-      <mat-label>{{'oblast' | translate}}</mat-label>
+  <div fxFlex="calc(33.3333% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <!-- <mat-icon matInput-prefix [style.color]="'#'+mag.color" >application</mat-icon> -->
+      <mat-label>{{ 'magazines.barva' | translate }}</mat-label>
+      <input matInput id="color" name="color" type="text" [(ngModel)]="mag.color">
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(33.3333% - 16px)">
+    <mat-form-field  class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.licence' | translate }}</mat-label>
+      <input matInput id="licence" name="licence" type="text" [(ngModel)]="mag.licence">
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(33.3333% - 16px)" fxFlexAlign="center">
+    <mat-checkbox id="showTitleLabel" [(ngModel)]="mag.showTitleLabel">{{ 'magazines.ukazat_slovo_casopis' | translate }}</mat-checkbox>
+  </div>
+  <div fxFlex="calc(33.3333% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.titulek' | translate }}</mat-label>
+      <input matInput id="title" type="text" [(ngModel)]="mag.title">
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(33.3333% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.obrazek' | translate }}</mat-label>
+      <input matInput type="text" [(ngModel)]="mag.img" id="img"  name="img"  />
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(33.3333% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'Issn' | translate }}</mat-label>
+      <input matInput type="text" [(ngModel)]="mag.issn" id="issn"  name="issn"  />
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(25% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.vydavatel' | translate }}</mat-label>
+      <input matInput type="text" [(ngModel)]="mag.vydavatel" id="vydavatel"  name="vydavatel"  />
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(25% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.oblast' | translate }}</mat-label>
       <input matInput type="text" [(ngModel)]="mag.oblast" id="oblast"  name="oblast"  />
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>{{'pristup' | translate}}</mat-label>
+  </div>
+  <div fxFlex="calc(25% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.pristup' | translate }}</mat-label>
       <input matInput type="text" [(ngModel)]="mag.pristup" id="pristup"  name="pristup"  />
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>{{'kontakt' | translate}}</mat-label>
+  </div>
+  <div fxFlex="calc(25% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.kontakt' | translate }}</mat-label>
       <input matInput type="text" [(ngModel)]="mag.kontakt" id="kontakt"  name="kontakt"  />
     </mat-form-field>
   </div>
-  <div  class="col s12 m8">
-
-    <label for="keywords" class="active">{{'Keywords' | translate}}</label>
-    <mat-list id="keywords">
-      <mat-list-item *ngFor="let k of mag.keywords; let idx = index;">
-        {{k}}
-        <a (click)="removeKeyword(idx)" mz-secondary-content><mat-icon title="remove keyword">close</mat-icon></a>
-      </mat-list-item>
-      <mat-list-item>
-        <input id="newKeyword" [(ngModel)]="newKeyword"  class="col s12 m8"/>
-        <a (click)="addKeyword()" mz-secondary-content><mat-icon title="add keyword">plus</mat-icon></a>
-      </mat-list-item>
-    </mat-list>
-
-  </div>  
-</div>
-
-<div class="row">
-  <mat-form-field>
-    <mat-label>{{'Description' | translate}}</mat-label>
-    <textarea matInput [(ngModel)]="mag.desc" id="desc"></textarea>
-  </mat-form-field>
-</div>
-
+  <div fxFlex="calc(25% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.klicove_slovo' | translate }}</mat-label>
+      <input matInput type="text" id="newKeyword" [(ngModel)]="newKeyword" />
+      <button matSuffix mat-icon-button (click)="addKeyword()" [matTooltip]="'magazines.pridat_klicove_slovo' | translate">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(75% - 16px)" fxFlexAlign="center">
+    <span *ngFor="let k of mag.keywords; let idx = index; let last = last;" class="app-keyword">
+      <label class="app-label">{{ k }}</label><a (click)="removeKeyword(idx)" [matTooltip]="'magazines.smazat_klicove_slovo' | translate"><mat-icon>clear</mat-icon></a><span class="app-pipe app-in-element" *ngIf="!last"></span>
+    </span>
+  </div>
+  <div fxFlex="calc(100% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.popis' | translate }}</mat-label>
+      <textarea matInput [(ngModel)]="mag.desc" id="desc"></textarea>
+    </mat-form-field>
+  </div>
 </div>

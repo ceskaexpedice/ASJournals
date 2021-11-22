@@ -1,0 +1,22 @@
+// --- FUNCTIONS ---
+
+// function get gap
+@function getGap($val) {
+  @return #{map-get($gaps, "#{$val}")}px;
+}
+
+// function get gap
+@function getState($val) {
+  @return map-get($states, "#{$val}");
+}
+
+// function set brand color
+@function setBrandColor() {
+  @if ($app-brand == "blue") {
+    @return #0099A8;
+  } @else if ($app-brand == "red") {
+    @return #E5332A;
+  } @else {
+    @return #96C120;
+  }
+}

@@ -16,6 +16,19 @@
   }
 }
 
+// button
+.mat-button-base {
+  .mat-icon {
+    @extend .app-mr-1;
+  }
+
+  &.mat-primary {
+    .mat-icon {
+      @include setIcon($color: $app-color-lightnes);
+    }
+  }
+}
+
 // button toggle
 .mat-button-toggle-appearance-standard {
   @extend .app-clean-bg;
@@ -55,6 +68,26 @@
       .app-count {
         color: $app-gray-5;
         font-size: 13px;
+      }
+    }
+  }
+}
+
+// list
+.mat-list {
+  &.app-view-admin {
+    @extend .app-pt-0;
+    border-width: 1px 1px 0 1px;
+    border-style: solid;
+    border-color: $app-brand-border-color;
+
+    .mat-list-item {
+      @extend .app-pt-2, .app-pb-2;
+      border-bottom: 1px solid $app-brand-border-color;
+      height: auto !important;
+
+      &:hover {
+        background-color: $app-gray-2;
       }
     }
   }

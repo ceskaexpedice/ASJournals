@@ -78,8 +78,10 @@ h1, h2, h3, h4 {
   @extend .app-ml-2, .app-mr-2;
   border-left: 1px solid $app-gray-4;
 
-  &:last-child {
-    @extend .app-dn;
+  &:not(.app-in-element) {
+    &:last-child {
+      @extend .app-dn;
+    }
   }
 }
 
@@ -98,11 +100,11 @@ h1, h2, h3, h4 {
 }
 
 .app-text-left {
-  text-align: left;
+  text-align: left !important;
 }
 
 .app-text-right {
-  text-align: right;
+  text-align: right !important;
 }
 
 .app-text-center {
@@ -130,5 +132,24 @@ h1, h2, h3, h4 {
   .mat-icon {
     transition: all 0.4s ease;
     transform: rotateZ(0deg);
+  }
+}
+
+.app-keyword {
+  .mat-icon {
+    @extend .app-ml-1;
+    @include setIcon(16, $app-color-warning, middle);
+  }
+}
+
+.app-layout-wrap-16 {
+  margin-left: -#{$app-gap-card};
+
+  & > div {
+    margin: 0 0 $app-gap-card $app-gap-card;
+
+    .mat-form-field {
+      @extend .app-clean-bottom-gap;
+    }
   }
 }
