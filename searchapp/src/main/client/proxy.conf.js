@@ -80,13 +80,14 @@ const PROXY_CONFIG = {
     "secure": false
   },
   "/login": {
-    "target2": "http://localhost:8080/login",
-    "target": "http://localhost:4200/assets/test/user.json",
+    "target": "http://localhost:8080/k5journals/login",
+    "target2": "http://localhost:4200/assets/test/user.json",
     "logLevel": "debug",
     "pathRewrite": {
       "^/login": ""
     },
-    "changeOrigin": false,
+    "withCredentials": true,
+    "changeOrigin": true,
     "secure": false 
   },
   "/index": {

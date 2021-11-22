@@ -9,7 +9,7 @@
       <mat-card-title>{{ resultItem.title }}</mat-card-title>
       <div>
         <label class="app-label">Vydavatel: </label>
-        <a [routerLink]="['/vydavatel', resultItem.vydavatel_id]" queryParamsHandling="preserve" [title]="resultItem.vydavatel">{{ resultItem.vydavatel }}</a>
+        <a [routerLink]="['/magazines/vydavatel', resultItem.vydavatel_id]" queryParamsHandling="preserve" [title]="resultItem.vydavatel">{{ resultItem.vydavatel }}</a>
       </div>
       <div>
         <label class="app-label">Oblast: </label>
