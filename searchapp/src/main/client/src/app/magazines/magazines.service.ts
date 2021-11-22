@@ -59,6 +59,7 @@ export class MagazinesService {
       .set('facet.mincount', '1')
       .append('facet.field', 'pristup')
       .append('facet.field', 'oblast')
+      .append('facet.field', 'vydavatel')
       .append('facet.field', 'keywords');
 
     for (let i in this.state.filters) {
@@ -187,13 +188,14 @@ login() {
   }
 
   doLogin() {
-    var url = 'login'
-    var params = new HttpParams()
-      .set('user', this.state.loginuser!)
-      .set('pwd', this.state.loginpwd!)
-      .set('ctx', "admin")
-      .set('action', 'LOGIN');
-    return this.http.get(url, {params: params});
+    const url = 'login';
+    var params = new HttpParams().set('action', 'LOGIN');
+    const user = {
+      user: this.state.loginuser,
+      pwd: this.state.loginpwd,
+      ctx: 'admin'
+    }
+    return this.http.post<any>(url, user, {params});
 
   }
 
@@ -215,4 +217,16 @@ login() {
     return this.http.get(url, {params: params});
 
   }
+
+  resetPwd(username: string, newpwd: string) {
+    const url = 'login';
+    var params = new HttpParams().set('action', 'RESET_PWD');
+    const user = {
+      user: username,
+      pwd: newpwd
+    }
+    return this.http.post<any>(url, user, {params});
+
+  }
+
 }
