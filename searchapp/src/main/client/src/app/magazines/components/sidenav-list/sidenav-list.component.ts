@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { AppState } from 'src/app/app.state';
+import { TranslateService } from '@ngx-translate/core';
+import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
 
 @Component({
@@ -19,8 +20,9 @@ export class SidenavListComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
 
   constructor(
-    public state: AppState,
-    public service: MagazinesService) { }
+    public state: MagazineState,
+    public service: MagazinesService,
+    public translate: TranslateService) { }
 
   ngOnInit(): void {
   }

@@ -2,80 +2,22 @@
   <div fxLayout="row" fxFlexFill fxLayoutAlign="start center" fxLayoutGap="32px" class="app-container-fluid">
     <div fxFlex class="app-left">
       <a (click)="goHome()" class="app-logo">
-        Digitální knihovna AV ČR<span class="app-pipe"></span> <span>online časopisy</span>
+        {{ 'magazines.digitalni_knihovna_av_cr' | translate }}<span class="app-pipe"></span> <span>{{ 'magazines.online_casopisy' | translate }}</span>
       </a>
     </div>
     <div class="app-right" fxHide.gt-md>
-      <a mat-flat-button color="primary" (click)="onToggleSidenav()" title="Menu"><mat-icon>menu</mat-icon></a> 
+      <a mat-flat-button color="primary" (click)="onToggleSidenav()" [title]="'magazines.navigace' | translate"><mat-icon>menu</mat-icon></a> 
     </div>
     <div class="app-right" fxHide.md fxHide.sm fxHide.xs>
-      <a mat-flat-button routerLink="magazines" routerLinkActive="app-active" color="primary" [title]="'magazines.seznam_casopisu' | translate">{{ 'magazines.seznam_casopisu' | translate}}</a>
-      <a mat-flat-button routerLink="o-projektu" routerLinkActive="app-active" color="primary" [title]="'magazines.o_projektu' | translate">{{ 'magazines.o_projektu' | translate}}</a>
-      <a mat-flat-button routerLink="vydavatele" routerLinkActive="app-active" color="primary" title="Vydavatelé">{{ 'magazines.vydavatele' | translate}}</a>
-      <a mat-flat-button routerLink="kontakt" routerLinkActive="app-active" color="primary" title="Kontakt">{{ 'magazines.kontakt' | translate}}</a>
-      <a mat-flat-button *ngIf="state.logged" routerLink="admin" routerLinkActive="app-active" color="primary" title="Admin">{{ 'magazines.admin' | translate}}</a>
-      <a mat-flat-button *ngIf="!state.logged" routerLink="prihlaseni" routerLinkActive="app-active" color="primary" title="Login">{{'Přihlásit' | translate}}</a>
-      <a mat-flat-button *ngIf="state.logged" (click)="logout()" color="primary" title="logout">{{'Odhlásit' | translate}}</a>
-
-      
-      <a mat-stroked-button *ngIf="translate.currentLang === 'cs'" (click)="translate.use('en')" [title]="'desc.en' | translate">{{ 'EN' | translate }}</a>
-      <a mat-stroked-button *ngIf="translate.currentLang === 'en'" (click)="translate.use('cs')" [title]="'desc.cs' | translate">{{ 'CS' | translate }}</a>
-
+      <a mat-flat-button routerLink="magazines" routerLinkActive="app-active" color="primary" [title]="'magazines.seznam_casopisu' | translate">{{ 'magazines.seznam_casopisu' | translate }}</a>
+      <a mat-flat-button routerLink="o-projektu" routerLinkActive="app-active" color="primary" [title]="'magazines.o_projektu' | translate">{{ 'magazines.o_projektu' | translate }}</a>
+      <a mat-flat-button routerLink="vydavatele" routerLinkActive="app-active" color="primary" [title]="'magazines.vydavatele' | translate">{{ 'magazines.vydavatele' | translate }}</a>
+      <a mat-flat-button routerLink="kontakt" routerLinkActive="app-active" color="primary" [title]="'magazines.kontakt' | translate">{{ 'magazines.kontakt' | translate }}</a>
+      <a mat-flat-button *ngIf="state.logged" routerLink="admin" routerLinkActive="app-active" color="primary" [title]="'magazines.administrace' | translate">{{ 'magazines.administrace' | translate }}</a>
+      <a mat-flat-button *ngIf="!state.logged" routerLink="prihlaseni" routerLinkActive="app-active" color="primary" [title]="'magazines.prihlasit' | translate">{{ 'magazines.prihlasit' | translate }}</a>
+      <a mat-flat-button *ngIf="state.logged" (click)="logout()" color="primary" [title]="'magazines.odhlasit' | translate">{{ 'magazines.odhlasit' | translate }}</a>
+      <a mat-flat-button *ngIf="translate.currentLang === 'cs'" color="primary" (click)="translate.use('en')" [title]="'desc.en' | translate">{{ 'EN' | translate }}</a>
+      <a mat-flat-button *ngIf="translate.currentLang === 'en'" color="primary" (click)="translate.use('cs')" [title]="'desc.cs' | translate">{{ 'CS' | translate }}</a>
     </div>
   </div>
 </mat-toolbar>
-
-
-
-
-<!-- <mat-toolbar>
-  <div class="container">
-    <a (click)="goHome()" class="brand-logo">
-      Digitální knihovna AV ČR <span class="cyan-text text-lighten-4">|</span> <span class="cyan-text text-lighten-4">online časopisy</span>
-    </a>
-    <div [align]="'right'">
-      <div routerLinkActive="active" queryParamsHandling="preserve" #seznamCasopisu="routerLinkActive" >
-        <a (click)="goHome()" title="Seznam časopisů">Seznam časopisů</a>
-      </div>
-      <div routerLink="o-projektu" queryParamsHandling="preserve" routerLinkActive="active" #oProjektu="routerLinkActive" >
-        <a routerLink="o-projektu" title="O projektu">O projektu</a>
-      </div>
-      <div routerLink="vydavatele" queryParamsHandling="preserve" routerLinkActive="active" #vydavatele="routerLinkActive" >
-        <a routerLink="vydavatele" title="Vydavatelé">Vydavatelé</a>
-      </div>
-      <div routerLink="kontakt" queryParamsHandling="preserve" routerLinkActive="active" #kontakt="routerLinkActive" >
-        <a routerLink="kontakt" title="Kontakt">Kontakt</a>
-      </div>
-      <div *ngIf="state.logged" routerLink="admin" queryParamsHandling="preserve" routerLinkActive="active" #admin="routerLinkActive" >
-        <a routerLink="admin" title="Admin">Admin</a>
-      </div>
-      <div routerLinkActive="active" queryParamsHandling="preserve" #prihlaseni="routerLinkActive" >
-        <a *ngIf="!state.logged" routerLink="/prihlaseni" title="Login">{{'Přihlásit' | translate}}</a>
-        <a *ngIf="state.logged" (click)="logout()" title="logout" class="app-btn">{{'Odhlásit' | translate}}</a>
-      </div>
-          
-    </div>
-    <a [id]="'app-btn-sidenav'" class="right">
-      <mat-icon>menu</mat-icon>
-    </a>
-  </div>
-  <mat-toolbar> -->
-
-<!-- Sidenav for responsive behavior -->
-<!-- <mz-sidenav [id]="'app-sidenav'" [collapseButtonId]="'app-btn-sidenav'">
-  <mz-sidenav-subheader>
-    Hlavní navigace
-  </mz-sidenav-subheader>
-  <mz-sidenav-link routerLink="seznam-casopisu" queryParamsHandling="preserve" routerLinkActive="active" #seznamCasopisu="routerLinkActive" [active]="seznamCasopisu.isActive">
-    <a (click)="goHome()" title="Seznam časopisů">Seznam časopisů</a>
-  </mz-sidenav-link>
-  <mz-sidenav-link routerLink="o-projektu" queryParamsHandling="preserve" routerLinkActive="active" #oProjektu="routerLinkActive" [active]="oProjektu.isActive">
-    <a routerLink="o-projektu" title="O projektu">O projektu</a>
-  </mz-sidenav-link>
-  <mz-sidenav-link routerLink="vydavatele" queryParamsHandling="preserve" routerLinkActive="active" #vydavatele="routerLinkActive" [active]="vydavatele.isActive">
-    <a routerLink="vydavatele" title="Vydavatelé">Vydavatelé</a>
-  </mz-sidenav-link>
-  <mz-sidenav-link routerLink="kontakt" queryParamsHandling="preserve" routerLinkActive="active" #kontakt="routerLinkActive" [active]="kontakt.isActive">
-    <a routerLink="kontakt" title="Kontakt">Kontakt</a>
-  </mz-sidenav-link>
-</mz-sidenav> -->

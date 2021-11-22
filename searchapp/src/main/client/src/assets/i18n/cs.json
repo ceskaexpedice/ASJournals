@@ -160,9 +160,15 @@
 	"a zároveň": "a zároveň",
 	"nebo": "nebo",
 	"magazines": {
+		"digitalni_knihovna_av_cr": "Digitální knihovna AV ČR",
+		"online_casopisy": "online časopisy",
+		"navigace": "Navigace",
 		"seznam_casopisu": "Seznam časopisů",
 		"o_projektu": "O projektu",
-		
+		"vydavatele": "Vydavatelé",
+		"kontakt": "Kontakt",
+		"administrace": "Administrace",
+		"prihlasit": "Přihlásit",		
 		"prihlaseni_do_administrace": "Přihlášení do administrace",
 		"uzivatel": "Uživatel",
 		"heslo": "Heslo",
