@@ -5,8 +5,8 @@
         <div fxFlex="350px">
           <button mat-flat-button (click)="addJournal()" color="primary" class="app-w-100 app-text-left app-mb-4"><mat-icon>add</mat-icon>{{ 'magazines.pridat_casopis' | translate }}</button>
           <mat-list role="list" class="app-view-admin">
-            <mat-list-item *ngFor="let ctx of state.ctxs" [class.active]="currentMag && ctx.ctx === currentMag.ctx" role="listitem">
-              <a (click)="editCtx(ctx)">&#160;{{ ctx.ctx || ctx.title }}</a>
+            <mat-list-item *ngFor="let ctx of state.ctxs" [class.active]="currentMag && ctx.ctx === currentMag.ctx" role="listitem" (click)="editCtx(ctx)" class="app-cursor-pointer">
+              <a><mat-icon>menu_book</mat-icon>{{ ctx.ctx || ctx.title }}</a>
             </mat-list-item>
           </mat-list>
         </div>

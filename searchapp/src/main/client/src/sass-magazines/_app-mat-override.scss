@@ -86,6 +86,11 @@
       border-bottom: 1px solid $app-brand-border-color;
       height: auto !important;
 
+      .mat-icon {
+        @extend .app-mr-2;
+        @include setIcon(20, $position: sub);
+      }
+
       &:hover {
         background-color: $app-gray-2;
       }
