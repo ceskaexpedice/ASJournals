@@ -161,6 +161,13 @@
 	"nebo": "OR",
 	"magazines": {
 		"seznam_casopisu": "List of magazines",
-		"o_projektu": "About project"
+		"o_projektu": "About project",
+
+		"prihlaseni_do_administrace": "Login to the administration",
+		"uzivatel": "User",
+		"heslo": "Password",
+		"spatne_prihlasovaci_udaje": "Bad login information",
+		"prihlasit_uzivatele": "Log in user",
+		"odhlasit": "Log out"
 	}
 }

@@ -161,6 +161,13 @@
 	"nebo": "nebo",
 	"magazines": {
 		"seznam_casopisu": "Seznam časopisů",
-		"o_projektu": "O projektu"	
+		"o_projektu": "O projektu",
+		
+		"prihlaseni_do_administrace": "Přihlášení do administrace",
+		"uzivatel": "Uživatel",
+		"heslo": "Heslo",
+		"spatne_prihlasovaci_udaje": "Špatné přihlašovací údaje",
+		"prihlasit_uzivatele": "Přihlásit uživatele",
+		"odhlasit": "Odhlásit"
 	}
 }
