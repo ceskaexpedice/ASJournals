@@ -173,5 +173,7 @@
     },
     "a zároveň": "AND",
     "nebo": "OR",
-    "dummy": ""
+    "magazines": {
+        "seznam_casopisu": "List of magazines"
+    }
 }

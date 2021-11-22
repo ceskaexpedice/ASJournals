@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
 
@@ -12,24 +13,25 @@ export class NavbarComponent implements OnInit {
 
   // sidenav
   @Output() public sidenavToggle = new EventEmitter();
-  
+
   constructor(
-  private route: ActivatedRoute,
-  private router: Router, 
-    public state: MagazineState, 
+    private route: ActivatedRoute,
+    private router: Router,
+    public translate: TranslateService,
+    public state: MagazineState,
     private service: MagazinesService) { }
 
   ngOnInit() {
   }
-  
-  logout(){
+
+  logout() {
     this.service.logout();
   }
-  
-  goHome(){
+
+  goHome() {
     this.state.filters = [];
     this.state.clear();
-    this.router.navigate([''], {queryParamsHandling: "preserve"});
+    this.router.navigate([''], { queryParamsHandling: "preserve" });
   }
 
   // sidenav fuction

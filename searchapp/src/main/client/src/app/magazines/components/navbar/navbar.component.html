@@ -6,16 +6,21 @@
       </a>
     </div>
     <div class="app-right" fxHide.gt-md>
-      <a mat-flat-button color="primary" (click)="onToggleSidenav()" title="Kontakt"><mat-icon>menu</mat-icon></a> 
+      <a mat-flat-button color="primary" (click)="onToggleSidenav()" title="Menu"><mat-icon>menu</mat-icon></a> 
     </div>
     <div class="app-right" fxHide.md fxHide.sm fxHide.xs>
-      <a mat-flat-button routerLink="magazines" routerLinkActive="app-active" color="primary" title="Seznam časopisů">Seznam časopisů</a>
-      <a mat-flat-button routerLink="o-projektu" routerLinkActive="app-active" color="primary" title="O projektu">O projektu</a>
-      <a mat-flat-button routerLink="vydavatele" routerLinkActive="app-active" color="primary" title="Vydavatelé">Vydavatelé</a>
-      <a mat-flat-button routerLink="kontakt" routerLinkActive="app-active" color="primary" title="Kontakt">Kontakt</a>
-      <a mat-flat-button *ngIf="state.logged" routerLink="admin" routerLinkActive="app-active" color="primary" title="Admin">Admin</a>
+      <a mat-flat-button routerLink="magazines" routerLinkActive="app-active" color="primary" [title]="'magazines.seznam_casopisu' | translate">{{ 'magazines.seznam_casopisu' | translate}}</a>
+      <a mat-flat-button routerLink="o-projektu" routerLinkActive="app-active" color="primary" [title]="'magazines.o_projektu' | translate">{{ 'magazines.o_projektu' | translate}}</a>
+      <a mat-flat-button routerLink="vydavatele" routerLinkActive="app-active" color="primary" title="Vydavatelé">{{ 'magazines.vydavatele' | translate}}</a>
+      <a mat-flat-button routerLink="kontakt" routerLinkActive="app-active" color="primary" title="Kontakt">{{ 'magazines.kontakt' | translate}}</a>
+      <a mat-flat-button *ngIf="state.logged" routerLink="admin" routerLinkActive="app-active" color="primary" title="Admin">{{ 'magazines.admin' | translate}}</a>
       <a mat-flat-button *ngIf="!state.logged" routerLink="prihlaseni" routerLinkActive="app-active" color="primary" title="Login">{{'Přihlásit' | translate}}</a>
       <a mat-flat-button *ngIf="state.logged" (click)="logout()" color="primary" title="logout">{{'Odhlásit' | translate}}</a>
+
+      
+      <a mat-stroked-button *ngIf="translate.currentLang === 'cs'" (click)="translate.use('en')" [title]="'desc.en' | translate">{{ 'EN' | translate }}</a>
+      <a mat-stroked-button *ngIf="translate.currentLang === 'en'" (click)="translate.use('cs')" [title]="'desc.cs' | translate">{{ 'CS' | translate }}</a>
+
     </div>
   </div>
 </mat-toolbar>

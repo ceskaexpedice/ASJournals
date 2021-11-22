@@ -31,28 +31,40 @@ const PROXY_CONFIG = {
     "changeOrigin": true,
     "secure": false
   },
-  "/texts/**": {
+  "/theme": {
+    "target": "http://localhost:8080/k5journals/theme",
+    "pathRewrite": {
+      "^/theme": ""
+    },
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "secure": false
+  },
+  "/texts": {
     "target": "http://localhost:8080/k5journals/texts",
     "target2": "http://localhost:4200/assets/test",
     "logLevel": "debug",
-    "bypass": function (req, res, proxyOptions) {
-      //console.log(req.query['ctx']);
-      req.headers["X-Custom-Header"] = "yes";
+    // "bypass": function (req, res, proxyOptions) {
+    //   //console.log(req.query['ctx']);
+    //   req.headers["X-Custom-Header"] = "yes";
 
-      if (req.path.indexOf('theme') > -1) {
-        const base = "/assets/test/cached_css/";
-        return base + req.query['color'] + ".css";
-      } else {
+    //   if (req.path.indexOf('theme') > -1) {
+    //     const base = "/assets/test/cached_css/";
+    //     return base + req.query['color'] + ".css";
+    //   } else {
 
-        const action = req.query['action'];
-        if (action === 'GET_CONFIG') {
-          return "/assets/test/" + req.query['ctx'] + "/config.json";
-        } else if (action === 'LOAD') {
-          return "/assets/test/" + req.query['ctx'] + "/texts/" + req.query['id'] + "_cs.html";
-        } else {
-          return "/assets/test/" + action + ".json";
-        }
-      }
+    //     const action = req.query['action'];
+    //     if (action === 'GET_CONFIG') {
+    //       return "/assets/test/" + req.query['ctx'] + "/config.json";
+    //     } else if (action === 'LOAD') {
+    //       return "/assets/test/" + req.query['ctx'] + "/texts/" + req.query['id'] + "_cs.html";
+    //     } else {
+    //       return "/assets/test/" + action + ".json";
+    //     }
+    //   }
+    // },
+    "pathRewrite": {
+      "^/texts": ""
     },
     "logLevel": "debug",
     "changeOrigin": false,

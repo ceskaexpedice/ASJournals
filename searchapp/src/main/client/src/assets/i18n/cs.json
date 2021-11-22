@@ -13,13 +13,13 @@
     "Rok": "Rok",
     "ročník": "ročník",
     "číslo": "číslo",
-  "used_filters": "Aktivní filtry",
-      "pristup": "Přístup",
-  "oblast":"Oblast",
-  "keywords":"Klíčová slova",
-  "journal_uuid":"Root uuid titulu",
-  "showTitleLabel":"Ukázat slovo 'ČASOPIS'",
-  "Color": "Barva",
+    "used_filters": "Aktivní filtry",
+    "pristup": "Přístup",
+    "oblast": "Oblast",
+    "keywords": "Klíčová slova",
+    "journal_uuid": "Root uuid titulu",
+    "showTitleLabel": "Ukázat slovo 'ČASOPIS'",
+    "Color": "Barva",
     "home": "Hlavní stránka",
     "home_news": "Aktuálně",
     "menu": {
@@ -68,7 +68,7 @@
     },
     "ARCHIV STARŠÍCH ROČNÍKŮ": "ARCHIV STARŠÍCH ROČNÍKŮ",
     "PROHLÍŽET CELÉ ČÍSLO": "PROHLÍŽET",
-    "AKTUÁLNÍ ČÍSLO": "AKTUÁLNÍ ČÍSLO", 
+    "AKTUÁLNÍ ČÍSLO": "AKTUÁLNÍ ČÍSLO",
     "Časopis je zařazen v databázích": "Časopis je zařazen v databázích",
     "předchozí číslo": "předchozí číslo",
     "následující číslo": "následující číslo",
@@ -82,7 +82,7 @@
     "Zdroj": "Zdroj",
     "Rubrika": "Rubrika",
     "Rozsah stran": "Rozsah stran",
-  "rozsah_zkratka": "s.",
+    "rozsah_zkratka": "s.",
     "Licence": "Licence",
     "Status recenzování": "Status recenzování",
     "recenzovaný článek": "recenzovaný článek",
@@ -145,11 +145,11 @@
         "title page": "Titulní list",
         "adresář": "Adresář",
         "directory": "Adresář",
-        "editorsNote":"Editorial"
+        "editorsNote": "Editorial"
     },
     "Available from": "Dostupné také z",
     "print": "tisk",
-    "admin" : {
+    "admin": {
         "Upload": "Nahrát",
         "Files": "Soubory",
         "Save_selected_pages": "Uložit výběr stran",
@@ -159,5 +159,8 @@
     },
     "a zároveň": "a zároveň",
     "nebo": "nebo",
-    "dummy": ""
+    "magazines": {
+        "seznam_casopisu": "Seznam časopisů",
+        "o_projektu": "O projektu"
+    }
 }
