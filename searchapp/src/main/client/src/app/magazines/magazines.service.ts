@@ -23,8 +23,6 @@ export class MagazinesService {
     private router: Router,
     private http: HttpClient) {}
 
-
-
   private get<T>(url: string, params: HttpParams = new HttpParams(), responseType?: any): Observable<T> {
     const options = { params, responseType, withCredentials: true };
     return this.http.get<T>(`api/${url}`, options)
@@ -73,11 +71,10 @@ export class MagazinesService {
       .set('action', 'LOAD')
       .set('ctx', 'magazines')
       .set('id', id)
-      .set('lang', 'titleCS ' + this.state.currentLang);
+      .set('lang', this.state.currentLang);
 
     return this.get(url, params, 'plain/text');
   }
-
 
   //Magazines
   getMagazines(): Observable<any> {

@@ -42,6 +42,7 @@ export class AdminMagazinesComponent implements OnInit {
   getEditors(){
     this.service.getEditors().subscribe(state => {
       this.editors = state['editorsList'];
+      this.currentMag = JSON.parse(JSON.stringify(this.state.ctxs[0]));
     });
   }
 

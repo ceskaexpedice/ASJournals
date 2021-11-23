@@ -177,7 +177,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       menuToSave[this.menu[i].label] = {submenu: this.menu[i].menu, visible: this.menu[i].visible};
     }
     
-    this.service.saveMenu(JSON.stringify(menuToSave)).subscribe(res => {
+    this.service.saveMenu(JSON.stringify(menuToSave)).subscribe((res: any) => {
       this.saved = !res.hasOwnProperty('error');
     });
   }

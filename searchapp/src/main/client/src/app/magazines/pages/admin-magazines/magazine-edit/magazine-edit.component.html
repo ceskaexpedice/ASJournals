@@ -54,7 +54,11 @@
   <div fxFlex="calc(25% - 16px)">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.vydavatel' | translate }}</mat-label>
-      <input matInput type="text" [(ngModel)]="mag.vydavatel" id="vydavatel"  name="vydavatel"  />
+      <mat-select (selectionChange)="setVydavatel($event.value)"  [(ngModel)]="vydavatel">
+        <mat-option *ngFor="let ed of editors" [value]="ed">
+          {{ed.name}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
   <div fxFlex="calc(25% - 16px)">

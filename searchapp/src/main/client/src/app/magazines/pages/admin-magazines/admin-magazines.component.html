@@ -11,7 +11,7 @@
           </mat-list>
         </div>
         <div *ngIf="currentMag">
-          <app-magazine-edit [mag]="currentMag"></app-magazine-edit>
+          <app-magazine-edit [mag]="currentMag" [editors]="editors"></app-magazine-edit>
           <button mat-flat-button (click)="save()" color="primary" class="app-mr-2">{{ 'magazines.ulozit_casopis' | translate }}</button>
           <button mat-flat-button (click)="removeJournal()" color="warn" class="app-mr-2">{{ 'magazines.smazat_casopis' | translate }}</button>
           <button mat-flat-button (click)="cancel()">{{ 'magazines.zrusit' | translate }}</button>

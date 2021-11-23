@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Journal } from '../models/journal.model';
@@ -10,7 +10,7 @@ import { Criterium } from '../models/criterium';
 
 
 import Utils from './utils';
-import { Subject, Observable, of } from 'rxjs';
+import { Subject, Observable, of, throwError } from 'rxjs';
 import { catchError, expand, map } from 'rxjs/operators';
 import { Magazine } from '../models/magazine';
 
@@ -36,8 +36,34 @@ export class AppService {
     private route: ActivatedRoute
   ) { }
 
+  private get<T>(url: string, params: HttpParams = new HttpParams(), responseType?: any): Observable<T> {
+    const options = { params, responseType, withCredentials: true };
+    return this.http.get<T>(`api/${url}`, options)
+    .pipe(catchError(err => { return this.handleError(err) }));
+  }
+
+  private post(url: string, obj: any, params: HttpParams = new HttpParams()) {
+    return this.http.post<any>(`api/${url}`, obj, { params })
+    .pipe(catchError(this.handleError));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(
+      'Something bad happened; please try again later.');
+  }
+
   getJournalConfig(ctx: Magazine) {
-    return this.http.get('texts?action=GET_CONFIG&ctx=' + ctx.ctx).pipe(
+    return this.get('texts?action=GET_CONFIG&ctx=' + ctx.ctx).pipe(
       map(res => {
         this.state.ctx = ctx;
         this.state.setConfig(res);
@@ -56,7 +82,7 @@ export class AppService {
 
   addJournal(ctx: Magazine) {
     this.state.ctxs.push(ctx);
-    return this.http.get('texts?action=ADD_JOURNAL&ctxs=' + JSON.stringify(this.state.ctxs)).pipe(
+    return this.get('texts?action=ADD_JOURNAL&ctxs=' + JSON.stringify(this.state.ctxs)).pipe(
       map(res => {
         this.state.ctx = ctx;
         this.state.setConfig(res);
@@ -155,11 +181,11 @@ export class AppService {
       .append('facet.field', 'oblast')
       .append('facet.field', 'keywords');
 
-    return this.http.get(url, { params: params });
+    return this.get(url, params);
   }
 
   getJournals() {
-    return this.http.get('texts?action=GET_JOURNALS');
+    return this.get('texts?action=GET_JOURNALS');
   }
 
   saveJournalConfig() {
@@ -172,7 +198,7 @@ export class AppService {
       .set('journals', JSON.stringify({ 'journals': this.state.ctxs }))
       .set('cfg', JSON.stringify(this.state.config))
       .set('ctx', this.state.ctx?.ctx!);
-    return this.http.get('texts?action=SAVE_JOURNALS', { params: params });
+    return this.get('texts?action=SAVE_JOURNALS', params);
   }
 
   searchFired(criteria: Criterium[]) {
@@ -197,7 +223,7 @@ export class AppService {
       .set('q', 'pid:"' + pid + '"')
       .set('wt', 'json');
 
-    return this.http.get(url, { params: params })
+    return this.get(url, params)
       .pipe(
         map((response: any) => {
           return response['response']['docs'][0];
@@ -208,13 +234,13 @@ export class AppService {
   getItemK5(pid: string): Observable<any> {
     let url = this.state.config['api_point'] + '/item/' + pid;
 
-    return this.http.get(url);
+    return this.get(url);
   }
 
   getChildrenApi(pid: string): Observable<any> {
     let url = this.state.config['api_point'] + '/item/' + pid + '/children';
 
-    return this.http.get(url);
+    return this.get(url);
   }
 
   getChildren(pid: string, dir: string = 'desc'): Observable<any> {
@@ -222,7 +248,7 @@ export class AppService {
     const params = new HttpParams().set('q', '*:*').set('fq', 'parents:"' + pid + '"')
       .set('wt', 'json').set('sort', 'idx ' + dir).set('rows', '500');
 
-    return this.http.get(url, { params: params }).pipe(
+    return this.get(url, params).pipe(
       map((response: any) => {
         return response['response']['docs'];
       })
@@ -242,7 +268,7 @@ export class AppService {
       .set('rows', '1');
 
 
-    return this.http.get(url, { params: params }).pipe(
+    return this.get(url, params).pipe(
       map((response: any) => {
         const j = response['response']['docs'][0];
 
@@ -270,7 +296,7 @@ export class AppService {
     let url = this.state.config['api_point'] + '/item/' + pid;
 
 
-    return this.http.get(url).pipe(
+    return this.get(url).pipe(
       map((response: any) => {
         //console.log(response);
         const j = response;
@@ -295,7 +321,7 @@ export class AppService {
   //  getJournalByPid(pid: string, model: string): Observable<Journal> {
   //    var url = this.state.config['api_point'] + '/item/' + pid + '/children';
   //
-  //    return this.http.get(url).map((response: Response) => {
+  //    return this.get(url).map((response: Response) => {
   //      let childs: any[] = response.json();
   //      //console.log(pid, childs);
   //      let last = childs[childs.length - 1];
@@ -372,7 +398,7 @@ export class AppService {
         .set('sort', 'idx asc')
         .set('rows', '500');
 
-      return this.http.get(url, { params: params });
+      return this.get(url, params);
     };
 
     return getRange(pid).pipe(
@@ -423,7 +449,7 @@ export class AppService {
       .set('fq', 'pid:"' + pid + '"')
       .set('wt', 'json').set('fl', 'mods');
 
-    return this.http.get(url, { params: params }).pipe(
+    return this.get(url, params).pipe(
       map((response: any) => {
         this.modsCache[pid] = response['response']['docs'][0]['mods'];
         return this.modsCache[pid];
@@ -436,7 +462,7 @@ export class AppService {
     const params = new HttpParams()
       .set('action', 'SET_VIEW')
       .set('pid', pid);
-    return this.http.get(url, { params: params });
+    return this.get(url, params);
 
 
     //    let url = this.state.config['context'] + 'search/views/update';
@@ -461,7 +487,7 @@ export class AppService {
       .set('wt', 'json')
       .set('fl', 'views');
 
-    return this.http.get(url, { params: params }).pipe(
+    return this.get(url, params).pipe(
       map((response: any) => {
         if (response['response']['numFound'] > 0) {
           return response['response']['docs'][0]['views'];
@@ -476,7 +502,7 @@ export class AppService {
 
   getModsK5(pid: string): Observable<any> {
     const url = this.state.config['api_point'] + '/item/' + pid + '/streams/BIBLIO_MODS';
-    return this.http.get(url).pipe(
+    return this.get(url).pipe(
       map((res: any) => {
         return JSON.parse(xml2json(res.text(), ''))['mods:modsCollection']['mods:mods'];
       })
@@ -490,7 +516,7 @@ export class AppService {
       .set('wt', 'json')
       .set('fl', 'parents');
 
-    return this.http.get(url, { params: params }).pipe(
+    return this.get(url, params).pipe(
       map((response: any) => {
         const parent = response['response']['docs'][0]['parents'][0];
         return this.getChildren(parent).subscribe();
@@ -500,7 +526,7 @@ export class AppService {
 
   getSiblingsk5(pid: string): Observable<any> {
     const url = this.state.config['api_point'] + '/item/' + pid + '/siblings';
-    return this.http.get(url).pipe(
+    return this.get(url).pipe(
       map((res: any) => {
 
         return res[0]['siblings'];
@@ -511,15 +537,20 @@ export class AppService {
   getUploadedFiles(): Observable<any> {
     let url = 'lf?action=LIST&ctx=' + this.state.ctx?.ctx;
 
-    return this.http.get(url).pipe(
+    return this.get(url).pipe(
       catchError((error: any) => of('error gettting content: ' + error))
     )
   }
 
   getText(id: string): Observable<string> {
-    let url = 'texts?action=LOAD&id=' + id + '&lang=' + this.state.currentLang + '&ctx=' + this.state.ctx?.ctx;
+    let url = 'texts';
+    let params = new HttpParams()
+      .set('action', 'LOAD')
+      .set('ctx', this.state.ctx?.ctx!)
+      .set('id', id)
+      .set('lang', this.state.currentLang);
 
-    return this.http.get(url, { responseType: 'text' }).pipe(
+    return this.get(url, params, 'plain/text').pipe(
       map((response: any) => {
         return response;
       }),
@@ -528,8 +559,11 @@ export class AppService {
   }
 
   getCitace(uuid: string): Observable<string> {
-    let url = 'index?action=CITATION&uuid=' + uuid;
-    return this.http.get(url, { responseType: 'text' }).pipe(
+    let url = 'index';
+    let params = new HttpParams()
+      .set('action', 'CITATION')
+      .set('uuid', uuid);
+    return this.get(url, params, 'plain/text').pipe(
       map((response: any) => {
         return response;
       }),
@@ -572,7 +606,7 @@ export class AppService {
       .set('ctx', this.state.ctx?.ctx!)
       .set('menu', menu);
 
-    return this.http.get(url, { params: params });
+    return this.get(url, params);
 
 
   }
@@ -583,14 +617,14 @@ export class AppService {
       .set('q', 'web:"' + web + '"')
       .set('wt', 'json');
 
-    return this.http.get(url, { params: params });
+    return this.get(url, params);
 
   }
 
   index(uuid: string) {
     let url = 'index?action=INDEX_DEEP&pid=' + uuid;
 
-    return this.http.get(url).pipe(
+    return this.get(url).pipe(
       map((response: any) => {
         return response.json();
       }),
@@ -602,7 +636,7 @@ export class AppService {
   delete(uuid: string) {
     let url = 'index?action=DELETE_PID&pid=' + uuid;
 
-    return this.http.get(url).pipe(
+    return this.get(url).pipe(
       map((response: any) => {
         return response.json();
       }),
@@ -613,7 +647,7 @@ export class AppService {
 
   login() {
     this.state.loginError = false;
-    return this.doLogin().subscribe(res => {
+    return this.doLogin().subscribe((res: any) => {
       if (res.hasOwnProperty('error')) {
         this.state.loginError = true;
         this.state.logged = false;
@@ -646,7 +680,7 @@ export class AppService {
       .set('pwd', this.state.loginpwd!)
       .set('ctx', this.state.ctx?.ctx!)
       .set('action', 'LOGIN');
-    return this.http.get(url, { params: params });
+    return this.get(url, params);
 
   }
 
@@ -669,7 +703,7 @@ export class AppService {
     let url = 'login';
     //console.log(this.loginuser, this.loginpwd, url);
     let params = new HttpParams().set('action', 'LOGOUT');
-    return this.http.get(url, { params: params });
+    return this.get(url, params);
 
   }
 

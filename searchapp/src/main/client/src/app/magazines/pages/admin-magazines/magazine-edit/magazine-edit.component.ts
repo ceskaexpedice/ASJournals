@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AppState } from 'src/app/app.state';
 import { MagazinesService } from 'src/app/magazines/magazines.service';
 import { Magazine } from 'src/app/models/magazine';
 
@@ -10,11 +11,29 @@ import { Magazine } from 'src/app/models/magazine';
 export class MagazineEditComponent implements OnInit {
 
   @Input() mag: Magazine = new Magazine();
+  @Input() editors: {
+    id: string,
+    typ: string,
+    name: string,
+    adresa: string,
+    web: string
+  }[]  = [];
+
+  vydavatel?: {
+    id: string,
+    typ: string,
+    name: string,
+    adresa: string,
+    web: string
+  };
   newKeyword: string = '';
   
-  constructor(private service: MagazinesService) { }
+  constructor(
+    public state: AppState,
+    private service: MagazinesService) { }
 
   ngOnInit() {
+    this.vydavatel = this.editors.find(e => e.id === this.mag.vydavatel_id)
   }
   
   removeKeyword(idx: number){
@@ -29,6 +48,11 @@ export class MagazineEditComponent implements OnInit {
         this.mag.keywords.push(this.newKeyword);
       this.newKeyword = '';
     }
+  }
+
+  setVydavatel(e: any) {
+    this.mag.vydavatel_id = e.id;
+    this.mag.vydavatel = e.name;
   }
 
 }
