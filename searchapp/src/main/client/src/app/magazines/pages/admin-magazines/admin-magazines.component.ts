@@ -43,6 +43,7 @@ export class AdminMagazinesComponent implements OnInit {
     this.service.getEditors().subscribe(state => {
       this.editors = state['editorsList'];
       this.currentMag = JSON.parse(JSON.stringify(this.state.ctxs[0]));
+      this.currentEditor = JSON.parse(JSON.stringify(this.editors[0]));
     });
   }
 
@@ -109,8 +110,8 @@ export class AdminMagazinesComponent implements OnInit {
       return;
     }
     this.service.saveMagazine(this.currentMag!).subscribe(res => {
-      this.service.getMagazines().subscribe(state => {
-        this.state.ctxs = state['magazines'];
+      this.service.getMagazines().subscribe(res2 => {
+        this.state.ctxs = res2['response']['docs'];
         this.service.showSnackBar('Saved success!');
       });
     });
@@ -120,8 +121,10 @@ export class AdminMagazinesComponent implements OnInit {
     var c = confirm('Delete journal "' + this.currentMag?.ctx + '"?');
     if (c == true) {
       this.service.deleteMagazine(this.currentMag?.ctx!).subscribe(res => {
-        this.service.getMagazines().subscribe(state => {
-          this.state.ctxs = state['magazines'];
+        this.service.getMagazines().subscribe(res2 => {
+          // this.state.setJournals(res);
+          
+          this.state.ctxs = res2['response']['docs'];
         });
       });
     }

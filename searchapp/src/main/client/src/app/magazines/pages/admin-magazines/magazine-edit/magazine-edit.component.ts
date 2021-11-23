@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, SimpleChange } from '@angular/core';
 import { AppState } from 'src/app/app.state';
 import { MagazinesService } from 'src/app/magazines/magazines.service';
 import { Magazine } from 'src/app/models/magazine';
@@ -34,6 +34,12 @@ export class MagazineEditComponent implements OnInit {
 
   ngOnInit() {
     this.vydavatel = this.editors.find(e => e.id === this.mag.vydavatel_id)
+  }
+
+  ngOnChanges(change: SimpleChanges) {
+    if (change.mag) {
+      this.vydavatel = this.editors.find(e => e.id === this.mag.vydavatel_id)
+    }
   }
   
   removeKeyword(idx: number){
