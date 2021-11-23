@@ -5,7 +5,7 @@
         <div fxFlex="350px">
           <button mat-flat-button (click)="addJournal()" color="primary" class="app-w-100 app-text-left app-mb-4"><mat-icon>add</mat-icon>{{ 'magazines.pridat_casopis' | translate }}</button>
           <mat-list role="list" class="app-view-admin">
-            <mat-list-item *ngFor="let ctx of state.ctxs" [class.active]="currentMag && ctx.ctx === currentMag.ctx" role="listitem" (click)="editCtx(ctx)" class="app-cursor-pointer">
+            <mat-list-item *ngFor="let ctx of state.ctxs" [class.app-active]="currentMag && ctx.ctx === currentMag.ctx" role="listitem" (click)="editCtx(ctx)" class="app-cursor-pointer">
               <a><mat-icon>menu_book</mat-icon>{{ ctx.ctx || ctx.title }}</a>
             </mat-list-item>
           </mat-list>
@@ -19,66 +19,23 @@
       </div>
     </mat-tab>
     <mat-tab [label]="'magazines.editori' | translate">
-      editori
+      <div fxLayout="row" fxLayoutGap="32px" class="app-mt-8">
+        <div fxFlex="350px">
+          <button mat-flat-button (click)="addEditor()" color="primary" class="app-w-100 app-text-left app-mb-4"><mat-icon>add</mat-icon>{{ 'magazines.pridat_editora' | translate }}</button>
+          <mat-list role="list" class="app-view-admin">
+            <mat-list-item *ngFor="let editor of editors" [class.app-active]="currentEditor && currentEditor.id === editor.id" role="listitem" (click)="editEditor(editor)" class="app-cursor-pointer">
+              <a>{{ editor.id }}</a><ng-container *ngIf="!editor.id">ID chybi ...</ng-container>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <div *ngIf="currentEditor">
+          <app-editor-edit [editor]="currentEditor"></app-editor-edit>
+          <button mat-flat-button (click)="saveEditor()" color="primary" class="app-mr-2">{{ 'magazines.ulozit_editora' | translate }}</button>
+          <button mat-flat-button (click)="removeEditor()" color="warn" class="app-mr-2">{{ 'magazines.smazat_editora' | translate }}</button>
+          <button mat-flat-button (click)="cancel()">{{ 'magazines.zrusit' | translate }}</button>
+         </div>
+      </div>
     </mat-tab>
     <mat-tab [label]="'magazines.sprava_uzivatelu' | translate | translate">{{ 'magazines.sprava_uzivatelu' | translate }}</mat-tab><!--uzivatel, heslo, select s vyberem zurnalu-->
   </mat-tab-group>
 </div>
-
-
-
-<section class="app-content">
-  <div class="container">
-    <!-- <h5>Adminstration : 
-    <a (click)="edit('journals')" [class.active]="editing === 'journals'">Journals</a>
-    | <a (click)="edit('editors')" [class.active]="editing === 'editors'">Editors</a></h5> -->
-
-    <!-- <ng-container  *ngIf="editing === 'journals'">
-      <div class="row" >
-        <div class="col-xs-12"> 
-          <ul class="app-admin-nav list-unstyled nav-pills">
-            <li >|</li>
-            <li *ngFor="let ctx of state.ctxs" [class.active]="currentMag && ctx.ctx === currentMag.ctx" >
-              &#160;<a (click)="editCtx(ctx)">&#160;{{ctx.ctx || ctx.title}}&#160;</a>&#160;|
-            </li>
-            <li >
-              &#160;&#160;&#160;&#160;<a (click)="addJournal()"><mat-icon title="add journal" >plus-circle-outline</mat-icon></a>
-            </li>
-            <li >
-              &#160;&#160;&#160;&#160;<a (click)="removeJournal()"><mat-icon title="delete journal">minus-circle-outline</mat-icon></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="row" *ngIf="currentMag">
-        <app-magazine-edit [mag]="currentMag"></app-magazine-edit>
-        <button type="button" class="btn app-btn app-btn-default" (click)="save()">Save</button>
-        <button type="button" class="btn app-btn app-btn-default" (click)="cancel()">Cancel</button>
-      </div>
-    </ng-container> -->
-
-    <ng-container  *ngIf="editing === 'editors'">
-      <div class="row" >
-      <ul class="app-admin-nav list-unstyled nav-pills">
-          <li >|</li>
-          <li *ngFor="let editor of editors" [class.active]="currentEditor && currentEditor.id === editor.id" >
-            &#160;<a (click)="editEditor(editor)">&#160;{{editor.id}}&#160;</a>&#160;|
-          </li>
-          <li >
-            &#160;&#160;&#160;&#160;<a (click)="addEditor()"><mat-icon title="add editor" >plus-circle-outline</mat-icon></a>
-          </li>
-          <li >
-            &#160;&#160;&#160;&#160;<a (click)="removeEditor()"><mat-icon title="delete editor" >minus-circle-outline</mat-icon></a>
-          </li>
-        </ul>
-      </div>
-      <div class="row" *ngIf="currentEditor">
-        <app-editor-edit [editor]="currentEditor"></app-editor-edit>
-        <button type="button" class="btn app-btn app-btn-default" (click)="saveEditor()">Save</button>
-        <button type="button" class="btn app-btn app-btn-default" (click)="cancel()">Cancel</button>
-      </div>
-    </ng-container>
-
-  </div>
-</section>

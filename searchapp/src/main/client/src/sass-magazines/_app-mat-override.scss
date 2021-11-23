@@ -94,6 +94,11 @@
       &:hover {
         background-color: $app-gray-2;
       }
+
+      &.app-active {
+        background-color: $app-brand-border-color;
+        font-weight: 900;
+      }
     }
   }
 }

@@ -196,6 +196,14 @@
 		"klicove_slovo": "Key word",
 		"pridat_klicove_slovo": "Add a keyword",
 		"smazat_klicove_slovo": "Remove a keyword",
-		"popis": "Description"
+		"popis": "Description",
+		"pridat_editora": "Add editor",
+		"id": "Id",
+		"typ": "Tyoe",
+		"jmeno": "Name",
+		"web": "Web",
+		"adresa": "Address",
+		"ulozit_editora": "Save editor",
+		"smazat_editora": "Delete editor"
 	}
 }
