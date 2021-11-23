@@ -1,7 +1,7 @@
 {
     "context": "/",
     "defaultLang": "cs",
-    "api_point": "api",
+    "api_point": "k5api",
     "journal": "uuid:fc144bf1-8d61-4f4b-80f9-e4a772db32dc",
     "model": "periodicalvolume",
     "sort_field": "datum_end",

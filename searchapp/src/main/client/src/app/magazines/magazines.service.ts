@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, throwError} from 'rxjs';
 
 import {MagazineState} from './magazine.state';
 import {Router} from '@angular/router';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Magazine } from '../models/magazine';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -22,6 +22,34 @@ export class MagazinesService {
     private snackBar: MatSnackBar,
     private router: Router,
     private http: HttpClient) {}
+
+
+
+  private get<T>(url: string, params: HttpParams = new HttpParams(), responseType?: any): Observable<T> {
+    const options = { params, responseType, withCredentials: true };
+    return this.http.get<T>(`api/${url}`, options)
+    .pipe(catchError(err => { return this.handleError(err) }));
+  }
+
+  private post(url: string, obj: any, params: HttpParams = new HttpParams()) {
+    return this.http.post<any>(`api/${url}`, obj, { params })
+    .pipe(catchError(this.handleError));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(
+      'Something bad happened; please try again later.');
+  }
 
   changeLang(lang: string) {
     this.state.currentLang = lang;
@@ -40,15 +68,20 @@ export class MagazinesService {
   }
 
   getText(id: string): Observable<string> {
-    var url = 'texts?action=LOAD&ctx=magazines&id=' + id + '&lang=' + this.state.currentLang;
+    const url = 'texts';
+    let params = new HttpParams()
+      .set('action', 'LOAD')
+      .set('ctx', 'magazines')
+      .set('id', id)
+      .set('lang', 'titleCS ' + this.state.currentLang);
 
-    return this.http.get(url, {responseType: 'text'});
+    return this.get(url, params, 'plain/text');
   }
 
 
   //Magazines
   getMagazines(): Observable<any> {
-    var url = this.state.config['context'] + 'search/magazines/select';
+    var url = 'search/magazines/select';
     let params = new HttpParams()
       .set('q', '*')
       .set('wt', 'json')
@@ -69,11 +102,11 @@ export class MagazinesService {
 
     this.state.clear();
 
-    return this.http.get(url, {params: params});
+    return this.get(url, params);
   }
 
   getEditorMagazines(id: string): Observable<any> {
-    var url = this.state.config['context'] + 'search/magazines/select';
+    var url = 'search/magazines/select';
     let params = new HttpParams()
       .set('q', 'vydavatel_id:"' + id + '"')
       .set('wt', 'json')
@@ -94,7 +127,7 @@ export class MagazinesService {
 
     this.state.clear();
 
-    return this.http.get(url, {params: params}).pipe(
+    return this.get(url, params).pipe(
       map((response: any) => {
         this.state.magazines = response['response']['docs'];
         this.state.setFacets(response['facet_counts']['facet_fields']);
@@ -105,7 +138,7 @@ export class MagazinesService {
 
 
   getEditors(): Observable<any> {
-    var url = this.state.config['context'] + 'search/editors/select';
+    var url = 'search/editors/select';
     let params = new HttpParams().set('q', '*')
       .set('wt', 'json')
       .set('rows', '50')
@@ -117,7 +150,7 @@ export class MagazinesService {
 
     this.state.clear();
 
-    return this.http.get(url, {params: params}).pipe(
+    return this.get(url, params).pipe(
       map((response) => {
         this.state.setEditors(response);
         return this.state;
@@ -132,7 +165,7 @@ export class MagazinesService {
       .set('action', 'SAVE_EDITOR')
       .set('editor', JSON.stringify(editor));
 
-    return this.http.get(url, {params: params});
+    return this.get(url, params);
   }
 
   deleteEditor(id: string) {
@@ -142,7 +175,7 @@ export class MagazinesService {
       .set('action', 'DELETE_EDITOR')
       .set('id', id);
 
-    return this.http.get(url, {params: params});
+    return this.get(url, params);
   }
 
   saveMagazine(mag: Magazine) {
@@ -152,7 +185,7 @@ export class MagazinesService {
       .set('action', 'SAVE_MAGAZINE')
       .set('mag', JSON.stringify(mag));
 
-    return this.http.get(url, {params: params});
+    return this.get(url, params);
   }
 
   deleteMagazine(ctx: string) {
@@ -162,7 +195,7 @@ export class MagazinesService {
       .set('action', 'DELETE_MAGAZINE')
       .set('ctx', ctx);
 
-    return this.http.get(url, {params: params});
+    return this.get(url, params);
   }
 login() {
     this.state.loginError = false;
@@ -195,7 +228,7 @@ login() {
       pwd: this.state.loginpwd,
       ctx: 'admin'
     }
-    return this.http.post<any>(url, user, {params});
+    return this.post(url, user, params);
 
   }
 
@@ -214,7 +247,7 @@ login() {
     var url = 'login';
     //console.log(this.loginuser, this.loginpwd, url);
     var params = new HttpParams().set('action', 'LOGOUT');
-    return this.http.get(url, {params: params});
+    return this.get(url, params);
 
   }
 
@@ -225,8 +258,7 @@ login() {
       user: username,
       pwd: newpwd
     }
-    return this.http.post<any>(url, user, {params});
-
+    return this.post(url, user, params);
   }
 
 }

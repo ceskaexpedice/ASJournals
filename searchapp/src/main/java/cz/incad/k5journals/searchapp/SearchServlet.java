@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import org.json.JSONException;
  *
  * @author alberto
  */
+@WebServlet(name = "SearchServlet", urlPatterns = {"/search/*"})
 public class SearchServlet extends HttpServlet {
 
   public static final Logger LOGGER = Logger.getLogger(Options.class.getName());

@@ -5,6 +5,20 @@
         <servlet-class>cz.incad.k5journals.searchapp.InitServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>InitServlet</servlet-name>
+        <url-pattern>/InitServlet</url-pattern>
+    </servlet-mapping>
+    
+  <servlet>
+    <servlet-name>ApiServlet</servlet-name>
+    <servlet-class>cz.incad.k5journals.searchapp.ApiServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ApiServlet</servlet-name>
+    <url-pattern>/api/*</url-pattern>
+  </servlet-mapping>
+  
     <servlet>
         <servlet-name>TextsServlet</servlet-name>
         <servlet-class>cz.incad.k5journals.searchapp.TextsServlet</servlet-class>
@@ -26,25 +40,13 @@
         <servlet-name>ImageServlet</servlet-name>
         <servlet-class>cz.incad.k5journals.searchapp.ImgServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>InitServlet</servlet-name>
-        <url-pattern>/InitServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>SearchServlet</servlet-name>
-        <servlet-class>cz.incad.k5journals.searchapp.SearchServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>SearchServlet</servlet-name>
-        <url-pattern>/search/*</url-pattern>
-    </servlet-mapping>
     <servlet>
         <servlet-name>ForwardServlet</servlet-name>
         <servlet-class>cz.incad.k5journals.searchapp.ForwardServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ForwardServlet</servlet-name>
-        <url-pattern>/api/*</url-pattern>
+        <url-pattern>/k5api/*</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>ConfigServlet</servlet-name>
