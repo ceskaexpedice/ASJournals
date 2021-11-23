@@ -273,6 +273,43 @@ public class IndexServlet extends HttpServlet {
         out.println(json.toString(2));
       }
     },
+    DELETE_USER {
+      @Override
+      void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+
+        resp.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = resp.getWriter();
+        JSONObject json = new JSONObject();
+        try {
+
+          Indexer indexer = new Indexer();
+          json.put("saved", indexer.deleteEditor(req.getParameter("id")));
+
+        } catch (Exception ex) {
+          json.put("error", ex.toString());
+        }
+        out.println(json.toString(2));
+      }
+    },
+    SAVE_USER {
+      @Override
+      void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+
+        resp.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = resp.getWriter();
+        JSONObject json = new JSONObject();
+        try {
+
+          Indexer indexer = new Indexer();
+          JSONObject jo = new JSONObject(req.getParameter("editor"));
+          json.put("saved", indexer.indexEditor(jo));
+
+        } catch (Exception ex) {
+          json.put("error", ex.toString());
+        }
+        out.println(json.toString(2));
+      }
+    },
     CITATION {
       @Override
       void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {

@@ -1,0 +1,21 @@
+<div fxLayout="row wrap" class="app-layout-wrap-16" *ngIf="user">
+  <div fxFlex="calc(50% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.username' | translate }}</mat-label>
+      <input matInput name="username" type="text" [(ngModel)]="user.username">
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(50% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.usercontext' | translate }}</mat-label>
+      
+      <mat-select [(ngModel)]="user.ctxs" multiple="true">
+        <mat-option *ngFor="let ctx of state.ctxs" [value]="ctx.ctx">
+          {{ctx.ctx}}
+        </mat-option>
+      </mat-select>
+
+      <input matInput name="usercontext"  type="text" [(ngModel)]="user.adresa">
+    </mat-form-field>
+  </div>
+</div>
