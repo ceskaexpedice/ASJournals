@@ -65,12 +65,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot([
+    RouterModule.forChild([
 
-    //{path: '', component: ContextsComponent},
+    { path: '', component: ContextsComponent, children: routes},
     { path: 'admin', redirectTo: 'magazines/admin', pathMatch: 'full' },
     { path: 'prihlaseni', redirectTo: 'magazines/prihlaseni', pathMatch: 'full' },
-    //{path: 'k5journals', redirectTo: 'k5journals/journal', pathMatch: 'full'},
     {
       path: ':ctx', component: ContextsComponent,
       children: routes

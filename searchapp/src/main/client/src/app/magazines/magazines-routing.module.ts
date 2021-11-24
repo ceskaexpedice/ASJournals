@@ -13,7 +13,7 @@ import { VydavateleComponent } from './pages/vydavatele/vydavatele.component';
 const routes: Routes =[
 
   {
-    path: 'magazines', component: MagazinesComponent,
+    path: '', component: MagazinesComponent,
     children: [
       {path: '', component: SeznamCasopisuComponent},
       {path: 'admin', component: AdminMagazinesComponent, canActivate: [AuthGuard]},
@@ -26,7 +26,7 @@ const routes: Routes =[
       {path: 'kontakt', component: KontaktComponent}
     ]
   },
-  { path: '', redirectTo: 'magazines', pathMatch: 'full'}
+  //{ path: '', redirectTo: 'magazines', pathMatch: 'full'}
 ];
 
 @NgModule({

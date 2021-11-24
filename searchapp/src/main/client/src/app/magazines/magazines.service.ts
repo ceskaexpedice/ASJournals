@@ -237,7 +237,7 @@ login() {
         this.state.loginpwd = '';
         this.state.logged = true;
         
-        this.router.navigate(['admin'], {queryParamsHandling: "preserve"});
+        this.router.navigate(['/magazines/admin'], {queryParamsHandling: "preserve"});
         
       }
     }, error => {

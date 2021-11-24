@@ -41,6 +41,7 @@ export class ContextsComponent implements OnInit {
     
     this.route.params
       .subscribe((params: Params) => {
+        console.log(params.ctx)
           if (this.state.ctxs && this.state.ctxs.length > 0) {
             this.state.ctx = this.service.getCtx(params.ctx);
             this.getConfig();

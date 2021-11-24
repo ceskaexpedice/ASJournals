@@ -8,7 +8,8 @@ import { MagazinesService } from '../../magazines.service';
 export type User = {
   username: string,
   ctxs: string[],
-  name: string
+  name: string,
+  isAdmin: boolean
 }
 
 @Component({
@@ -128,6 +129,7 @@ export class AdminMagazinesComponent implements OnInit {
     this.currentUser = {
       username: '',
       name: '',
+      isAdmin: false,
       ctxs: []
     };
   }

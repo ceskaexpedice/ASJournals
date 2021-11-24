@@ -89,7 +89,7 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     CommonModule,
     FormsModule,
-    BrowserAnimationsModule,
+    // BrowserAnimationsModule,
     JournalRoutingModule,
     NouisliderModule,
     AlertModule.forRoot(),
@@ -110,6 +110,6 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     CollapseModule.forRoot(), TooltipModule.forRoot()
   ],
-  providers: [AppState]
+  providers: []
 })
 export class JournalModule { }

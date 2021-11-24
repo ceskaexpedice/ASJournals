@@ -7,8 +7,13 @@
   </div>
   <div fxFlex="calc(50% - 16px)">
     <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.userpwd' | translate }}</mat-label>
+      <input matInput name="pwd" type="text" [(ngModel)]="user.pwd">
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(50% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.usercontext' | translate }}</mat-label>
-      
       <mat-select [(ngModel)]="user.ctxs" multiple="true">
         <mat-option *ngFor="let ctx of state.ctxs" [value]="ctx.ctx">
           {{ctx.ctx}}
@@ -17,5 +22,8 @@
 
       <input matInput name="usercontext"  type="text" [(ngModel)]="user.adresa">
     </mat-form-field>
+  </div>
+  <div fxFlex="calc(50% - 16px)" fxFlexAlign="center">
+    <mat-checkbox id="isAdmin" [(ngModel)]="user.isAdmin">{{ 'magazines.user_isadmin' | translate }}</mat-checkbox>
   </div>
 </div>

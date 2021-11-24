@@ -114,7 +114,7 @@ export class AppService {
     for (let i = 0; i < this.state.ctxs.length; i++) {
       if (!this.findStyle(this.state.ctxs[i].ctx)) {
         const link = document.createElement('link');
-        link.href = 'theme?ctx=' + this.state.ctxs[i].ctx + '&color=' + this.state.ctxs[i]['color'];
+        link.href = 'api/theme?ctx=' + this.state.ctxs[i].ctx + '&color=' + this.state.ctxs[i]['color'];
         link.rel = 'stylesheet';
         link.id = 'css-theme-' + this.state.ctxs[i].ctx;
         link.title = this.state.ctxs[i].ctx!;

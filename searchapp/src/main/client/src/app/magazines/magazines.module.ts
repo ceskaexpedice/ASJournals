@@ -36,7 +36,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 }
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, 'assets/i18n/', '.magazines.json');
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
 
 

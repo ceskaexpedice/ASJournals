@@ -24,7 +24,7 @@ export class AppState {
   public _configSubject = new Subject();
   public configSubject: Observable<any> = this._configSubject.asObservable();
 
-  private _journalsSubject = new Subject();
+  private _journalsSubject: ReplaySubject<any> = new ReplaySubject(2);
   public journalsInitilized: Observable<any> = this._journalsSubject.asObservable();
 
   //Holds client configuration
