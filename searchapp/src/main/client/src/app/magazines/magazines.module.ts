@@ -28,6 +28,7 @@ import { VydavateleComponent } from './pages/vydavatele/vydavatele.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppState } from '../app.state';
 import { SidenavListComponent } from './components/sidenav-list/sidenav-list.component';
+import { UserEditComponent } from './pages/admin-magazines/user-edit/user-edit.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -35,7 +36,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 }
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, 'assets/i18n/', '.magazines.json');
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
 
 
@@ -56,6 +57,7 @@ export function createTranslateLoader(http: HttpClient) {
     AdminMagazinesComponent,
     MagazineEditComponent,
     EditorEditComponent,
+    UserEditComponent,
     LoginComponent,
     SidenavListComponent
   ],

@@ -36,6 +36,23 @@
          </div>
       </div>
     </mat-tab>
-    <mat-tab [label]="'magazines.sprava_uzivatelu' | translate | translate">{{ 'magazines.sprava_uzivatelu' | translate }}</mat-tab><!--uzivatel, heslo, select s vyberem zurnalu-->
+    <mat-tab [label]="'magazines.sprava_uzivatelu' | translate | translate">
+      <div fxLayout="row" fxLayoutGap="32px" class="app-mt-8">
+        <div fxFlex="350px">
+          <button mat-flat-button (click)="addUser()" color="primary" class="app-w-100 app-text-left app-mb-4"><mat-icon>add</mat-icon>{{ 'magazines.pridat_user' | translate }}</button>
+          <mat-list role="list" class="app-view-admin">
+            <mat-list-item *ngFor="let user of users" [class.app-active]="currentUser && currentUser.username === user.username" role="listitem" (click)="editUser(user)" class="app-cursor-pointer">
+              <a>{{ user.username }}</a>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <div *ngIf="currentUser">
+          <app-user-edit [user]="currentUser"></app-user-edit>
+          <button mat-flat-button (click)="saveUser()" color="primary" class="app-mr-2">{{ 'magazines.ulozit_user' | translate }}</button>
+          <button mat-flat-button (click)="removeUser()" color="warn" class="app-mr-2">{{ 'magazines.smazat_user' | translate }}</button>
+          <button mat-flat-button (click)="cancel()">{{ 'magazines.zrusit' | translate }}</button>
+         </div>
+      </div>
+    </mat-tab><!--uzivatel, heslo, select s vyberem zurnalu-->
   </mat-tab-group>
 </div>

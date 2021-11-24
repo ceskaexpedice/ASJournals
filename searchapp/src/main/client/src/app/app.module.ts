@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,7 @@ import { AuthGuard } from './services/auth-guard';
 import { SearchService } from './services/search.service';
 import { MagazinesModule } from './magazines/magazines.module';
 import { JournalModule } from './journal/journal.module';
+import { AppConfiguration } from './app-configuration';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -37,7 +38,10 @@ export function createTranslateLoader(http: HttpClient) {
     MagazinesModule,
     JournalModule,
   ],
-  providers: [HttpClient, AppService, SearchService, AuthGuard, TranslateService],
+  providers: [
+    AppState, AppConfiguration, HttpClient, 
+    { provide: APP_INITIALIZER, useFactory: (config: AppConfiguration) => () => config.load(), deps: [AppConfiguration], multi: true },
+      AppService, SearchService, AuthGuard, TranslateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

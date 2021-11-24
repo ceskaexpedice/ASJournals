@@ -175,6 +175,36 @@ export class MagazinesService {
     return this.get(url, params);
   }
 
+  getUsers(): Observable<any> {
+    var url = 'search/users/select';
+    let params = new HttpParams().set('q', '*')
+      .set('wt', 'json')
+      .set('rows', '50')
+      .set('json.nl', 'arrntv')
+      .set('sort', 'username asc');
+
+    this.state.clear();
+
+    return this.get(url, params);
+  }
+  
+  saveUser(user: any) {
+    var url = 'index';
+    let params = new HttpParams()
+      .set('action', 'SAVE_USER');
+    return this.post(url, user, params);
+  }
+
+  deleteUser(username: string) {
+
+    var url = 'index';
+    let params = new HttpParams()
+      .set('action', 'DELETE_USER')
+      .set('username', username);
+
+    return this.get(url, params);
+  }
+
   saveMagazine(mag: Magazine) {
 
     var url = 'index';
@@ -207,7 +237,7 @@ login() {
         this.state.loginpwd = '';
         this.state.logged = true;
         
-        this.router.navigate(['admin'], {queryParamsHandling: "preserve"});
+        this.router.navigate(['/magazines/admin'], {queryParamsHandling: "preserve"});
         
       }
     }, error => {

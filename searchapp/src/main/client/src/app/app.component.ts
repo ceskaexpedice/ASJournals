@@ -54,13 +54,13 @@ export class AppComponent implements OnInit {
             });
           }
       });
-    
-    //this.service.getJournals().subscribe(res => {
-    this.service.getMagazines().subscribe((res: any) => {
-      this.state.setJournals(res);
       this.service.setStyles();
-      // this.getConfig();
-    });
+    //this.service.getJournals().subscribe(res => {
+    // this.service.getMagazines().subscribe((res: any) => {
+    //   this.state.setJournals(res);
+    //   this.service.setStyles();
+    //   // this.getConfig();
+    // });
     
   }
 

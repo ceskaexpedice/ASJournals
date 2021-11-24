@@ -36,6 +36,7 @@ export class MagazinesComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('kk')
     this.getConfig().subscribe(
       (cfg: any) => {
 

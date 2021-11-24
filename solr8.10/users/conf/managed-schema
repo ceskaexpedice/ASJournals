@@ -56,6 +56,7 @@
     <field name="pwd" type="string" indexed="true" stored="true" multiValued="false" />
     <field name="name" type="collatedCS" indexed="true" stored="true" multiValued="false" />
     <field name="ctxs" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="isAdmin" type="boolean" indexed="true" stored="true" />
 
     <uniqueKey>username</uniqueKey>
 

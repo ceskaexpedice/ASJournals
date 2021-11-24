@@ -24,7 +24,7 @@ const PROXY_CONFIG = {
                 // const cookies = pr.headers['set-cookie'].map(cookie => 
                 //     cookie.replace(/\/insodatawebui/gi, '/')
                 // );
-                //pr.headers['set-cookie'] = cookies;
+                // pr.headers['set-cookie'] = cookies;
                 // console.log("Replaced cookie "+pr.headers['set-cookie']);
             }
         }
