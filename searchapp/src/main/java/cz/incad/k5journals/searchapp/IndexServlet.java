@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.solr.common.SolrInputDocument;
 import org.json.JSONObject;
 
@@ -301,8 +302,8 @@ public class IndexServlet extends HttpServlet {
         try {
 
           Indexer indexer = new Indexer();
-          JSONObject jo = new JSONObject(req.getParameter("editor"));
-          json.put("saved", indexer.indexEditor(jo));
+          JSONObject jo = new JSONObject(IOUtils.toString(req.getInputStream(), "UTF-8"));
+          json.put("saved", indexer.indexUser(jo));
 
         } catch (Exception ex) {
           json.put("error", ex.toString());

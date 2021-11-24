@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{ 'desc.' + data.caption | translate }}</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="outline" class="app-w-100 app-clean-bottom-gap">
+    <mat-label>{{ 'desc.' + data.label | translate }}</mat-label>
+    <input matInput cdkFocusInitial type="text" [(ngModel)]="result" autocomplete="on" id="result" [placeholder]="'desc.' + data.label | translate">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-flat-button color="primary" [mat-dialog-close]="result" cdkFocusInitial>{{ 'desc.ulozit' | translate }}</button>
+  <button mat-button [mat-dialog-close]="null">{{ 'desc.zavrit' | translate }}</button>
+</div>
+

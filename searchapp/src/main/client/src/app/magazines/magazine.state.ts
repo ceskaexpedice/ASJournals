@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { User } from '../models/user';
   
 @Injectable()
   export class MagazineState {
@@ -22,6 +23,7 @@ import { Observable, Subject } from 'rxjs';
   //Holds client configuration
   config: any;
 
+  user: User | null = null;
   loginuser: string | null = null;
   loginpwd: string | null = null;
   loginError: boolean = false;

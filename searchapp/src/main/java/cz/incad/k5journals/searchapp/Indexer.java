@@ -838,6 +838,42 @@ public class Indexer {
     }
     return ret;
   }
+
+  /**
+   * Index user 
+   *
+   * @param json doc in json format
+   */
+  public JSONObject indexUser(JSONObject json) {
+    JSONObject ret = new JSONObject();
+    try (SolrClient solr = getClient("users")) {
+      SolrInputDocument idoc = new SolrInputDocument();
+      for (Object key : json.keySet()) {
+        String name = (String) key;
+        if (null == name) {
+          //idoc.addField(name, json.get(name));
+        } else {
+          switch (name) {
+            case "index_time":
+              break;
+            case "_version_":
+              break;
+            default:
+              idoc.setField(name, json.get(name));
+              break;
+          }
+        }
+      }
+      LOGGER.info(idoc.toString());
+      solr.add(idoc);
+      solr.commit();
+      ret.put("success", "user saved");
+    } catch (SolrServerException | IOException ex) {
+      ret.put("error", ex);
+      LOGGER.log(Level.SEVERE, null, ex);
+    }
+    return ret;
+  }
   
   
 

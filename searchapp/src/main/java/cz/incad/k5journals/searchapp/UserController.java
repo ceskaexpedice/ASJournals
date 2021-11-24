@@ -81,7 +81,7 @@ public class UserController {
 
       SolrQuery q = new SolrQuery("username:\"" + ClientUtils.escapeQueryChars(username) + "\"")
               .addFilterQuery("pwd:\"" + ClientUtils.escapeQueryChars(hashPassword(pwd, username)) + "\"")
-              .setFields("name, username, ctxs");
+              .setFields("name, username, ctxs, isAdmin");
       SolrDocumentList docs = solr.query("users", q).getResults();
       solr.close();
       if (docs.getNumFound() > 0) {
@@ -109,7 +109,7 @@ public class UserController {
       ret.put("error", "not logged");
       return ret;
     }
-    if (!user.getJSONArray("ctxs").toList().contains("admin")) {
+    if (!user.optBoolean("isAdmin")) {
       ret.put("error", "not autorized");
       return ret;
     }

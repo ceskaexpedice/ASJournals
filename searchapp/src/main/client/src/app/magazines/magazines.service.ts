@@ -230,13 +230,14 @@ login() {
       if (res.hasOwnProperty('error')) {
         this.state.loginError = true;
         this.state.logged = false;
+        this.state.user = null;
       } else {
 
         this.state.loginError = false;
         this.state.loginuser = '';
         this.state.loginpwd = '';
         this.state.logged = true;
-        
+        this.state.user = res;
         this.router.navigate(['/magazines/admin'], {queryParamsHandling: "preserve"});
         
       }
@@ -244,6 +245,7 @@ login() {
       console.log('error : ' + error);
         this.state.loginError = true;
         this.state.logged = false;
+        this.state.user = null;
     });
   }
 
@@ -265,6 +267,7 @@ login() {
         console.log(res['error']);
       }
       this.state.logged = false;
+      this.state.user = null;
       this.router.navigate(['.'], {queryParamsHandling: "preserve"});
     });
   }

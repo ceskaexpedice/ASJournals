@@ -1,16 +1,13 @@
 import {Component, OnInit} from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import {Router} from '@angular/router';
 import { AppState } from 'src/app/app.state';
 import { Magazine } from 'src/app/models/magazine';
+import { User } from 'src/app/models/user';
+import { DialogPromptComponent } from '../../components/dialog-prompt/dialog-prompt.component';
+import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
-
-export type User = {
-  username: string,
-  ctxs: string[],
-  name: string,
-  isAdmin: boolean
-}
 
 @Component({
   selector: 'app-admin-magazines',
@@ -42,7 +39,9 @@ export class AdminMagazinesComponent implements OnInit {
 
   editing: string = 'journals';
   constructor(
+    public dialog: MatDialog,
     public state: AppState,
+    public magState: MagazineState,
     private service: MagazinesService,
     private router: Router) {}
 
@@ -143,10 +142,29 @@ export class AdminMagazinesComponent implements OnInit {
     if (c == true) {
       this.service.deleteUser(this.currentUser!.username).subscribe(res => {
         this.service.getUsers().subscribe(res2 => {
-          this.users = res2['editorsList'];
+          this.users = res2['response']['docs'];
         });
       });
     }
+  }
+
+  resetPwd() {
+    
+    const dialogRef = this.dialog.open(DialogPromptComponent, {
+      width: '700px',
+      data: {caption: 'nove_heslo', label: 'nove_heslo'},
+      panelClass: 'app-register-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== null) {
+        this.service.resetPwd(this.currentUser!.username, result).subscribe(res => {
+          this.service.getUsers().subscribe(res2 => {
+            this.users = res2['response']['docs'];
+          });
+        });
+      }
+    });
   }
 
   saveUser() {
@@ -157,7 +175,7 @@ export class AdminMagazinesComponent implements OnInit {
     }
     this.service.saveUser(this.currentUser).subscribe(res => {
       this.service.getUsers().subscribe(res2 => {
-        this.editors = res2['editorsList'];
+        this.users = res2['response']['docs'];
         this.service.showSnackBar('Saved success!');
       });
     });

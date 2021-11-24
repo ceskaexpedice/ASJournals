@@ -36,7 +36,7 @@
          </div>
       </div>
     </mat-tab>
-    <mat-tab [label]="'magazines.sprava_uzivatelu' | translate | translate">
+    <mat-tab *ngIf="magState.user?.isAdmin" [label]="'magazines.sprava_uzivatelu' | translate | translate">
       <div fxLayout="row" fxLayoutGap="32px" class="app-mt-8">
         <div fxFlex="350px">
           <button mat-flat-button (click)="addUser()" color="primary" class="app-w-100 app-text-left app-mb-4"><mat-icon>add</mat-icon>{{ 'magazines.pridat_user' | translate }}</button>
@@ -50,6 +50,7 @@
           <app-user-edit [user]="currentUser"></app-user-edit>
           <button mat-flat-button (click)="saveUser()" color="primary" class="app-mr-2">{{ 'magazines.ulozit_user' | translate }}</button>
           <button mat-flat-button (click)="removeUser()" color="warn" class="app-mr-2">{{ 'magazines.smazat_user' | translate }}</button>
+          <button mat-flat-button (click)="resetPwd()" color="warn" class="app-mr-2">{{ 'magazines.reset_heslo' | translate }}</button>
           <button mat-flat-button (click)="cancel()">{{ 'magazines.zrusit' | translate }}</button>
          </div>
       </div>
