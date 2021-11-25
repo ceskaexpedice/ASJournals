@@ -38,8 +38,6 @@ import { User } from '../models/user';
   filters: {field: string, value: string}[] = [];
   currentSortDir: string = 'asc';
   
-  
-  
   editorsList: any=[];
   editors: any = {};
   editorsType: any = [];

@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
 import { map } from 'rxjs/operators';
+import { AppState } from 'src/app/app.state';
+import { AppConfiguration } from 'src/app/app-configuration';
 
 @Component({
   selector: 'magazines-root',
@@ -14,6 +16,7 @@ import { map } from 'rxjs/operators';
 export class MagazinesComponent implements OnInit {
 
   constructor(
+    public config: AppConfiguration,
     public state: MagazineState,
     private service: MagazinesService,
     private http: HttpClient,
@@ -36,9 +39,15 @@ export class MagazinesComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('kk')
-    this.getConfig().subscribe(
-      (cfg: any) => {
+    // this.getConfig().subscribe(
+    //   (cfg: any) => {
+      
+      this.state.setConfig(this.config.config);
+      // this.state.ctxs
+      var userLang = navigator.language.split('-')[0]; // use navigator lang if available
+      userLang = /(cs|en)/gi.test(userLang) ? userLang : 'cs';
+      userLang = this.config.defaultLang;
+      this.service.changeLang(userLang);
 
         this.state.stateChangedSubject.subscribe(route => {
           this.stateChanged(route);
@@ -46,8 +55,8 @@ export class MagazinesComponent implements OnInit {
 
         this.processUrl();
         this.setStyles();
-      }
-    );
+      // }
+    // );
   }
 
 

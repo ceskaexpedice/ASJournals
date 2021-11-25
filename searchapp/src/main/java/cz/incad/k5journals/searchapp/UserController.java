@@ -70,24 +70,46 @@ public class UserController {
       JSONObject inputJs;
       String username;
       String pwd;
+      String ctx;
       if (req.getMethod().equals("POST")) {
         inputJs = new JSONObject(IOUtils.toString(req.getInputStream(), "UTF-8"));
         username = inputJs.getString("user");
         pwd = inputJs.getString("pwd");
+        ctx = inputJs.getString("ctx");
       } else {
         username = req.getParameter("user");
         pwd = req.getParameter("pwd");
+        ctx = req.getParameter("ctx");
       }
 
       SolrQuery q = new SolrQuery("username:\"" + ClientUtils.escapeQueryChars(username) + "\"")
               .addFilterQuery("pwd:\"" + ClientUtils.escapeQueryChars(hashPassword(pwd, username)) + "\"")
               .setFields("name, username, ctxs, isAdmin");
+
       SolrDocumentList docs = solr.query("users", q).getResults();
       solr.close();
       if (docs.getNumFound() > 0) {
         ret = new JSONObject(docs.get(0).toMap(new HashMap<String, Object>()));
-        ret.put("logged", true);
-        req.getSession().setAttribute("login", ret);
+        if ("admin".equals(ctx)) {
+          if (ret.optBoolean("isAdmin")) {
+            ret.put("logged", true);
+            req.getSession().setAttribute("login", ret);
+          } else {
+            ret = new JSONObject();
+            ret.put("logged", false);
+            ret.put("error", "not allowed");
+          }
+        } else {
+          if (ret.optBoolean("isAdmin") || ret.getJSONArray("ctxs").toList().contains(ctx)) {
+            ret.put("logged", true);
+            req.getSession().setAttribute("login", ret);
+          } else {
+            ret = new JSONObject();
+            ret.put("logged", false);
+            ret.put("error", "not allowed");
+          }
+        }
+
       } else {
         ret.put("logged", false);
         ret.put("error", "invalid user name or password");

@@ -15,11 +15,12 @@ const routes: Routes =[
   {
     path: '', component: MagazinesComponent,
     children: [
-      {path: '', component: SeznamCasopisuComponent},
+      // {path: '', component: SeznamCasopisuComponent},
+      { path: '', redirectTo: 'casopisy', pathMatch: 'full'},
       {path: 'admin', component: AdminMagazinesComponent, canActivate: [AuthGuard]},
       {path: 'prihlaseni', component: LoginComponent},
       {path: 'seznam-casopisu', component: SeznamCasopisuComponent},
-      {path: 'magazines', component: SeznamCasopisuComponent},
+      {path: 'casopisy', component: SeznamCasopisuComponent},
       {path: 'o-projektu', component: OProjektuComponent},
       {path: 'vydavatele', component: VydavateleComponent},
       {path: 'vydavatel/:id', component: VydavateleDetailComponent},

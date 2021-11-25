@@ -8,14 +8,14 @@ import { AppState } from './app.state';
     providedIn: 'root'
 }) export class AppConfiguration {
 
-    private config!: Configuration;
+    public config!: Configuration;
 
     public get context() {
         return this.config.context;
     }
 
-    public get lang() {
-        return this.config.lang;
+    public get defaultLang() {
+        return this.config.defaultLang;
     }
 
     constructor(
