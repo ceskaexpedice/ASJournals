@@ -8,11 +8,11 @@
     <div class="app-right">
       <mat-card-title>{{ resultItem.title }}</mat-card-title>
       <div>
-        <label class="app-label">Vydavatel: </label>
+        <label class="app-label">{{ 'magazines.vydavatel' | translate }}: </label>
         <a [routerLink]="['/magazines/vydavatel', resultItem.vydavatel_id]" queryParamsHandling="preserve" [title]="resultItem.vydavatel">{{ resultItem.vydavatel }}</a>
       </div>
       <div>
-        <label class="app-label">Oblast: </label>
+        <label class="app-label">{{ 'magazines.oblast' | translate }}: </label>
         <a (click)="addFilter('oblast', resultItem.oblast)" [title]="resultItem.oblast">{{ resultItem.oblast }}</a>
       </div>
       <div>
@@ -20,17 +20,17 @@
         {{ resultItem.issn }}
       </div>
       <div>
-        <label class="app-label">Klíčová slova: </label>
+        <label class="app-label">{{ 'magazines.keywords' | translate }}: </label>
         <span *ngFor="let keyword of resultItem.keywords">
           <a (click)="addFilter('keywords', keyword)" [title]="keyword">{{ keyword }}</a>, 
         </span>
       </div>
       <div>
-        <label class="app-label">Přístup: </label>
+        <label class="app-label">{{ 'magazines.pristup' | translate }}: </label>
         <a (click)="addFilter('pristup', resultItem.pristup)" [title]="resultItem.pristup">{{ resultItem.pristup }}</a>
       </div>
       <div>
-        <label class="app-label">Kontakt: </label>
+        <label class="app-label">{{ 'magazines.kontakt' | translate }}: </label>
         <a [href]="'mailto:' + resultItem.kontakt" [title]="resultItem.kontakt">{{ resultItem.kontakt }}</a>
       </div>
     </div>
@@ -42,12 +42,12 @@
   <mat-card-actions fxLayout="row" fxLayoutGap="32px">
     <div fxFlex>
       <a mat-flat-button [href]="resultItem.ctx" [matTooltip]="resultItem.ctx" matTooltipPosition="above" target="_blank">
-        <mat-icon>link</mat-icon> Vstup na web
+        <mat-icon>link</mat-icon> {{ 'magazines.vstup_na_web' | translate }}
       </a>
     </div>
     <div>
       <button mat-flat-button (click)="showDetail()" [class]="showingDetail ? 'app-rotate-up' : 'app-rotate-down'">
-        <mat-icon>expand_more</mat-icon> {{ showingDetail ? 'Skrýt detail' : 'Zobrazit detail' }}
+        <mat-icon>expand_more</mat-icon> {{ showingDetail ? ('magazines.skryt_detail' | translate ) : ('magazines.zobrazit_detail' | translate) }}
       </button>
     </div>
   </mat-card-actions>

@@ -1,10 +1,10 @@
 <mat-accordion *ngIf="active" multi>
   <mat-expansion-panel [expanded]="active" *ngFor="let facet of state.facets">
     <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="48px">
-      <strong>{{facet.field | translate}}</strong>
+      <strong>{{ 'magazines.' + facet.field | translate }}</strong>
     </mat-expansion-panel-header>
     <div *ngFor="let facetItem of facet.values">
-      <a (click)="addFilter(facet.field, facetItem[0])">{{facetItem[0]}}</a>
+      <a (click)="addFilter(facet.field, facetItem[0])">{{ facetItem[0] }}</a>
     </div>
   </mat-expansion-panel>
 </mat-accordion>
