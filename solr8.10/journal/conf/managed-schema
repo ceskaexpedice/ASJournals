@@ -90,6 +90,7 @@
     
     <field name="datum" type="pdate" indexed="true" stored="true" multiValued="false"/>
     <field name="year" type="pint" indexed="true" stored="true" multiValued="false"/>
+    <field name="dateIssued" type="string" indexed="false" stored="true" multiValued="false"/>
     
     <field name="isRecenzovany" type="boolean" indexed="true" stored="true" multiValued="false"/>
     <field name="ocr" type="text_cz" indexed="true" stored="true" multiValued="false"/>

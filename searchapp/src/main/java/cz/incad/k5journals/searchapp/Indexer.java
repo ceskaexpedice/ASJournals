@@ -46,6 +46,7 @@ public class Indexer {
   JSONObject response = new JSONObject();
 
   Map<String, Integer> dates = new HashMap();
+  Map<String, String> dateIssued = new HashMap();
 
   public Indexer() {
     try {
@@ -156,15 +157,19 @@ public class Indexer {
       setGenre(idoc, mods);
       setISSN(idoc, mods);
 
-      if (dates.containsKey(parent) && dates.get(parent) != 0) {
-        idoc.addField("year", dates.get(parent));
-        dates.put(pid, dates.get(parent));
-
-//      if("article".equalsIgnoreCase(model)){
-//        setDatum(idoc, parent);
+      if (dateIssued.containsKey(parent)) {
+        idoc.addField("dateIssued", dateIssued.get(parent));
+        dateIssued.put(pid, dateIssued.get(parent));
       } else {
         setDatum(idoc, mods, pid);
       }
+      if (dates.containsKey(parent) && dates.get(parent) != 0) {
+        idoc.addField("year", dates.get(parent));
+        dates.put(pid, dates.get(parent));
+      } else {
+        setDatum(idoc, mods, pid);
+      }
+
       return idoc;
     } catch (JSONException ex) {
       LOGGER.log(Level.SEVERE, "mods: {0}", mods);
@@ -252,7 +257,7 @@ public class Indexer {
   }
 
   /**
-   * Delete doc from index and his children 
+   * Delete doc from index and his children
    *
    * @param pid
    */
@@ -531,7 +536,7 @@ public class Indexer {
         if (np instanceof JSONArray) {
           JSONArray janp = (JSONArray) np;
           addUniqueToDoc(idoc, "keywords", janp.optString(0) + ", " + janp.getJSONObject(1).optString("content"));
-        } else if (np instanceof String){
+        } else if (np instanceof String) {
           addUniqueToDoc(idoc, "keywords", np);
         }
       }
@@ -695,6 +700,10 @@ public class Indexer {
 
     JSONObject o = mods.optJSONObject("mods:originInfo");
     if (o != null) {
+      if (!idoc.containsKey("dateIssued")) {
+        dateIssued.put(pid, o.optString("mods:dateIssued"));
+        idoc.addField("dateIssued", o.optString("mods:dateIssued"));
+      }
       int date = o.optInt("mods:dateIssued");
       if (date > 0) {
         dates.put(pid, date);
@@ -704,6 +713,10 @@ public class Indexer {
       //Pokus starych zaznamu
       o = mods.optJSONObject("mods:part");
       if (o != null) {
+        if (!idoc.containsKey("dateIssued")) {
+          dateIssued.put(pid, o.optString("mods:date"));
+          idoc.addField("dateIssued", o.optString("mods:date"));
+        }
         int date = o.optInt("mods:date");
         if (date > 0) {
           dates.put(pid, date);
@@ -763,14 +776,13 @@ public class Indexer {
     return ret;
   }
 
-
   /**
    * Delete editor
    *
    * @param id editor id
    */
   public JSONObject deleteEditor(String id) {
-    
+
     JSONObject ret = new JSONObject();
     try (SolrClient solr = getClient("editors")) {
       solr.deleteById(id);
@@ -783,14 +795,13 @@ public class Indexer {
     return ret;
   }
 
-
   /**
    * Delete magazine
    *
    * @param json doc in json format
    */
   public JSONObject deleteMagazine(String ctx) {
-    
+
     JSONObject ret = new JSONObject();
     try (SolrClient solr = getClient("magazines")) {
       solr.deleteById(ctx);
@@ -804,7 +815,7 @@ public class Indexer {
   }
 
   /**
-   * Index editor 
+   * Index editor
    *
    * @param json doc in json format
    */
@@ -840,7 +851,7 @@ public class Indexer {
   }
 
   /**
-   * Index user 
+   * Index user
    *
    * @param json doc in json format
    */
@@ -874,8 +885,6 @@ public class Indexer {
     }
     return ret;
   }
-  
-  
 
   /**
    * Index json
@@ -924,9 +933,7 @@ public class Indexer {
 
     LOGGER.log(Level.INFO, "index finished. Indexed: {0}", total);
 
-
     return ret;
   }
-
 
 }
