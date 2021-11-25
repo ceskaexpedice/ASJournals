@@ -550,7 +550,7 @@ export class AppService {
       .set('id', id)
       .set('lang', this.state.currentLang);
 
-    return this.get(url, params, 'plain/text').pipe(
+    return this.get(url, params, 'text').pipe(
       map((response: any) => {
         return response;
       }),
@@ -563,7 +563,7 @@ export class AppService {
     let params = new HttpParams()
       .set('action', 'CITATION')
       .set('uuid', uuid);
-    return this.get(url, params, 'plain/text').pipe(
+    return this.get(url, params, 'text/plain').pipe(
       map((response: any) => {
         return response;
       }),

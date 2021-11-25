@@ -172,10 +172,10 @@ public class Indexer {
 
       return idoc;
     } catch (JSONException ex) {
-      LOGGER.log(Level.SEVERE, "mods: {0}", mods);
       LOGGER.log(Level.FINE, "idoc: {0}", idoc);
       LOGGER.log(Level.SEVERE, null, ex);
     } catch (Exception ex) {
+      LOGGER.log(Level.SEVERE, "Error indexing pid: {0}", pid);
       LOGGER.log(Level.SEVERE, null, ex);
     }
     return null;

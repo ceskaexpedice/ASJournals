@@ -73,7 +73,7 @@ export class MagazinesService {
       .set('id', id)
       .set('lang', this.state.currentLang);
 
-    return this.get(url, params, 'plain/text');
+    return this.get(url, params, 'text/plain');
   }
 
   //Magazines

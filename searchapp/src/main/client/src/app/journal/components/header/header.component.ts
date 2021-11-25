@@ -17,6 +17,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentLang: string = 'cs';
   menu: any = null;
 
+  public isCollapsed: boolean = false;
+
   constructor(
     private titleService: Title,
     public state: AppState,
@@ -81,6 +83,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logActual() {
     console.log(this.state.actualNumber);
   }
-
-  public isCollapsed: boolean = true;
 }
