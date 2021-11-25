@@ -1,16 +1,12 @@
-<div class="container">
-  <div class="row">
-    <div class="col s12" *ngIf="state.config">
-      <div *ngFor="let vydavatel of state.editorsType">
-        <h5>{{vydavatel}}</h5>
-        <span class="grey-text text-darken-1">
-          <ul>
-            <li *ngFor="let item of state.editors[vydavatel]">
-              <a [routerLink]="['../vydavatel', item.id]" queryParamsHandling="preserve" title="{{item.name}}">{{item.name}}</a>
-            </li>
-          </ul>
-        </span>
-      </div>
-    </div><!--/.col -->
-  </div><!--/.row -->
-</div><!--/.container -->
+<div class="app-container">
+  <div *ngIf="state.config" fxLayout="row" fxLayoutGap="32px">
+    <div fxFlex *ngFor="let vydavatel of state.editorsType">
+      <h2>{{ vydavatel }}</h2>
+      <ul>
+        <li *ngFor="let item of state.editors[vydavatel]">
+          <a [routerLink]="['../vydavatel', item.id]" queryParamsHandling="preserve" [title]="item.name">{{ item.name }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
