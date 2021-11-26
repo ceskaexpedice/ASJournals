@@ -210,6 +210,13 @@
 		"skryt_detail": "Skrýt detail",
 		"vstup_na_web": "Vstup na web",
 		"razeni": "Řazení",
-		"vydavane_casopisy": "Vydávané časopisy"
+		"vydavane_casopisy": "Vydávané časopisy",
+		"jmeno_a_prijmeni": "Jméno a příjmení",
+		"prirazeny_casopis": "Přiřazený časopis",
+		"role_administrator": "Role administrátor",
+		"pridat_uzivatele": "Přidat uživatele",
+		"ulozit_uzivatele": "Uložit uživatele",
+		"smazat_uzivatele": "Smazat uživatele",
+		"resetovat_heslo": "Resetovat heslo"
 	}
 }

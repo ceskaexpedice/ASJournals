@@ -210,6 +210,13 @@
 		"skryt_detail": "Hide detail",
 		"vstup_na_web": "Web access",
 		"razeni": "Sorting",
-		"vydavane_casopisy": "Published magazines"
+		"vydavane_casopisy": "Published magazines",
+		"jmeno_a_prijmeni": "Name and surname",
+		"prirazeny_casopis": "Assigned magazine",
+		"role_administrator": "Administrator role",
+		"pridat_uzivatele": "Add new user",
+		"ulozit_uzivatele": "Save user",
+		"smazat_uzivatele": "Delete user",
+		"resetovat_heslo": "Password reset"
 	}
 }
