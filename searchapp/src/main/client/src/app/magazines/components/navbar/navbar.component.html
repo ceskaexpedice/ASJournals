@@ -1,8 +1,11 @@
 <mat-toolbar color="primary">
   <div fxLayout="row" fxFlexFill fxLayoutAlign="start center" fxLayoutGap="32px" class="app-container-fluid">
     <div fxFlex class="app-left">
-      <a (click)="goHome()" class="app-logo">
+      <a (click)="goHome()" class="app-logo" fxHide.lt-sm="true">
         {{ 'magazines.digitalni_knihovna_av_cr' | translate }}<span class="app-pipe"></span> <span>{{ 'magazines.online_casopisy' | translate }}</span>
+      </a>
+      <a (click)="goHome()" class="app-logo" fxHide.gt-xs="true">
+        {{ 'magazines.dk_av_cr' | translate }}<span class="app-pipe"></span> <span>{{ 'magazines.online_casopisy' | translate }}</span>
       </a>
     </div>
     <div class="app-right" fxHide.gt-md>

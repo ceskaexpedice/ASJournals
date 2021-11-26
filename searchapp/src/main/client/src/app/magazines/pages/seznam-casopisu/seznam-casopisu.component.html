@@ -1,6 +1,6 @@
 <div class="app-container">
-  <div fxLayout="row" fxLayoutGap="32px">
-    <div fxFlex="350px">
+  <div fxLayout="row" fxLayout.lt-md="row wrap" fxLayoutGap.gt-sm="32px">
+    <div fxFlex="350px" fxFlex.lt-md="100%">
       <app-facets-used></app-facets-used>
       <app-facets *ngIf="state.facets.length > 0"></app-facets>
     </div>
