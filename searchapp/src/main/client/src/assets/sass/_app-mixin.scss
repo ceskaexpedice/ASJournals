@@ -36,8 +36,8 @@
 
 // set vertical align
 @mixin set-vertical-align($height) {
-  height: $height#{px};
-  line-height: $height#{px};
+  height: #{$height}px;
+  line-height: #{$height}px;
 }
 
 // roboto fontface

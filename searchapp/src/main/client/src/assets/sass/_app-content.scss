@@ -34,7 +34,7 @@
       &:first-child {
         position: relative;
         width: 100px;
-        background: $app-brand-l-4 url("assets/img/ico-aktualne.png") center center no-repeat;
+        background: $app-brand-l-4 url("~assets/img/ico-aktualne.png") center center no-repeat;
         text-align: center;
         @extend .app-font-pt-serif;
         span {
