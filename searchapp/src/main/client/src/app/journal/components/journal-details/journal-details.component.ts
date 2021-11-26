@@ -58,14 +58,16 @@ export class JournalDetailsComponent implements OnInit {
             }
           }
         });
-
         if (mods['mods:originInfo']) {
           if (mods['mods:titleInfo']) {
             this.issueNumber = mods['mods:titleInfo']['mods:partNumber'];
             this.partName = mods['mods:titleInfo']['mods:partName'];
           }
+        } else if  (mods['mods:titleInfo']) {
+            this.issueNumber = mods['mods:titleInfo']['mods:partNumber'];
+            this.partName = mods['mods:titleInfo']['mods:partName'];
+        
         } else {
-
           //podpora pro starsi mods. ne podle zadani
           if (mods['part'] && mods['part']['date']) {
             this.year = mods['part']['date'];
@@ -81,7 +83,7 @@ export class JournalDetailsComponent implements OnInit {
         }
 
       }
-    } else {
+    } else if (this.journal?.pid) {
       this.appService.getMods(this.journal?.pid!).subscribe(mods => {
         if (this.journal) {
           this.journal.mods = mods;

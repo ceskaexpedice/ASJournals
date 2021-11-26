@@ -39,12 +39,12 @@ export class AppService {
   private get<T>(url: string, params: HttpParams = new HttpParams(), responseType?: any): Observable<T> {
     const options = { params, responseType, withCredentials: true };
     return this.http.get<T>(`api/${url}`, options)
-    .pipe(catchError(err => { return this.handleError(err) }));
+      .pipe(catchError(err => { return this.handleError(err) }));
   }
 
   private post(url: string, obj: any, params: HttpParams = new HttpParams()) {
     return this.http.post<any>(`api/${url}`, obj, { params })
-    .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -447,12 +447,14 @@ export class AppService {
     const params = new HttpParams()
       .set('q', '*:*')
       .set('fq', 'pid:"' + pid + '"')
-      .set('wt', 'json').set('fl', 'mods');
+      .set('wt', 'json').set('fl', 'mods:[json]');
 
     return this.get(url, params).pipe(
       map((response: any) => {
-        this.modsCache[pid] = response['response']['docs'][0]['mods'];
-        return this.modsCache[pid];
+        if (response.response.docs.length > 0 && response.response.docs[0].mods) {
+          this.modsCache[pid] = response['response']['docs'][0]['mods'];
+          return this.modsCache[pid];
+        }
       })
     )
   }
@@ -563,7 +565,7 @@ export class AppService {
     let params = new HttpParams()
       .set('action', 'CITATION')
       .set('uuid', uuid);
-    return this.get(url, params, 'text/plain').pipe(
+    return this.get(url, params, 'text').pipe(
       map((response: any) => {
         return response;
       }),
@@ -571,7 +573,7 @@ export class AppService {
     )
   }
 
-  saveText(id: string, text: string, menu: string|null = null): Observable<string> {
+  saveText(id: string, text: string, menu: string | null = null): Observable<string> {
 
     //var url = 'texts?action=SAVE&id=' + id + '&lang=' + this.state.currentLang;
     let url = 'texts';

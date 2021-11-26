@@ -31,7 +31,7 @@ export class ArticleViewerComponent implements OnInit {
 
   zoom = 1.0;
 
-  journal: Journal = new Journal;
+  journal: Journal = new Journal();
 
   siblingIndex: number = 0;
   isPrintSupported = false;
