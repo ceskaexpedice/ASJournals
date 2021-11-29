@@ -39,8 +39,8 @@
       <div class="col-xs-12 app-col-right" [class.app-col-right-full]="state.isFull">
         <!--<div *ngIf="loading" class="img-responsive app-thumb-doc" >loading...</div>-->
         
-        <div *ngIf="isPdf" style="overflow:visible;">
-          <pdf-viewer #pdfComponent [src]="fullSrc!" 
+        <div *ngIf="isPdf && fullSrc" style="overflow:visible;width:100%;height: 400px;">
+          <pdf-viewer #pdfComponent [src]="fullSrc" 
                       [original-size]="false" 
                       [render-text]="true"
                       [show-all]="true"
@@ -48,7 +48,7 @@
                       [zoom]="zoom"
                       (after-load-complete)="afterLoad($event)"
                       (page-rendered)="pageRendered($event)"
-                      style="display: block;"
+                      style="display: block;width:100%;height: 100%;"
           ></pdf-viewer>
         <div *ngIf="loading" style="position: absolute;width:100%;height:100%;background:white;left:0;top:0;">loading...</div>
         </div>

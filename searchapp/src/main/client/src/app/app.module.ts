@@ -14,6 +14,7 @@ import { SearchService } from './services/search.service';
 import { MagazinesModule } from './magazines/magazines.module';
 import { JournalModule } from './journal/journal.module';
 import { AppConfiguration } from './app-configuration';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');

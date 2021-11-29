@@ -128,7 +128,7 @@ export class AppState {
     this.currentSort = cfg[0];
     this.krameriusUrl = this.config['k5'] + this.config['journal'];
 
-    this.imgSrc = this.config['context'] + 'img?obalka=true&ctx=' + this.ctx?.ctx + '&uuid=' + this.config['journal'] + '&stream=IMG_THUMB&action=SCALE&scaledWidth=220';
+    this.imgSrc = this.config['context'] + 'api/img?obalka=true&ctx=' + this.ctx?.ctx + '&uuid=' + this.config['journal'] + '&stream=IMG_THUMB&action=SCALE&scaledWidth=220';
 
     this._configSubject.next(cfg);
   }

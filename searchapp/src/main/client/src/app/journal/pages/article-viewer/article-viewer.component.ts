@@ -122,11 +122,11 @@ magazine: any;
             this.downloadFilename = this.pid + '.pdf';
           }
 
-          this.fullSrc = this.state.config['context'] + 'img?uuid=' + this.pid + '&stream=IMG_FULL&action=GETRAW';
+          this.fullSrc = this.state.config['context'] + 'api/img?uuid=' + this.pid + '&stream=IMG_FULL&action=GETRAW';
         } else {
           this.isPdf = false;
           this.downloadFilename = this.pid;
-          this.fullSrc = this.state.config['context'] + 'img?uuid=' + this.pid + '&stream=IMG_FULL&action=GETRAW';
+          this.fullSrc = this.state.config['context'] + 'api/img?uuid=' + this.pid + '&stream=IMG_FULL&action=GETRAW';
           this.loading = false;
         }
 
@@ -192,6 +192,7 @@ magazine: any;
 
   pageRendered(e: CustomEvent) {
     //console.log('(page-rendered)', e);
+    console.log(e);
     this.pagesRendered++;
     if (this.pagesRendered === this.numPages) {
       this.searchInPdf();
@@ -199,6 +200,7 @@ magazine: any;
   }
 
   afterLoad(pdf: any) {
+    console.log(pdf)
     this.numPages = pdf.numPages;
     this.loading = false;
   }

@@ -125,7 +125,6 @@ export class ContextsComponent implements OnInit {
       this.state.route = p[1];
       this.state.mainClass = this.classes[this.state.route];
     }
-    console.log(this.state.mainClass)
   }
 
 

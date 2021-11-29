@@ -30,6 +30,7 @@ import { AppState } from '../app.state';
 import { SidenavListComponent } from './components/sidenav-list/sidenav-list.component';
 import { UserEditComponent } from './pages/admin-magazines/user-edit/user-edit.component';
 import { DialogPromptComponent } from './components/dialog-prompt/dialog-prompt.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -66,6 +67,7 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     CommonModule,
     FormsModule,
+    PdfViewerModule,
     MagazinesRoutingModule,
     MagazinesMaterialModule,
     FlexLayoutModule,

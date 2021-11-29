@@ -88,8 +88,8 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   imports: [
     CommonModule,
-    FormsModule,
-    // BrowserAnimationsModule,
+    FormsModule, 
+    // BrowserModule,
     JournalRoutingModule,
     NouisliderModule,
     AlertModule.forRoot(),
