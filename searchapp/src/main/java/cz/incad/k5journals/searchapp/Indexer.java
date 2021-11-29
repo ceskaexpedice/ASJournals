@@ -164,7 +164,7 @@ public class Indexer {
         setDatum(idoc, mods, pid);
       }
       if (dates.containsKey(parent) && dates.get(parent) != 0) {
-        idoc.addField("year", dates.get(parent));
+        idoc.setField("year", dates.get(parent));
         dates.put(pid, dates.get(parent));
       } else {
         setDatum(idoc, mods, pid);
@@ -473,46 +473,47 @@ public class Indexer {
       // Ignore konspekt
       return;
     }
-    if (subject.has(prefix + "topic")) {
-      Object oTopic = subject.get(prefix + "topic");
-      if (oTopic instanceof JSONObject) {
-        JSONObject joTopic = (JSONObject) oTopic;
-        processTopic(idoc, prefix, joTopic);
-      } else if (oTopic instanceof JSONArray) {
-        JSONArray jaTopic = (JSONArray) oTopic;
-        for (int i = 0; i < jaTopic.length(); i++) {
-          Object o2 = jaTopic.get(i);
-          if (o2 instanceof JSONObject) {
-            processTopic(idoc, prefix, (JSONObject) o2);
-          } else {
+    try {
+      if (subject.has(prefix + "topic")) {
+        Object oTopic = subject.get(prefix + "topic");
+        if (oTopic instanceof JSONObject) {
+          JSONObject joTopic = (JSONObject) oTopic;
+          processTopic(idoc, prefix, joTopic);
+        } else if (oTopic instanceof JSONArray) {
+          JSONArray jaTopic = (JSONArray) oTopic;
+          for (int i = 0; i < jaTopic.length(); i++) {
+            Object o2 = jaTopic.get(i);
+            if (o2 instanceof JSONObject) {
+              processTopic(idoc, prefix, (JSONObject) o2);
+            } else {
 //            idoc.addField("keywords", o2);
-            addUniqueToDoc(idoc, "keywords", o2);
+              addUniqueToDoc(idoc, "keywords", o2);
 
+            }
           }
-        }
-      } else if (oTopic instanceof String) {
+        } else if (oTopic instanceof String) {
 //        idoc.addField("keywords", oTopic);
-        addUniqueToDoc(idoc, "keywords", oTopic);
+          addUniqueToDoc(idoc, "keywords", oTopic);
+        }
       }
-    }
 
 //      {"mods:geographic": "Czechia"},
-    if (subject.has(prefix + "geographic")) {
-      //Test geographic
-      //idoc.addField("keywords", subject.optString(prefix + "geographic"));
-      addUniqueToDoc(idoc, "keywords", subject.optString(prefix + "geographic"));
-    }
+      if (subject.has(prefix + "geographic")) {
+        //Test geographic
+        //idoc.addField("keywords", subject.optString(prefix + "geographic"));
+        addUniqueToDoc(idoc, "keywords", subject.optString(prefix + "geographic"));
+      }
 
 //      {"mods:temporal": "1942-2012"},
 //      {
 //        "authority": "czenas",
 //        "mods:temporal": "20.-21. století"
 //      },
-    if (subject.has(prefix + "temporal")) {
-      //Test temporal
+      if (subject.has(prefix + "temporal")) {
+        //Test temporal
 //      idoc.addField("keywords", subject.optString(prefix + "temporal"));
-      addUniqueToDoc(idoc, "keywords", subject.optString(prefix + "temporal"));
-    }
+        addUniqueToDoc(idoc, "keywords", subject.optString(prefix + "temporal"));
+      }
 
 //      {
 //        "mods:name": {
@@ -527,20 +528,50 @@ public class Indexer {
 //        },
 //        "authority": "czenas"
 //      }
-    if (subject.has(prefix + "name")) {
-      //Test name
-//      idoc.addField("keywords", subject.optString(prefix + "name"));
-      JSONObject joName = subject.optJSONObject(prefix + "name");
-      Object np = joName.opt(prefix + "namePart");
-      if (np != null) {
-        if (np instanceof JSONArray) {
-          JSONArray janp = (JSONArray) np;
-          addUniqueToDoc(idoc, "keywords", janp.optString(0) + ", " + janp.getJSONObject(1).optString("content"));
-        } else if (np instanceof String) {
-          addUniqueToDoc(idoc, "keywords", np);
-        }
-      }
 
+
+// a nebo
+//            mods:name": {
+//                "type": "personal",
+//                "mods:namePart": [
+//                  {
+//                    "type": "termsOfAddress",
+//                    "content": "česká a uherská královna, císařovna, choť Františka Štěpána I., římskoněmeckého císaře"
+//                  },
+//                  "Marie Terezie",
+//                  {
+//                    "type": "date",
+//                    "content": "1717-1780"
+//                  }
+//                ]
+//              },
+      if (subject.has(prefix + "name")) {
+        //Test name
+//      idoc.addField("keywords", subject.optString(prefix + "name"));
+        JSONObject joName = subject.optJSONObject(prefix + "name");
+        Object np = joName.opt(prefix + "namePart");
+        if (np != null) {
+          if (np instanceof JSONArray) {
+            JSONArray janp = (JSONArray) np;
+            for (int i = 0; i<janp.length(); i++) {
+              Object cont = janp.get(i);
+              if (cont instanceof String) {
+                addUniqueToDoc(idoc, "keywords", janp.optString(i) + ", " + janp.getJSONObject(i+1).optString("content"));
+                i++;
+              } else {
+                addUniqueToDoc(idoc, "keywords", janp.getJSONObject(i).optString("content"));
+              }
+            }
+            
+          } else if (np instanceof String) {
+            addUniqueToDoc(idoc, "keywords", np);
+          }
+        }
+
+      }
+    } catch (Exception ex) {
+      LOGGER.log(Level.SEVERE, "error processing subject {0}", idoc.getFieldValue("pid"));
+      LOGGER.log(Level.SEVERE,null, ex);
     }
 
   }
@@ -707,7 +738,7 @@ public class Indexer {
       int date = o.optInt("mods:dateIssued");
       if (date > 0) {
         dates.put(pid, date);
-        idoc.addField("year", date);
+        idoc.setField("year", date);
       }
     } else {
       //Pokus starych zaznamu
@@ -720,16 +751,15 @@ public class Indexer {
         int date = o.optInt("mods:date");
         if (date > 0) {
           dates.put(pid, date);
-          idoc.addField("year", date);
+          idoc.setField("year", date);
         }
-
       }
     }
   }
 
   private void setDatum(SolrInputDocument idoc, String parent) {
     if (dates.containsKey(parent)) {
-      idoc.addField("year", dates.get(parent));
+      idoc.setField("year", dates.get(parent));
     }
   }
 
