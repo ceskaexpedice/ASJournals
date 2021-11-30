@@ -32,17 +32,18 @@
   </div>
   <div fxFlex="calc(33.3333% - 16px)" fxFlexAlign="center">
     <mat-checkbox id="showTitleLabel" [(ngModel)]="mag.showTitleLabel">{{ 'magazines.ukazat_slovo_casopis' | translate }}</mat-checkbox>
-  </div>
-  <div fxFlex="calc(33.3333% - 16px)" fxFlexAlign="center">
     <mat-checkbox id="showOldYears" [(ngModel)]="mag.showOldYears">{{ 'magazines.ukazat_starsi_rocniky' | translate }}</mat-checkbox>
   </div>
-  <div fxFlex="calc(33.3333% - 16px)">
+  <!-- <div fxFlex="calc(33.3333% - 16px)" fxFlexAlign="center">
+    <mat-checkbox id="showOldYears" [(ngModel)]="mag.showOldYears">{{ 'magazines.ukazat_starsi_rocniky' | translate }}</mat-checkbox>
+  </div> -->
+  <div fxFlex="calc(50% - 16px)">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.titulek' | translate }}</mat-label>
       <input matInput id="title" type="text" [(ngModel)]="mag.title">
     </mat-form-field>
   </div>
-  <div fxFlex="calc(33.3333% - 16px)">
+  <div fxFlex="calc(50% - 16px)">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.podtitulek' | translate }}</mat-label>
       <input matInput id="subtitle" type="text" [(ngModel)]="mag.subtitle">
@@ -60,7 +61,7 @@
       <input matInput type="text" [(ngModel)]="mag.issn" id="issn"  name="issn"  />
     </mat-form-field>
   </div>
-  <div fxFlex="calc(25% - 16px)">
+  <div fxFlex="calc(33.3333% - 16px)">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.vydavatel' | translate }}</mat-label>
       <mat-select (selectionChange)="setVydavatel($event.value)"  [(ngModel)]="vydavatel">
@@ -70,19 +71,19 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div fxFlex="calc(25% - 16px)">
+  <div fxFlex="calc(33.3333% - 16px)">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.oblast' | translate }}</mat-label>
       <input matInput type="text" [(ngModel)]="mag.oblast" id="oblast"  name="oblast"  />
     </mat-form-field>
   </div>
-  <div fxFlex="calc(25% - 16px)">
+  <div fxFlex="calc(33.3333% - 16px)">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.pristup' | translate }}</mat-label>
       <input matInput type="text" [(ngModel)]="mag.pristup" id="pristup"  name="pristup"  />
     </mat-form-field>
   </div>
-  <div fxFlex="calc(25% - 16px)">
+  <div fxFlex="calc(33.3333% - 16px)">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.kontakt' | translate }}</mat-label>
       <input matInput type="text" [(ngModel)]="mag.kontakt" id="kontakt"  name="kontakt"  />
