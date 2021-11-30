@@ -12,8 +12,8 @@ import { AppService } from 'src/app/services/app.service';
 })
 export class JournalDetailsComponent implements OnInit {
 
-  @Input('journal') journal: Journal | null = null;;
-  year: string | null = null;;
+  @Input('journal') journal: Journal | null = null;
+  year: string | null = null;
   volumeNumber: string | null = null;
   issueNumber: string | null = null;
   partName: string | null = null;
