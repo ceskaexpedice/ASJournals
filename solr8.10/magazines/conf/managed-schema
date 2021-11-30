@@ -54,6 +54,7 @@
     <field name="ctx" type="string" indexed="true" stored="true" required="true" multiValued="false" />
       
     <field name="title" type="string" indexed="true" stored="true" multiValued="false" />
+    <field name="subtitle" type="string" indexed="true" stored="true" multiValued="false" />
     <field name="titleCS" type="collatedCS" indexed="true" stored="true" multiValued="false" docValues="true" />
     <field name="img" type="string" indexed="false" stored="true" multiValued="false" />
     <field name="k5url" type="string" indexed="false" stored="true" multiValued="false" />
@@ -75,6 +76,7 @@
     <field name="licence" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="color" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="showTitleLabel" type="boolean" indexed="true" stored="true" multiValued="false"/>
+    <field name="showOldYears" type="boolean" indexed="true" stored="true" multiValued="false"/>
     
     <!-- Only enabled in the "schemaless" data-driven example (assuming the client
          does not know what fields may be searched) because it's very expensive to index everything twice. -->

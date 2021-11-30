@@ -5,7 +5,9 @@
         <div class="col-xs-6 col-sm-9">
           <h1 class="app-clean-mg">
             <a routerLink="home" queryParamsHandling="preserve" title="Home" *ngIf="state.config"> 
-              <span *ngIf="state.config['showTitleLabel']">{{'ČASOPIS' | translate}}</span>&#160;<span *ngIf="state.actualNumber" class="app-font-roboto-cb">{{state.actualNumber?.root_title! | translate}}</span>
+              <span *ngIf="state.config['showTitleLabel']">{{'ČASOPIS' | translate}}</span>&#160;
+              <span *ngIf="state.ctx?.title" class="app-font-roboto-cb">{{state.ctx?.title! | translate}}</span>
+              <span *ngIf="state.ctx?.subtitle" class="app-font-roboto-cb">: {{state.ctx?.subtitle! | translate}}</span>
             </a>
           </h1>
         </div><!--/.col -->

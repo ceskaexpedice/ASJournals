@@ -33,10 +33,19 @@
   <div fxFlex="calc(33.3333% - 16px)" fxFlexAlign="center">
     <mat-checkbox id="showTitleLabel" [(ngModel)]="mag.showTitleLabel">{{ 'magazines.ukazat_slovo_casopis' | translate }}</mat-checkbox>
   </div>
+  <div fxFlex="calc(33.3333% - 16px)" fxFlexAlign="center">
+    <mat-checkbox id="showOldYears" [(ngModel)]="mag.showOldYears">{{ 'magazines.ukazat_starsi_rocniky' | translate }}</mat-checkbox>
+  </div>
   <div fxFlex="calc(33.3333% - 16px)">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.titulek' | translate }}</mat-label>
       <input matInput id="title" type="text" [(ngModel)]="mag.title">
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(33.3333% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.podtitulek' | translate }}</mat-label>
+      <input matInput id="subtitle" type="text" [(ngModel)]="mag.subtitle">
     </mat-form-field>
   </div>
   <div fxFlex="calc(33.3333% - 16px)">

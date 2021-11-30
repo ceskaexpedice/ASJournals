@@ -72,7 +72,7 @@
             <app-article-result *ngIf="!isHiddenByGenre(art['genre'])" [article]="art"></app-article-result>
           </div>
         </ng-container><!--/.media -->
-        <p>
+        <p *ngIf="state.ctx?.showOldYears">
           {{'Starší ročníky najdete v' | translate}} <a [href]="state.ctx?.k5url! + state.config?.journal!" [title]="'k5_title' | translate" target="_blank">{{'Digitální knihovně AV ČR' | translate}}</a>
         </p>
       </div><!--/.col -->
