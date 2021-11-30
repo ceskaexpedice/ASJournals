@@ -39,6 +39,20 @@ $app-brand-d-3:         #73555d !default;
 $app-brand-d-4:         #5b1629 !default;
 
 
+// gaps
+$gaps: (
+  "0": 0,
+  "1": 4,
+  "2": 8,
+  "3": 12,
+  "4": 16,
+  "5": 20,
+  "6": 24,
+  "7": 28,
+  "8": 32,
+);
+
+
 // app var
 $app-col-close-width:		40px; 
 $app-slider-base-color:	    $app-brand-l-3;
