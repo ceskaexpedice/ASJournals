@@ -109,7 +109,7 @@ export class ArchivItemComponent implements OnInit {
 
 
   img() {
-    return this.state.config['context'] + 'img?uuid=' + this.item['pid'] + '&stream=IMG_THUMB&action=SCALE&scaledHeight=140';
+    return this.state.config['context'] + 'api/img?uuid=' + this.item['pid'] + '&stream=IMG_THUMB&action=SCALE&scaledHeight=140';
   }
   
   gotoArticle(){

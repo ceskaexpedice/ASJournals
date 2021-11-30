@@ -172,7 +172,6 @@ export class AppState {
 
   setActual(a: Journal | null) {
     this.actualNumber = a;
-    //this.imgSrc = this.config['context'] + 'img?obalka=true';
     this._titleSubject.next(a);
     this.stateChanged();
   }
