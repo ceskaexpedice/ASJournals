@@ -55,12 +55,6 @@ export class AppComponent implements OnInit {
           }
       });
       this.service.setStyles();
-    //this.service.getJournals().subscribe(res => {
-    // this.service.getMagazines().subscribe((res: any) => {
-    //   this.state.setJournals(res);
-    //   this.service.setStyles();
-    //   // this.getConfig();
-    // });
     
   }
 
@@ -103,12 +97,12 @@ export class AppComponent implements OnInit {
     
   }
   processUrl() {
-    this.setMainClass(this.router.url);
+    //this.setMainClass(this.router.url);
     this.pathObserver = this.router.events.subscribe(val => {
       //console.log('pathObserver', val);
       if (val instanceof NavigationEnd) {
         this.state.paramsChanged();
-        this.setMainClass(val.url);
+        //this.setMainClass(val.url);
       } else if (val instanceof NavigationStart) {
         this.state.clear();
       }

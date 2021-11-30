@@ -115,7 +115,7 @@ export class ArticleInfoComponent implements OnInit {
     setTitleInfo() {
 
         let modsLang = this.langsMap[this.lang];
-
+        
         if (this.titleInfo.hasOwnProperty('length')) {
             this.title = this.titleInfo[0]["mods:title"];
             for (let i in this.titleInfo) {

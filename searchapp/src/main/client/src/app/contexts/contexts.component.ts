@@ -120,10 +120,11 @@ export class ContextsComponent implements OnInit {
     let p = url.split('?')[0].split('/');
     if (p.length > 2) {
       this.state.route = p[2].split(';')[0];
-      this.state.mainClass = this.classes[this.state.route];
+      this.theClass = this.classes[this.state.route];
+
     } else if (p.length === 2 && p[1] === 'hledat'){
       this.state.route = p[1];
-      this.state.mainClass = this.classes[this.state.route];
+      this.theClass = this.classes[this.state.route];
     }
   }
 

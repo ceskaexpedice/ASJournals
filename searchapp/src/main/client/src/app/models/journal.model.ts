@@ -27,9 +27,12 @@ export class Journal{
     for (let j in res) {
       let art = res[j];
       if (art && art['pid']) {
-        art['mods'] = art['mods'];
+        // art['mods'] = art['mods'];
           //let mods = bmods["mods:modsCollection"]["mods:mods"];
-        if (art.hasOwnProperty("genre")) {
+        
+        if (!art.hasOwnProperty("genre")) {
+          art['genre'] = ['main article']
+        }
             for (let i in art['genre']) {
               let genre = art['genre'][i];
               if (mergeGenres.hasOwnProperty(genre) ){
@@ -50,8 +53,6 @@ export class Journal{
 
           
             }
-          
-        }
       }
     }
   }

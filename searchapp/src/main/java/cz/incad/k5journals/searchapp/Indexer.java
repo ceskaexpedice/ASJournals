@@ -413,9 +413,9 @@ public class Indexer {
     }
     if (o instanceof JSONObject) {
       JSONObject jo = (JSONObject) o;
-      idoc.addField("title", jo.optString(prefix + "title"));
-      idoc.addField("subtitle", jo.optString(prefix + "subTitle"));
-      idoc.addField("non_sort_title", jo.optString(prefix + "nonSort"));
+      idoc.setField("title", jo.optString(prefix + "title"));
+      idoc.setField("subtitle", jo.optString(prefix + "subTitle"));
+      idoc.setField("non_sort_title", jo.optString(prefix + "nonSort"));
 
     } else if (o instanceof JSONArray) {
       JSONArray ja = (JSONArray) o;
@@ -427,24 +427,24 @@ public class Indexer {
             //Mozna chceme jeste pridat alternativni titulek
           } else {
             String lang = jo.optString("lang");
-            idoc.addField("title_" + lang, jo.optString(prefix + "title"));
-            idoc.addField("subtitle_" + lang, jo.optString(prefix + "subTitle"));
-            idoc.addField("non_sort_title_" + lang, jo.optString(prefix + "nonSort"));
+            idoc.setField("title_" + lang, jo.optString(prefix + "title"));
+            idoc.setField("subtitle_" + lang, jo.optString(prefix + "subTitle"));
+            idoc.setField("non_sort_title_" + lang, jo.optString(prefix + "nonSort"));
           }
         } else {
           if (!hasDefault) {
-            idoc.addField("title", jo.optString(prefix + "title"));
-            idoc.addField("subtitle", jo.optString(prefix + "subTitle"));
-            idoc.addField("non_sort_title", jo.optString(prefix + "nonSort"));
+            idoc.setField("title", jo.optString(prefix + "title"));
+            idoc.setField("subtitle", jo.optString(prefix + "subTitle"));
+            idoc.setField("non_sort_title", jo.optString(prefix + "nonSort"));
             hasDefault = true;
           }
         }
       }
       if (!hasDefault) {
         JSONObject jo = ja.getJSONObject(0);
-        idoc.addField("title", jo.optString(prefix + "title"));
-        idoc.addField("subtitle", jo.optString(prefix + "subTitle"));
-        idoc.addField("non_sort_title", jo.optString(prefix + "nonSort"));
+        idoc.setField("title", jo.optString(prefix + "title"));
+        idoc.setField("subtitle", jo.optString(prefix + "subTitle"));
+        idoc.setField("non_sort_title", jo.optString(prefix + "nonSort"));
       }
     }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { Journal } from 'src/app/models/journal.model';
 import { AppService } from 'src/app/services/app.service';
 
@@ -22,7 +22,12 @@ export class JournalDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.details();
+  }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.journal && !changes.journal.firstChange && changes.journal.currentValue.pid !== changes.journal.previousValue?.pid) {
+      this.details();
+    }
   }
 
   details() {

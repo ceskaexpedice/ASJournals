@@ -104,7 +104,7 @@ magazine: any;
       //console.log('viewed!');
     });
 
-    let subs = this.service.getItem(this.pid).subscribe(res => {
+    this.service.getItem(this.pid).subscribe(res => {
       
       if (res['datanode']) {
         this.getCitace();
@@ -138,13 +138,13 @@ magazine: any;
         const parent = res['parents'][0];
         if (!this.journal || this.journal.pid !== parent) {
           this.service.getJournal(parent).subscribe((a: any) => {
+            
             if (a.pid) {
               this.journal = a;
               this.service.getMods(a['pid']).subscribe(mods => {
                 this.journal.mods = mods;
 
                 this.service.getArticles(a['pid']).subscribe(res => {
-                  //this.service.setArticles(this.journal, res);
                   this.journal.setArticles(res, this.state.config['mergeGenres']);
                 });
                 
@@ -168,7 +168,6 @@ magazine: any;
         this.findFirstdatanode(this.pid!);
       }
       this.settingData = false;
-      subs.unsubscribe();
     });
   }
 
@@ -192,7 +191,6 @@ magazine: any;
 
   pageRendered(e: any) {
     //console.log('(page-rendered)', e);
-    console.log(e.pageNumber);
     this.pagesRendered++;
     if (this.pagesRendered === this.numPages) {
       this.searchInPdf();

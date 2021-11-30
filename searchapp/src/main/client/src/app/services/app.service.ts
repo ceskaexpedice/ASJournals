@@ -386,8 +386,22 @@ export class AppService {
       genre !== 'advertisement' &&
       genre !== 'colophon';
   }
+  
 
   getArticles(pid: string): Observable<any[]> {
+
+      let url = this.state.config['context'] + 'search/journal/select';
+      const params = new HttpParams()
+        .set('q', '*:*')
+        .set('fq', 'parents:"' + pid + '"')
+        .set('wt', 'json')
+        .set('sort', 'idx asc')
+        .set('rows', '500');
+
+      return this.get(url, params);
+    }
+
+  getArticles2(pid: string): Observable<any[]> {
     const getRange = (pid: string): Observable<any> => {
 
       let url = this.state.config['context'] + 'search/journal/select';
