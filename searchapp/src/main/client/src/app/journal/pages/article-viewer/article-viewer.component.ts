@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {Observable} from 'rxjs';
 
-import {PdfViewerComponent} from 'ng2-pdf-viewer';
+import {PDFDocumentProxy, PDFPageProxy, PdfViewerComponent} from 'ng2-pdf-viewer';
 import { AppState } from 'src/app/app.state';
 import { Journal } from 'src/app/models/journal.model';
 import { AppService } from 'src/app/services/app.service';
@@ -190,17 +190,17 @@ magazine: any;
     }
   }
 
-  pageRendered(e: CustomEvent) {
+  pageRendered(e: any) {
     //console.log('(page-rendered)', e);
-    console.log(e);
+    console.log(e.pageNumber);
     this.pagesRendered++;
     if (this.pagesRendered === this.numPages) {
       this.searchInPdf();
     }
+
   }
 
-  afterLoad(pdf: any) {
-    console.log(pdf)
+  afterLoad(pdf: PDFDocumentProxy) {
     this.numPages = pdf.numPages;
     this.loading = false;
   }
