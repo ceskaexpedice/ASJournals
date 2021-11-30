@@ -3,17 +3,17 @@
     <div class="row">
       <div class="col-xs-12">
         <ng-container *ngIf="state.ctx">
-          <div class="row mt-4">
+          <div class="row app-mt-5">
             <div class="col-xs-12">
               <div class="form-inline pull-left">
                 <div class="form-group">
                   <input type="text" class="form-control" id="indexUUID" name="indexUUID" placeholder="uuid" [(ngModel)]="indexUUID">
                 </div>
-                <button type="button" class="btn app-btn app-btn-default" (click)="index()">{{'admin.add_uuid' | translate}}</button>
-                <button type="button" class="btn app-btn app-btn-default" (click)="openConfirm()">{{'admin.delete_uuid' | translate}}</button>
+                <button type="button" class="btn app-btn app-btn-default app-mr-2" (click)="index()">{{'admin.add_uuid' | translate}}</button>
+                <button type="button" class="btn app-btn app-btn-default app-mr-4" (click)="openConfirm()">{{'admin.delete_uuid' | translate}}</button>
                 <span>{{ 'admin.cover' | translate }}</span>:
                 <div class="form-group">
-                  <input type="file" ng2FileSelect [uploader]="coverUploader" [title]="'nahrát obrázek' | translate">
+                  <input class="form-control"  type="file" ng2FileSelect [uploader]="coverUploader" [title]="'nahrát obrázek' | translate">
                 </div>
                 <button type="button" class="btn app-btn app-btn-default" (click)="uploadCover()">{{'admin.Upload' | translate}}</button>{{ coverMsg }}
               </div>

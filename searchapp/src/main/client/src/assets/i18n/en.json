@@ -155,7 +155,8 @@
 		"Save_selected_pages": "Save selected pages",
 		"add_uuid": "Add uuid",
 		"cover": "Cover",
-		"Indexing": "Indexing"
+		"Indexing": "Indexing",
+		"delete_uuid": "Delete UUID"
 	},
 	"a zároveň": "AND",
 	"nebo": "OR",

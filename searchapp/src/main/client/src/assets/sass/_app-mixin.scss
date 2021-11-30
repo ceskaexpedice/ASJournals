@@ -77,7 +77,6 @@
 }
 
 
-
 // set gap
 @mixin setGap() {
   @each $gap, $val in $gaps {
