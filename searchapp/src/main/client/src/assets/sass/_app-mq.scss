@@ -149,6 +149,9 @@
         .row {
           .app-col-left {
             // sem umistit Alberto
+            &.app-hidden {
+              display: none;
+            }
             
             /* overflow: auto;
             height: 993px; */
