@@ -43,6 +43,8 @@ export class ArticleViewerComponent implements OnInit {
   citace: string | null = null;
   location: string | null = null;
 
+  hideList = true;
+
 
   lang: string = 'cs';
   langsMap = {
@@ -67,6 +69,7 @@ magazine: any;
       .subscribe((params: Params) => {
         this.pid = params.pid;
         if (this.state.config) {
+          this.hideList = true;
           this.setData();
         }
 
@@ -74,6 +77,7 @@ magazine: any;
 
     this.state.configSubject.subscribe(
       () => {
+        this.hideList = true;
         this.setData();
       }
     );

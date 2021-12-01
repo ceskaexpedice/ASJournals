@@ -149,7 +149,9 @@
         .row {
           .app-col-left {
             // sem umistit Alberto
-            &.app-hidden {
+            display: flex; 
+            flex-direction: column;
+            &.app-list-hidden {
               display: none;
             }
             
