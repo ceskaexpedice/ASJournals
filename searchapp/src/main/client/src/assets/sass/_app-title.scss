@@ -3,7 +3,11 @@
 .app-title {
   color: $app-brand;
   @include gradient-vertical($body-bg, $app-brand-l-3, 0%, 100%);
-  @include set-vertical-align(50);
+  //@include set-vertical-align(50);
+  min-height: 50px;
+  line-height: 30px;
+  padding: 10px 0;
+
   h1 {
     line-height: inherit;
     a {
@@ -14,6 +18,10 @@
     }
     span {
       text-transform: uppercase;
+    }
+
+    .app-subtitle {
+      font-size: 18px;
     }
   }
   img {

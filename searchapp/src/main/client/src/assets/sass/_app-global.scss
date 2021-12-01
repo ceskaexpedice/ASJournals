@@ -152,6 +152,13 @@ h4+hr {
   padding: 0 10px;
 }
 
+// common
+.app-pipe-brand {
+  @extend .app-ml-2, .app-mr-2;
+  border-left: 1px solid;
+  border-color: rgba($app-brand, .5);
+}
+
 .app-mg-bottom-40 {
   margin-bottom: 40px;
 }
