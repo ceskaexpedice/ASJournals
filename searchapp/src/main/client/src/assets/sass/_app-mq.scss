@@ -166,6 +166,12 @@
               display: none;
             }
           }
+
+          .app-col-zpetnaseznam {
+            &.app-col-zpetnaseznam-hidden {
+              display: none;
+            }
+          }
         }
       }
     }
