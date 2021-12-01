@@ -255,6 +255,23 @@ export class AppService {
     )
   }
 
+  
+
+  getPeriodicalItems(pid: string) {
+    let url = 'search/journal/select';
+    const params = new HttpParams()
+    .set('q', '*')
+    .append('fq', 'model:periodicalitem')
+    .append('fq', `root_pid:"${pid}"`)
+      .set('wt', 'json')
+      .set('rows', '500')
+      .set('fl', '*,mods:[json]')
+      .set('sort', 'idx asc, year asc');
+
+    return this.get(url, params);
+    
+  }
+
   //  getActual(): Observable<Journal> {
   //    return this.getJournalByPid(this.state.config['journal'], this.state.config['model']);
   //  }

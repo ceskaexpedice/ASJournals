@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>{{ 'licences' | translate }} for: <span>{{ data.title }}</span></h1>
+<div mat-dialog-content>
+  <table class="app-table" [cellPadding]="1" [cellSpacing]="5">
+    <thead>
+      <th>pid</th>
+      <th>{{'Rok'|translate}}</th>
+      <th>{{'číslo'|translate}}</th>
+      <th>{{'partName'|translate}}</th>
+      <th>{{'licence'|translate}}</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td>{{ item.pid }}</td>
+        <td>{{ item.year }}</td>
+        <td>{{ item.issueNumber }}</td>
+        <td>{{ item.partName }}</td>
+        <td>
+          <mat-form-field  class="app-w-100" appearance="outline">
+            <mat-label>{{ 'magazines.licence' | translate }}</mat-label>
+            <input matInput id="licence" name="licence" type="text" [(ngModel)]="item.licence">
+          </mat-form-field>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close cdkFocusInitial>{{ 'desc.zavrit' | translate }}</button>
+</div>

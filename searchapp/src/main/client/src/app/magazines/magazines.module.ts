@@ -31,6 +31,7 @@ import { SidenavListComponent } from './components/sidenav-list/sidenav-list.com
 import { UserEditComponent } from './pages/admin-magazines/user-edit/user-edit.component';
 import { DialogPromptComponent } from './components/dialog-prompt/dialog-prompt.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { LicencesDialogComponent } from './pages/admin-magazines/licences-dialog/licences-dialog.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -62,7 +63,8 @@ export function createTranslateLoader(http: HttpClient) {
     UserEditComponent,
     LoginComponent,
     SidenavListComponent,
-    DialogPromptComponent
+    DialogPromptComponent,
+    LicencesDialogComponent
   ],
   imports: [
     CommonModule,

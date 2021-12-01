@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, SimpleChanges, SimpleChange } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { AppState } from 'src/app/app.state';
 import { MagazinesService } from 'src/app/magazines/magazines.service';
 import { Magazine } from 'src/app/models/magazine';
+import { LicencesDialogComponent } from '../licences-dialog/licences-dialog.component';
 
 @Component({
   selector: 'app-magazine-edit',
@@ -29,6 +31,7 @@ export class MagazineEditComponent implements OnInit {
   newKeyword: string = '';
   
   constructor(
+    public dialog: MatDialog,
     public state: AppState,
     private service: MagazinesService) { }
 
@@ -59,6 +62,24 @@ export class MagazineEditComponent implements OnInit {
   setVydavatel(e: any) {
     this.mag.vydavatel_id = e.id;
     this.mag.vydavatel = e.name;
+  }
+
+  setLicences() {
+    const dialogRef = this.dialog.open(LicencesDialogComponent, {
+      width: '1150px',
+      data: this.mag,
+      panelClass: 'app-dialog-states'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.change) {
+        // this.service.changeStavDirect(this.doc.identifier, result.newState, result.poznamka, result.granularity).subscribe(res => {
+        //   console.log(res);
+        // this.doc.dntstav = result.newState;
+        // });
+      }
+
+    });
   }
 
 }
