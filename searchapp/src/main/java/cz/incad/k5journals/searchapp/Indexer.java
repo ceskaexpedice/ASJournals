@@ -528,8 +528,6 @@ public class Indexer {
 //        },
 //        "authority": "czenas"
 //      }
-
-
 // a nebo
 //            mods:name": {
 //                "type": "personal",
@@ -553,16 +551,16 @@ public class Indexer {
         if (np != null) {
           if (np instanceof JSONArray) {
             JSONArray janp = (JSONArray) np;
-            for (int i = 0; i<janp.length(); i++) {
+            for (int i = 0; i < janp.length(); i++) {
               Object cont = janp.get(i);
               if (cont instanceof String) {
-                addUniqueToDoc(idoc, "keywords", janp.optString(i) + ", " + janp.getJSONObject(i+1).optString("content"));
+                addUniqueToDoc(idoc, "keywords", janp.optString(i) + ", " + janp.getJSONObject(i + 1).optString("content"));
                 i++;
               } else {
                 addUniqueToDoc(idoc, "keywords", janp.getJSONObject(i).optString("content"));
               }
             }
-            
+
           } else if (np instanceof String) {
             addUniqueToDoc(idoc, "keywords", np);
           }
@@ -571,7 +569,7 @@ public class Indexer {
       }
     } catch (Exception ex) {
       LOGGER.log(Level.SEVERE, "error processing subject {0}", idoc.getFieldValue("pid"));
-      LOGGER.log(Level.SEVERE,null, ex);
+      LOGGER.log(Level.SEVERE, null, ex);
     }
 
   }
@@ -695,10 +693,10 @@ public class Indexer {
 //                            }
             }
           } else if (go instanceof String) {
-//                        if ("article".equals((String) go) && !hasMain) {
-//                            idoc.addField("genre", "main article");
+            if ("article".equals((String) go)) {
+              idoc.addField("genre", "article");
 //                            hasMain = true;
-//                        }
+            }
           }
         }
 
@@ -706,7 +704,16 @@ public class Indexer {
         String g = ((JSONObject) o).optString("type");
         if (g != null) {
           idoc.addField("genre", g);
+        } else {
+          idoc.addField("genre", "unspecified");
         }
+      } else if (o instanceof String) {
+        if ("article".equals(o)) {
+          idoc.addField("genre", "unspecified");
+        } else {
+          idoc.addField("genre", o);
+        }
+          
       }
     }
   }

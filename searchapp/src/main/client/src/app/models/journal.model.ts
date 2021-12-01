@@ -30,9 +30,10 @@ export class Journal{
         // art['mods'] = art['mods'];
           //let mods = bmods["mods:modsCollection"]["mods:mods"];
         
-        if (!art.hasOwnProperty("genre")) {
-          art['genre'] = ['main article']
-        }
+        // if (!art.hasOwnProperty("genre")) {
+        //   art['genre'] = ['article']
+        // }
+        if (art.hasOwnProperty("genre")) {
             for (let i in art['genre']) {
               let genre = art['genre'][i];
               if (mergeGenres.hasOwnProperty(genre) ){
@@ -53,6 +54,7 @@ export class Journal{
 
           
             }
+          }
       }
     }
   }
