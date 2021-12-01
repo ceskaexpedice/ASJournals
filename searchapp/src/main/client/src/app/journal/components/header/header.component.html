@@ -32,7 +32,7 @@
           <span class="icon-bar"></span>
         </button>
       </div><!--/.navbar-header -->
-      <div id="navbar" class="collapse navbar-collapse" [collapse]="isCollapsed" *ngIf="menu">
+      <div id="navbar" class="collapse navbar-collapse" [collapse]="!isCollapsed" *ngIf="menu">
         <ul *ngIf="menu" class="nav navbar-nav">
           <li routerLink="actual" queryParamsHandling="preserve" #aa="routerLinkActive" [attr.active]="aa.isActive" routerLinkActive="active">
             <a routerLink="actual" queryParamsHandling="preserve" title="Aktuální číslo">{{'menu.actual_' | translate}}</a></li>
