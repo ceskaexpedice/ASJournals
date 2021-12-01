@@ -120,6 +120,9 @@
               overflow: initial;
             }
           }
+          .app-col-zpetnaseznam {
+            display: none;
+          }
         }
       }
     }
@@ -148,33 +151,37 @@
       .container {
         .row {
           .app-col-left {
-            // sem umistit Alberto
             display: flex; 
             flex-direction: column;
+            height: auto !important;
+            overflow: none !important;
+            
             &.app-list-hidden {
               display: none;
             }
-            
-            /* overflow: auto;
-            height: 993px; */
           }
-          .app-col-right {
-            // sem umistit Alberto
 
-           /*  margin-top: 30px;
-            overflow: auto;
-            height: 993px; */
+          .app-col-right {
+            &.app-viewer-hidden {
+              display: none;
+            }
           }
         }
       }
     }
-    /* .app-sidebar {
+
+    .app-sidebar {
       .app-sidebar-wrapper {
         .app-sidebar-bottom {
-          bottom: 700px;
+          bottom: 0;
+          top: 40px;
+
+          &.app-sidebar-bottom-hidden {
+            display: none;
+          }
         }
       }
-    } */
+    }
   }
 }
 
