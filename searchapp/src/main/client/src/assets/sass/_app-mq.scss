@@ -153,8 +153,6 @@
           .app-col-left {
             display: flex; 
             flex-direction: column;
-            height: auto !important;
-            overflow: none !important;
             
             &.app-list-hidden {
               display: none;
@@ -162,6 +160,9 @@
           }
 
           .app-col-right {
+            min-height: 923px;
+            overflow: auto;
+
             &.app-viewer-hidden {
               display: none;
             }
