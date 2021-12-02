@@ -8,6 +8,7 @@ import { User } from 'src/app/models/user';
 import { DialogPromptComponent } from '../../components/dialog-prompt/dialog-prompt.component';
 import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
+import { LicencesDialogComponent } from './licences-dialog/licences-dialog.component';
 
 @Component({
   selector: 'app-admin-magazines',
@@ -216,6 +217,21 @@ export class AdminMagazinesComponent implements OnInit {
 
   edit(s: string) {
     this.editing = s;
+  }
+
+  setLicences() {
+    const dialogRef = this.dialog.open(LicencesDialogComponent, {
+      width: '1150px',
+      data: this.currentMag,
+      panelClass: 'app-dialog-states'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.currentMag!.licences = JSON.stringify(result);
+      }
+
+    });
   }
 
 }
