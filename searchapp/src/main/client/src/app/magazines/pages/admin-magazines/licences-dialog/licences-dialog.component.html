@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ 'licences' | translate }} for: <span>{{ data.title }}</span></h1>
+<h1 mat-dialog-title>{{ 'magazines.licence_pro' | translate }}: <span>{{ data.title }}</span></h1>
 <div mat-dialog-content>
     <div *ngFor="let item of cache[data.journal].children">
       <div>
@@ -20,6 +20,6 @@
     </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="save()">{{ 'desc.ulozit' | translate }}</button>
-  <button mat-button mat-dialog-close cdkFocusInitial>{{ 'desc.zavrit' | translate }}</button>
+  <button mat-button (click)="save()">{{ 'magazines.ulozit' | translate }}</button>
+  <button mat-button mat-dialog-close cdkFocusInitial>{{ 'magazines.zavrit' | translate }}</button>
 </div>

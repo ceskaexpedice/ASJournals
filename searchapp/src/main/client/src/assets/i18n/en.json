@@ -222,6 +222,11 @@
 		"resetovat_heslo": "Password reset",
 		"dk_av_cr": "DL AV ČR",
 		"ukazat_starsi_rocniky": "Show older vintages",
-		"podtitulek": "Subtitle"
+		"podtitulek": "Subtitle",
+		"nastavit_licenci": "Set license",
+
+		"licence_pro": "License for",
+		"ulozit": "Save",
+		"zavrit": "Close"
 	}
 }
