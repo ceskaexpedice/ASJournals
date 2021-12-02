@@ -22,9 +22,11 @@
     @extend .app-mr-1;
   }
 
-  &.mat-primary {
-    .mat-icon {
-      @include setIcon($color: $app-color-lightnes);
+  &.mat-flat-button {
+    &.mat-primary {
+      .mat-icon {
+        @include setIcon($color: $app-color-lightnes);
+      }
     }
   }
 }

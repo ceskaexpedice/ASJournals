@@ -227,6 +227,8 @@
 
 		"licence_pro": "License for",
 		"ulozit": "Save",
-		"zavrit": "Close"
+		"zavrit": "Close",
+		"zobrazit_cisla": "Show numbers",
+		"skryt_cisla": "Hide numbers"
 	}
 }

@@ -176,3 +176,40 @@ h1, h2, h3, h4 {
     }
   }
 }
+
+// table
+.app-table {
+  tbody {
+    tr {
+      &:nth-child(odd) {
+        background-color: $app-gray-1;
+      }
+
+      td {
+        @extend .app-p-2;
+        vertical-align: top;
+
+        .app-input {
+          @extend .app-pl-2, .app-pr-2;
+          height: 34px;
+          border: 1px solid $app-gray-3;
+          border-radius: $app-border-radius;
+        }
+
+        &:first-child {
+          font-weight: 900;
+          font-size: 16px;
+        }
+
+        &:nth-child(2) {
+          text-align: right;
+        }
+
+        &:last-child {
+          width: 160px;
+          text-align: right;
+        }
+      }
+    }
+  }
+}
