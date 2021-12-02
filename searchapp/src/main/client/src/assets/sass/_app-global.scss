@@ -154,7 +154,7 @@ h4+hr {
 
 // common
 .app-pipe-brand {
-  @extend .app-ml-2, .app-mr-2;
+  @extend .app-ml-2, .app-mr-2 !optional;
   border-left: 1px solid;
   border-color: rgba($app-brand, .5);
 }
