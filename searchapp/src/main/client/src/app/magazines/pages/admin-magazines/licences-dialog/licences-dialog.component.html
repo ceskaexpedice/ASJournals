@@ -6,7 +6,7 @@
         <td>{{ item.label }}</td>
         <td>
           <input id="licence" name="licence" type="text" [(ngModel)]="cache[item.pid].licence" class="app-input">
-          <div *ngIf="cache[item.pid]?.children">
+          <div *ngIf="cache[item.pid]?.children && cache[item.pid]?.show">
             <div *ngFor="let sitem of cache[item.pid].children">
               <label class="app-label app-mr-2">{{ sitem.label }}:</label> 
               <input name="slicence" type="text" [(ngModel)]="cache[sitem.pid].licence" class="app-input app-mt-2">
@@ -14,8 +14,8 @@
           </div>
         </td>
         <td>
-          <button mat-button color="primary" (click)="getChildren(item.pid, item)" [class]="showingNumbers ? 'app-rotate-up' : 'app-rotate-down'">
-            <mat-icon>expand_less</mat-icon> {{ showingNumbers ? ('magazines.skryt_cisla' | translate ) : ('magazines.zobrazit_cisla' | translate) }}
+          <button mat-button color="primary" (click)="getChildren(item.pid, item)" [class]="cache[item.pid]?.show ? 'app-rotate-up' : 'app-rotate-down'">
+            <mat-icon>expand_less</mat-icon> {{ cache[item.pid]?.show ? ('magazines.skryt_cisla' | translate ) : ('magazines.zobrazit_cisla' | translate) }}
           </button>
         </td>
       </tr>

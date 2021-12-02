@@ -13,7 +13,6 @@ export class LicencesDialogComponent implements OnInit {
   items: any[] = [];
   cache: any = {};
   licences: any = {};
-  showingNumbers: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<LicencesDialogComponent>,
@@ -75,21 +74,22 @@ export class LicencesDialogComponent implements OnInit {
   }
 
   getChildren(pid: string, item: any) {
-    this.showingNumbers = !this.showingNumbers;
 
     if (!this.cache[pid]) {
       this.cache[pid] = {label: this.setLabel(item), licence: this.licences[pid]};
     }
+
     if (!this.cache[pid].children) {
       this.service.getChildren(pid).subscribe(res => {
         this.cache[pid].children = [];
         res.forEach((e: any) => {
           e.label = this.setLabel(e);
           this.cache[pid].children.push(e);
-          this.cache[e.pid] = {label: this.setLabel(e), licence: this.licences[e.pid]};
+          this.cache[e.pid] = {label: this.setLabel(e), licence: this.licences[e.pid], show: false};
         });
       });
     }
+    this.cache[pid].show = !this.cache[pid].show;
   }
 
   save() {
