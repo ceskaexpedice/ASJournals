@@ -106,13 +106,13 @@ public class IndexServlet extends HttpServlet {
 
           Indexer indexer = new Indexer();
           for(String pid : req.getParameterValues("pid")){
-            json.put(pid, indexer.indexDeep(pid));
+            json = indexer.indexDeep(pid);
           }
           //indexer.indexPidAndChildren(req.getParameter("pid"));
 
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, null, ex);
-          json.put("error", ex.toString());
+            json.put("error", ex.toString());
         }
         out.println(json.toString(2));
       }

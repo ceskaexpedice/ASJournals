@@ -22,14 +22,9 @@
               </div>
             </div>
           </div>
-          <div *ngIf="indexed" class="row">
+          <div *ngIf="resultMsg && !working" class="row">
             <div class="alert alert-success" role="alert">
-              {{indexUUID}} {{'text.indexed-note' | translate}}!
-            </div>
-          </div>
-          <div *ngIf="deleted" class="row">
-            <div class="alert alert-success" role="alert">
-              {{indexUUID}} {{'text.deleted-note' | translate}}!
+              {{resultMsg}} {{'text.indexed-note' | translate}}!
             </div>
           </div>
           <hr />

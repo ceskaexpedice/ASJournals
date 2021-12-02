@@ -198,12 +198,13 @@ public class Indexer {
       indexPidAndChildren(pid, idx);
       LOGGER.log(Level.INFO, "index finished. Indexed: {0}", total);
 
-      response.put("total indexed", total);
+      response.put("msg", "total indexed " + total);
       Date tend = new Date();
       response.put("ellapsed time", FormatUtils.formatInterval(tend.getTime() - tstart.getTime()));
       client.close();
     } catch (IOException ex) {
       Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
+      response.put("error", ex);
     }
     return response;
 
@@ -269,7 +270,7 @@ public class Indexer {
       long num = solr.query(new SolrQuery(q)).getResults().getNumFound();
       ret = new JSONObject(solr.deleteByQuery(q).jsonStr());
       solr.commit();
-      ret.put("success", "deleted " + num + " documents");
+      ret.put("msg", "deleted " + num + " documents");
     } catch (SolrServerException | IOException ex) {
       ret.put("error", ex);
       LOGGER.log(Level.SEVERE, null, ex);
@@ -735,7 +736,7 @@ public class Indexer {
   }
 
   private void setDatum(SolrInputDocument idoc, JSONObject mods, String pid) {
-
+    int year = 0;
     JSONObject o = mods.optJSONObject("mods:originInfo");
     if (o != null) {
       if (!idoc.containsKey("dateIssued")) {
@@ -747,7 +748,9 @@ public class Indexer {
         dates.put(pid, date);
         idoc.setField("year", date);
       }
-    } else {
+    } 
+    
+    if (year == 0) {
       //Pokus starych zaznamu
       o = mods.optJSONObject("mods:part");
       if (o != null) {
@@ -762,7 +765,7 @@ public class Indexer {
         }
       }
     }
-  }
+  } 
 
   private void setDatum(SolrInputDocument idoc, String parent) {
     if (dates.containsKey(parent)) {

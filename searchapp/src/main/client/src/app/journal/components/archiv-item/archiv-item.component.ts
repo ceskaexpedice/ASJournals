@@ -33,11 +33,9 @@ export class ArchivItemComponent implements OnInit {
       let mods = JSON.parse(this.item['mods']);
       if (this.item['model'] === 'periodicalvolume') {
 
-        if (mods['mods:originInfo']) {
-          this.year = mods['mods:originInfo']['mods:dateIssued'];
-          if (mods['mods:titleInfo']) {
+        this.year = this.item.year;
+        if (mods['mods:titleInfo']) {
             this.volumeNumber = mods['mods:titleInfo']['mods:partNumber'];
-          }
         } else {
           //podpora pro starsi mods. ne podle zadani
           //

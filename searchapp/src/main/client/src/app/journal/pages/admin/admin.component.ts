@@ -61,6 +61,8 @@ export class AdminComponent implements OnInit, OnDestroy {
   tinyConfig: any;
   tinyInited = false;
 
+  resultMsg: string = '';
+
   ngOnInit() {
     this.subscriptions.push(this.state.configSubject.subscribe(val => {
       this.fillMenu();
@@ -217,8 +219,9 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   index() {
     this.working = true;
+    this.resultMsg = '';
     this.service.index(this.indexUUID!).subscribe(res => {
-      this.indexed = !res.hasOwnProperty('error');
+      this.resultMsg = res.hasOwnProperty('error') ? res.error : res.msg;
       this.working = false;
     });
   }
@@ -230,8 +233,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   confirmDelete(): void {
     
     this.working = true;
+    this.resultMsg = '';
     this.service.delete(this.indexUUID!).subscribe(res => {
-      this.deleted = !res.hasOwnProperty('error');
+      this.resultMsg = res.hasOwnProperty('error') ? res.error : res.msg;
       this.working = false;
     });
     this.comfirmTemplate?.hide();
