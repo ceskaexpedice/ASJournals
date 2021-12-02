@@ -192,7 +192,7 @@ h1, h2, h3, h4 {
         .app-input {
           @extend .app-pl-2, .app-pr-2;
           height: 34px;
-          border: 1px solid $app-gray-3;
+          border: 1px solid $app-gray-4;
           border-radius: $app-border-radius;
         }
 
@@ -203,6 +203,7 @@ h1, h2, h3, h4 {
 
         &:nth-child(2) {
           text-align: right;
+          padding-right: 100px !important;
         }
 
         &:last-child {

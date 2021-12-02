@@ -5,11 +5,11 @@
       <tr *ngFor="let item of cache[data.journal].children">
         <td>{{ item.label }}</td>
         <td>
-          <input id="licence" name="licence" type="text" [(ngModel)]="cache[item.pid].licence" class="app-input">
+          <input id="licence" name="licence" type="text" [(ngModel)]="cache[item.pid].licence" class="app-input" [placeholder]="'licence' + '...' | translate">
           <div *ngIf="cache[item.pid]?.children && cache[item.pid]?.show">
             <div *ngFor="let sitem of cache[item.pid].children">
               <label class="app-label app-mr-2">{{ sitem.label }}:</label> 
-              <input name="slicence" type="text" [(ngModel)]="cache[sitem.pid].licence" class="app-input app-mt-2">
+              <input name="slicence" type="text" [(ngModel)]="cache[sitem.pid].licence" class="app-input app-mt-2" [placeholder]="'licence' + '...' | translate">
             </div>
           </div>
         </td>

@@ -156,7 +156,8 @@
 		"add_uuid": "Add uuid",
 		"cover": "Cover",
 		"Indexing": "Indexing",
-		"delete_uuid": "Delete UUID"
+		"delete_uuid": "Delete UUID",
+		"confirm_delete": "Confirm deleted"
 	},
 	"a zároveň": "AND",
 	"nebo": "OR",
@@ -224,11 +225,11 @@
 		"ukazat_starsi_rocniky": "Show older vintages",
 		"podtitulek": "Subtitle",
 		"nastavit_licenci": "Set license",
-
 		"licence_pro": "License for",
 		"ulozit": "Save",
 		"zavrit": "Close",
 		"zobrazit_cisla": "Show numbers",
-		"skryt_cisla": "Hide numbers"
+		"skryt_cisla": "Hide numbers",
+		"nove_heslo": "New password"
 	}
 }

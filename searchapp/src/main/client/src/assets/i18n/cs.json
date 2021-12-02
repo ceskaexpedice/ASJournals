@@ -156,7 +156,8 @@
 		"add_uuid": "Přidat uuid",
 		"cover": "Obálka",
 		"Indexing": "Indexing",
-		"delete_uuid": "Smazat UUID"
+		"delete_uuid": "Smazat UUID",
+		"confirm_delete": "Potvrdit smazání"
 	},
 	"a zároveň": "a zároveň",
 	"nebo": "nebo",
@@ -224,11 +225,11 @@
 		"ukazat_starsi_rocniky": "Ukázat starší ročníky",
 		"podtitulek": "Podtitulek",
 		"nastavit_licenci": "Nastavit licenci",
-		
 		"licence_pro": "Licence pro",
 		"ulozit": "Uložit",
 		"zavrit": "Zavřít",
 		"zobrazit_cisla": "Zobrazit čísla",
-		"skryt_cisla": "Skrýt čísla"
+		"skryt_cisla": "Skrýt čísla",
+		"nove_heslo": "Nové heslo"
 	}
 }
