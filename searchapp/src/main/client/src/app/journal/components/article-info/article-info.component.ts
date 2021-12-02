@@ -41,6 +41,8 @@ export class ArticleInfoComponent implements OnInit {
     doi: string | null = null;
     isPeerReviewed: boolean = false;
 
+    licence: string | null | undefined;
+
     constructor(
         private router: Router,
         private elementRef: ElementRef,
@@ -108,6 +110,29 @@ export class ArticleInfoComponent implements OnInit {
         }
 
         this.isPeerReviewed = this.article['genre'].indexOf('peer-reviewed') > -1;
+
+        this.licence = this.state.ctx?.licence;
+        
+
+        if (this.state.ctx?.licences) {
+            const licences = JSON.parse(this.state.ctx.licences);
+            const paths: string[] = this.article.pid_paths;
+            let hasLic = false;
+            paths.forEach(p => {
+                const pids = p.split('/').reverse();
+                pids.forEach(pid => {
+                    if (licences[pid]) {
+                        this.licence = licences[pid];
+                        hasLic = true;
+                        return;
+                    }
+                    
+                });
+                if (hasLic) {
+                    return;
+                }
+            });
+        }
 
     }
 
