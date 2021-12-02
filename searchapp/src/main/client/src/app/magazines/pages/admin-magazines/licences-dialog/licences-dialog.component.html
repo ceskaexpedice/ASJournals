@@ -1,29 +1,25 @@
 <h1 mat-dialog-title>{{ 'licences' | translate }} for: <span>{{ data.title }}</span></h1>
 <div mat-dialog-content>
-  <table class="app-table" [cellPadding]="1" [cellSpacing]="5">
-    <thead>
-      <th>pid</th>
-      <th>{{'Rok'|translate}}</th>
-      <th>{{'číslo'|translate}}</th>
-      <th>{{'partName'|translate}}</th>
-      <th>{{'licence'|translate}}</th>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of items">
-        <td>{{ item.pid }}</td>
-        <td>{{ item.year }}</td>
-        <td>{{ item.issueNumber }}</td>
-        <td>{{ item.partName }}</td>
-        <td>
-          <mat-form-field  class="app-w-100" appearance="outline">
-            <mat-label>{{ 'magazines.licence' | translate }}</mat-label>
-            <input matInput id="licence" name="licence" type="text" [(ngModel)]="item.licence">
-          </mat-form-field>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <div *ngFor="let item of cache[data.journal].children">
+      <div>
+        {{ item.label }} <button mat-button (click)="getChildren(item.pid, item)">+</button> 
+        <mat-form-field   >
+          <mat-label>{{ 'magazines.licence' | translate }}</mat-label>
+          <input matInput id="licence" name="licence" type="text" [(ngModel)]="cache[item.pid].licence">
+        </mat-form-field>
+      </div>
+      <div *ngIf="cache[item.pid]?.children">
+          <div *ngFor="let sitem of cache[item.pid].children">
+            {{ sitem.label }} 
+            <mat-form-field   >
+              <mat-label>{{ 'magazines.licence' | translate }}</mat-label>
+              <input matInput  name="slicence" type="text" [(ngModel)]="cache[sitem.pid].licence">
+            </mat-form-field>
+          </div>
+      </div>
+    </div>
 </div>
 <div mat-dialog-actions>
+  <button mat-button (click)="save()">{{ 'desc.ulozit' | translate }}</button>
   <button mat-button mat-dialog-close cdkFocusInitial>{{ 'desc.zavrit' | translate }}</button>
 </div>

@@ -5,6 +5,7 @@ export class Magazine {
   showTitleLabel: boolean = false;
   showOldYears: boolean = true;
   licence:string | null = null;
+  licences:string | null = null;
   
   title: string | null = null;
   subtitle: string | null = null;

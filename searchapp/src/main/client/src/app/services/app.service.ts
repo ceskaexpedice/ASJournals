@@ -244,7 +244,7 @@ export class AppService {
   }
 
   getChildren(pid: string, dir: string = 'desc'): Observable<any> {
-    let url = this.state.config['context'] + 'search/journal/select';
+    let url = 'api/search/journal/select';
     const params = new HttpParams().set('q', '*:*').set('fq', 'parents:"' + pid + '"')
       .set('wt', 'json').set('sort', 'idx ' + dir).set('rows', '500');
 

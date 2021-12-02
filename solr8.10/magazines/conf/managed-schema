@@ -74,6 +74,7 @@
     
     <field name="journal" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="licence" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="licences" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="color" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="showTitleLabel" type="boolean" indexed="true" stored="true" multiValued="false"/>
     <field name="showOldYears" type="boolean" indexed="true" stored="true" multiValued="false"/>

@@ -72,11 +72,8 @@ export class MagazineEditComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result && result.change) {
-        // this.service.changeStavDirect(this.doc.identifier, result.newState, result.poznamka, result.granularity).subscribe(res => {
-        //   console.log(res);
-        // this.doc.dntstav = result.newState;
-        // });
+      if (result) {
+        this.mag.licences = JSON.stringify(result);
       }
 
     });

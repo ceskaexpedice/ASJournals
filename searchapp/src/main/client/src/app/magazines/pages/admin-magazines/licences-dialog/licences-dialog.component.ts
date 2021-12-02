@@ -1,3 +1,4 @@
+import { keyframes } from '@angular/animations';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppService } from 'src/app/services/app.service';
@@ -10,6 +11,8 @@ import { AppService } from 'src/app/services/app.service';
 export class LicencesDialogComponent implements OnInit {
 
   items: any[] = [];
+  cache: any = {};
+  licences: any = {};
 
   constructor(
     public dialogRef: MatDialogRef<LicencesDialogComponent>,
@@ -17,30 +20,85 @@ export class LicencesDialogComponent implements OnInit {
     private service: AppService) { }
 
   ngOnInit(): void {
-    this.service.getPeriodicalItems(this.data.journal).subscribe((res: any) => {
-      this.items = res.response.docs;
-      this.items.forEach(item => {
-        const mods = item.mods;
-        if (mods['mods:originInfo']) {
-          if (mods['mods:titleInfo']) {
-            item.issueNumber = mods['mods:titleInfo']['mods:partNumber'];
-            item.partName = mods['mods:titleInfo']['mods:partName'];
-          }
-        } else if (mods['mods:titleInfo']) {
-          item.issueNumber = mods['mods:titleInfo']['mods:partNumber'];
-          item.partName = mods['mods:titleInfo']['mods:partName'];
+    if (this.data.licences) {
+      this.licences = JSON.parse(this.data.licences);
+    }
+    
+    this.cache[this.data.journal] = {label: this.data.year, licence: ''};
+    this.getChildren(this.data.journal, this.data);
+  }
 
-        } else {
-
-          if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
-            item.issueNumber = mods['part']['detail']['number'];
-          } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
-            item.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
-          }
+  setLabel(item: any) {
+    let label = '';
+    const mods = JSON.parse(item['mods']);
+    if (item['model'] === 'periodicalvolume') {
+      label += item.year;
+      if (mods['mods:originInfo']) {
+        //this.year = mods['mods:originInfo']['mods:dateIssued'];
+        if (mods['mods:titleInfo']) {
+          label += ', ročník: ' + mods['mods:titleInfo']['mods:partNumber'];
         }
-        console.log(item.partName)
+      } else {
+        //podpora pro starsi mods. ne podle zadani
+        if (mods['part'] && mods['part']['date']) {
+          //this.year = mods['part']['date'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:date']) {
+          //this.year = mods['mods:part']['mods:date'];
+        }
+
+        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+          label += ' ' + mods['part']['detail']['number'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+          label += ' ' + mods['mods:part']['mods:detail']['mods:number'];
+        }
+      }
+    } else if (item['model'] === 'periodicalitem') {
+      if (mods['mods:originInfo']) {
+        //this.year = mods['mods:originInfo']['mods:dateIssued'];
+        if (mods['mods:titleInfo']['mods:partNumber']) {
+          label += ' Číslo: ' + mods['mods:titleInfo']['mods:partNumber'];
+        }
+        if (mods['mods:titleInfo']['mods:partName']) {
+          label += ' Part: ' + mods['mods:titleInfo']['mods:partName'];
+        }
+      } else {
+        //podpora pro starsi mods. ne podle zadani
+        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+          label += ' Číslo: ' + mods['part']['detail']['number'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+          label += ' Číslo: ' + mods['mods:part']['mods:detail']['mods:number'];
+        }
+      }
+    }
+    return label;
+  }
+
+  getChildren(pid: string, item: any) {
+    if (!this.cache[pid]) {
+      this.cache[pid] = {label: this.setLabel(item), licence: this.licences[pid]};
+    }
+    if (!this.cache[pid].children) {
+      this.service.getChildren(pid).subscribe(res => {
+        this.cache[pid].children = [];
+        res.forEach((e: any) => {
+          e.label = this.setLabel(e);
+          this.cache[pid].children.push(e);
+          this.cache[e.pid] = {label: this.setLabel(e), licence: this.licences[e.pid]};
+        });
       });
+    }
+  }
+
+  save() {
+    const pids = Object.keys(this.cache);
+    const licences: any = {};
+    pids.forEach(pid => {
+      if (this.cache[pid]?.licence !== '') {
+        licences[pid] = this.cache[pid].licence;
+      }
     });
+      
+      this.dialogRef.close(licences);
   }
 
 }
