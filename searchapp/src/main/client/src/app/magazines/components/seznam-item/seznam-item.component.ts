@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { AppState } from 'src/app/app.state';
 
 import {MagazineState} from '../../magazine.state';
 import {MagazinesService} from '../../magazines.service';
@@ -19,6 +21,7 @@ export class SeznamItemComponent implements OnInit {
   private route: ActivatedRoute,
     private router: Router, 
     public state: MagazineState, 
+    public translate: TranslateService,
     private service: MagazinesService) { }
 
   ngOnInit() {

@@ -109,4 +109,10 @@
       <textarea matInput [(ngModel)]="mag.desc" id="desc"></textarea>
     </mat-form-field>
   </div>
+  <div fxFlex="calc(100% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.popis_angl' | translate }}</mat-label>
+      <textarea matInput [(ngModel)]="mag.desc_en" id="desc"></textarea>
+    </mat-form-field>
+  </div>
 </div>

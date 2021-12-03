@@ -19,5 +19,6 @@ export class Magazine {
   kontakt: string | null = null;
   keywords: string[] = [];
   desc: string | null = null;
+  desc_en: string | null = null;
   web: string | null = null;
 }

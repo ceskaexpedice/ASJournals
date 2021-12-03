@@ -63,6 +63,7 @@
     <field name="issn" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="kontakt" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="desc" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="desc_en" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="web" type="string" indexed="true" stored="true" multiValued="false"/>
     
     <!-- pro facety -->
