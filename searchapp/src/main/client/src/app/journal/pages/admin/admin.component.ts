@@ -1,10 +1,10 @@
-import {Component, OnInit, OnDestroy, TemplateRef, ViewChild} from '@angular/core';
-import {Subscription} from 'rxjs';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 
-import {BsModalRef, BsModalService, ModalDirective} from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 //import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
-import {FileUploader} from 'ng2-file-upload';
+import { FileUploader } from 'ng2-file-upload';
 import { Router } from '@angular/router';
 import { AppState } from 'src/app/app.state';
 import { Magazine } from 'src/app/models/magazine';
@@ -29,12 +29,13 @@ export class AdminComponent implements OnInit, OnDestroy {
   @ViewChild('filesModal') filesModal: any;
   @ViewChild('childModal') public childModal: ModalDirective | null = null;
   @ViewChild('comfirmTemplate') public comfirmTemplate: ModalDirective | null = null;
+  @ViewChild('licencesModal') public licencesModal: ModalDirective | null = null;
 
 
   subscriptions: Subscription[] = [];
 
-  public uploader: FileUploader = new FileUploader({url: 'lf?action=UPLOAD'});
-  public coverUploader: FileUploader = new FileUploader({url: 'lf?action=UPLOAD&cover=true'});
+  public uploader: FileUploader = new FileUploader({ url: 'lf?action=UPLOAD' });
+  public coverUploader: FileUploader = new FileUploader({ url: 'lf?action=UPLOAD&cover=true' });
 
 
   menu: any[] = [];
@@ -56,25 +57,37 @@ export class AdminComponent implements OnInit, OnDestroy {
   coverMsg: string | null = null;
 
   newctx: string = '';
-  
-  currentMag : Magazine | null = null;
+
+  currentMag: Magazine | null = null;
   tinyConfig: any;
   tinyInited = false;
 
   resultMsg: string = '';
 
+  tab: string = 'config';
+  cache: any = {};
+  licences: any = {};
+
   ngOnInit() {
     this.subscriptions.push(this.state.configSubject.subscribe(val => {
       this.fillMenu();
       this.initTiny();
+
     }));
+
+    if (this.state?.ctx?.licences && this.state?.ctx?.journal) {
+      this.licences = JSON.parse(this.state.ctx.licences);
+    }
+    this.cache[this.state.ctx!.journal!] = { label: 'root', licence: '' };
+    this.getChildren(this.state.ctx!.journal!, this.state.ctx);
+
   }
 
   constructor(
     public state: AppState,
     private service: AppService,
     private modalService: BsModalService,
-    private router: Router) {}
+    private router: Router) { }
 
   ngAfterViewInit() {
     if (this.state.config) {
@@ -84,13 +97,14 @@ export class AdminComponent implements OnInit, OnDestroy {
       }, 100);
     }
   }
-  
+
 
   initData() {
 
     this.subscriptions.push(this.service.langSubject.subscribe(val => {
       this.getText();
     }));
+
 
   }
 
@@ -99,8 +113,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     var that = this;
     this.tinyConfig = {
 
-      base_url: '/tinymce', 
-                  suffix: '.min' ,
+      base_url: '/tinymce',
+      suffix: '.min',
 
       // selector: '#' + this.elementId,
       menubar: false,
@@ -108,8 +122,8 @@ export class AdminComponent implements OnInit, OnDestroy {
       toolbar: 'save | undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code mybutton',
       // skin_url: this.state.config['context'] + 'assets/skins/lightgray',
       images_upload_url: 'lf?action=UPLOAD&isImage=true&ctx=' + this.state.ctx?.ctx,
-      automatic_uploads: true, 
-      relative_urls : false,
+      automatic_uploads: true,
+      relative_urls: false,
       setup: (editor: any) => {
         this.editor = editor;
         this.initData();
@@ -122,10 +136,10 @@ export class AdminComponent implements OnInit, OnDestroy {
           }
         });
       },
-      
-      
 
-      save_oncancelcallback: function () {console.log('Save canceled');},
+
+
+      save_oncancelcallback: function () { console.log('Save canceled'); },
       save_onsavecallback: () => this.save()
     };
 
@@ -147,7 +161,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     this.menu = [];
     for (let m in this.state.config['menu']) {
-      this.menu.push({label: m, menu: this.state.config['menu'][m]['submenu'], visible: this.state.config['menu'][m]['visible']})
+      this.menu.push({ label: m, menu: this.state.config['menu'][m]['submenu'], visible: this.state.config['menu'][m]['visible'] })
       //this.menu = this.state.config['menu'];
     }
 
@@ -161,7 +175,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
   }
 
-  select(m: string, m1: string|null) {
+  select(m: string, m1: string | null) {
     if (m1) {
       this.selected = m + '/' + m1;
     } else {
@@ -172,13 +186,13 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.deleted = false;
     this.getText();
   }
-  
-  saveMenu(){
+
+  saveMenu() {
     let menuToSave: any = {};
     for (let i = 0; i < this.menu.length; i++) {
-      menuToSave[this.menu[i].label] = {submenu: this.menu[i].menu, visible: this.menu[i].visible};
+      menuToSave[this.menu[i].label] = { submenu: this.menu[i].menu, visible: this.menu[i].visible };
     }
-    
+
     this.service.saveMenu(JSON.stringify(menuToSave)).subscribe((res: any) => {
       this.saved = !res.hasOwnProperty('error');
     });
@@ -191,23 +205,23 @@ export class AdminComponent implements OnInit, OnDestroy {
     if (this.visibleChanged) {
       let menuToSave: any = {};
       for (let i = 0; i < this.menu.length; i++) {
-        menuToSave[this.menu[i].label] = {submenu: this.menu[i].menu, visible: this.menu[i].visible};
+        menuToSave[this.menu[i].label] = { submenu: this.menu[i].menu, visible: this.menu[i].visible };
       }
       m = JSON.stringify(menuToSave);
     }
     this.service.saveText(this.selected, content, m).subscribe(res => {
-      
-        this.saved = !res.hasOwnProperty('error');
+
+      this.saved = !res.hasOwnProperty('error');
       //if (res.hasOwnProperty('error')) {
       //  this.saved = !res.hasOwnProperty('error');
       //} else {
-        //this.service.saveJournalConfig().subscribe(res2 => {
-          //this.saved = !res2.hasOwnProperty('error');
-          //if (!res2.hasOwnProperty('error')) {
-          //  this.service.getJournalConfig(this.state.ctx).subscribe();
-          //  this.service.switchStyle();
-          //}
-        //});
+      //this.service.saveJournalConfig().subscribe(res2 => {
+      //this.saved = !res2.hasOwnProperty('error');
+      //if (!res2.hasOwnProperty('error')) {
+      //  this.service.getJournalConfig(this.state.ctx).subscribe();
+      //  this.service.switchStyle();
+      //}
+      //});
       //}
     });
   }
@@ -229,9 +243,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   openConfirm() {
     this.comfirmTemplate?.show();
   }
- 
+
   confirmDelete(): void {
-    
+
     this.working = true;
     this.resultMsg = '';
     this.service.delete(this.indexUUID!).subscribe(res => {
@@ -240,14 +254,14 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
     this.comfirmTemplate?.hide();
   }
- 
+
   decline(): void {
     this.comfirmTemplate?.hide();
   }
 
   uploadFile() {
 
-    this.uploader.setOptions({url: 'lf?action=UPLOAD&ctx=' + this.state.ctx?.ctx});
+    this.uploader.setOptions({ url: 'lf?action=UPLOAD&ctx=' + this.state.ctx?.ctx });
     this.uploader.onSuccessItem = (item, response, status, headers) => this.uploaded();
     this.uploader.uploadAll();
   }
@@ -261,7 +275,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   uploadCover() {
     // this.coverUploader = new FileUploader({url: 'lf?action=UPLOAD&cover=true&ctx=' + this.state.ctx.ctx});
-    this.coverUploader.setOptions({url: 'lf?action=UPLOAD&cover=true&ctx=' + this.state.ctx?.ctx});
+    this.coverUploader.setOptions({ url: 'lf?action=UPLOAD&cover=true&ctx=' + this.state.ctx?.ctx });
     this.coverUploader.onSuccessItem = (item, response, status, headers) => this.coverUploaded();
     this.coverUploader.uploadAll();
   }
@@ -290,6 +304,89 @@ export class AdminComponent implements OnInit, OnDestroy {
   public closeFiles() {
     this.childModal?.hide();
     //this.editor.insertContent('&nbsp;<b>' + this.selectedFile + '</b>&nbsp;');
+  }
+
+  setLicences() {
+    this.licencesModal?.show();
+  }
+
+
+
+  setLabel(item: any) {
+    let label = '';
+    const mods = JSON.parse(item['mods']);
+    if (item['model'] === 'periodicalvolume') {
+      label += item.year;
+      if (mods['mods:originInfo']) {
+        //this.year = mods['mods:originInfo']['mods:dateIssued'];
+        if (mods['mods:titleInfo']) {
+          label += ', ročník: ' + mods['mods:titleInfo']['mods:partNumber'];
+        }
+      } else {
+        //podpora pro starsi mods. ne podle zadani
+        if (mods['part'] && mods['part']['date']) {
+          //this.year = mods['part']['date'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:date']) {
+          //this.year = mods['mods:part']['mods:date'];
+        }
+
+        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+          label += ' ' + mods['part']['detail']['number'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+          label += ' ' + mods['mods:part']['mods:detail']['mods:number'];
+        }
+      }
+    } else if (item['model'] === 'periodicalitem') {
+      if (mods['mods:originInfo']) {
+        //this.year = mods['mods:originInfo']['mods:dateIssued'];
+        if (mods['mods:titleInfo']['mods:partNumber']) {
+          label += ' Číslo: ' + mods['mods:titleInfo']['mods:partNumber'];
+        }
+        if (mods['mods:titleInfo']['mods:partName']) {
+          label += ' Part: ' + mods['mods:titleInfo']['mods:partName'];
+        }
+      } else {
+        //podpora pro starsi mods. ne podle zadani
+        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+          label += ' Číslo: ' + mods['part']['detail']['number'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+          label += ' Číslo: ' + mods['mods:part']['mods:detail']['mods:number'];
+        }
+      }
+    }
+    return label;
+  }
+
+
+  getChildren(pid: string, item: any) {
+
+    if (!this.cache[pid]) {
+      this.cache[pid] = { label: this.setLabel(item), licence: this.licences[pid] };
+    }
+
+    if (!this.cache[pid].children) {
+      this.service.getChildren(pid).subscribe(res => {
+        this.cache[pid].children = [];
+        res.forEach((e: any) => {
+          e.label = this.setLabel(e);
+          this.cache[pid].children.push(e);
+          this.cache[e.pid] = { label: this.setLabel(e), licence: this.licences[e.pid], show: false };
+        });
+      });
+    }
+    this.cache[pid].show = !this.cache[pid].show;
+  }
+
+  saveLicences() {
+    const pids = Object.keys(this.cache);
+    const licences: any = {};
+    pids.forEach(pid => {
+      if (this.cache[pid]?.licence !== '') {
+        licences[pid] = this.cache[pid].licence;
+      }
+    });
+
+    this.licencesModal?.hide();
   }
 
 }

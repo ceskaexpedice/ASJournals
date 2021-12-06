@@ -4,7 +4,7 @@ export class Magazine {
   color: string | null = null;
   showTitleLabel: boolean = false;
   showOldYears: boolean = true;
-  licence:string | null = null;
+  licence:string = '';
   licences:string | null = null;
   
   title: string | null = null;
