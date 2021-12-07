@@ -157,12 +157,8 @@ public class Indexer {
       setGenre(idoc, mods);
       setISSN(idoc, mods);
 
-      if (dateIssued.containsKey(parent)) {
-        idoc.addField("dateIssued", dateIssued.get(parent));
-        dateIssued.put(pid, dateIssued.get(parent));
-      } else {
-        setDatum(idoc, mods, pid);
-      }
+      setDateIssued(idoc, mods, pid, parent);
+
       if (dates.containsKey(parent) && dates.get(parent) != 0) {
         idoc.setField("year", dates.get(parent));
         dates.put(pid, dates.get(parent));
@@ -714,7 +710,7 @@ public class Indexer {
         } else {
           idoc.addField("genre", o);
         }
-          
+
       }
     }
   }
@@ -735,29 +731,53 @@ public class Indexer {
     }
   }
 
+  private void setDateIssued(SolrInputDocument idoc, JSONObject mods, String pid, String parent) {
+    String val = null;
+    JSONObject o = mods.optJSONObject("mods:originInfo");
+    if (o != null) {
+      if (!idoc.containsKey("mods:dateIssued")) {
+        val = o.optString("mods:dateIssued");
+      }
+    }
+
+    if (val == null) {
+      //Pokus starych zaznamu
+      o = mods.optJSONObject("mods:part");
+      if (o != null) {
+        if (!idoc.containsKey("mods:date")) {
+          val = o.optString("mods:date");
+        }
+      }
+    }
+
+    if (val == null && dateIssued.containsKey(parent)) {
+      val = dateIssued.get(parent);
+      dateIssued.put(pid, dateIssued.get(parent));
+    }
+
+    if (val != null) {
+      idoc.addField("dateIssued", val);
+      dateIssued.put(pid, val);
+    }
+  }
+
   private void setDatum(SolrInputDocument idoc, JSONObject mods, String pid) {
     int year = 0;
     JSONObject o = mods.optJSONObject("mods:originInfo");
     if (o != null) {
-      if (!idoc.containsKey("dateIssued")) {
-        dateIssued.put(pid, o.optString("mods:dateIssued"));
-        idoc.addField("dateIssued", o.optString("mods:dateIssued"));
-      }
+
       int date = o.optInt("mods:dateIssued");
       if (date > 0) {
         dates.put(pid, date);
         idoc.setField("year", date);
       }
-    } 
-    
+    }
+
     if (year == 0) {
       //Pokus starych zaznamu
       o = mods.optJSONObject("mods:part");
       if (o != null) {
-        if (!idoc.containsKey("dateIssued")) {
-          dateIssued.put(pid, o.optString("mods:date"));
-          idoc.addField("dateIssued", o.optString("mods:date"));
-        }
+
         int date = o.optInt("mods:date");
         if (date > 0) {
           dates.put(pid, date);
@@ -765,7 +785,7 @@ public class Indexer {
         }
       }
     }
-  } 
+  }
 
   private void setDatum(SolrInputDocument idoc, String parent) {
     if (dates.containsKey(parent)) {
