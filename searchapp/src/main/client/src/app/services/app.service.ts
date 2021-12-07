@@ -653,6 +653,15 @@ export class AppService {
     return this.get(url, params);
 
   }
+  saveMagazine(mag: Magazine) {
+
+    var url = 'index';
+    let params = new HttpParams()
+      .set('action', 'SAVE_MAGAZINE')
+      .set('mag', JSON.stringify(mag));
+
+    return this.get(url, params);
+  }
 
   index(uuid: string) {
     let url = 'index?action=INDEX_DEEP&pid=' + uuid;

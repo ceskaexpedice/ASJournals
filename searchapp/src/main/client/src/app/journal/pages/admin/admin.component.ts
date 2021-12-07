@@ -79,6 +79,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.licences = JSON.parse(this.state.ctx.licences);
     }
     this.cache[this.state.ctx!.journal!] = { label: 'root', licence: '' };
+
     this.getChildren(this.state.ctx!.journal!, this.state.ctx);
 
   }
@@ -379,11 +380,18 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   saveLicences() {
     const pids = Object.keys(this.cache);
-    const licences: any = {};
+    // const licences: any = {};
     pids.forEach(pid => {
       if (this.cache[pid]?.licence !== '') {
-        licences[pid] = this.cache[pid].licence;
+        this.licences[pid] = this.cache[pid].licence;
       }
+    });
+    this.state.ctx!.licences = JSON.stringify(this.licences);
+
+    this.service.saveMagazine(this.state.ctx!).subscribe(res => {
+      // this.service.getMagazines().subscribe(res2 => {
+      //   this.state.ctxs = res2['response']['docs'];
+      // });
     });
 
     this.licencesModal?.hide();

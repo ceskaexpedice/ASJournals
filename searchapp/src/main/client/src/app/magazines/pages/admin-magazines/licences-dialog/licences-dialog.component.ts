@@ -94,14 +94,14 @@ export class LicencesDialogComponent implements OnInit {
 
   save() {
     const pids = Object.keys(this.cache);
-    const licences: any = {};
+    // const licences: any = {};
     pids.forEach(pid => {
       if (this.cache[pid]?.licence !== '') {
-        licences[pid] = this.cache[pid].licence;
+        this.licences[pid] = this.cache[pid].licence;
       }
     });
       
-      this.dialogRef.close(licences);
+      this.dialogRef.close(this.licences);
   }
 
 }

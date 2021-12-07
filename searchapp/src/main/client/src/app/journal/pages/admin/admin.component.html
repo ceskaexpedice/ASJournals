@@ -163,7 +163,7 @@
 
 <div bsModal #licencesModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-sm">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title pull-left">{{ 'magazines.licence_pro' | translate }} </h4>
@@ -195,7 +195,7 @@
         </table>
         
         <div >
-          <button type="button" class="btn btn-success btn-s" (click)="save()">{{ 'magazines.ulozit' | translate }}</button>
+          <button type="button" class="btn btn-success btn-s" (click)="saveLicences()">{{ 'magazines.ulozit' | translate }}</button>
           <button type="button" class="btn btn-success btn-s" (click)="licencesModal.hide()">{{ 'magazines.zavrit' | translate }}</button>
         </div>
 
