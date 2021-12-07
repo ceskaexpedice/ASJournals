@@ -4,7 +4,7 @@
 	"q_authors_placeholder": "Search authors...",
 	"q_keywords_placeholder": "Search keywords...",
 	"ČASOPIS": "JOURNAL",
-	"k5_title": "Digital Library AV ČR",
+	"k5_title": "Digital Library of the CAS",
 	"Starší ročníky najdete v": "Older issues you can find in the",
 	"Zpět na ročníky": "Back to volumes",
 	"přidat kritérium": "add criterium",
@@ -163,7 +163,7 @@
 	"nebo": "OR",
 	"zpet_na_seznam": "Back to the list",
 	"magazines": {
-		"digitalni_knihovna_av_cr": "Digital Library of the AV ČR",
+		"digitalni_knihovna_av_cr": "Digital Library of the CAS",
 		"online_casopisy": "online magazines",
 		"navigace": "Navigation",
 		"seznam_casopisu": "List of magazines",
