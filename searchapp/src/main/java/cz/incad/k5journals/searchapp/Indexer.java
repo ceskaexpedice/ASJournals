@@ -750,12 +750,12 @@ public class Indexer {
       }
     }
 
-    if (val == null && dateIssued.containsKey(parent)) {
+    if ((val == null || "".equals(val)) && dateIssued.containsKey(parent)) {
       val = dateIssued.get(parent);
       dateIssued.put(pid, dateIssued.get(parent));
     }
 
-    if (val != null) {
+    if (val != null || "".equals(val)) {
       idoc.addField("dateIssued", val);
       dateIssued.put(pid, val);
     }
@@ -765,7 +765,6 @@ public class Indexer {
     int year = 0;
     JSONObject o = mods.optJSONObject("mods:originInfo");
     if (o != null) {
-
       int date = o.optInt("mods:dateIssued");
       if (date > 0) {
         dates.put(pid, date);
