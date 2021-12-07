@@ -44,7 +44,7 @@
       </div>
       
       <div class="col-xs-12 app-col-right" [class.app-col-right-full]="state.isFull" [ngClass]="!hideList ? 'app-viewer-hidden' : ''">
-        <div *ngIf="isPdf && fullSrc" style="overflow:visible;width:100%;height: 400px;">
+        <div *ngIf="isPdf && fullSrc" style="width:100%;height: 400px;"><!--overflow:visible;-->
           <pdf-viewer #pdfComponent [src]="fullSrc" 
                       [original-size]="false" 
                       [render-text]="true"
