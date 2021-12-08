@@ -163,6 +163,20 @@ h4+hr {
   margin-bottom: 40px;
 }
 
+.app-rotate-up {
+  .glyphicon-chevron-down {
+    transition: all 0.4s ease;
+    transform: rotateZ(180deg);
+  }
+}
+
+.app-rotate-down {
+  .glyphicon-chevron-down {
+    transition: all 0.4s ease;
+    transform: rotateZ(0deg);
+  }
+}
+
 // bootstrap rewrite
 .dropdown-menu {
   font-size: 1.8rem;
@@ -174,6 +188,13 @@ h4+hr {
     height: 140px;
   }
 }
+
+.btn {
+  .glyphicon {
+    vertical-align: text-bottom;
+  }
+}
+
 
 // Z-levels
 .z-depth-0 {
@@ -283,4 +304,42 @@ h4+hr {
 // tiny editor
 .tox-tinymce {
   min-height: 400px !important;
+}
+
+// table
+.app-table {
+  tbody {
+    tr {
+      &:nth-child(odd) {
+        background-color: $app-brand-l-5;
+      }
+
+      td {
+        @extend .app-p-2;
+        vertical-align: top;
+
+        .app-input {
+          @extend .app-pl-2, .app-pr-2;
+          height: 34px;
+          border: 1px solid $app-brand-l-3;
+          border-radius: 4px;
+        }
+
+        &:first-child {
+          font-weight: 900;
+          font-size: 16px;
+        }
+
+        &:nth-child(2) {
+          text-align: right;
+          padding-right: 100px !important;
+        }
+
+        &:last-child {
+          width: 160px;
+          text-align: right;
+        }
+      }
+    }
+  }
 }

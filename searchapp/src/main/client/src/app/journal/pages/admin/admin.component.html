@@ -2,7 +2,6 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-9 col-md-offset-3">
-        <!-- Nav tabs -->
         <ul class="nav nav-tabs">
           <li role="presentation"><span>{{'Administrace' | translate}}:</span></li>
           <li role="presentation" [class.active]="tab === 'config'"  >
@@ -10,12 +9,12 @@
           <li role="presentation" [class.active]="tab === 'ui'" >
             <a (click)="tab = 'ui'"  >{{'Rozhrani' | translate}}</a></li>
         </ul>
-      </div><!--/.col -->
-    </div><!--./row -->
-  </div><!--/.container -->
-</div><!--/.app-nav-tabs -->
+      </div>
+    </div>
+  </div>
+</div>
 
-<section class="app-content" *ngIf="state.ctx">
+<section class="app-content app-pt-8" *ngIf="state.ctx">
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
@@ -47,47 +46,39 @@
                   </ul>
                 </li>
               </ul>
-              <button type="button" class="btn app-btn app-btn-default"
-                (click)="saveMenu()">{{'admin.Save_selected_pages' | translate}}</button>
+              <button type="button" class="btn app-btn app-btn-default" (click)="saveMenu()">{{'admin.Save_selected_pages' | translate}}</button>
             </div>
-            <!--/.col -->
             <div class="col-xs-9">
-              <h3>{{selected}} <span class="app-brand-text text-darken-1">({{state.currentLang}})</span>
-
-              </h3>
+              <h3>{{selected}} <span class="app-brand-text text-darken-1">({{state.currentLang}})</span></h3>
               <div *ngIf="saved" class="alert alert-success" role="alert">
                 {{'text.save-note-1' | translate}} <strong>{{selected}} ({{state.currentLang}})</strong>
                 {{'text.save-note-2' | translate}}!
               </div>
               <form class="clearfix">
-                <!-- <textarea class="form-control" rows="28" [id]="elementId"></textarea> -->
                 <editor *ngIf="tinyInited" name="editor" [(ngModel)]="text" [init]="tinyConfig"></editor>
-
-
-
-
               </form>
-              <!--/.clearfix -->
             </div>
-            <!--/.col -->
           </div>
-          <!--/.row -->
         </ng-container>
 
         <ng-container *ngIf="tab === 'config'">
-          <div class="row app-mt-5">
+          <div class="row">
             <div class="col-xs-12">
               <div class="form-inline pull-left">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="indexUUID" name="indexUUID" placeholder="uuid" [(ngModel)]="indexUUID">
+                <div class="form-group app-mr-6">
+                  <input type="text" class="form-control app-mr-2" id="indexUUID" name="indexUUID" placeholder="uuid" [(ngModel)]="indexUUID">
+                  <button type="button" class="btn app-btn app-btn-default app-mr-1" (click)="index()">{{'admin.add_uuid' | translate}}</button>
+                  <button type="button" class="btn app-btn app-btn-default" (click)="openConfirm()">{{'admin.delete_uuid' | translate}}</button>
                 </div>
-                <button type="button" class="btn app-btn app-btn-default app-mr-2" (click)="index()">{{'admin.add_uuid' | translate}}</button>
-                <button type="button" class="btn app-btn app-btn-default app-mr-4" (click)="openConfirm()">{{'admin.delete_uuid' | translate}}</button>
-                <span>{{ 'admin.cover' | translate }}</span>:
-                <div class="form-group">
-                  <input class="form-control"  type="file" ng2FileSelect [uploader]="coverUploader" [title]="'nahrát obrázek' | translate">
+                <div class="form-group app-mr-6">
+                  <span>{{ 'admin.cover' | translate }}</span>:
+                  <input class="form-control app-mr-2"  type="file" ng2FileSelect [uploader]="coverUploader" [title]="'nahrát obrázek' | translate">
+                  <button type="button" class="btn app-btn app-btn-default" (click)="uploadCover()">{{'admin.Upload' | translate}}</button>{{ coverMsg }}
                 </div>
-                <button type="button" class="btn app-btn app-btn-default" (click)="uploadCover()">{{'admin.Upload' | translate}}</button>{{ coverMsg }}
+                <div class="form-group app-mr-6">
+                  <input type="text" class="form-control app-mr-2" name="licence" placeholder="licence" [(ngModel)]="state.ctx.licence">
+                  <button type="button" class="btn app-btn app-btn-default app-mr-4" (click)="setLicences()" >{{'magazines.nastavit_licenci' | translate}}</button>
+                </div>
               </div>
               <div *ngIf="working">
                 <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {{'admin.Indexing' | translate}} ...
@@ -98,22 +89,11 @@
             <div class="alert alert-success" role="alert">
               {{resultMsg}} {{'text.indexed-note' | translate}}!
             </div>
-          </div>
-          
-          <div class="row">
-            <input type="text" class="form-control" name="licence" placeholder="licence" [(ngModel)]="state.ctx.licence">
-            <button type="button" class="btn app-btn app-btn-default app-mr-4" (click)="setLicences()" >{{'magazines.nastavit_licenci' | translate}}</button>
-          </div>
-
-          <!--/.row -->
+          </div>  
         </ng-container>
-
       </div>
-      <!--/.col -->
     </div>
-    <!--/.row -->
   </div>
-  <!--/.container -->
 </section>
 
 <ng-template #filesModal>
@@ -127,8 +107,8 @@
         <h4 class="modal-title pull-left">{{'admin.confirm_delete' | translate}} {{ indexUUID }}</h4>
       </div>
       <div class="modal-body">
-        <button type="button" class="btn btn-default" (click)="confirmDelete()">Yes</button>
-        <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+        <button type="button" class="btn btn-primary app-mr-1" (click)="confirmDelete()">Yes</button>
+        <button type="button" class="btn btn-default" (click)="decline()">No</button>
       </div>
     </div>
   </div>
@@ -146,10 +126,9 @@
       </div>
       <div class="modal-body">
         <span><input type="file" ng2FileSelect [uploader]="uploader" (onCompleteAll)="uploaded()" />
-          <button type="button" class="btn btn-success btn-s" (click)="uploadFile()"
-            [disabled]="!uploader.getNotUploadedItems().length">
-            <span class="glyphicon glyphicon-upload"></span>{{'admin.Upload' | translate}}</button>
-
+          <button type="button" class="btn btn-success btn-s" (click)="uploadFile()"[disabled]="!uploader.getNotUploadedItems().length">
+            <span class="glyphicon glyphicon-upload"></span>{{'admin.Upload' | translate}}
+          </button>
         </span>
         <ul>
           <li *ngFor="let f of fileList"><a (click)="selectFile(f)">{{f}}</a></li>
@@ -159,20 +138,17 @@
   </div>
 </div>
 
-
-
-<div bsModal #licencesModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-  aria-hidden="true">
+<div bsModal #licencesModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left">{{ 'magazines.licence_pro' | translate }} </h4>
+        <h4 class="modal-title pull-left">{{ 'nastavit_licenci_detailne' | translate }}</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="licencesModal.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" *ngIf="state.ctx?.journal && cache[state.ctx?.journal!]">
-        <table [cellPadding]="0" [cellSpacing]="0" class="app-table app-w-100">
+        <table [cellPadding]="0" [cellSpacing]="0" class="app-table app-w-100 app-mb-4">
           <tbody>
             <tr *ngFor="let item of cache[state.ctx?.journal!].children">
               <td>{{ item.label }}</td>
@@ -186,19 +162,17 @@
                 </div>
               </td>
               <td>
-                <button mat-button color="primary" (click)="getChildren(item.pid, item)" [class]="cache[item.pid]?.show ? 'app-rotate-up' : 'app-rotate-down'">
-                   {{ cache[item.pid]?.show ? ('magazines.skryt_cisla' | translate ) : ('magazines.zobrazit_cisla' | translate) }}
+                <button type="button" class="btn btn-default btn-s" (click)="getChildren(item.pid, item)" [class]="cache[item.pid]?.show ? 'app-rotate-up' : 'app-rotate-down'">
+                   <span class="glyphicon glyphicon-chevron-down app-mr-1"></span> {{ cache[item.pid]?.show ? ('magazines.skryt_cisla' | translate ) : ('magazines.zobrazit_cisla' | translate) }}
                 </button>
               </td>
             </tr>
           </tbody>
-        </table>
-        
-        <div >
-          <button type="button" class="btn btn-success btn-s" (click)="saveLicences()">{{ 'magazines.ulozit' | translate }}</button>
+        </table> 
+        <div>
+          <button type="button" class="btn btn-success btn-s app-mr-1" (click)="saveLicences()">{{ 'magazines.ulozit' | translate }}</button>
           <button type="button" class="btn btn-success btn-s" (click)="licencesModal.hide()">{{ 'magazines.zavrit' | translate }}</button>
         </div>
-
       </div>
     </div>
   </div>

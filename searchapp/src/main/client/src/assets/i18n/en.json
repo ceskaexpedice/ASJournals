@@ -90,6 +90,7 @@
 	"nerecenzovaný článek": "non peer reviewed",
 	"Trvalý odkaz": "Permanent link",
 	"Datum publikování": "Published date",
+	"dateIssued": "Date of publishing",
 	"od roku": "from year",
 	"do roku": "until",
 	"Vyhledat": "Search",
@@ -162,6 +163,7 @@
 	"a zároveň": "AND",
 	"nebo": "OR",
 	"zpet_na_seznam": "Back to the list",
+	"nastavit_licenci_detailne": "Set the license in detail",
 	"magazines": {
 		"digitalni_knihovna_av_cr": "Digital Library of the CAS",
 		"online_casopisy": "online magazines",
