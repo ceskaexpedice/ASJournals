@@ -1,24 +1,24 @@
 export class Magazine {
-  ctx: string | null = null;
-  journal: string | null = null;
-  color: string | null = null;
+  ctx: string | undefined = undefined;
+  journal: string | undefined = undefined;
+  color: string | undefined = undefined;
   showTitleLabel: boolean = false;
   showOldYears: boolean = true;
   licence:string = '';
-  licences:string | null = null;
+  licences:string | undefined = undefined;
   
-  title: string | null = null;
-  subtitle: string | null = null;
-  img: string | null = null;
-  k5url: string | null = null;
-  vydavatel: string | null = null;
-  vydavatel_id: string | null = null;
-  oblast: string | null = null;
-  issn: string | null = null;
-  pristup: string | null = null;
-  kontakt: string | null = null;
+  title: string | undefined = undefined;
+  subtitle: string | undefined = undefined;
+  img: string | undefined = undefined;
+  k5url: string | undefined = undefined;
+  vydavatel: string | undefined = undefined;
+  vydavatel_id: string | undefined = undefined;
+  oblast: string | undefined = undefined;
+  issn: string | undefined = undefined;
+  pristup: string | undefined = undefined;
+  kontakt: string | undefined = undefined;
   keywords: string[] = [];
-  desc: string | null = null;
-  desc_en: string | null = null;
-  web: string | null = null;
+  desc: string | undefined = undefined;
+  desc_en: string | undefined = undefined;
+  web: string | undefined = undefined;
 }

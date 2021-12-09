@@ -209,10 +209,9 @@ export class MagazinesService {
 
     var url = 'index';
     let params = new HttpParams()
-      .set('action', 'SAVE_MAGAZINE')
-      .set('mag', JSON.stringify(mag));
+      .set('action', 'SAVE_MAGAZINE');
 
-    return this.get(url, params);
+    return this.post(url, mag, params);
   }
 
   deleteMagazine(ctx: string) {
