@@ -138,7 +138,7 @@ public class JsassServlet extends HttpServlet {
    */
   private Collection<Import> doImport(String url1, Import previous) {
     try {
-      LOGGER.info("importing " + url1);
+      //LOGGER.info("importing " + url1);
       //LOGGER.info("previous.getAbsoluteUri() " + previous.getAbsoluteUri().getPath());
       //LOGGER.info("previous getImportUri  " + previous.getImportUri());
 String url = url1;
@@ -251,7 +251,7 @@ String url = url1;
             return resource;
           }
         } catch (Exception eee) {
-          LOGGER.info("no resource " + eee.toString());
+          LOGGER.fine("no resource " + eee.toString());
         }
       }
     }

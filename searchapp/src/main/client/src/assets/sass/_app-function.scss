@@ -32,7 +32,7 @@
 @function setSaturation($color, $val) {
   $saturation: round(saturation($color)/1%);
   @if($saturation == 0) {
-    @return 0;
+    @return 0%;
   } @else {
     @return $val;
   }
