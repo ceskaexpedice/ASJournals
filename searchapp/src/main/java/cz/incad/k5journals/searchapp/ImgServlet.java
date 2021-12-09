@@ -17,6 +17,7 @@
  */
 package cz.incad.k5journals.searchapp;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -55,15 +56,28 @@ public class ImgServlet extends HttpServlet {
     try {
 
       if (request.getParameter("obalka") != null) {
-        
+
         String ctx = request.getParameter("ctx");
         String path = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "cover.jpeg";
         File f = new File(path);
         if (f.exists()) {
           try (OutputStream out = response.getOutputStream()) {
-            //response.setContentType("image/jpeg");
+            // response.setContentType("image/jpeg");
             BufferedImage bi = ImageIO.read(f);
-            ImageIO.write(bi, "jpg", out);
+
+            BufferedImage nbi = new BufferedImage(
+                    bi.getWidth(),
+                    bi.getHeight(),
+                    BufferedImage.TYPE_INT_RGB);
+
+            nbi.createGraphics()
+                    .drawImage(bi,
+                            0,
+                            0,
+                            Color.WHITE,
+                            null);
+
+            ImageIO.write(nbi, "jpg", out);
           }
         } else {
           getFromUrl(request, response);
@@ -93,7 +107,6 @@ public class ImgServlet extends HttpServlet {
       solrhost += "?" + request.getQueryString();
     }
 
-    
     LOGGER.log(Level.INFO, "requesting url {0}", solrhost);
     Map<String, String> reqProps = new HashMap<>();
 //    reqProps.put("Content-Type", "application/json");
@@ -101,20 +114,20 @@ public class ImgServlet extends HttpServlet {
     InputStream inputStream = RESTHelper.inputStream(solrhost, reqProps);
     org.apache.commons.io.IOUtils.copy(inputStream, response.getOutputStream());
     //out.print(org.apache.commons.io.IOUtils.toString(inputStream, "UTF8"));
-  
-}
+
+  }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-/**
- * Handles the HTTP <code>GET</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+  /**
+   * Handles the HTTP <code>GET</code> method.
+   *
+   * @param request servlet request
+   * @param response servlet response
+   * @throws ServletException if a servlet-specific error occurs
+   * @throws IOException if an I/O error occurs
+   */
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
     processRequest(request, response);
   }
@@ -128,7 +141,7 @@ public class ImgServlet extends HttpServlet {
    * @throws IOException if an I/O error occurs
    */
   @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
     processRequest(request, response);
   }
@@ -139,7 +152,7 @@ public class ImgServlet extends HttpServlet {
    * @return a String containing servlet description
    */
   @Override
-        public String getServletInfo() {
+  public String getServletInfo() {
     return "Short description";
   }// </editor-fold>
 
