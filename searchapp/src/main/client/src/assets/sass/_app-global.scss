@@ -144,7 +144,7 @@ h4+hr {
 }
 
 .app-clean-bg {
-  background-color: transparent!important;
+  background-color: transparent !important;
 }
 
 // common
@@ -315,11 +315,11 @@ h4+hr {
       }
 
       td {
-        @extend .app-p-2;
+        @extend .app-p-2 !optional;
         vertical-align: top;
 
         .app-input {
-          @extend .app-pl-2, .app-pr-2;
+          @extend .app-pl-2, .app-pr-2 !optional;
           height: 34px;
           border: 1px solid $app-brand-l-3;
           border-radius: 4px;
