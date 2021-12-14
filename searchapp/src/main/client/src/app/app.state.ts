@@ -35,6 +35,7 @@ export class AppState {
   //ctxs: {ctx: string, color: string, journal: string, showTitleLabel: boolean, licence:string}[];
   ctxs: Magazine[] = [];
 
+  username = '';
   loginuser: string | undefined;
   loginpwd: string | undefined;
   loginError: boolean = false;

@@ -79,12 +79,16 @@
                   <input type="text" class="form-control app-mr-2" name="licence" placeholder="licence" [(ngModel)]="state.ctx.licence">
                   <button type="button" class="btn app-btn app-btn-default app-mr-4" (click)="setLicences()" >{{'magazines.nastavit_licenci' | translate}}</button>
                 </div>
+                <div class="form-group app-mr-6">
+                  <button type="button" class="btn app-btn app-btn-default app-mr-4" (click)="showResetPwd()" >{{'magazines.resetovat_heslo' | translate}}</button>
+                </div>
               </div>
               <div *ngIf="working">
                 <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {{'admin.Indexing' | translate}} ...
               </div>
             </div>
           </div>
+          <alert *ngIf="newPwdOk" [type]="'success'" [dismissOnTimeout]="2000" >{{ 'magazines.resetovat_heslo_ok' | translate }}</alert>
           <div *ngIf="resultMsg && !working" class="row">
             <div class="alert alert-success" role="alert">
               {{resultMsg}} {{'text.indexed-note' | translate}}!
@@ -172,6 +176,29 @@
         <div>
           <button type="button" class="btn btn-success btn-s app-mr-1" (click)="saveLicences()">{{ 'magazines.ulozit' | translate }}</button>
           <button type="button" class="btn btn-success btn-s" (click)="licencesModal.hide()">{{ 'magazines.zavrit' | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div bsModal #resetpwdModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">{{ 'magazines.resetovat_heslo' | translate }}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="resetpwdModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <input name="newPwd" type="text" [(ngModel)]="newPwd" class="app-input app-mt-2" [placeholder]="'magazines.nove_heslo'| translate">
+        </div><br/>
+        <div>
+          <button type="button" class="btn btn-success btn-s app-mr-1" (click)="resetPwd()">{{ 'magazines.ulozit' | translate }}</button>
+          <button type="button" class="btn btn-success btn-s" (click)="resetpwdModal.hide()">{{ 'magazines.zavrit' | translate }}</button>
         </div>
       </div>
     </div>

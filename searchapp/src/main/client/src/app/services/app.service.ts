@@ -663,6 +663,16 @@ export class AppService {
     return this.get(url, params);
   }
 
+  resetPwd(username: string, newpwd: string) {
+    const url = 'login';
+    var params = new HttpParams().set('action', 'RESET_PWD');
+    const user = {
+      user: username,
+      pwd: newpwd
+    }
+    return this.post(url, user, params);
+  }
+
   index(uuid: string) {
     let url = 'index?action=INDEX_DEEP&pid=' + uuid;
 
@@ -693,9 +703,11 @@ export class AppService {
       if (res.hasOwnProperty('error')) {
         this.state.loginError = true;
         this.state.logged = false;
+        this.state.username = '';
       } else {
 
         this.state.loginError = false;
+        this.state.username = this.state.loginuser!;
         this.state.loginuser = '';
         this.state.loginpwd = '';
         this.state.logged = true;
@@ -733,6 +745,7 @@ export class AppService {
       }
 
       this.state.loginError = false;
+      this.state.username = '';
       this.state.loginuser = '';
       this.state.loginpwd = '';
       this.state.logged = false;

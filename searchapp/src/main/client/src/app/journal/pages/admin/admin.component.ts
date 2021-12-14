@@ -30,6 +30,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   @ViewChild('childModal') public childModal: ModalDirective | null = null;
   @ViewChild('comfirmTemplate') public comfirmTemplate: ModalDirective | null = null;
   @ViewChild('licencesModal') public licencesModal: ModalDirective | null = null;
+  @ViewChild('resetpwdModal') public resetpwdModal: ModalDirective | null = null;
 
 
   subscriptions: Subscription[] = [];
@@ -67,6 +68,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   tab: string = 'config';
   cache: any = {};
   licences: any = {};
+
+  newPwd = '';
+  newPwdOk = false;
 
   ngOnInit() {
     this.subscriptions.push(this.state.configSubject.subscribe(val => {
@@ -395,6 +399,20 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
 
     this.licencesModal?.hide();
+  }
+
+  showResetPwd() {
+    this.resetpwdModal?.show();
+  }
+
+  resetPwd() {
+    this.newPwdOk = false;
+      if (this.newPwd !== '') {
+        this.service.resetPwd(this.state.username, this.newPwd).subscribe(res => {
+          this.newPwdOk = true;
+          this.resetpwdModal?.hide();
+        });
+      }
   }
 
 }
