@@ -5,7 +5,6 @@
  */
 package cz.incad.k5journals.searchapp;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -15,7 +14,6 @@ import java.util.logging.Logger;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -24,7 +22,6 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -117,6 +114,21 @@ public class UserController {
     } catch (SolrServerException | IOException ex) {
       ret.put("error", ex);
       ret.put("logged", false);
+      LOGGER.log(Level.SEVERE, null, ex);
+    }
+    return ret;
+  }
+  
+  
+  public static JSONObject deleteUser(String id) {
+
+    JSONObject ret = new JSONObject();
+    try (SolrClient solr = new HttpSolrClient.Builder(Options.getInstance().getString("solr.host", "http://localhost:8983/solr/")).build()) {
+      solr.deleteById("users", id);
+      solr.commit("users");
+      ret.put("success", "user deleted");
+    } catch (SolrServerException | IOException ex) {
+      ret.put("error", ex);
       LOGGER.log(Level.SEVERE, null, ex);
     }
     return ret;

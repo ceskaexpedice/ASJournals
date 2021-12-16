@@ -280,9 +280,7 @@ public class IndexServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         JSONObject json = new JSONObject();
         try {
-
-          Indexer indexer = new Indexer();
-          json.put("saved", indexer.deleteEditor(req.getParameter("id")));
+          json.put("deleted", UserController.deleteUser(req.getParameter("username")));
 
         } catch (Exception ex) {
           json.put("error", ex.toString());

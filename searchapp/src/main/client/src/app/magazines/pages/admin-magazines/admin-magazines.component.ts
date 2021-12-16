@@ -160,9 +160,16 @@ export class AdminMagazinesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result !== null) {
         this.service.resetPwd(this.currentUser!.username, result).subscribe(res => {
-          this.service.getUsers().subscribe(res2 => {
-            this.users = res2['response']['docs'];
-          });
+          if (res.error) {
+            this.service.showSnackBar(res.error, '', true);
+            if (res.logged.toString() === 'false') {
+              this.service.logout();
+            }
+          } else {
+            this.service.getUsers().subscribe(res2 => {
+              this.users = res2['response']['docs'];
+            });
+          }
         });
       }
     });
