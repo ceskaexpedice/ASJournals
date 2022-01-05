@@ -1,0 +1,21 @@
+// --- FOOTER ---
+
+app-footer {
+  @extend .app-p-4;
+  display: block;
+  color: $app-footer-color;
+  background-color: $app-footer-bg;
+
+  .app-left {
+    a {
+      @extend .app-ml-1;
+    }
+  }
+
+  .app-right {  
+    .app-logo-inovatika {
+      height: 16px;
+      vertical-align: text-bottom;
+    }
+  }
+}

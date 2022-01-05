@@ -5,11 +5,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,8 +21,10 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +46,7 @@ public class Indexer {
   JSONObject response = new JSONObject();
 
   Map<String, Integer> dates = new HashMap();
+  Map<String, String> dateIssued = new HashMap();
 
   public Indexer() {
     try {
@@ -156,21 +157,21 @@ public class Indexer {
       setGenre(idoc, mods);
       setISSN(idoc, mods);
 
-      if (dates.containsKey(parent) && dates.get(parent) != 0) {
-        idoc.addField("year", dates.get(parent));
-        dates.put(pid, dates.get(parent));
+      setDateIssued(idoc, mods, pid, parent);
 
-//      if("article".equalsIgnoreCase(model)){
-//        setDatum(idoc, parent);
+      if (dates.containsKey(parent) && dates.get(parent) != 0) {
+        idoc.setField("year", dates.get(parent));
+        dates.put(pid, dates.get(parent));
       } else {
         setDatum(idoc, mods, pid);
       }
+
       return idoc;
     } catch (JSONException ex) {
-      LOGGER.log(Level.SEVERE, "mods: {0}", mods);
       LOGGER.log(Level.FINE, "idoc: {0}", idoc);
       LOGGER.log(Level.SEVERE, null, ex);
     } catch (Exception ex) {
+      LOGGER.log(Level.SEVERE, "Error indexing pid: {0}", pid);
       LOGGER.log(Level.SEVERE, null, ex);
     }
     return null;
@@ -193,12 +194,13 @@ public class Indexer {
       indexPidAndChildren(pid, idx);
       LOGGER.log(Level.INFO, "index finished. Indexed: {0}", total);
 
-      response.put("total indexed", total);
+      response.put("msg", "total indexed " + total);
       Date tend = new Date();
       response.put("ellapsed time", FormatUtils.formatInterval(tend.getTime() - tstart.getTime()));
       client.close();
     } catch (IOException ex) {
       Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
+      response.put("error", ex);
     }
     return response;
 
@@ -249,6 +251,28 @@ public class Indexer {
     } else {
       return 0;
     }
+  }
+
+  /**
+   * Delete doc from index and his children
+   *
+   * @param pid
+   */
+  public JSONObject deletePidAndChildren(String pid) {
+
+    JSONObject ret = new JSONObject();
+    try (SolrClient solr = getClient("journal")) {
+      String q = "pid_paths:*" + ClientUtils.escapeQueryChars(pid) + "*";
+      long num = solr.query(new SolrQuery(q)).getResults().getNumFound();
+      ret = new JSONObject(solr.deleteByQuery(q).jsonStr());
+      solr.commit();
+      ret.put("msg", "deleted " + num + " documents");
+    } catch (SolrServerException | IOException ex) {
+      ret.put("error", ex);
+      LOGGER.log(Level.SEVERE, null, ex);
+    }
+    return ret;
+
   }
 
   /**
@@ -386,9 +410,9 @@ public class Indexer {
     }
     if (o instanceof JSONObject) {
       JSONObject jo = (JSONObject) o;
-      idoc.addField("title", jo.optString(prefix + "title"));
-      idoc.addField("subtitle", jo.optString(prefix + "subTitle"));
-      idoc.addField("non_sort_title", jo.optString(prefix + "nonSort"));
+      idoc.setField("title", jo.optString(prefix + "title"));
+      idoc.setField("subtitle", jo.optString(prefix + "subTitle"));
+      idoc.setField("non_sort_title", jo.optString(prefix + "nonSort"));
 
     } else if (o instanceof JSONArray) {
       JSONArray ja = (JSONArray) o;
@@ -400,24 +424,24 @@ public class Indexer {
             //Mozna chceme jeste pridat alternativni titulek
           } else {
             String lang = jo.optString("lang");
-            idoc.addField("title_" + lang, jo.optString(prefix + "title"));
-            idoc.addField("subtitle_" + lang, jo.optString(prefix + "subTitle"));
-            idoc.addField("non_sort_title_" + lang, jo.optString(prefix + "nonSort"));
+            idoc.setField("title_" + lang, jo.optString(prefix + "title"));
+            idoc.setField("subtitle_" + lang, jo.optString(prefix + "subTitle"));
+            idoc.setField("non_sort_title_" + lang, jo.optString(prefix + "nonSort"));
           }
         } else {
           if (!hasDefault) {
-            idoc.addField("title", jo.optString(prefix + "title"));
-            idoc.addField("subtitle", jo.optString(prefix + "subTitle"));
-            idoc.addField("non_sort_title", jo.optString(prefix + "nonSort"));
+            idoc.setField("title", jo.optString(prefix + "title"));
+            idoc.setField("subtitle", jo.optString(prefix + "subTitle"));
+            idoc.setField("non_sort_title", jo.optString(prefix + "nonSort"));
             hasDefault = true;
           }
         }
       }
       if (!hasDefault) {
         JSONObject jo = ja.getJSONObject(0);
-        idoc.addField("title", jo.optString(prefix + "title"));
-        idoc.addField("subtitle", jo.optString(prefix + "subTitle"));
-        idoc.addField("non_sort_title", jo.optString(prefix + "nonSort"));
+        idoc.setField("title", jo.optString(prefix + "title"));
+        idoc.setField("subtitle", jo.optString(prefix + "subTitle"));
+        idoc.setField("non_sort_title", jo.optString(prefix + "nonSort"));
       }
     }
 
@@ -446,46 +470,47 @@ public class Indexer {
       // Ignore konspekt
       return;
     }
-    if (subject.has(prefix + "topic")) {
-      Object oTopic = subject.get(prefix + "topic");
-      if (oTopic instanceof JSONObject) {
-        JSONObject joTopic = (JSONObject) oTopic;
-        processTopic(idoc, prefix, joTopic);
-      } else if (oTopic instanceof JSONArray) {
-        JSONArray jaTopic = (JSONArray) oTopic;
-        for (int i = 0; i < jaTopic.length(); i++) {
-          Object o2 = jaTopic.get(i);
-          if (o2 instanceof JSONObject) {
-            processTopic(idoc, prefix, (JSONObject) o2);
-          } else {
+    try {
+      if (subject.has(prefix + "topic")) {
+        Object oTopic = subject.get(prefix + "topic");
+        if (oTopic instanceof JSONObject) {
+          JSONObject joTopic = (JSONObject) oTopic;
+          processTopic(idoc, prefix, joTopic);
+        } else if (oTopic instanceof JSONArray) {
+          JSONArray jaTopic = (JSONArray) oTopic;
+          for (int i = 0; i < jaTopic.length(); i++) {
+            Object o2 = jaTopic.get(i);
+            if (o2 instanceof JSONObject) {
+              processTopic(idoc, prefix, (JSONObject) o2);
+            } else {
 //            idoc.addField("keywords", o2);
-            addUniqueToDoc(idoc, "keywords", o2);
+              addUniqueToDoc(idoc, "keywords", o2);
 
+            }
           }
-        }
-      } else if (oTopic instanceof String) {
+        } else if (oTopic instanceof String) {
 //        idoc.addField("keywords", oTopic);
-        addUniqueToDoc(idoc, "keywords", oTopic);
+          addUniqueToDoc(idoc, "keywords", oTopic);
+        }
       }
-    }
 
 //      {"mods:geographic": "Czechia"},
-    if (subject.has(prefix + "geographic")) {
-      //Test geographic
-      //idoc.addField("keywords", subject.optString(prefix + "geographic"));
-      addUniqueToDoc(idoc, "keywords", subject.optString(prefix + "geographic"));
-    }
+      if (subject.has(prefix + "geographic")) {
+        //Test geographic
+        //idoc.addField("keywords", subject.optString(prefix + "geographic"));
+        addUniqueToDoc(idoc, "keywords", subject.optString(prefix + "geographic"));
+      }
 
 //      {"mods:temporal": "1942-2012"},
 //      {
 //        "authority": "czenas",
 //        "mods:temporal": "20.-21. století"
 //      },
-    if (subject.has(prefix + "temporal")) {
-      //Test temporal
+      if (subject.has(prefix + "temporal")) {
+        //Test temporal
 //      idoc.addField("keywords", subject.optString(prefix + "temporal"));
-      addUniqueToDoc(idoc, "keywords", subject.optString(prefix + "temporal"));
-    }
+        addUniqueToDoc(idoc, "keywords", subject.optString(prefix + "temporal"));
+      }
 
 //      {
 //        "mods:name": {
@@ -500,20 +525,48 @@ public class Indexer {
 //        },
 //        "authority": "czenas"
 //      }
-    if (subject.has(prefix + "name")) {
-      //Test name
+// a nebo
+//            mods:name": {
+//                "type": "personal",
+//                "mods:namePart": [
+//                  {
+//                    "type": "termsOfAddress",
+//                    "content": "česká a uherská královna, císařovna, choť Františka Štěpána I., římskoněmeckého císaře"
+//                  },
+//                  "Marie Terezie",
+//                  {
+//                    "type": "date",
+//                    "content": "1717-1780"
+//                  }
+//                ]
+//              },
+      if (subject.has(prefix + "name")) {
+        //Test name
 //      idoc.addField("keywords", subject.optString(prefix + "name"));
-      JSONObject joName = subject.optJSONObject(prefix + "name");
-      Object np = joName.opt(prefix + "namePart");
-      if (np != null) {
-        if (np instanceof JSONArray) {
-          JSONArray janp = (JSONArray) np;
-          addUniqueToDoc(idoc, "keywords", janp.getString(0) + ", " + janp.getJSONObject(1).optString("content"));
-        } else if (np instanceof String){
-          addUniqueToDoc(idoc, "keywords", np);
-        }
-      }
+        JSONObject joName = subject.optJSONObject(prefix + "name");
+        Object np = joName.opt(prefix + "namePart");
+        if (np != null) {
+          if (np instanceof JSONArray) {
+            JSONArray janp = (JSONArray) np;
+            for (int i = 0; i < janp.length(); i++) {
+              Object cont = janp.get(i);
+              if (cont instanceof String) {
+                addUniqueToDoc(idoc, "keywords", janp.optString(i) + ", " + janp.getJSONObject(i + 1).optString("content"));
+                i++;
+              } else {
+                addUniqueToDoc(idoc, "keywords", janp.getJSONObject(i).optString("content"));
+              }
+            }
 
+          } else if (np instanceof String) {
+            addUniqueToDoc(idoc, "keywords", np);
+          }
+        }
+
+      }
+    } catch (Exception ex) {
+      LOGGER.log(Level.SEVERE, "error processing subject {0}", idoc.getFieldValue("pid"));
+      LOGGER.log(Level.SEVERE, null, ex);
     }
 
   }
@@ -637,10 +690,10 @@ public class Indexer {
 //                            }
             }
           } else if (go instanceof String) {
-//                        if ("article".equals((String) go) && !hasMain) {
-//                            idoc.addField("genre", "main article");
+            if ("article".equals((String) go)) {
+              idoc.addField("genre", "article");
 //                            hasMain = true;
-//                        }
+            }
           }
         }
 
@@ -648,7 +701,16 @@ public class Indexer {
         String g = ((JSONObject) o).optString("type");
         if (g != null) {
           idoc.addField("genre", g);
+        } else {
+          idoc.addField("genre", "unspecified");
         }
+      } else if (o instanceof String) {
+        if ("article".equals(o)) {
+          idoc.addField("genre", "unspecified");
+        } else {
+          idoc.addField("genre", o);
+        }
+
       }
     }
   }
@@ -669,32 +731,64 @@ public class Indexer {
     }
   }
 
-  private void setDatum(SolrInputDocument idoc, JSONObject mods, String pid) {
+  private void setDateIssued(SolrInputDocument idoc, JSONObject mods, String pid, String parent) {
+    String val = null;
+    JSONObject o = mods.optJSONObject("mods:originInfo");
+    if (o != null) {
+      if (!idoc.containsKey("mods:dateIssued")) {
+        val = o.optString("mods:dateIssued");
+      }
+    }
 
+    if (val == null) {
+      //Pokus starych zaznamu
+      o = mods.optJSONObject("mods:part");
+      if (o != null) {
+        if (!idoc.containsKey("mods:date")) {
+          val = o.optString("mods:date");
+        }
+      }
+    }
+
+    if ((val == null || "".equals(val)) && dateIssued.containsKey(parent)) {
+      val = dateIssued.get(parent);
+      dateIssued.put(pid, dateIssued.get(parent));
+    }
+
+    if (val != null || "".equals(val)) {
+      idoc.addField("dateIssued", val);
+      dateIssued.put(pid, val);
+    }
+  }
+
+  private void setDatum(SolrInputDocument idoc, JSONObject mods, String pid) {
+    int year = 0;
     JSONObject o = mods.optJSONObject("mods:originInfo");
     if (o != null) {
       int date = o.optInt("mods:dateIssued");
       if (date > 0) {
         dates.put(pid, date);
-        idoc.addField("year", date);
+        idoc.setField("year", date);
       }
-    } else {
+    }
+
+    if (year == 0) {
       //Pokus starych zaznamu
       o = mods.optJSONObject("mods:part");
       if (o != null) {
+
         int date = o.optInt("mods:date");
         if (date > 0) {
           dates.put(pid, date);
-          idoc.addField("year", date);
+          idoc.setField("year", date);
         }
-
       }
     }
   }
 
   private void setDatum(SolrInputDocument idoc, String parent) {
     if (dates.containsKey(parent)) {
-      idoc.addField("year", dates.get(parent));
+      idoc.setField("year", dates.get(parent));
     }
   }
 
@@ -741,14 +835,13 @@ public class Indexer {
     return ret;
   }
 
-
   /**
    * Delete editor
    *
    * @param id editor id
    */
   public JSONObject deleteEditor(String id) {
-    
+
     JSONObject ret = new JSONObject();
     try (SolrClient solr = getClient("editors")) {
       solr.deleteById(id);
@@ -761,14 +854,13 @@ public class Indexer {
     return ret;
   }
 
-
   /**
    * Delete magazine
    *
    * @param json doc in json format
    */
   public JSONObject deleteMagazine(String ctx) {
-    
+
     JSONObject ret = new JSONObject();
     try (SolrClient solr = getClient("magazines")) {
       solr.deleteById(ctx);
@@ -782,7 +874,7 @@ public class Indexer {
   }
 
   /**
-   * Index editor 
+   * Index editor
    *
    * @param json doc in json format
    */
@@ -816,8 +908,42 @@ public class Indexer {
     }
     return ret;
   }
-  
-  
+
+  /**
+   * Index user
+   *
+   * @param json doc in json format
+   */
+  public JSONObject indexUser(JSONObject json) {
+    JSONObject ret = new JSONObject();
+    try (SolrClient solr = getClient("users")) {
+      SolrInputDocument idoc = new SolrInputDocument();
+      for (Object key : json.keySet()) {
+        String name = (String) key;
+        if (null == name) {
+          //idoc.addField(name, json.get(name));
+        } else {
+          switch (name) {
+            case "index_time":
+              break;
+            case "_version_":
+              break;
+            default:
+              idoc.setField(name, json.get(name));
+              break;
+          }
+        }
+      }
+      LOGGER.info(idoc.toString());
+      solr.add(idoc);
+      solr.commit();
+      ret.put("success", "user saved");
+    } catch (SolrServerException | IOException ex) {
+      ret.put("error", ex);
+      LOGGER.log(Level.SEVERE, null, ex);
+    }
+    return ret;
+  }
 
   /**
    * Index json
@@ -866,9 +992,7 @@ public class Indexer {
 
     LOGGER.log(Level.INFO, "index finished. Indexed: {0}", total);
 
-
     return ret;
   }
-
 
 }

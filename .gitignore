@@ -1,2 +1,17 @@
 /searchapp/nb-configuration.xml
 /searchapp/nbactions.xml
+/searchapp/src/main/webapp/assets/
+/searchapp/target/
+
+/solr8.10/**/data
+**/solr8.10/**/data
+/solr8.10/filestore/
+/solr8.10/userfiles/
+
+.DS_Store
+searchapp/src/main/webapp/tinymce/bower.json
+searchapp/src/main/webapp/tinymce/CHANGELOG.md
+searchapp/src/main/webapp/tinymce/composer.json
+searchapp/src/main/webapp/tinymce/README.md
+searchapp/src/main/webapp/tinymce/tinymce.d.ts
+searchapp/src/main/webapp/tinymce/package.json

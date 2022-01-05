@@ -1,0 +1,32 @@
+// --- ROOT STYLE ---
+
+@import "app-function";
+@import "brand-config"; // to config app colors
+
+@import "app-variables";
+@import "app-palette";
+@import "app-color";
+@import "app-mixin";
+@import "app-gaps";
+
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import "~nouislider/distribute/nouislider.min.css";
+
+@import "fontface/roboto-condensed/roboto-condensed-fontface";
+@import "fontface/pt-serif/pt-serif";
+
+@import "app-global";
+@import "app-button";
+@import "app-slider";
+@import "app-title";
+@import "app-navbar";
+@import "app-navtabs";
+@import "app-jumbotron";
+@import "app-content";
+@import "app-sidebar";
+@import "app-footer";
+@import "app-typeahead";
+@import "app-modal";
+@import "app-login";
+@import "app-admin";
+@import "app-mq";

@@ -5,10 +5,8 @@
  */
 package cz.incad.k5journals.searchapp;
 
-import static cz.incad.k5journals.searchapp.Options.LOGGER;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +19,8 @@ import org.json.JSONObject;
  * @author alberto
  */
 public class LoginController {
+  
+  public static final Logger LOGGER = Logger.getLogger(LoginController.class.getName());
 
   public static JSONObject get(HttpServletRequest req) {
     JSONObject jo = new JSONObject();

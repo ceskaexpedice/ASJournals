@@ -159,6 +159,9 @@ public class LocalFileServlet extends HttpServlet {
               if(request.getParameter("cover") != null){
                 String fileName = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "cover.jpeg";
                 File uploadedFile = new File(fileName);
+                if (uploadedFile.exists()) {
+                  uploadedFile.delete();
+                }
                 item.write(uploadedFile);
                 json.put("msg", "ok");
               } else {

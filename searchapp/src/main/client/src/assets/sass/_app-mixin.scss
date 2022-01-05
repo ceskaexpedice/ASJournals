@@ -1,0 +1,151 @@
+// --- MIXIN ---
+
+// set border
+@mixin set-border($position, $height, $style, $color) {
+  @if ($position=="top") {
+    border-width: $height 0 0 0;
+    border-style: solid;
+    border-color: $color;
+  }
+  @else if ($position=="right") {
+    border-width: 0 $height 0 0;
+    border-style: solid;
+    border-color: $color;
+  }
+  @else if ($position=="bottom") {
+    border-width: 0 0 $height 0;
+    border-style: solid;
+    border-color: $color;
+  }
+  @else if ($position=="left") {
+    border-width: 0 0 0 $height;
+    border-style: solid;
+    border-color: $color;
+  }
+  @else if ($position=="right-left-bottom") {
+    border-width: 0 $height $height $height;
+    border-style: solid;
+    border-color: $color;
+  }
+  @else {
+    border-width: $height $height $height $height;
+    border-style: solid;
+    border-color: $color;
+  }
+}
+
+// set vertical align
+@mixin set-vertical-align($height) {
+  height: #{$height}px;
+  line-height: #{$height}px;
+}
+
+// roboto fontface
+@mixin roboto-font($name, $variant, $type, $weight, $style) {
+
+  $font-full-path: '#{$roboto-font-path}/#{$name}-#{$variant}/#{$name}-#{$variant}';
+
+  @font-face {
+    font-family: '#{$name}-#{$variant}';
+    src: url('#{$font-full-path}-#{$type}.eot');
+    src: local('#{$name} #{$variant}'),
+         local('#{$name} #{$variant} #{$type}'),
+         local('#{$name}-#{$variant} #{$type}'),
+         local('#{$name}-#{$variant}-#{$type}'),
+         url('#{$font-full-path}-#{$type}.eot?#iefix') format('embedded-opentype'),
+         url('#{$font-full-path}-#{$type}.woff2') format('woff2'),
+         url('#{$font-full-path}-#{$type}.woff') format('woff'),
+         url('#{$font-full-path}-#{$type}.ttf') format('truetype'),
+         url('#{$font-full-path}-#{$type}.svg##{$variant}') format('svg');
+    font-weight: $weight;
+    font-style: $style;
+  }
+
+  @font-face {
+    font-family: '#{$name}-#{$variant}-#{$type}';
+    //src: url('#{$name}-#{$font-full-path}-#{$type}.eot');
+    src: url('#{$font-full-path}-#{$type}.eot');
+    src: local('#{$name} #{$variant} #{$type}'),
+         local('#{$name}-#{$variant} #{$type}'),
+         local('#{$name}-#{$variant}-#{$type}'),
+         url('#{$font-full-path}-#{$type}.eot?#iefix') format('embedded-opentype'),
+         url('#{$font-full-path}-#{$type}.woff2') format('woff2'),
+         url('#{$font-full-path}-#{$type}.woff') format('woff'),
+         url('#{$font-full-path}-#{$type}.ttf') format('truetype'),
+         url('#{$font-full-path}-#{$type}.svg##{$variant}') format('svg');
+  }
+}
+
+
+// set gap
+@mixin setGap() {
+  @each $gap, $val in $gaps {
+    // margin
+    .app-m-#{$gap} {
+      margin: #{$val}px !important;
+    }
+    .app-ml-#{$gap} {
+      margin-left: #{$val}px !important;
+    }
+    .app-mr-#{$gap} {
+      margin-right: #{$val}px !important;
+    }
+    .app-mt-#{$gap} {
+      margin-top: #{$val}px !important;
+    }
+    .app-mb-#{$gap} {
+      margin-bottom: #{$val}px !important;
+    }
+
+    // margin negative
+    .app-m-n#{$gap} {
+      margin: -#{$val}px !important;
+    }
+    .app-ml-n#{$gap} {
+      margin-left: -#{$val}px !important;
+    }
+    .app-mr-n#{$gap} {
+      margin-right: -#{$val}px !important;
+    }
+    .app-mt-n#{$gap} {
+      margin-top: -#{$val}px !important;
+    }
+    .app-mb-n#{$gap} {
+      margin-bottom: -#{$val}px !important;
+    }
+    
+    // padding
+    .app-p-#{$gap} {
+      padding: #{$val}px !important;
+    }
+    .app-pl-#{$gap} {
+      padding-left: #{$val}px !important;
+    }
+    .app-pr-#{$gap} {
+      padding-right: #{$val}px !important;
+    }
+    .app-pt-#{$gap} {
+      padding-top: #{$val}px !important;
+    }
+    .app-pb-#{$gap} {
+      padding-bottom: #{$val}px !important;
+    }
+
+    // padding negative
+    .app-p-n#{$gap} {
+      padding: -#{$val}px !important;
+    }
+    .app-pl-n#{$gap} {
+      padding-left: -#{$val}px !important;
+    }
+    .app-pr-n#{$gap} {
+      padding-right: -#{$val}px !important;
+    }
+    .app-pt-n#{$gap} {
+      padding-top: -#{$val}px !important;
+    }
+    .app-pb-n#{$gap} {
+      padding-bottom: -#{$val}px !important;
+    }
+  }
+}

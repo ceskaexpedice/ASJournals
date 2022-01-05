@@ -1,0 +1,27 @@
+<div fxLayout="row wrap" class="app-layout-wrap-16" *ngIf="user">
+  <div fxFlex="calc(50% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.uzivatel' | translate }}</mat-label>
+      <input matInput name="username" type="text" [(ngModel)]="user.username">
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(50% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.jmeno_a_prijmeni' | translate }}</mat-label>
+      <input matInput name="name" type="text" [(ngModel)]="user.name">
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(50% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.prirazeny_casopis' | translate }}</mat-label>
+      <mat-select [(ngModel)]="user.ctxs" multiple="true">
+        <mat-option *ngFor="let ctx of state.ctxs" [value]="ctx.ctx">
+          {{ctx.ctx}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(50% - 16px)" fxFlexAlign="center">
+    <mat-checkbox id="isAdmin" [(ngModel)]="user.isAdmin">{{ 'magazines.role_administrator' | translate }}</mat-checkbox>
+  </div>
+</div>

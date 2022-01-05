@@ -1,0 +1,18 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav role="navigation">
+    <mat-nav-list>
+      <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <header>
+      <app-navbar (sidenavToggle)="sidenav.toggle()"></app-navbar>
+    </header>
+    <main fxLayout="column">
+      <div fxFlex class="app-page-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+      <app-footer></app-footer>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

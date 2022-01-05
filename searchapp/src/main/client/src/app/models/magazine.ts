@@ -1,0 +1,24 @@
+export class Magazine {
+  ctx: string | undefined = undefined;
+  journal: string | undefined = undefined;
+  color: string | undefined = undefined;
+  showTitleLabel: boolean = false;
+  showOldYears: boolean = true;
+  licence:string = '';
+  licences:string | undefined = undefined;
+  
+  title: string | undefined = undefined;
+  subtitle: string | undefined = undefined;
+  img: string | undefined = undefined;
+  k5url: string | undefined = undefined;
+  vydavatel: string | undefined = undefined;
+  vydavatel_id: string | undefined = undefined;
+  oblast: string | undefined = undefined;
+  issn: string | undefined = undefined;
+  pristup: string | undefined = undefined;
+  kontakt: string | undefined = undefined;
+  keywords: string[] = [];
+  desc: string | undefined = undefined;
+  desc_en: string | undefined = undefined;
+  web: string | undefined = undefined;
+}

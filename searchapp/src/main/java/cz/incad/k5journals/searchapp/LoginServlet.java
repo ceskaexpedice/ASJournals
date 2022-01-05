@@ -43,7 +43,8 @@ public class LoginServlet extends HttpServlet {
       if (actionNameParam != null) {
         LoginServlet.Actions actionToDo = LoginServlet.Actions.valueOf(actionNameParam.toUpperCase());
         resp.setContentType("application/json;charset=UTF-8");
-        actionToDo.doPerform(req, resp);
+        PrintWriter out = resp.getWriter();
+        out.println(actionToDo.doPerform(req, resp));
       } else {
         PrintWriter out = resp.getWriter();
         out.print("actionNameParam -> " + actionNameParam);
@@ -70,41 +71,38 @@ public class LoginServlet extends HttpServlet {
   enum Actions {
     LOGIN {
       @Override
-      void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+      JSONObject doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
-        PrintWriter out = resp.getWriter();
         JSONObject jo = new JSONObject();
         try {
-
-          String user = req.getParameter("user");
-          if (user != null) {
-            
-            if(LoginController.login(req, user, req.getParameter("pwd"), req.getParameter("ctx"))){
-              jo.put("logged", true);
-            }else{
-              jo.put("logged", false);
-              jo.put("error", "invalid user name or password");
-            }
-            
-          } else {
-            jo.put("logged", false);
-            jo.put("error", "invalid user name or password");
-          }
-
+            jo = UserController.login(req);
         } catch (Exception ex) {
           jo.put("logged", false);
           jo.put("error", ex.toString());
+          LOGGER.log(Level.SEVERE, null, ex);
         }
-        out.println(jo.toString());
-        
+        return jo;
+      }
+    },
+    RESET_PWD {
+      @Override
+      JSONObject doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
+        JSONObject jo = new JSONObject();
+        try {
+            jo = UserController.resetPwd(req);
+        } catch (Exception ex) {
+          jo.put("logged", false);
+          jo.put("error", ex.toString());
+          LOGGER.log(Level.SEVERE, null, ex);
+        }
+        return jo;
       }
     },
     LOGOUT {
       @Override
-      void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+      JSONObject doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
-        PrintWriter out = resp.getWriter();
         JSONObject jo = new JSONObject();
         try {
           req.getSession().removeAttribute("login");
@@ -114,14 +112,13 @@ public class LoginServlet extends HttpServlet {
         } catch (Exception ex) {
           jo.put("error", ex.toString());
         }
-        out.println(jo.toString());
+        return jo;
       }
     },
     TESTLOGIN {
       @Override
-      void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+      JSONObject doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
-        PrintWriter out = resp.getWriter();
         JSONObject jo = new JSONObject();
         try {
           jo = (JSONObject) req.getSession().getAttribute("user");
@@ -133,15 +130,11 @@ public class LoginServlet extends HttpServlet {
         } catch (Exception ex) {
           jo.put("error", ex.toString());
         }
-        if (req.getParameter("json.wrf") != null) {
-          out.println(req.getParameter("json.wrf") + "(" + jo.toString(2) + ")");
-        } else {
-          out.println(jo.toString(2));
-        }
+        return jo;
       }
     };
 
-    abstract void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception;
+    abstract JSONObject doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception;
   }
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -5,7 +5,6 @@
  */
 package cz.incad.k5journals.searchapp;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -15,7 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.solr.common.SolrInputDocument;
 import org.json.JSONObject;
 
@@ -105,13 +104,13 @@ public class IndexServlet extends HttpServlet {
 
           Indexer indexer = new Indexer();
           for(String pid : req.getParameterValues("pid")){
-            json.put(pid, indexer.indexDeep(pid));
+            json = indexer.indexDeep(pid);
           }
           //indexer.indexPidAndChildren(req.getParameter("pid"));
 
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, null, ex);
-          json.put("error", ex.toString());
+            json.put("error", ex.toString());
         }
         out.println(json.toString(2));
       }
@@ -129,6 +128,25 @@ public class IndexServlet extends HttpServlet {
           String pid = req.getParameter("pid");
           indexer.indexPid(pid, indexer.getIdx(pid, false));
           //out.println(indexer.getModsToJson(request.getParameter("pid")).toString(2));
+
+        } catch (Exception ex) {
+          json.put("error", ex.toString());
+        }
+        out.println(json.toString(2));
+      }
+    },
+    DELETE_PID {
+      @Override
+      void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+
+        resp.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = resp.getWriter();
+        JSONObject json = new JSONObject();
+        try {
+
+          Indexer indexer = new Indexer();
+          String pid = req.getParameter("pid");
+          json = indexer.deletePidAndChildren(pid);
 
         } catch (Exception ex) {
           json.put("error", ex.toString());
@@ -190,7 +208,7 @@ public class IndexServlet extends HttpServlet {
         try {
 
           Indexer indexer = new Indexer();
-          JSONObject jo = new JSONObject(req.getParameter("mag"));
+          JSONObject jo = new JSONObject(IOUtils.toString(req.getInputStream(), "UTF-8"));
           json.put("saved", indexer.indexMagazine(jo));
 
         } catch (Exception ex) {
@@ -247,6 +265,41 @@ public class IndexServlet extends HttpServlet {
           Indexer indexer = new Indexer();
           JSONObject jo = new JSONObject(req.getParameter("editor"));
           json.put("saved", indexer.indexEditor(jo));
+
+        } catch (Exception ex) {
+          json.put("error", ex.toString());
+        }
+        out.println(json.toString(2));
+      }
+    },
+    DELETE_USER {
+      @Override
+      void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+
+        resp.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = resp.getWriter();
+        JSONObject json = new JSONObject();
+        try {
+          json.put("deleted", UserController.deleteUser(req.getParameter("username")));
+
+        } catch (Exception ex) {
+          json.put("error", ex.toString());
+        }
+        out.println(json.toString(2));
+      }
+    },
+    SAVE_USER {
+      @Override
+      void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+
+        resp.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = resp.getWriter();
+        JSONObject json = new JSONObject();
+        try {
+
+          Indexer indexer = new Indexer();
+          JSONObject jo = new JSONObject(IOUtils.toString(req.getInputStream(), "UTF-8"));
+          json.put("saved", indexer.indexUser(jo));
 
         } catch (Exception ex) {
           json.put("error", ex.toString());
