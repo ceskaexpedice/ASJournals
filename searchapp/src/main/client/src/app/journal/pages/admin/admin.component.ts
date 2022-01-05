@@ -409,8 +409,12 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.newPwdOk = false;
       if (this.newPwd !== '') {
         this.service.resetPwd(this.state.username, this.newPwd).subscribe(res => {
-          this.newPwdOk = true;
-          this.resetpwdModal?.hide();
+          if (res.error) {
+            alert(res.error)
+          } else {
+            this.newPwdOk = true;
+            this.resetpwdModal?.hide();
+          }
         });
       }
   }

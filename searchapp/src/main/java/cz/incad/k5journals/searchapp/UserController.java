@@ -143,23 +143,24 @@ public class UserController {
       ret.put("error", "not logged");
       return ret;
     }
-    if (!user.optBoolean("isAdmin")) {
+    try (SolrClient solr = new HttpSolrClient.Builder(Options.getInstance().getString("solr.host", "http://localhost:8983/solr/")).build()) {
+
+    JSONObject inputJs;
+    String username;
+    String pwd;
+    if (req.getMethod().equals("POST")) {
+      inputJs = new JSONObject(IOUtils.toString(req.getInputStream(), "UTF-8"));
+      username = inputJs.getString("user");
+      pwd = inputJs.getString("pwd");
+    } else {
+      username = req.getParameter("user");
+      pwd = req.getParameter("pwd");
+    }
+            
+    if (!user.optBoolean("isAdmin") && !user.getString("username").equals(username)) {
       ret.put("error", "not autorized");
       return ret;
     }
-    try (SolrClient solr = new HttpSolrClient.Builder(Options.getInstance().getString("solr.host", "http://localhost:8983/solr/")).build()) {
-
-      JSONObject inputJs;
-      String username;
-      String pwd;
-      if (req.getMethod().equals("POST")) {
-        inputJs = new JSONObject(IOUtils.toString(req.getInputStream(), "UTF-8"));
-        username = inputJs.getString("user");
-        pwd = inputJs.getString("pwd");
-      } else {
-        username = req.getParameter("user");
-        pwd = req.getParameter("pwd");
-      }
 
       SolrInputDocument idoc = new SolrInputDocument();
       idoc.setField("username", username);
