@@ -388,6 +388,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     pids.forEach(pid => {
       if (this.cache[pid]?.licence !== '') {
         this.licences[pid] = this.cache[pid].licence;
+      } else if (this.cache[pid]?.licence === '') {
+        delete(this.licences[pid]);
       }
     });
     this.state.ctx!.licences = JSON.stringify(this.licences);

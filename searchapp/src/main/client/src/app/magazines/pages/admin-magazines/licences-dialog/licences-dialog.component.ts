@@ -98,6 +98,8 @@ export class LicencesDialogComponent implements OnInit {
     pids.forEach(pid => {
       if (this.cache[pid]?.licence !== '') {
         this.licences[pid] = this.cache[pid].licence;
+      } else if (this.cache[pid]?.licence === '') {
+        delete(this.licences[pid]);
       }
     });
       
