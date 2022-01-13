@@ -657,10 +657,10 @@ export class AppService {
 
     var url = 'index';
     let params = new HttpParams()
-      .set('action', 'SAVE_MAGAZINE')
-      .set('mag', JSON.stringify(mag));
+      .set('action', 'SAVE_MAGAZINE');
+    //  .set('mag', JSON.stringify(mag));
 
-    return this.get(url, params);
+    return this.post(url, mag, params);
   }
 
   resetPwd(username: string, newpwd: string) {
