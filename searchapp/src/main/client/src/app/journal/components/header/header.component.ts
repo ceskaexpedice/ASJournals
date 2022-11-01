@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { AppState } from 'src/app/app.state';
 import { AppService } from 'src/app/services/app.service';
 
@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private titleService: Title,
+    private meta: Meta,
     public state: AppState,
     public appservice: AppService,
     private router: Router,
@@ -37,6 +38,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.state.titleChangedSubject.subscribe(val => {
       if (this.state.actualNumber) {
         this.titleService.setTitle( this.state.actualNumber['root_title']!);
+        this.meta.addTags( [
+          { name: 'description', content: this.state.ctx!.desc! },
+          { name: 'author', content: this.state.ctx!.vydavatel! },
+          { name: 'keywords', content: this.state.ctx!.keywords.join(',') }
+        ]);
       }
     }));
 

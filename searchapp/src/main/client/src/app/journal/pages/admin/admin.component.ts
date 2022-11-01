@@ -57,6 +57,8 @@ export class AdminComponent implements OnInit, OnDestroy {
   deleted: boolean = false;
   coverMsg: string | null = null;
 
+  description: string = '';
+
   newctx: string = '';
 
   currentMag: Magazine | null = null;

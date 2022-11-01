@@ -83,6 +83,14 @@
                   <button type="button" class="btn app-btn app-btn-default app-mr-4" (click)="showResetPwd()" >{{'magazines.resetovat_heslo' | translate}}</button>
                 </div>
               </div>
+              <div class="form-inline pull-left">
+                <div class="form-group app-mr-6">
+                  <input type="text" class="form-control app-mr-2" id="indexUUID" name="indexUUID" placeholder="uuid" [(ngModel)]="description">
+                  <button type="button" class="btn app-btn app-btn-default app-mr-1" (click)="index()">{{'admin.add_uuid' | translate}}</button>
+                  <button type="button" class="btn app-btn app-btn-default" (click)="openConfirm()">{{'admin.delete_uuid' | translate}}</button>
+                </div>
+
+              </div>
               <div *ngIf="working">
                 <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {{'admin.Indexing' | translate}} ...
               </div>
