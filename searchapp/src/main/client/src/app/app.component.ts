@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router, Params, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription, Observable, of } from 'rxjs';
 import { AppState } from './app.state';
+import { AppWindowRef } from './app.window-ref';
 import { Magazine } from './models/magazine';
 import { AppService } from './services/app.service';
 
@@ -31,6 +33,8 @@ export class AppComponent implements OnInit {
   mainClass: string = this.classes['home'];
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
+    private windowRef: AppWindowRef,
     public state: AppState,
     private service: AppService,
     private route: ActivatedRoute,
@@ -59,11 +63,13 @@ export class AppComponent implements OnInit {
   }
 
   initApp() {
-    var userLang; 
+    var userLang = 'cs'; 
     if (this.route.snapshot.queryParams['lang']){
       userLang = this.route.snapshot.queryParams['lang'];
     } else {
-      userLang = navigator.language.split('-')[0]; // use navigator lang if available
+      if (isPlatformBrowser(this.platformId)) {
+        userLang = this.windowRef.nativeWindow.navigator.language.split('-')[0]; // use navigator lang if available
+      }
       userLang = /(cs|en)/gi.test(userLang) ? userLang : 'cs';
       if (this.state.config.hasOwnProperty('defaultLang')) {
         userLang = this.state.config['defaultLang'];

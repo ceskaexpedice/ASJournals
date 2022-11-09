@@ -37,7 +37,7 @@ public class ImgServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
     try {
-
+      response.addHeader("Access-Control-Allow-Origin", "*");
       if (request.getParameter("obalka") != null) {
 
         String ctx = request.getParameter("ctx");

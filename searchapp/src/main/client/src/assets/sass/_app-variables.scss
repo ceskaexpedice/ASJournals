@@ -56,8 +56,8 @@ $app-col-close-width:		40px;
 $app-slider-base-color:	    $app-brand-l-3;
 
 // paths
-$roboto-font-path: '~assets/fonts' !default;
-$icon-font-path: if($bootstrap-sass-asset-helper, "bootstrap/", "~assets/fonts/glyphicons/") !default;
+$roboto-font-path: '/assets/fonts' !default;
+$icon-font-path: if($bootstrap-sass-asset-helper, "bootstrap/", "/assets/fonts/glyphicons/") !default;
 
 
 //== Scaffolding

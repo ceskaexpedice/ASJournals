@@ -70,7 +70,7 @@
   <build>
     <plugins>
       
-      <plugin>
+<!--      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.6.0</version>
@@ -84,7 +84,7 @@
               <workingDirectory>${project.basedir}/src/main/client</workingDirectory>  
               <arguments>
                 <argument>run</argument>
-                <argument>build.prod</argument>
+                <argument>build:ssr</argument>
               </arguments>
             </configuration>
             <goals>
@@ -92,7 +92,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin>-->
       
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
@@ -102,13 +102,6 @@
             <fileset>
               <directory>${project.basedir}/src/main/webapp</directory>
               <includes>
-              <!--
-                <include>*.bundle.css</include>
-                <include>*.js</include>
-                <include>*.bundle.js.gz</include>
-                <include>*.bundle.map</include>
-                <include>index.html</include>
-              -->
                 <include>assets/*/**</include>
                 <include>*.*</include>
               </includes>
@@ -139,7 +132,7 @@
               <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
               <resources>
                 <resource>
-                  <directory>src/main/client/dist/client</directory>
+                  <directory>src/main/client/dist/browser</directory>
                   <includes>
                     <include>*/**</include>
                   </includes>
@@ -213,6 +206,7 @@
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
+
     
       <!-- Insert jsp pageEncoding tag to index.html -->
       <plugin> 

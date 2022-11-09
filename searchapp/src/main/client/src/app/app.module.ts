@@ -25,7 +25,8 @@ export function createTranslateLoader(http: HttpClient) {
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    // BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'K5Journals' }),
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,6 +13,7 @@ import Utils from './utils';
 import { Subject, Observable, of, throwError } from 'rxjs';
 import { catchError, expand, map } from 'rxjs/operators';
 import { Magazine } from '../models/magazine';
+import { DOCUMENT } from '@angular/common';
 
 declare var xml2json: any;
 
@@ -28,6 +29,7 @@ export class AppService {
   public searchSubject: Observable<any> = this._searchSubject.asObservable();
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private state: AppState,
     private search: SearchService,
     private translate: TranslateService,
@@ -113,19 +115,20 @@ export class AppService {
 
     for (let i = 0; i < this.state.ctxs.length; i++) {
       if (!this.findStyle(this.state.ctxs[i].ctx)) {
-        const link = document.createElement('link');
-        link.href = 'api/theme?ctx=' + this.state.ctxs[i].ctx + '&color=' + this.state.ctxs[i]['color'];
+        const link = this.document.createElement('link');
+        link.type = 'text/css';
+        link.href = '/api/theme?ctx=' + this.state.ctxs[i].ctx + '&color=' + this.state.ctxs[i]['color'];
         link.rel = 'stylesheet';
         link.id = 'css-theme-' + this.state.ctxs[i].ctx;
         link.title = this.state.ctxs[i].ctx!;
         link.disabled = true;
-        document.getElementsByTagName('head')[0].appendChild(link);
+        this.document.getElementsByTagName('head')[0].appendChild(link);
       }
     }
   }
 
   findStyle(theme: any) {
-    let links = document.getElementsByTagName('link');
+    let links = this.document.getElementsByTagName('link');
     for (let i = 0; i < links.length; i++) {
       let link = links[i];
       if (link.rel.indexOf('stylesheet') != -1 && link.title) {
@@ -140,16 +143,17 @@ export class AppService {
   switchStyle() {
     let exists: boolean = this.findStyle(this.state.ctx!.ctx);
     if (!exists) {
-      const link = document.createElement('link');
-      link.href = 'theme?ctx=' + this.state.ctx!.ctx + '&color=' + this.state.config['color']; // insert url in between quotes
+      const link = this.document.createElement('link');
+      link.href = '/api/theme?ctx=' + this.state.ctx!.ctx + '&color=' + this.state.config['color']; // insert url in between quotes
       link.rel = 'stylesheet';
+      link.type = 'text/css';
       link.id = 'css-theme-' + this.state.ctx!.ctx;
       link.title = this.state.ctx?.ctx!;
       link.disabled = false;
-      document.getElementsByTagName('head')[0].appendChild(link);
+      this.document.getElementsByTagName('head')[0].appendChild(link);
     }
 
-    let links = document.getElementsByTagName('link');
+    let links = this.document.getElementsByTagName('link');
     for (let i = 0; i < links.length; i++) {
       let link = links[i];
       if (link.rel.indexOf('stylesheet') != -1 && link.title) {

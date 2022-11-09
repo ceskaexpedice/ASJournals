@@ -256,13 +256,13 @@ magazine: any;
   }
 
   url() {
-    return window.location.href;
-    //return this.router.url;
+    //return window.location.href;
+    return this.router.url;
   }
 
   _socialUrl() {
-    return window.location.href;
-    //return this.route.snapshot.pathFromRoot;
+    //return window.location.href;
+    return this.router.url;
   }
 
   facebookShare() {
@@ -286,7 +286,7 @@ magazine: any;
   getCitace(){
     this.service.getCitace(this.pid!).subscribe(resp => {
       this.citace = resp;
-      this.location = window.location.href;
+      this.location = this.router.url;
     });
   }
 
