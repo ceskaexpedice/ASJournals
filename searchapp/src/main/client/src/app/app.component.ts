@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
             });
           }
       });
-      this.service.setStyles();
+      //this.service.setStyles();
     
   }
 

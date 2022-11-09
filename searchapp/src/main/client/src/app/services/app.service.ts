@@ -72,7 +72,10 @@ export class AppService {
         this.state.config['color'] = ctx.color;
         this.state.config['journal'] = ctx.journal;
         this.state.config['showTitleLabel'] = ctx.showTitleLabel;
-        this.switchStyle();
+        // setTimeout(() => {
+        //   console.log('switching 1')
+          this.switchStyle();
+        // }, 5000);
         this.findActual();
         this.getKeywords();
         this.getGenres();
@@ -82,24 +85,27 @@ export class AppService {
     )
   }
 
-  addJournal(ctx: Magazine) {
-    this.state.ctxs.push(ctx);
-    return this.get('texts?action=ADD_JOURNAL&ctxs=' + JSON.stringify(this.state.ctxs)).pipe(
-      map(res => {
-        this.state.ctx = ctx;
-        this.state.setConfig(res);
-        this.state.config['color'] = ctx.color;
-        this.state.config['journal'] = ctx.journal;
-        this.state.config['showTitleLabel'] = ctx.showTitleLabel;
-        this.switchStyle();
-        this.findActual();
-        this.getKeywords();
-        this.getGenres();
-        this.state.stateChanged();
-        return res;
-      })
-    )
-  }
+  // addJournal(ctx: Magazine) {
+  //   this.state.ctxs.push(ctx);
+  //   return this.get('texts?action=ADD_JOURNAL&ctxs=' + JSON.stringify(this.state.ctxs)).pipe(
+  //     map(res => {
+  //       this.state.ctx = ctx;
+  //       this.state.setConfig(res);
+  //       this.state.config['color'] = ctx.color;
+  //       this.state.config['journal'] = ctx.journal;
+  //       this.state.config['showTitleLabel'] = ctx.showTitleLabel;
+  //       setTimeout(() => {
+  //         console.log('switching 2')
+  //         this.switchStyle();
+  //       }, 5000);
+  //       this.findActual();
+  //       this.getKeywords();
+  //       this.getGenres();
+  //       this.state.stateChanged();
+  //       return res;
+  //     })
+  //   )
+  // }
 
 
   getCtx(ctx: string) {
