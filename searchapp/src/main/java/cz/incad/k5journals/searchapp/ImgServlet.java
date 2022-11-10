@@ -15,7 +15,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.util.ClientUtils;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -78,25 +84,48 @@ public class ImgServlet extends HttpServlet {
   }
 
   private void getFromUrl(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+    // Check if uuid is in our index
+    Options opts = Options.getInstance();
+    String pid = request.getParameter("uuid");
+    try (SolrClient solr = new HttpSolrClient.Builder(String.format("%s%s",
+            opts.getString("solr.host", "http://localhost:8983/solr/"),
+            "journal")).build()) {
+      String q = "pid:\"" + pid + "\"";
+      long num = solr.query(new SolrQuery(q)).getResults().getNumFound();
+      if (num == 0) {
+        LOGGER.log(Level.WARNING, "Not in index {0}", pid);
+        return;
+      }
+    } catch (SolrServerException | IOException ex) {
+      LOGGER.log(Level.SEVERE, null, ex);
+      return;
+    } 
+
     //response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
     response.addHeader("Access-Control-Allow-Methods", "GET, POST");
     response.addHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
-    Options opts = Options.getInstance();
-
-    String solrhost = opts.getString("img.point", "http://localhost:8080/search/img");
-    //        + request.getPathInfo();
-    if (request.getQueryString() != null && !request.getQueryString().equals("")) {
-      solrhost += "?" + request.getQueryString();
+    String imgPoint;
+        
+    String size = request.getParameter("size");
+    if ("k7".equals(request.getParameter("kramerius_version"))) {
+      imgPoint = opts.getString("api.point.k7")
+              + "/items/" + pid + "/image";
+      if (size != null) {
+        imgPoint += "/thumb";
+      }
+    } else {
+      imgPoint = opts.getString("img.point");
+      if (request.getQueryString() != null && !request.getQueryString().equals("")) {
+        imgPoint += "?" + request.getQueryString();
+      }
     }
+     
 
-    LOGGER.log(Level.INFO, "requesting url {0}", solrhost);
+    LOGGER.log(Level.FINE, "requesting url {0}", imgPoint);
     Map<String, String> reqProps = new HashMap<>();
-//    reqProps.put("Content-Type", "application/json");
-//    reqProps.put("Accept", "application/json");
-    InputStream inputStream = RESTHelper.inputStream(solrhost, reqProps);
+    InputStream inputStream = RESTHelper.inputStream(imgPoint, reqProps);
     org.apache.commons.io.IOUtils.copy(inputStream, response.getOutputStream());
-    //out.print(org.apache.commons.io.IOUtils.toString(inputStream, "UTF8"));
 
   }
 

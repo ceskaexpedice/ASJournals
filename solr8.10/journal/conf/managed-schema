@@ -60,7 +60,9 @@
     <field name="pid_paths" type="string" indexed="true" stored="true" multiValued="true"/>
     
     <field name="policy" type="string" indexed="true" stored="true" multiValued="false" />
-    
+	
+    <!-- k5, k7 -->
+    <field name="kramerius_version" type="string" indexed="true" stored="true" multiValued="false" />
     
     <field name="datanode" type="boolean" indexed="true" stored="true" multiValued="false"/>
     <field name="url_pdf" type="string" indexed="true" stored="true" multiValued="false"/>

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
+import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrInputDocument;
 import org.json.JSONObject;
 
@@ -42,11 +43,10 @@ public class IndexServlet extends HttpServlet {
 
       String actionNameParam = req.getParameter(ACTION_NAME);
       if (actionNameParam != null) {
-        
+
         Actions actionToDo = Actions.valueOf(actionNameParam.toUpperCase());
         actionToDo.doPerform(req, resp);
-        
-          
+
       } else {
         PrintWriter out = resp.getWriter();
         out.print("Action missing");
@@ -86,7 +86,7 @@ public class IndexServlet extends HttpServlet {
           indexer.setView(pid);
 
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+          LOGGER.log(Level.SEVERE, null, ex);
           json.put("error", ex.toString());
         }
         out.println(json.toString(2));
@@ -101,16 +101,25 @@ public class IndexServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         JSONObject json = new JSONObject();
         try {
-
-          Indexer indexer = new Indexer();
-          for(String pid : req.getParameterValues("pid")){
-            json = indexer.indexDeep(pid);
+          
+          String kramerius_version = req.getParameter("kramerius_version");
+          if ("k7".equals(kramerius_version)) {
+            IndexerK7 indexer = new IndexerK7();
+            for (String pid : req.getParameterValues("pid")) {
+              json = indexer.indexDeep(pid); 
+            }
+          } else {
+            Indexer indexer = new Indexer();
+            for (String pid : req.getParameterValues("pid")) {
+              json = indexer.indexDeep(pid);
+            }
           }
+
           //indexer.indexPidAndChildren(req.getParameter("pid"));
 
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
-            json.put("error", ex.toString());
+          LOGGER.log(Level.SEVERE, null, ex);
+          json.put("error", ex.toString());
         }
         out.println(json.toString(2));
       }
@@ -176,25 +185,32 @@ public class IndexServlet extends HttpServlet {
       @Override
       void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 
-        resp.setContentType("application/json;charset=UTF-8");
-
-        PrintWriter out = resp.getWriter();
         JSONObject json = new JSONObject();
         try {
+          SolrInputDocument idoc;
+          String kramerius_version = req.getParameter("kramerius_version");
+          if ("k7".equals(kramerius_version)) {
+            IndexerK7 indexer = new IndexerK7();
+            idoc = indexer.createSolrDoc(req.getParameter("pid"));
+          } else {
+            Indexer indexer = new Indexer();
+            idoc = indexer.createSolrDoc(req.getParameter("pid"), 0);
+          }
 
-          Indexer indexer = new Indexer();
-          SolrInputDocument idoc = indexer.createSolrDoc(req.getParameter("pid"), 0);
-          if(req.getParameter("field") != null){
-            for(Object o : idoc.getFieldValues(req.getParameter("field"))){
-            out.println(o);
+          if (req.getParameter("field") != null) {
+            resp.setContentType("application/json;charset=UTF-8");
+            PrintWriter out = resp.getWriter();
+            for (Object o : idoc.getFieldValues(req.getParameter("field"))) {
+              out.println(o);
             }
           } else {
-            out.println(idoc);
+            resp.setContentType("text/xml;charset=UTF-8");
+            resp.setCharacterEncoding("UTF-8");
+            resp.getWriter().println(ClientUtils.toXML(idoc));
           }
-          
 
         } catch (Exception ex) {
-          out.println(json.put("error", ex).toString(2));
+          resp.getWriter().println(json.put("error", ex).toString(2));
         }
       }
     },
@@ -230,7 +246,7 @@ public class IndexServlet extends HttpServlet {
           json.put("saved", indexer.deleteMagazine(req.getParameter("ctx")));
 
         } catch (Exception ex) {
-          json.put("error", ex.toString()); 
+          json.put("error", ex.toString());
         }
         out.println(json.toString(2));
       }
@@ -313,32 +329,28 @@ public class IndexServlet extends HttpServlet {
 
         resp.setContentType("text/plain;charset=UTF-8");
         Options opts = Options.getInstance();
-        String url = opts.getString("citation_server", "http://citace.rychtar.cloud/v1/kramerius?format=html&url=https://kramerius.lib.cas.cz&uuid=") +
-                req.getParameter("uuid");
-        
+        String url = opts.getString("citation_server", "http://citace.rychtar.cloud/v1/kramerius?format=html&url=https://kramerius.lib.cas.cz&uuid=")
+                + req.getParameter("uuid");
+
         InputStream inputStream = RESTHelper.inputStream(url);
         org.apache.commons.io.IOUtils.copy(inputStream, resp.getOutputStream());
       }
     };
-    
-    
 
     abstract void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception;
   }
 
-
-
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-/**
- * Handles the HTTP <code>GET</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+  /**
+   * Handles the HTTP <code>GET</code> method.
+   *
+   * @param request servlet request
+   * @param response servlet response
+   * @throws ServletException if a servlet-specific error occurs
+   * @throws IOException if an I/O error occurs
+   */
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
     processRequest(request, response);
   }
@@ -352,7 +364,7 @@ public class IndexServlet extends HttpServlet {
    * @throws IOException if an I/O error occurs
    */
   @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
     processRequest(request, response);
   }
@@ -363,7 +375,7 @@ public class IndexServlet extends HttpServlet {
    * @return a String containing servlet description
    */
   @Override
-        public String getServletInfo() {
+  public String getServletInfo() {
     return "Short description";
   }// </editor-fold>
 

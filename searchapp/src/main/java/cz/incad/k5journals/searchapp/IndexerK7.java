@@ -35,9 +35,12 @@ import org.json.XML;
  *
  * @author alberto
  */
-public class Indexer {
+public class IndexerK7 {
+//  https://kramerius-test.lib.cas.cz/search/api/client/v7.0/items/uuid:fc144bf1-8d61-4f4b-80f9-e4a772db32dc/info
+//  https://kramerius-test.lib.cas.cz/search/api/client/v7.0/items/uuid:d118a57e-8d42-4744-9b2b-e76484f4df16/info
 
-  static final Logger LOGGER = Logger.getLogger(Indexer.class.getName());
+  static final Logger LOGGER = Logger.getLogger(IndexerK7.class.getName());
+  final String apiPointKey = "api.point.k7";
   Options opts;
   JSONObject langsMap;
 
@@ -48,7 +51,7 @@ public class Indexer {
   Map<String, Integer> dates = new HashMap();
   Map<String, String> dateIssued = new HashMap();
 
-  public Indexer() {
+  public IndexerK7() {
     try {
       opts = Options.getInstance();
       langsMap = opts.getJSONObject("langsMap");
@@ -90,13 +93,13 @@ public class Indexer {
    * @param pid document identifier
    * @param index doc index in parent children
    */
-  public void indexPid(String pid, int index) {
+  public void indexPid(String pid) {
     try {
       client = getClient("journal");
-      SolrInputDocument idoc = createSolrDoc(pid, index);
+      SolrInputDocument idoc = createSolrDoc(pid);
       if (idoc != null) {
         try {
-          LOGGER.log(Level.INFO, "indexed: {0} with idx {1}", new Object[]{total++, index});
+          LOGGER.log(Level.INFO, "indexed: {0}", new Object[]{total++});
           client.add(idoc);
           client.commit();
         } catch (SolrServerException | IOException ex) {
@@ -110,45 +113,51 @@ public class Indexer {
     }
   }
 
-  public SolrInputDocument createSolrDoc(String pid, int index) {
+  public SolrInputDocument createSolrDoc(String pid) {
     SolrInputDocument idoc = new SolrInputDocument();
     JSONObject mods = new JSONObject();
     try {
       idoc.addField("pid", pid);
       mods = getModsToJson(pid).getJSONObject("mods:modsCollection").getJSONObject("mods:mods");
       LOGGER.log(Level.FINE, "mods: {0}", mods);
+      idoc.addField("kramerius_version", "k7");
       idoc.addField("mods", mods.toString());
       JSONObject item = getItem(pid);
-      idoc.addField("datanode", item.optBoolean("datanode"));
-      String model = item.optString("model");
-      idoc.addField("model", model);
+      
+      idoc.addField("datanode", item.has("ds.img_full.mime"));
+      idoc.addField("model", item.optString("model"));
       response.increment(item.optString("model"));
-      idoc.addField("root_title", item.optString("root_title"));
-      idoc.addField("root_pid", item.optString("root_pid"));
-      idoc.addField("idx", index);
+      idoc.addField("root_title", item.optString("root.title"));
+      idoc.addField("root_pid", item.optString("root.pid"));
+      idoc.addField("idx", item.optInt("rels_ext_index.sort"));
+      
+      String parent = item.optString("own_parent.pid");
+      idoc.addField("parents", parent);
+      idoc.addField("model_paths", item.optString("own_model_path"));
+      idoc.addField("pid_paths", item.optString("own_pid_path"));
 
-      JSONArray ctx = item.getJSONArray("context");
-      String parent = null;
-      for (int i = 0; i < ctx.length(); i++) {
-        String model_path = "";
-        String pid_path = "";
-        JSONArray ja = ctx.getJSONArray(i);
-        if (ja.length() > 1) {
-          parent = ja.getJSONObject(ja.length() - 2).getString("pid");
-          idoc.addField("parents", parent);
-        }
-        for (int j = 0; j < ja.length(); j++) {
-          model_path += ja.getJSONObject(j).getString("model") + "/";
-          pid_path += ja.getJSONObject(j).getString("pid") + "/";
-        }
-        idoc.addField("model_paths", model_path);
-        idoc.addField("pid_paths", pid_path);
-      }
-
-      if (item.has("pdf")) {
-        idoc.addField("url_pdf", item.getJSONObject("pdf").getString("url"));
+      if ("application/pdf".equals(item.optString("ds.img_full.mime"))) {
+        idoc.addField("url_pdf", item.optString("ds.img_full.mime"));
         getPdf(pid, idoc);
       }
+      
+//      JSONArray ctx = item.getJSONArray("context");
+//      for (int i = 0; i < ctx.length(); i++) {
+//        String model_path = "";
+//        String pid_path = "";
+//        JSONArray ja = ctx.getJSONArray(i);
+//        if (ja.length() > 1) {
+//          parent = ja.getJSONObject(ja.length() - 2).getString("pid");
+//          idoc.addField("parents", parent);
+//        }
+//        for (int j = 0; j < ja.length(); j++) {
+//          model_path += ja.getJSONObject(j).getString("model") + "/";
+//          pid_path += ja.getJSONObject(j).getString("pid") + "/";
+//        }
+//        idoc.addField("model_paths", model_path);
+//        idoc.addField("pid_paths", pid_path);
+//      }
+
 
       setTitleInfo(idoc, mods);
       setNames(idoc, mods);
@@ -189,9 +198,9 @@ public class Indexer {
     try {
       client = getClient("journal");
       Date tstart = new Date();
-      int idx = getIdx(pid, true);
-      LOGGER.log(Level.INFO, "idx: {0}", idx);
-      indexPidAndChildren(pid, idx);
+//      int idx = getIdx(pid, true);
+//      LOGGER.log(Level.INFO, "idx: {0}", idx);
+      indexPidAndChildren(pid);
       LOGGER.log(Level.INFO, "index finished. Indexed: {0}", total);
 
       response.put("msg", "total indexed " + total);
@@ -199,7 +208,7 @@ public class Indexer {
       response.put("ellapsed time", FormatUtils.formatInterval(tend.getTime() - tstart.getTime()));
       client.close();
     } catch (IOException ex) {
-      Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(IndexerK7.class.getName()).log(Level.SEVERE, null, ex);
       response.put("error", ex);
     }
     return response;
@@ -221,7 +230,7 @@ public class Indexer {
       for (int j = 0; j < ja.length() - 1; j++) {
         String pid = ja.getJSONObject(j).getString("pid");
         int idx = getIdx(pid, false);
-        indexPid(pid, idx);
+        indexPid(pid);
       }
     }
   }
@@ -237,7 +246,8 @@ public class Indexer {
         }
 
         String ppid = ja.getJSONObject(ja.length() - 2).getString("pid");
-        JSONArray children = getChildren(ppid);
+        JSONObject pitem = getItem(ppid);
+        JSONArray children = pitem.getJSONObject("structure").getJSONObject("children").getJSONArray("own");
         for (int i = 0; i < children.length(); i++) {
           if (pid.equals(children.getJSONObject(i).getString("pid"))) {
             return i;
@@ -280,19 +290,18 @@ public class Indexer {
    *
    * @param pid
    */
-  private void indexPidAndChildren(String pid, int idx) {
-
-    indexPid(pid, idx);
+  private void indexPidAndChildren(String pid) {
+    // JSONObject item =  getItem(pid);
+    indexPid(pid);
     JSONArray children = getChildren(pid);
     for (int i = 0; i < children.length(); i++) {
-      if (!children.getJSONObject(i).optBoolean("datanode")) {
-        indexPidAndChildren(children.getJSONObject(i).getString("pid"), i);
+      JSONObject child = children.getJSONObject(i);
+      if (!child.has("ds.img_full.mime")) {
+        indexPidAndChildren(children.getJSONObject(i).getString("pid"));
       } else {
-
-        indexPid(children.getJSONObject(i).getString("pid"), i);
+        indexPid(child.getString("pid"));
       }
     }
-
   }
 
   /**
@@ -303,12 +312,12 @@ public class Indexer {
    */
   public JSONObject getModsToJson(String pid) {
     try {
-
-      String k5host = opts.getString("api.point", "http://localhost:8080/search/api/v5.0")
-              + "/item/" + pid + "/streams/BIBLIO_MODS";
+// https://k7.inovatika.dev/search/api/client/v7.0/items/uuid:57976e35-5078-4d1b-86b2-cf59060f0c0a/metadata/mods
+      String k5host = opts.getString(apiPointKey)
+              + "/items/" + pid + "/metadata/mods";
       Map<String, String> reqProps = new HashMap<>();
       reqProps.put("Content-Type", "application/json");
-      reqProps.put("Accept", "application/json");
+      //reqProps.put("Accept", "application/json");
       InputStream inputStream = RESTHelper.inputStream(k5host, reqProps);
       String modsXml = org.apache.commons.io.IOUtils.toString(inputStream, Charset.forName("UTF-8"));
       return XML.toJSONObject(modsXml);
@@ -327,8 +336,8 @@ public class Indexer {
   public void getPdf(String pid, SolrInputDocument idoc) {
     try {
 
-      String k5host = opts.getString("api.point", "http://localhost:8080/search/api/v5.0")
-              + "/item/" + pid + "/streams/IMG_FULL";
+      String k5host = opts.getString(apiPointKey)
+              + "/items/" + pid + "/image";
       Map<String, String> reqProps = new HashMap<>();
 //      reqProps.put("Content-Type", "application/json");
 //      reqProps.put("Accept", "application/json");
@@ -355,29 +364,14 @@ public class Indexer {
   private JSONObject getItem(String pid) {
     try {
 
-      String k5host = opts.getString("api.point", "http://localhost:8080/search/api/v5.0")
-              + "/item/" + pid;
+      String k5host = opts.getString(apiPointKey)
+              + "/search?q=pid:" + ClientUtils.escapeQueryChars(pid);
       Map<String, String> reqProps = new HashMap<>();
       reqProps.put("Content-Type", "application/json");
-      reqProps.put("Accept", "application/json");
+      // reqProps.put("Accept", "application/json");
       InputStream inputStream = RESTHelper.inputStream(k5host, reqProps);
-      return new JSONObject(org.apache.commons.io.IOUtils.toString(inputStream, Charset.forName("UTF-8")));
-    } catch (JSONException | IOException ex) {
-      LOGGER.log(Level.SEVERE, null, ex);
-      return null;
-    }
-  }
-
-  private JSONArray getStreams(String pid) {
-    try {
-
-      String k5host = opts.getString("api.point", "http://localhost:8080/search/api/v5.0")
-              + "/item/" + pid + "/streams";
-      Map<String, String> reqProps = new HashMap<>();
-      reqProps.put("Content-Type", "application/json");
-      reqProps.put("Accept", "application/json");
-      InputStream inputStream = RESTHelper.inputStream(k5host, reqProps);
-      return new JSONArray(org.apache.commons.io.IOUtils.toString(inputStream, Charset.forName("UTF-8")));
+      JSONObject resp = new JSONObject(org.apache.commons.io.IOUtils.toString(inputStream, Charset.forName("UTF-8")));
+      return resp.getJSONObject("response").getJSONArray("docs").getJSONObject(0);
     } catch (JSONException | IOException ex) {
       LOGGER.log(Level.SEVERE, null, ex);
       return null;
@@ -387,13 +381,16 @@ public class Indexer {
   private JSONArray getChildren(String pid) {
     try {
 
-      String k5host = opts.getString("api.point", "http://localhost:8080/search/api/v5.0")
-              + "/item/" + pid + "/children";
+      String k5host = opts.getString(apiPointKey)
+              + "/search?rows=1000&q=own_parent.pid:" + ClientUtils.escapeQueryChars(pid);
       Map<String, String> reqProps = new HashMap<>();
       reqProps.put("Content-Type", "application/json");
       reqProps.put("Accept", "application/json");
       InputStream inputStream = RESTHelper.inputStream(k5host, reqProps);
-      return new JSONArray(org.apache.commons.io.IOUtils.toString(inputStream, Charset.forName("UTF-8")));
+      
+      JSONObject resp = new JSONObject(org.apache.commons.io.IOUtils.toString(inputStream, Charset.forName("UTF-8")));
+      return resp.getJSONObject("response").getJSONArray("docs");
+      
     } catch (JSONException | IOException ex) {
       LOGGER.log(Level.SEVERE, null, ex);
       return null;

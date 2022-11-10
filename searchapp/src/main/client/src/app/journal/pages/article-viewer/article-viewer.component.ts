@@ -126,11 +126,11 @@ magazine: any;
             this.downloadFilename = this.pid + '.pdf';
           }
 
-          this.fullSrc = this.state.config['context'] + 'api/img?uuid=' + this.pid + '&stream=IMG_FULL&action=GETRAW';
+          this.fullSrc = this.state.config['context'] + 'api/img?uuid=' + this.pid + '&kramerius_version=' + res['kramerius_version'] + '&stream=IMG_FULL&action=GETRAW';
         } else {
           this.isPdf = false;
           this.downloadFilename = this.pid;
-          this.fullSrc = this.state.config['context'] + 'api/img?uuid=' + this.pid + '&stream=IMG_FULL&action=GETRAW';
+          this.fullSrc = this.state.config['context'] + 'api/img?uuid=' + this.pid + '&kramerius_version=' + res['kramerius_version'] + '&stream=IMG_FULL&action=GETRAW';
           this.loading = false;
         }
 
