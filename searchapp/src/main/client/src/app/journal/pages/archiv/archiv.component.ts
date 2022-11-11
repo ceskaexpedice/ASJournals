@@ -263,8 +263,8 @@ export class ArchivComponent implements OnInit {
   }
 
 
-  img(pid: string) {
-    return this.state.config['context'] + 'api/img?uuid=' + pid + '&stream=IMG_THUMB&action=SCALE&scaledHeight=140';
+  img(pid: string, kramerius_version: string) {
+    return this.state.config['context'] + 'api/img?uuid=' + pid + '&kramerius_version=' + kramerius_version + '&thumb=true';
   }
 
 }

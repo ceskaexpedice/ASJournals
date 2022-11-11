@@ -683,8 +683,11 @@ export class AppService {
     return this.post(url, user, params);
   }
 
-  index(uuid: string) {
+  index(uuid: string, isK7: boolean) {
     let url = 'index?action=INDEX_DEEP&pid=' + uuid;
+    if (isK7) {
+      url += '&kramerius_version=k7';
+    }
 
     return this.get(url).pipe(
       map((response: any) => {

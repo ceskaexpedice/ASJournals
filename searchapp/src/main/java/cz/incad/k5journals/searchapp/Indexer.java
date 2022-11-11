@@ -807,6 +807,11 @@ public class Indexer {
           //idoc.addField(name, json.get(name));
         } else {
           switch (name) {
+            case "isK7":
+              if (json.getBoolean(name)) {
+                idoc.setField("kramerius_version", "k7");
+              }
+              break;
             case "titleCS":
               break;
             case "_version_":

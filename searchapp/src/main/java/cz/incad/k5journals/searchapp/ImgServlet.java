@@ -100,27 +100,29 @@ public class ImgServlet extends HttpServlet {
     } catch (SolrServerException | IOException ex) {
       LOGGER.log(Level.SEVERE, null, ex);
       return;
-    } 
-
+    }
+ 
     //response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
     response.addHeader("Access-Control-Allow-Methods", "GET, POST");
     response.addHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
     String imgPoint;
-        
-    String size = request.getParameter("size");
+
+    String thumb = request.getParameter("thumb");
     if ("k7".equals(request.getParameter("kramerius_version"))) {
       imgPoint = opts.getString("api.point.k7")
               + "/items/" + pid + "/image";
-      if (size != null) {
+      if (thumb != null) {
         imgPoint += "/thumb";
       }
     } else {
       imgPoint = opts.getString("img.point");
-      if (request.getQueryString() != null && !request.getQueryString().equals("")) {
-        imgPoint += "?" + request.getQueryString();
+      imgPoint += "?uuid=" + pid;
+      if (thumb != null) {
+        imgPoint += "&stream=IMG_THUMB&action=SCALE&scaledHeight=140";
+      } else {
+        imgPoint += "&stream=IMG_FULL&action=GETRAW";
       }
     }
-     
 
     LOGGER.log(Level.FINE, "requesting url {0}", imgPoint);
     Map<String, String> reqProps = new HashMap<>();

@@ -4,10 +4,12 @@
       <div class="col-xs-12 col-sm-12 col-md-9 col-md-offset-3">
         <ul class="nav nav-tabs">
           <li role="presentation"><span>{{'Administrace' | translate}}:</span></li>
-          <li role="presentation" [class.active]="tab === 'config'"  >
-            <a (click)="tab = 'config'" class="app-item-authors">{{'Konfigurace' | translate}}</a></li>
-          <li role="presentation" [class.active]="tab === 'ui'" >
-            <a (click)="tab = 'ui'"  >{{'Rozhrani' | translate}}</a></li>
+          <li role="presentation" [class.active]="tab === 'config'">
+            <a (click)="tab = 'config'" class="app-item-authors">{{'Konfigurace' | translate}}</a>
+          </li>
+          <li role="presentation" [class.active]="tab === 'ui'">
+            <a (click)="tab = 'ui'">{{'Rozhrani' | translate}}</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -46,7 +48,8 @@
                   </ul>
                 </li>
               </ul>
-              <button type="button" class="btn app-btn app-btn-default" (click)="saveMenu()">{{'admin.Save_selected_pages' | translate}}</button>
+              <button type="button" class="btn app-btn app-btn-default"
+                (click)="saveMenu()">{{'admin.Save_selected_pages' | translate}}</button>
             </div>
             <div class="col-xs-9">
               <h3>{{selected}} <span class="app-brand-text text-darken-1">({{state.currentLang}})</span></h3>
@@ -65,43 +68,63 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="form-inline pull-left">
-                <div class="form-group app-mr-6">
-                  <input type="text" class="form-control app-mr-2" id="indexUUID" name="indexUUID" placeholder="uuid" [(ngModel)]="indexUUID">
-                  <button type="button" class="btn app-btn app-btn-default app-mr-1" (click)="index()">{{'admin.add_uuid' | translate}}</button>
-                  <button type="button" class="btn app-btn app-btn-default" (click)="openConfirm()">{{'admin.delete_uuid' | translate}}</button>
+                <div class="form-group app-mr-12">
+                  <input type="text" class="form-control app-mr-2" id="indexUUID" name="indexUUID" placeholder="uuid"
+                    size="80" [(ngModel)]="indexUUID">&#160;&#160;
+                    <label for="isK7">{{ 'magazines.isK7' | translate }}</label>&#160;&#160;
+                    <input [(ngModel)]="isK7" id="isK7" type="checkbox" [title]="'magazines.isK7' | translate" />
+                  <button type="button" class="btn app-btn app-btn-default app-mr-1"
+                    (click)="index()">{{'admin.add_uuid' | translate}}</button>
+                  <button type="button" class="btn app-btn app-btn-default"
+                    (click)="openConfirm()">{{'admin.delete_uuid' | translate}}</button>
                 </div>
-                <div class="form-group app-mr-6">
-                  <span>{{ 'admin.cover' | translate }}</span>:
-                  <input class="form-control app-mr-2"  type="file" ng2FileSelect [uploader]="coverUploader" [title]="'nahrát obrázek' | translate">
-                  <button type="button" class="btn app-btn app-btn-default" (click)="uploadCover()">{{'admin.Upload' | translate}}</button>{{ coverMsg }}
-                </div>
-                <div class="form-group app-mr-6">
-                  <input type="text" class="form-control app-mr-2" name="licence" placeholder="licence" [(ngModel)]="state.ctx.licence">
-                  <button type="button" class="btn app-btn app-btn-default app-mr-4" (click)="setLicences()" >{{'magazines.nastavit_licenci' | translate}}</button>
-                </div>
-                <div class="form-group app-mr-6">
-                  <button type="button" class="btn app-btn app-btn-default app-mr-4" (click)="showResetPwd()" >{{'magazines.resetovat_heslo' | translate}}</button>
-                </div>
-              </div>
-              <div class="form-inline pull-left">
-                <div class="form-group app-mr-6">
-                  <input type="text" class="form-control app-mr-2" id="indexUUID" name="indexUUID" placeholder="uuid" [(ngModel)]="description">
-                  <button type="button" class="btn app-btn app-btn-default app-mr-1" (click)="index()">{{'admin.add_uuid' | translate}}</button>
-                  <button type="button" class="btn app-btn app-btn-default" (click)="openConfirm()">{{'admin.delete_uuid' | translate}}</button>
-                </div>
-
-              </div>
-              <div *ngIf="working">
-                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {{'admin.Indexing' | translate}} ...
               </div>
             </div>
           </div>
-          <alert *ngIf="newPwdOk" [type]="'success'" [dismissOnTimeout]="2000" >{{ 'magazines.resetovat_heslo_ok' | translate }}</alert>
+          
+
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-inline pull-left">
+                <div class="form-group app-mr-12">
+                  <span>{{ 'admin.cover' | translate }}</span>:
+                  <input class="form-control app-mr-2" type="file" ng2FileSelect [uploader]="coverUploader"
+                    [title]="'nahrát obrázek' | translate">
+                  <button type="button" class="btn app-btn app-btn-default" (click)="uploadCover()">{{'admin.Upload' |
+                    translate}}</button>{{ coverMsg }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-inline pull-left">
+                <div class="form-group app-mr-6">
+                  <input type="text" class="form-control app-mr-2" name="licence" placeholder="licence"
+                    [(ngModel)]="state.ctx.licence">
+                  <button type="button" class="btn app-btn app-btn-default app-mr-4"
+                    (click)="setLicences()">{{'magazines.nastavit_licenci' | translate}}</button>
+                </div>
+                <div class="form-group app-mr-6">
+                  <button type="button" class="btn app-btn app-btn-default app-mr-4"
+                    (click)="showResetPwd()">{{'magazines.resetovat_heslo' | translate}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div *ngIf="working">
+              <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {{'admin.Indexing' |
+              translate}} ...
+            </div>
+          </div>
+          <alert *ngIf="newPwdOk" [type]="'success'" [dismissOnTimeout]="2000">{{ 'magazines.resetovat_heslo_ok' |
+            translate }}</alert>
           <div *ngIf="resultMsg && !working" class="row">
             <div class="alert alert-success" role="alert">
               {{resultMsg}} {{'text.indexed-note' | translate}}!
             </div>
-          </div>  
+          </div>
         </ng-container>
       </div>
     </div>
@@ -138,7 +161,8 @@
       </div>
       <div class="modal-body">
         <span><input type="file" ng2FileSelect [uploader]="uploader" (onCompleteAll)="uploaded()" />
-          <button type="button" class="btn btn-success btn-s" (click)="uploadFile()"[disabled]="!uploader.getNotUploadedItems().length">
+          <button type="button" class="btn btn-success btn-s" (click)="uploadFile()"
+            [disabled]="!uploader.getNotUploadedItems().length">
             <span class="glyphicon glyphicon-upload"></span>{{'admin.Upload' | translate}}
           </button>
         </span>
@@ -150,7 +174,8 @@
   </div>
 </div>
 
-<div bsModal #licencesModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div bsModal #licencesModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -165,25 +190,31 @@
             <tr *ngFor="let item of cache[state.ctx?.journal!].children">
               <td>{{ item.label }}</td>
               <td>
-                <input id="licence" name="licence" type="text" [(ngModel)]="cache[item.pid].licence" class="app-input" [placeholder]="'licence' + '...' | translate">
+                <input id="licence" name="licence" type="text" [(ngModel)]="cache[item.pid].licence" class="app-input"
+                  [placeholder]="'licence' + '...' | translate">
                 <div *ngIf="cache[item.pid]?.children && cache[item.pid]?.show">
                   <div *ngFor="let sitem of cache[item.pid].children">
-                    <label class="app-label app-mr-2">{{ sitem.label }}:</label> 
-                    <input name="slicence" type="text" [(ngModel)]="cache[sitem.pid].licence" class="app-input app-mt-2" [placeholder]="'licence' + '...' | translate">
+                    <label class="app-label app-mr-2">{{ sitem.label }}:</label>
+                    <input name="slicence" type="text" [(ngModel)]="cache[sitem.pid].licence" class="app-input app-mt-2"
+                      [placeholder]="'licence' + '...' | translate">
                   </div>
                 </div>
               </td>
               <td>
-                <button type="button" class="btn btn-default btn-s" (click)="getChildren(item.pid, item)" [class]="cache[item.pid]?.show ? 'app-rotate-up' : 'app-rotate-down'">
-                   <span class="glyphicon glyphicon-chevron-down app-mr-1"></span> {{ cache[item.pid]?.show ? ('magazines.skryt_cisla' | translate ) : ('magazines.zobrazit_cisla' | translate) }}
+                <button type="button" class="btn btn-default btn-s" (click)="getChildren(item.pid, item)"
+                  [class]="cache[item.pid]?.show ? 'app-rotate-up' : 'app-rotate-down'">
+                  <span class="glyphicon glyphicon-chevron-down app-mr-1"></span> {{ cache[item.pid]?.show ?
+                  ('magazines.skryt_cisla' | translate ) : ('magazines.zobrazit_cisla' | translate) }}
                 </button>
               </td>
             </tr>
           </tbody>
-        </table> 
+        </table>
         <div>
-          <button type="button" class="btn btn-success btn-s app-mr-1" (click)="saveLicences()">{{ 'magazines.ulozit' | translate }}</button>
-          <button type="button" class="btn btn-success btn-s" (click)="licencesModal.hide()">{{ 'magazines.zavrit' | translate }}</button>
+          <button type="button" class="btn btn-success btn-s app-mr-1" (click)="saveLicences()">{{ 'magazines.ulozit' |
+            translate }}</button>
+          <button type="button" class="btn btn-success btn-s" (click)="licencesModal.hide()">{{ 'magazines.zavrit' |
+            translate }}</button>
         </div>
       </div>
     </div>
@@ -191,7 +222,8 @@
 </div>
 
 
-<div bsModal #resetpwdModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div bsModal #resetpwdModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
@@ -202,11 +234,14 @@
       </div>
       <div class="modal-body">
         <div>
-          <input name="newPwd" type="text" [(ngModel)]="newPwd" class="app-input app-mt-2" [placeholder]="'magazines.nove_heslo'| translate">
-        </div><br/>
+          <input name="newPwd" type="text" [(ngModel)]="newPwd" class="app-input app-mt-2"
+            [placeholder]="'magazines.nove_heslo'| translate">
+        </div><br />
         <div>
-          <button type="button" class="btn btn-success btn-s app-mr-1" (click)="resetPwd()">{{ 'magazines.ulozit' | translate }}</button>
-          <button type="button" class="btn btn-success btn-s" (click)="resetpwdModal.hide()">{{ 'magazines.zavrit' | translate }}</button>
+          <button type="button" class="btn btn-success btn-s app-mr-1" (click)="resetPwd()">{{ 'magazines.ulozit' |
+            translate }}</button>
+          <button type="button" class="btn btn-success btn-s" (click)="resetpwdModal.hide()">{{ 'magazines.zavrit' |
+            translate }}</button>
         </div>
       </div>
     </div>

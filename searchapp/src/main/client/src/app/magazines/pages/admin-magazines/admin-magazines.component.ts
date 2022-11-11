@@ -199,6 +199,7 @@ export class AdminMagazinesComponent implements OnInit {
     this.service.saveMagazine(this.currentMag!).subscribe(res => {
       this.service.getMagazines().subscribe(res2 => {
         this.state.ctxs = res2['response']['docs'];
+        this.state.ctxs.forEach((m: Magazine) => m.isK7 = m.kramerius_version === 'k7');
         this.service.showSnackBar('Saved success!');
       });
     });

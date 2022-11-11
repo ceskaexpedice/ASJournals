@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Magazine } from 'src/app/models/magazine';
 import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
 
@@ -36,6 +37,7 @@ export class SeznamCasopisuComponent implements OnInit {
   getData() {
     this.service.getMagazines().subscribe((response: any) => {
       this.state.magazines = response['response']['docs'];
+      this.state.magazines.forEach((m: Magazine) => m.isK7 = m.kramerius_version === 'k7');
       this.state.setFacets(response['facet_counts']['facet_fields']);
     });
   }

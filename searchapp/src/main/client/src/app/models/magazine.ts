@@ -21,4 +21,6 @@ export class Magazine {
   desc: string | undefined = undefined;
   desc_en: string | undefined = undefined;
   web: string | undefined = undefined;
+  kramerius_version: string | undefined = undefined;
+  isK7: boolean = false;
 }

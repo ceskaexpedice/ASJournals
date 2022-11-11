@@ -70,9 +70,16 @@ export class AdminComponent implements OnInit, OnDestroy {
   tab: string = 'config';
   cache: any = {};
   licences: any = {};
+  isK7: boolean = false;
 
   newPwd = '';
   newPwdOk = false;
+
+  constructor(
+    public state: AppState,
+    private service: AppService,
+    private modalService: BsModalService,
+    private router: Router) { }
 
   ngOnInit() {
     this.subscriptions.push(this.state.configSubject.subscribe(val => {
@@ -84,17 +91,15 @@ export class AdminComponent implements OnInit, OnDestroy {
     if (this.state?.ctx?.licences && this.state?.ctx?.journal) {
       this.licences = JSON.parse(this.state.ctx.licences);
     }
+
+    if (this.state?.ctx?.isK7) {
+      this.isK7 = true
+    }
     this.cache[this.state.ctx!.journal!] = { label: 'root', licence: '' };
 
     this.getChildren(this.state.ctx!.journal!, this.state.ctx);
 
   }
-
-  constructor(
-    public state: AppState,
-    private service: AppService,
-    private modalService: BsModalService,
-    private router: Router) { }
 
   ngAfterViewInit() {
     if (this.state.config) {
@@ -241,7 +246,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   index() {
     this.working = true;
     this.resultMsg = '';
-    this.service.index(this.indexUUID!).subscribe(res => {
+    this.service.index(this.indexUUID!, this.isK7).subscribe(res => {
       this.resultMsg = res.hasOwnProperty('error') ? res.error : res.msg;
       this.working = false;
     });
