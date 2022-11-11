@@ -39,6 +39,16 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  showDb() {
+    const db =  this.state.config.menu.find((m:any) => m.route === 'news');
+    return db && db.visible
+  }
+
+  showNews() {
+    const db =  this.state.config.menu.find((m:any) => m.route === 'db');
+    return db && db.visible
+  }
+
   setData() {
     if (this.state.actualNumber) {
       this.actual = this.state.actualNumber;

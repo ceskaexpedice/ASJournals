@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -250,8 +251,8 @@ public class TextsServlet extends HttpServlet {
           String fnmenu = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "menu.json";
           File fmenu = new File(fnmenu);
           if (fmenu.exists()) {
-            JSONObject jsonMenu = new JSONObject(FileUtils.readFileToString(fmenu, "UTF-8"));
-            js.put("menu", jsonMenu);
+            JSONArray jsonMenu = new JSONArray(FileUtils.readFileToString(fmenu, "UTF-8"));
+            js.put("menu", jsonMenu); 
           }
 
         out.println(js.toString(2));

@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -87,9 +88,11 @@ public class ConfigServlet extends HttpServlet {
       String fnmenu = InitServlet.CONFIG_DIR + File.separator +ctx + "menu.json";
       File fmenu = new File(fnmenu);
       if(fmenu.exists()){
-        JSONObject jsonMenu = new JSONObject(FileUtils.readFileToString(fmenu, "UTF-8"));
-        js.put("menu", jsonMenu);
-      }    
+        JSONArray jsonMenu = new JSONArray(FileUtils.readFileToString(fmenu, "UTF-8"));
+        js.put("menu", jsonMenu); 
+      } else {
+        LOGGER.log(Level.WARNING, "Menu doesn't exists {0}", fnmenu);
+      }
       
     }
     return js;

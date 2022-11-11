@@ -39,7 +39,7 @@ import { isPlatformBrowser } from '@angular/common';
     }
 
     public load(): Promise<any> {
-        const url = this.server + 'assets/config.json';
+        const url = this.server + '/api/assets/config.json';
         console.log('loading config... ');
         const promise = this.http.get(url)
             .toPromise()
@@ -53,7 +53,7 @@ import { isPlatformBrowser } from '@angular/common';
     }
 
     getMagazines() {
-        let url = this.server + 'api/search/magazines/select';
+        let url = this.server + '/api/search/magazines/select';
         const params = new HttpParams()
             .set('q', '*')
             .set('wt', 'json')

@@ -23,36 +23,62 @@
         <ng-container *ngIf="tab === 'ui'">
           <div class="row">
             <div class="col-xs-3">
+              
               <ul class="list-unstyled app-admin-nav" *ngIf="menu.length > 0">
-                <li role="app-page-nav" [class.active]="selected === 'home'">
+
+                <li role="app-page-nav" [class.active]="selectedPage === 'home'">
                   <strong>
-                    <a (click)="select('home', null)">{{'menu.home_' | translate}}</a>
+                    <a (click)="selectPage('home')">{{'menu.home_' | translate}}</a>
                   </strong>
                 </li>
-                <li role="app-page-nav" [class.active]="selected === 'footer'">
+                <li role="app-page-nav" [class.active]="selectedPage === 'footer'">
                   <strong>
-                    <a (click)="select('footer', null)">{{'menu.footer' | translate}}</a>
+                    <a (click)="selectPage('footer')">{{'menu.footer_' | translate}}</a>
                   </strong>
                 </li>
-                <li role="app-page-nav" *ngFor="let m of menu" [class.active]="selected === m.label">
+
+                <li role="app-page-nav" [class.active]="selectedPage === 'news'">
                   <strong>
-                    <a (click)="select(m.label, null)">{{'menu.'+m.label+'_' | translate}}</a>
-                    <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" />
+                    <a (click)="selectPage('news')">{{'menu.news_' | translate}}</a>
+                  </strong>
+                </li>
+                <li role="app-page-nav" [class.active]="selectedPage === 'db'">
+                  <strong>
+                    <a (click)="selectPage('db')">{{'menu.db_' | translate}}</a>
+                  </strong>
+                </li>
+
+                <li role="app-page-nav" *ngFor="let m of menu" [class.active]="selected === m">
+                  <strong>
+                    <a (click)="select(m)">{{m.route}}</a>
+                    <input type="checkbox" [(ngModel)]="m.inMenu" (change)="changeVisible()" />
                   </strong>
                   <ul class="nav-pills nav-stacked">
-                    <li role="app-page-nav" *ngFor="let m1 of m.menu"
-                      [class.active]="selected === m.label + '/' +m1.route">
-                      <a (click)="select(m.label, m1.route)">{{'menu.'+m.label+'.'+m1.route+'_' | translate}}</a>
-                      <input type="checkbox" [(ngModel)]="m1.visible" (change)="changeVisible()" />
+                    <li role="app-page-nav" *ngFor="let m1 of m.children"
+                      [class.active]="selected === m1">
+                      <a (click)="select(m1)">{{m1.route}}</a>
                     </li>
                   </ul>
                 </li>
               </ul>
+
               <button type="button" class="btn app-btn app-btn-default"
                 (click)="saveMenu()">{{'admin.Save_selected_pages' | translate}}</button>
             </div>
-            <div class="col-xs-9">
-              <h3>{{selected}} <span class="app-brand-text text-darken-1">({{state.currentLang}})</span></h3>
+            <div class="col-xs-9" *ngIf="selected || selectedPage">
+              <h3>
+                <!-- <span class="app-brand-text text-darken-1">({{state.currentLang}})</span> -->
+                <ng-container *ngIf="selected || selectedPage">
+                  {{ 'menu.' + selectedPage + '_' | translate }}
+                </ng-container>
+                <ng-container *ngIf="selected">
+                  <input type="text" [(ngModel)]="selected.route" />
+                  <input type="text" [(ngModel)]="selected.label_cs" />
+                  <input type="text" [(ngModel)]="selected.label_en" />
+                  <label for="isVisible">visible</label>
+                  <input type="checkbox" id="isVisible" [(ngModel)]="selected.visible"  />
+                </ng-container>
+              </h3>
               <div *ngIf="saved" class="alert alert-success" role="alert">
                 {{'text.save-note-1' | translate}} <strong>{{selected}} ({{state.currentLang}})</strong>
                 {{'text.save-note-2' | translate}}!

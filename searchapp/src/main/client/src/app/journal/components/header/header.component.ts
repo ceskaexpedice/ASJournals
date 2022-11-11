@@ -48,6 +48,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(this.state.stateChangedSubject.subscribe(val => {
       this.menu = this.state.config['menu'];
+      console.log(this.menu)
       
     }));
 
