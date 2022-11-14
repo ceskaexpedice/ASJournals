@@ -40,12 +40,12 @@ export class HomeComponent implements OnInit {
   }
 
   showDb() {
-    const db =  this.state.config.menu.find((m:any) => m.route === 'news');
+    const db =  this.state.config.layout.pages.find((m:any) => m.route === 'db');
     return db && db.visible
   }
 
   showNews() {
-    const db =  this.state.config.menu.find((m:any) => m.route === 'db');
+    const db =  this.state.config.layout.pages.find((m:any) => m.route === 'news');
     return db && db.visible
   }
 

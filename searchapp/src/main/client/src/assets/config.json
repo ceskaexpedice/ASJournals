@@ -31,82 +31,139 @@
             "field": "title_sort asc"
         }
     ],
-    "menu": {
-        "o-casopisu": {
-            "visible": true,
-            "submenu": [
-                {
-                    "route": "redakce",
-                    "visible": true
-                },
-                {
-                    "route": "open-access",
-                    "visible": true
-                },
-                {
-                    "route": "zapojeni",
-                    "visible": true
-                },
-                {
-                    "route": "historie",
-                    "visible": false
-                },
-                {
-                    "route": "distribuce",
-                    "visible": false
-                },
-                {
-                    "route": "fotogalerie",
-                    "visible": false
-                },
-                {
-                    "route": "oznameni-sefredaktora",
-                    "visible": false
-                },
-                {
-                    "route": "pripravujeme",
-                    "visible": false
-                }
-            ]
-        },
-        "pro-autory": {
-            "visible": true,
-            "submenu": [
-                {
-                    "route": "recenzni-rizeni",
-                    "visible": true
-                },
-                {
-                    "route": "citacni-pravidla",
-                    "visible": true
-                },
-                {
-                    "route": "publikacni-etika",
-                    "visible": true
-                },
-                {
-                    "route": "recenzenti",
-                    "visible": false
-                },
-                {
-                    "route": "odkazy",
-                    "visible": false
-                },
-                {
-                    "route": "caste-dotazy",
-                    "visible": false
-                }
-            ]
-        },
-        "e-shop": {
-            "visible": true
-        },
-        "kontakt": {
-            "visible": true
-        },
-        "news": {
-            "visible": true
-        }
+    "layout": {
+        "pages": [
+            {
+                "route": "news",
+                "cs": "E-shop",
+                "visible": true,
+                "children": [],
+                "en": "E-shop"
+            },
+            {
+                "route": "db",
+                "cs": "Kontakt",
+                "visible": true,
+                "children": [],
+                "en": "Contact"
+            }
+        ],
+        "menu": [
+            {
+                "route": "o-casopisu",
+                "cs": "O časopisu",
+                "visible": true,
+                "children": [
+                    {
+                        "route": "redakce",
+                        "cs": "Redakce",
+                        "visible": true,
+                        "en": "Editorial board"
+                    },
+                    {
+                        "route": "open-access",
+                        "cs": "Open Access",
+                        "visible": true,
+                        "en": "Open Access"
+                    },
+                    {
+                        "route": "zapojeni",
+                        "cs": "Zapojení do databází",
+                        "visible": true,
+                        "en": "Databases"
+                    },
+                    {
+                        "route": "historie",
+                        "cs": "Historie",
+                        "visible": true,
+                        "en": "History"
+                    },
+                    {
+                        "route": "distribuce",
+                        "cs": "Distribuce",
+                        "visible": false,
+                        "en": "Distribution"
+                    },
+                    {
+                        "route": "fotogalerie",
+                        "cs": "Fotogalerie",
+                        "visible": true,
+                        "en": "Photogallery"
+                    },
+                    {
+                        "route": "oznameni-sefredaktora",
+                        "cs": "Oznámení šéfredaktora",
+                        "visible": true,
+                        "en": "Main editor's notes"
+                    },
+                    {
+                        "route": "pripravujeme",
+                        "cs": "Připravujeme",
+                        "visible": true,
+                        "en": "We are preparing..."
+                    }
+                ],
+                "en": "About journal"
+            },
+            {
+                "route": "pro-autory",
+                "cs": "Pro autory",
+                "visible": true,
+                "children": [
+                    {
+                        "route": "recenzni-rizeni",
+                        "cs": "Recenzní řízení",
+                        "visible": true,
+                        "en": "Peer review process"
+                    },
+                    {
+                        "route": "citacni-pravidla",
+                        "cs": "Citační pravidla",
+                        "visible": true,
+                        "en": "Citation rules"
+                    },
+                    {
+                        "route": "publikacni-etika",
+                        "cs": "Publikační etika",
+                        "visible": true,
+                        "en": "Publication ethics"
+                    },
+                    {
+                        "route": "recenzenti",
+                        "cs": "Recenzenti",
+                        "visible": true,
+                        "en": "Reviewers"
+                    },
+                    {
+                        "route": "odkazy",
+                        "cs": "Odkazy",
+                        "visible": true,
+                        "en": "Links"
+                    },
+                    {
+                        "route": "caste-dotazy",
+                        "cs": "Časté dotazy",
+                        "visible": true,
+                        "en": "FAQ"
+                    }
+                ],
+                "en": "For authors"
+            },
+            {
+                "route": "e-shop",
+                "cs": "E-shop",
+                "visible": true,
+                "children": [],
+                "en": "E-shop"
+            },
+            {
+                "route": "kontakt",
+                "cs": "Kontakt",
+                "visible": true,
+                "children": [],
+                "en": "Contact"
+            }
+        ]
     },
     "hiddenGenres": ["cover", "advertisement", "colophon"],
     "genres": ["cover", "titulní list", "title page", "colophon",

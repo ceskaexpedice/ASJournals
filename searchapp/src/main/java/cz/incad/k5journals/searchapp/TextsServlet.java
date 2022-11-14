@@ -251,10 +251,9 @@ public class TextsServlet extends HttpServlet {
           String fnmenu = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "menu.json";
           File fmenu = new File(fnmenu);
           if (fmenu.exists()) {
-            JSONArray jsonMenu = new JSONArray(FileUtils.readFileToString(fmenu, "UTF-8"));
-            js.put("menu", jsonMenu); 
+            JSONObject layout = new JSONObject(FileUtils.readFileToString(fmenu, "UTF-8"));
+            js.put("layout", layout); 
           }
-
         out.println(js.toString(2));
       }
     };

@@ -14,11 +14,6 @@ import { AppService } from 'src/app/services/app.service';
 
 declare var tinymce: any;
 
-interface menuItem {
-  route: string;
-  visible: boolean;
-};
-
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -40,6 +35,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
 
   menu: any[] = [];
+  pages: any[] = [];
   selected: MenuItem | undefined;
   selectedPage: string | undefined;
   visibleChanged: boolean = false;
@@ -172,13 +168,8 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   fillMenu() {
 
-    // this.menu = [];
-    // for (let m in this.state.config['menu']) {
-    //   this.menu.push({ label: m, menu: this.state.config['menu'][m]['submenu'], visible: this.state.config['menu'][m]['visible'] })
-    //   //this.menu = this.state.config['menu'];
-    // }
-
-    this.menu = JSON.parse(JSON.stringify(this.state.config['menu']));
+    this.pages = JSON.parse(JSON.stringify(this.state.config.layout.pages));
+    this.menu = JSON.parse(JSON.stringify(this.state.config.layout.menu));
     
   }
 
@@ -186,7 +177,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     let page: string = '';
     if (this.selected) {
-      page = this.selected?.route;
+      page = this.selected?.id;
     } else if (this.selectedPage) {
       page = this.selectedPage;
     }
@@ -215,16 +206,9 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   saveMenu() {
-    // let menuToSave: any = {};
-    // for (let i = 0; i < this.menu.length; i++) {
-    //   menuToSave[this.menu[i].label] = { submenu: this.menu[i].menu, visible: this.menu[i].visible };
-    // }
+    const m = JSON.stringify({menu: this.menu, pages: this.pages});
 
-    // this.service.saveMenu(JSON.stringify(menuToSave)).subscribe((res: any) => {
-    //   this.saved = !res.hasOwnProperty('error');
-    // });
-
-    this.service.saveMenu(JSON.stringify(this.menu)).subscribe((res: any) => {
+    this.service.saveMenu(m).subscribe((res: any) => {
       this.saved = !res.hasOwnProperty('error');
     });
   }
@@ -232,18 +216,12 @@ export class AdminComponent implements OnInit, OnDestroy {
   save() {
 
     const content = this.editor.getContent();
-    let m = null;
-    if (this.visibleChanged) {
-      let menuToSave: any = {};
-      for (let i = 0; i < this.menu.length; i++) {
-        menuToSave[this.menu[i].label] = { submenu: this.menu[i].menu, visible: this.menu[i].visible };
-      }
-      m = JSON.stringify(menuToSave);
-    }
+
+    const m = JSON.stringify({menu: this.menu, pages: this.pages});
 
     let page: string = '';
     if (this.selected) {
-      page = this.selected?.route;
+      page = this.selected?.id;
     } else if (this.selectedPage) {
       page = this.selectedPage;
     }
@@ -460,9 +438,10 @@ export class AdminComponent implements OnInit, OnDestroy {
 }
 
 interface MenuItem {
+  id: string,
   route: string,
-  label_cs: string,
-  label_en: string,
+  cs: string,
+  en: string,
   visible: boolean,
   inMenu: boolean,
   children: MenuItem[]

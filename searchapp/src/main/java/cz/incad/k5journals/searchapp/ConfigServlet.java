@@ -55,12 +55,12 @@ public class ConfigServlet extends HttpServlet {
     try {
 
       response.setContentType("application/json;charset=UTF-8");
-      
-      if (request.getParameter("reset") != null){
+
+      if (request.getParameter("reset") != null) {
         Options.resetInstance();
       }
       PrintWriter out = response.getWriter();
-    
+
       JSONObject js = Options.getInstance().getClientConf();
 
       out.print(mergeCustom(request.getPathInfo(), js).toString(2));
@@ -68,14 +68,14 @@ public class ConfigServlet extends HttpServlet {
       LOGGER.log(Level.SEVERE, null, ex);
     } catch (JSONException ex) {
       LOGGER.log(Level.SEVERE, null, ex);
-    } 
+    }
   }
-  
-    private JSONObject mergeCustom(String ctx, JSONObject conf) throws IOException{
+
+  private JSONObject mergeCustom(String ctx, JSONObject conf) throws IOException {
     JSONObject js = new JSONObject(conf.toString());
-    
+
     File f = new File(InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "config.json");
-    
+
     if (f.exists() && f.canRead()) {
       String json = FileUtils.readFileToString(f, "UTF-8");
       JSONObject customClientConf = new JSONObject(json).getJSONObject("client");
@@ -84,16 +84,16 @@ public class ConfigServlet extends HttpServlet {
         String key = (String) keys.next();
         LOGGER.log(Level.FINE, "key {0} will be overrided", key);
         js.put(key, customClientConf.get(key));
-      }
-      String fnmenu = InitServlet.CONFIG_DIR + File.separator +ctx + "menu.json";
+      } 
+      String fnmenu = InitServlet.CONFIG_DIR + File.separator + ctx + "menu.json";
       File fmenu = new File(fnmenu);
-      if(fmenu.exists()){
-        JSONArray jsonMenu = new JSONArray(FileUtils.readFileToString(fmenu, "UTF-8"));
-        js.put("menu", jsonMenu); 
+      if (fmenu.exists()) {
+        JSONObject layout = new JSONObject(FileUtils.readFileToString(fmenu, "UTF-8"));
+        js.put("layout", layout);
       } else {
         LOGGER.log(Level.WARNING, "Menu doesn't exists {0}", fnmenu);
       }
-      
+
     }
     return js;
   }

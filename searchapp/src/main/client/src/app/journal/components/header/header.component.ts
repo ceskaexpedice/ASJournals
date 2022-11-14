@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppState } from 'src/app/app.state';
 import { AppService } from 'src/app/services/app.service';
+import { FreePageComponent } from '../free-page/free-page.component';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   currentLang: string = 'cs';
-  menu: any = null;
+  menu: any[] = [];
 
   public isCollapsed: boolean = false;
 
@@ -29,7 +30,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.state.config) {
-      this.menu = this.state.config['menu'];
+      this.menu = this.state.config.layout.menu;
+      
     }
     this.subscriptions.push(this.appservice.langSubject.subscribe(val => {
       this.currentLang = val;
@@ -47,9 +49,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }));
 
     this.subscriptions.push(this.state.stateChangedSubject.subscribe(val => {
-      this.menu = this.state.config['menu'];
-      console.log(this.menu)
-      
+      this.menu = this.state.config.layout.menu;
     }));
 
     //    this.state.fullScreenSubject.subscribe(val=> {
@@ -71,13 +71,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subscriptions = [];
   }
 
-  isVisible(h: string, sub: string) {
-    if (this.menu.hasOwnProperty(h)) {
-      return this.menu[h][sub];
-    } else {
-      return false;
-    }
-  }
+  // isVisible(h: string, sub: string) {
+  //   if (this.menu.hasOwnProperty(h)) {
+  //     return this.menu[h][sub];
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   changeLang(lang: string) {
     this.appservice.changeLang(lang);

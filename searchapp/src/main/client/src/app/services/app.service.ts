@@ -14,6 +14,7 @@ import { Subject, Observable, of, throwError } from 'rxjs';
 import { catchError, expand, map } from 'rxjs/operators';
 import { Magazine } from '../models/magazine';
 import { DOCUMENT } from '@angular/common';
+import { FreePageComponent } from '../journal/components/free-page/free-page.component';
 
 declare var xml2json: any;
 
@@ -37,6 +38,23 @@ export class AppService {
     private router: Router,
     private route: ActivatedRoute
   ) { }
+
+  findMenuItem(route: string) {
+    for (let i=0; i<this.state.config.layout.menu.length; i++) {
+      const m = this.state.config.layout.menu[i];
+      if (m.route === ('/'+route)) {
+        return m;
+      } else if (m.children.length > 0) {
+        for (let j=0; j<m.children.length; j++) {
+          const m2 = m.children[j];
+          if (('/'+m.route + '/' + m2.route) === route) {
+            return m2;
+          }
+        }
+      }
+    }
+    return null;
+  }
 
   private get<T>(url: string, params: HttpParams = new HttpParams(), responseType?: any): Observable<T> {
     const options = { params, responseType, withCredentials: true };
@@ -80,6 +98,22 @@ export class AppService {
         this.getKeywords();
         this.getGenres();
         this.state.stateChanged();
+
+        const menu = this.state.config.layout.menu;
+        menu.forEach((m: any) => {
+          const r = this.router.config.find((ro: any) => ro.path === ':ctx' && ro.children);
+          if (r && r.children && r.children.length> 0) {
+            const r1 = r.children.find((ro2: any) => ro2.path === m.route);
+            if (!r1) {
+              r.children.push({ path: m.route, component: FreePageComponent });
+            }
+            m.children.forEach((m1: any) => {
+  
+  
+            });
+          }
+        });
+
         return res;
       })
     )
@@ -506,21 +540,6 @@ export class AppService {
       .set('action', 'SET_VIEW')
       .set('pid', pid);
     return this.get(url, params);
-
-
-    //    let url = this.state.config['context'] + 'search/views/update';
-    //    let headers = new Headers({ 'Content-Type': 'application/json' });
-    //    let options = new RequestOptions({ headers: headers });
-    //    let add = { add: { doc: {}, commitWithin: 10 } };
-    //    let body = add['add']['doc'];
-    //    body['pid'] = pid;
-    //    body['views'] = { 'inc': 1 };
-
-    //    return this.http.post(url, JSON.stringify(add), options)
-    //      .map((response: Response) => {
-    //        return response.json();
-    //
-    //      });
   }
 
   getViewed(pid: string): Observable<number> {

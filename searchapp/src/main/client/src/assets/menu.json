@@ -1,134 +1,154 @@
-[
-    {
-        "route": "news",
-        "label_cs": "Aktuálně",
-        "visible": true,
-        "children": [],
-        "label_en": "News"
-    },
-    {
-        "route": "o-casopisu",
-        "label_cs": "O časopisu",
-        "visible": true,
-        "children": [
-            {
-                "route": "redakce",
-                "label_cs": "Redakce",
-                "visible": true,
-                "label_en": "Editorial board"
-            },
-            {
-                "route": "open-access",
-                "label_cs": "Open Access",
-                "visible": true,
-                "label_en": "Open Access"
-            },
-            {
-                "route": "zapojeni",
-                "label_cs": "Zapojení do databází",
-                "visible": true,
-                "label_en": "Databases"
-            },
-            {
-                "route": "historie",
-                "label_cs": "Historie",
-                "visible": true,
-                "label_en": "History"
-            },
-            {
-                "route": "distribuce",
-                "label_cs": "Distribuce",
-                "visible": false,
-                "label_en": "Distribution"
-            },
-            {
-                "route": "fotogalerie",
-                "label_cs": "Fotogalerie",
-                "visible": true,
-                "label_en": "Photogallery"
-            },
-            {
-                "route": "oznameni-sefredaktora",
-                "label_cs": "Oznámení šéfredaktora",
-                "visible": true,
-                "label_en": "Main editor's notes"
-            },
-            {
-                "route": "pripravujeme",
-                "label_cs": "Připravujeme",
-                "visible": true,
-                "label_en": "We are preparing..."
-            }
-        ],
-        "inMenu": true,
-        "label_en": "About journal"
-    },
-    {
-        "route": "pro-autory",
-        "label_cs": "Pro autory",
-        "visible": true,
-        "children": [
-            {
-                "route": "recenzni-rizeni",
-                "label_cs": "Recenzní řízení",
-                "visible": true,
-                "label_en": "Peer review process"
-            },
-            {
-                "route": "citacni-pravidla",
-                "label_cs": "Citační pravidla",
-                "visible": true,
-                "label_en": "Citation rules"
-            },
-            {
-                "route": "publikacni-etika",
-                "label_cs": "Publikační etika",
-                "visible": true,
-                "label_en": "Publication ethics"
-            },
-            {
-                "route": "recenzenti",
-                "label_cs": "Recenzenti",
-                "visible": true,
-                "label_en": "Reviewers"
-            },
-            {
-                "route": "odkazy",
-                "label_cs": "Odkazy",
-                "visible": true,
-                "label_en": "Links"
-            },
-            {
-                "route": "caste-dotazy",
-                "label_cs": "Časté dotazy",
-                "visible": true,
-                "label_en": "FAQ"
-            }
-        ],
-        "inMenu": true,
-        "label_en": "For authors"
-    },
-    {
-        "route": "e-shop",
-        "label_cs": "E-shop",
-        "visible": true,
-        "children": [],
-        "inMenu": true,
-        "label_en": "E-shop"
-    },
-    {
-        "route": "kontakt",
-        "label_cs": "Kontakt",
-        "visible": true,
-        "children": [],
-        "inMenu": true,
-        "label_en": "Contact"
-    },
-    {
-        "route": "db",
-        "label_cs": "Zařazení v databázích",
-        "visible": true,
-        "children": [],
-        "label_en": "Databases"
-    }
-]
+{
+    "pages": [
+        {
+            "id": "news",
+            "route": "news",
+            "cs": "E-shop",
+            "visible": true,
+            "children": [],
+            "en": "E-shop"
+        },
+        {
+            "id": "db",
+            "route": "db",
+            "cs": "Kontakt",
+            "visible": true,
+            "children": [],
+            "en": "Contact"
+        }
+    ],
+    "menu": [
+        {
+            "id": "o-casopisu",
+            "route": "o-casopisu",
+            "cs": "O časopisu",
+            "visible": true,
+            "children": [
+                {
+                    "id": "redakce",
+                    "route": "redakce",
+                    "cs": "Redakce",
+                    "visible": true,
+                    "en": "Editorial board"
+                },
+                {
+                    "id": "open-access",
+                    "route": "open-access",
+                    "cs": "Open Access",
+                    "visible": true,
+                    "en": "Open Access"
+                },
+                {
+                    "id": "zapojeni",
+                    "route": "zapojeni",
+                    "cs": "Zapojení do databází",
+                    "visible": true,
+                    "en": "Databases"
+                },
+                {
+                    "id": "historie",
+                    "route": "historie",
+                    "cs": "Historie",
+                    "visible": true,
+                    "en": "History"
+                },
+                {
+                    "id": "distribuce",
+                    "route": "distribuce",
+                    "cs": "Distribuce",
+                    "visible": false,
+                    "en": "Distribution"
+                },
+                {
+                    "id": "fotogalerie",
+                    "route": "fotogalerie",
+                    "cs": "Fotogalerie",
+                    "visible": true,
+                    "en": "Photogallery"
+                },
+                {
+                    "id": "oznameni-sefredaktora",
+                    "route": "oznameni-sefredaktora",
+                    "cs": "Oznámení šéfredaktora",
+                    "visible": true,
+                    "en": "Main editor's notes"
+                },
+                {
+                    "id": "pripravujeme",
+                    "route": "pripravujeme",
+                    "cs": "Připravujeme",
+                    "visible": true,
+                    "en": "We are preparing..."
+                }
+            ],
+            "en": "About journal"
+        },
+        {
+            "id": "pro-autory",
+            "route": "pro-autory",
+            "cs": "Pro autory",
+            "visible": true,
+            "children": [
+                {
+                    "id": "recenzni-rizeni",
+                    "route": "recenzni-rizeni",
+                    "cs": "Recenzní řízení",
+                    "visible": true,
+                    "en": "Peer review process"
+                },
+                {
+                    "id": "citacni-pravidla",
+                    "route": "citacni-pravidla",
+                    "cs": "Citační pravidla",
+                    "visible": true,
+                    "en": "Citation rules"
+                },
+                {
+                    "id": "publikacni-etika",
+                    "route": "publikacni-etika",
+                    "cs": "Publikační etika",
+                    "visible": true,
+                    "en": "Publication ethics"
+                },
+                {
+                    "id": "recenzenti",
+                    "route": "recenzenti",
+                    "cs": "Recenzenti",
+                    "visible": true,
+                    "en": "Reviewers"
+                },
+                {
+                    "id": "odkazy",
+                    "route": "odkazy",
+                    "cs": "Odkazy",
+                    "visible": true,
+                    "en": "Links"
+                },
+                {
+                    "id": "caste-dotazy",
+                    "route": "caste-dotazy",
+                    "cs": "Časté dotazy",
+                    "visible": true,
+                    "en": "FAQ"
+                }
+            ],
+            "en": "For authors"
+        },
+        {
+            "id": "e-shop",
+            "route": "e-shop",
+            "cs": "E-shop",
+            "visible": true,
+            "children": [],
+            "en": "E-shop"
+        },
+        {
+            "id": "kontakt",
+            "route": "kontakt",
+            "cs": "Kontakt",
+            "visible": true,
+            "children": [],
+            "en": "Contact"
+        }
+    ]
+}
