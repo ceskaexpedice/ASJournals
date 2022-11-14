@@ -173,6 +173,7 @@
 		"kontakt": "Kontakt",
 		"administrace": "Administrace",
 		"prihlasit": "Přihlásit",		
+		"prihlasit_tooltip": "Por administrátora celého webu",	
 		"prihlaseni_do_administrace": "Přihlášení do administrace",
 		"uzivatel": "Uživatel",
 		"heslo": "Heslo",

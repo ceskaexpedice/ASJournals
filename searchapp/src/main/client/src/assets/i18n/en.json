@@ -173,6 +173,7 @@
 		"kontakt": "Contact",
 		"administrace": "Administration",
 		"prihlasit": "Login",
+		"prihlasit_tooltip": "For Magazines administrators",
 		"prihlaseni_do_administrace": "Login to the administration",
 		"uzivatel": "User",
 		"heslo": "Password",
