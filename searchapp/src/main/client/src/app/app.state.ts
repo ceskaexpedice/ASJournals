@@ -30,7 +30,7 @@ export class AppState {
   //Holds client configuration
   config: any;
   //ctx: {ctx: string, color: string, journal: string, showTitleLabel: boolean, licence:string};
-  ctx: Magazine | null = null;
+  ctx: Magazine | null | undefined= null;
 
   //ctxs: {ctx: string, color: string, journal: string, showTitleLabel: boolean, licence:string}[];
   ctxs: Magazine[] = [];

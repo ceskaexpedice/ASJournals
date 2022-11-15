@@ -18,14 +18,14 @@ const PROXY_CONFIG = {
         "pathRewrite": {
             "^/api": ""
         },
-         "bypass": function (req, res, proxyOptions) {
-              //console.log(req.query['ctx']);
-              req.headers["X-Custom-Header"] = "yes";
+        //  "bypass": function (req, res, proxyOptions) {
+        //       //console.log(req.query['ctx']);
+        //       req.headers["X-Custom-Header"] = "yes";
         
-              if (req.path.indexOf('theme') > -1) {
-                return  "/assets/test/empty.css";
-              }
-         },
+        //       if (req.path.indexOf('theme') > -1) {
+        //         return  "/assets/test/empty.css";
+        //       }
+        //  },
         "onProxyRes": function (pr, req, res) {
             if (pr.headers['set-cookie']) {
                 // console.log("Replacing cookie "+pr.headers['set-cookie']);

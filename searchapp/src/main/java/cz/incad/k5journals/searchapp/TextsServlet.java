@@ -115,7 +115,7 @@ public class TextsServlet extends HttpServlet {
 
         String id = request.getParameter("id");
         String lang = request.getParameter("lang");
-          String ctx = request.getParameter("ctx");
+        String ctx = request.getParameter("ctx");
         String filename = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "texts"
                 + File.separator + id;
         File f;
@@ -152,7 +152,7 @@ public class TextsServlet extends HttpServlet {
         JSONObject json = new JSONObject();
 
         String ctx = request.getParameter("ctx");
-        
+
         String menu = request.getParameter("menu");
 
         LOGGER.log(Level.FINE, "menu is " + menu);
@@ -167,7 +167,7 @@ public class TextsServlet extends HttpServlet {
         out.println(json.toString(2));
       }
     },
-    ADD_JOURNAL{
+    ADD_JOURNAL {
       @Override
       void doPerform(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -182,7 +182,7 @@ public class TextsServlet extends HttpServlet {
         String fnmenu = InitServlet.CONFIG_DIR + File.separator + "journals.json";
         File f = new File(fnmenu);
         FileUtils.writeStringToFile(f, journals, Charset.forName("UTF-8"));
-        
+
         File fctx = new File(InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "config.json");
         FileUtils.writeStringToFile(fctx, cfg, Charset.forName("UTF-8"));
 
@@ -204,7 +204,7 @@ public class TextsServlet extends HttpServlet {
         String fnmenu = InitServlet.CONFIG_DIR + File.separator + "journals.json";
         File f = new File(fnmenu);
         FileUtils.writeStringToFile(f, journals, Charset.forName("UTF-8"));
-        
+
         File fctx = new File(InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "config.json");
         FileUtils.writeStringToFile(fctx, cfg, Charset.forName("UTF-8"));
 
@@ -235,7 +235,7 @@ public class TextsServlet extends HttpServlet {
         JSONObject js = new JSONObject(conf.toString());
 
         File f = new File(InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "config.json");
-        
+
         if (f.exists() && f.canRead()) {
           String json = FileUtils.readFileToString(f, "UTF-8");
           JSONObject customClientConf = new JSONObject(json);
@@ -247,13 +247,21 @@ public class TextsServlet extends HttpServlet {
           }
 
         }
-          
-          String fnmenu = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "menu.json";
-          File fmenu = new File(fnmenu);
-          if (fmenu.exists()) {
-            JSONObject layout = new JSONObject(FileUtils.readFileToString(fmenu, "UTF-8"));
-            js.put("layout", layout); 
-          }
+
+        String fnmenu = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "menu.json";
+        File fmenu = new File(fnmenu);
+        if (fmenu.exists()) {
+          JSONObject layout = new JSONObject(FileUtils.readFileToString(fmenu, "UTF-8"));
+          js.put("layout", layout);
+        }
+
+        String home = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "texts"
+                + File.separator + "home_cs.html";
+        File fhome = new File(home);
+        if (fmenu.exists()) {
+          js.put("home", FileUtils.readFileToString(fhome, "UTF-8"));
+        }
+        
         out.println(js.toString(2));
       }
     };

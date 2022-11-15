@@ -189,7 +189,7 @@ export class AppService {
       link.type = 'text/css';
       link.id = 'css-theme-' + this.state.ctx!.ctx;
       link.title = this.state.ctx?.ctx!;
-      link.disabled = false;
+      link.disabled = true;
       this.document.getElementsByTagName('head')[0].appendChild(link);
     }
 

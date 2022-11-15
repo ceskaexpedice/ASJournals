@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   volumeNumber: string | null = null;
   issueNumber: string | null = null;
   partName: string | null = null;
+  home_text: string = '';
 
   constructor(
     private service: AppService,
@@ -30,8 +31,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.home_text = this.state.config.home; 
     this.setData();
-
+    //this.service.getText('home').subscribe(t => this.home_text = t);
     this.state.stateChangedSubject.subscribe(
       () => {
         this.setData();

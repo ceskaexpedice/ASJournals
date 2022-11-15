@@ -65,7 +65,9 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     this.crumbs = [];
     this.crumbs.push({ link: 'home', label: this.appService.translateKey('menu.home_') });
 
-    if (this.page === 'home') {
+    if (this.page === '') {
+
+    } else if (this.page === 'home') {
 
     } else if (this.page.indexOf('article') === 0) {
 

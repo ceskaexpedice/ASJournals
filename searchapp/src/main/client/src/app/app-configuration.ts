@@ -3,13 +3,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Configuration } from './models/configuration';
 import { Observable } from 'rxjs';
 import { AppState } from './app.state';
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Magazine } from './models/magazine';
 
 @Injectable({
     providedIn: 'root'
 }) export class AppConfiguration {
 
     public config!: Configuration;
+
 
     public get context() {
         return this.config.context;
@@ -22,6 +24,7 @@ import { isPlatformBrowser } from '@angular/common';
     server = '';
     constructor(
         @Inject(PLATFORM_ID) private platformId: any,
+        @Inject(DOCUMENT) private document: Document,
         private http: HttpClient,
         private state: AppState) {
             if (!isPlatformBrowser(this.platformId)) {
@@ -40,6 +43,10 @@ import { isPlatformBrowser } from '@angular/common';
 
     public load(): Promise<any> {
         const url = this.server + '/api/assets/config.json';
+        if (!isPlatformBrowser(this.platformId)) {
+        } else {
+
+        }
         console.log('loading config... ');
         const promise = this.http.get(url)
             .toPromise()
@@ -72,12 +79,40 @@ import { isPlatformBrowser } from '@angular/common';
             .then((res: any) => {
                 this.state.setJournals(res);
                 console.log('magazines loaded');
+                const path = this.document.location.pathname.split("/")[1]
+                if ( path && path !== 'magazines') {
+                    const ctx = this.state.ctxs.find(c => c.ctx === path);
+                    if (ctx) {
+                        return this.getJournalConfig(ctx);
+                    }
+                    
+                }
+                return;
             })
             .catch(res => {
                 console.log(res);
                 localStorage.removeItem('user');
             });
     }
+
+    getJournalConfig(ctx: Magazine) {
+        console.log('loading journal config...' + ctx.ctx);
+        let url = this.server + '/api/texts?action=GET_CONFIG&ctx=' + ctx.ctx;
+        return this.http.get(url)
+        .toPromise()
+        .then((res: any) => {
+            console.log(res)
+            this.state.ctx = ctx;
+            this.state.setConfig(res);
+            this.state.config['color'] = ctx.color;
+            this.state.config['journal'] = ctx.journal;
+            this.state.config['showTitleLabel'] = ctx.showTitleLabel;
+            this.state.stateChanged();
+          })
+          .catch(res => {
+              console.log(res);
+          });
+      }
 
 
 

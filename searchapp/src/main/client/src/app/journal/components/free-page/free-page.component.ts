@@ -58,6 +58,7 @@ export class FreePageComponent implements OnInit {
 
   setPage(route: string) {
     this.page = route;
+    
     // find page by menu config
     this.state.config.layout.menu.forEach((m: any) => {
       if (m.route === ('/'+route)) {
@@ -72,6 +73,9 @@ export class FreePageComponent implements OnInit {
         });
       }
     });
+    if (!this.page) {
+      this.page = 'home';
+    }
     this.appService.getText(this.page).subscribe(t => this.text = t);
   }
 

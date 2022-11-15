@@ -46,16 +46,21 @@
                 </li>
                 <li> --- </li>
 
-                <li role="app-page-nav" *ngFor="let m of menu" [class.active]="selected === m">
+                <li role="app-page-nav" *ngFor="let m of menu; let last = last; let first = first; let index = index" [class.active]="selected === m">
                   <strong>
                     <a (click)="select(m)">{{m.route}}</a>
                     <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" />
+                    <i (click)="addChild(m)" class="glyphicon glyphicon-plus"></i>
+                    <i *ngIf="!first" (click)="moveUp(menu, index)" class="glyphicon glyphicon-arrow-up"></i>
+                    <i *ngIf="!last" (click)="moveDown(menu, index)" class="glyphicon glyphicon-arrow-down"></i>
                   </strong>
                   <ul class="nav-pills nav-stacked">
-                    <li role="app-page-nav" *ngFor="let m1 of m.children"
+                    <li role="app-page-nav" *ngFor="let m1 of m.children; let last2 = last; let first2 = first; let index2 = index"
                       [class.active]="selected === m1">
                       <a (click)="select(m1)">{{m1.route}}</a>
                       <input type="checkbox" id="isVisible" [(ngModel)]="m1.visible"  />
+                      <i *ngIf="!first2" (click)="moveUp(m.children, index2)" class="glyphicon glyphicon-arrow-up"></i>
+                      <i *ngIf="!last2" (click)="moveDown(m.children, index2)" class="glyphicon glyphicon-arrow-down"></i>
                     </li>
                   </ul>
                 </li>

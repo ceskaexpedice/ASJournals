@@ -15,6 +15,7 @@ import { MagazinesModule } from './magazines/magazines.module';
 import { JournalModule } from './journal/journal.module';
 import { AppConfiguration } from './app-configuration';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -41,7 +42,7 @@ export function createTranslateLoader(http: HttpClient) {
     JournalModule,
   ],
   providers: [
-    AppState, AppConfiguration, HttpClient, 
+    AppState, AppConfiguration, HttpClient,
     { provide: APP_INITIALIZER, useFactory: (config: AppConfiguration) => () => config.load(), deps: [AppConfiguration], multi: true },
       AppService, SearchService, AuthGuard, TranslateService],
   bootstrap: [AppComponent]

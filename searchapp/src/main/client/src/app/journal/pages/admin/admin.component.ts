@@ -170,7 +170,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     this.pages = JSON.parse(JSON.stringify(this.state.config.layout.pages));
     this.menu = JSON.parse(JSON.stringify(this.state.config.layout.menu));
-    
+
   }
 
   getText() {
@@ -206,7 +206,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   saveMenu() {
-    const m = JSON.stringify({menu: this.menu, pages: this.pages});
+    const m = JSON.stringify({ menu: this.menu, pages: this.pages });
 
     this.service.saveMenu(m).subscribe((res: any) => {
       this.saved = !res.hasOwnProperty('error');
@@ -217,7 +217,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     const content = this.editor.getContent();
 
-    const m = JSON.stringify({menu: this.menu, pages: this.pages});
+    const m = JSON.stringify({ menu: this.menu, pages: this.pages });
 
     let page: string = '';
     if (this.selected) {
@@ -403,7 +403,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       if (this.cache[pid]?.licence !== '') {
         this.licences[pid] = this.cache[pid].licence;
       } else if (this.cache[pid]?.licence === '') {
-        delete(this.licences[pid]);
+        delete (this.licences[pid]);
       }
     });
     this.state.ctx!.licences = JSON.stringify(this.licences);
@@ -423,16 +423,40 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   resetPwd() {
     this.newPwdOk = false;
-      if (this.newPwd !== '') {
-        this.service.resetPwd(this.state.username, this.newPwd).subscribe(res => {
-          if (res.error) {
-            alert(res.error)
-          } else {
-            this.newPwdOk = true;
-            this.resetpwdModal?.hide();
-          }
-        });
-      }
+    if (this.newPwd !== '') {
+      this.service.resetPwd(this.state.username, this.newPwd).subscribe(res => {
+        if (res.error) {
+          alert(res.error)
+        } else {
+          this.newPwdOk = true;
+          this.resetpwdModal?.hide();
+        }
+      });
+    }
+  }
+
+  addChild(m: MenuItem) {
+    m.children.push({
+      id: m.route + '_' + m.children.length,
+      route: m.route + '_' + m.children.length + '_new',
+      cs: m.cs,
+      en: m.en,
+      visible: true,
+      children: []
+    })
+  }
+
+  moveUp(arr: any[], idx: number) {
+    this.moveArr(arr, idx, idx - 1);
+  }
+
+  moveDown(arr: any[], idx: number) {
+    this.moveArr(arr, idx, idx + 1);
+  }
+
+  moveArr(arr: any[], old_index: number, new_index: number) {
+    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+    
   }
 
 }
@@ -443,6 +467,5 @@ interface MenuItem {
   cs: string,
   en: string,
   visible: boolean,
-  inMenu: boolean,
   children: MenuItem[]
 }

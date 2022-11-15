@@ -82,11 +82,11 @@ export class ContextsComponent implements OnInit {
     this.service.changeLang(userLang);
     //this.setCtx(false);
     
-    setTimeout(() => {
+    //setTimeout(() => {
       this.processUrl();
       this.hasContext = true;
       this.state.stateChanged();
-    }, 500);
+    //}, 500);
 
   }
 
