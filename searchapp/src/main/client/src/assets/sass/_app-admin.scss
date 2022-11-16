@@ -38,6 +38,7 @@ app-admin {
       }
       .nav-pills {
         > li {
+          list-style: none;
           &.active {
             a {
               &:hover {

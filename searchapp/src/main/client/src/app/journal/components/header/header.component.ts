@@ -31,6 +31,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.state.config) {
       this.menu = this.state.config.layout.menu;
+        this.meta.addTags( [
+          { name: 'description', content: this.state.ctx!.desc! },
+          { name: 'author', content: this.state.ctx!.vydavatel! },
+          { name: 'keywords', content: this.state.ctx!.keywords.join(',') }
+        ]);
       
     }
     this.subscriptions.push(this.appservice.langSubject.subscribe(val => {
@@ -40,6 +45,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.state.titleChangedSubject.subscribe(val => {
       if (this.state.actualNumber) {
         this.titleService.setTitle( this.state.actualNumber['root_title']!);
+        this.meta.removeTag('name=description');
+        this.meta.removeTag('name=author');
+        this.meta.removeTag('name=keywords');
         this.meta.addTags( [
           { name: 'description', content: this.state.ctx!.desc! },
           { name: 'author', content: this.state.ctx!.vydavatel! },

@@ -48,31 +48,33 @@
 
                 <li role="app-page-nav" *ngFor="let m of menu; let last = last; let first = first; let index = index" [class.active]="selected === m">
                   <strong>
-                    <a (click)="select(m)">{{m.route}}</a>
-                    <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" />
                     <i (click)="addChild(m)" class="glyphicon glyphicon-plus"></i>
                     <i *ngIf="!first" (click)="moveUp(menu, index)" class="glyphicon glyphicon-arrow-up"></i>
                     <i *ngIf="!last" (click)="moveDown(menu, index)" class="glyphicon glyphicon-arrow-down"></i>
+                    <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" />
+                    <a (click)="select(m, null)">{{m.route}}</a>
                   </strong>
                   <ul class="nav-pills nav-stacked">
                     <li role="app-page-nav" *ngFor="let m1 of m.children; let last2 = last; let first2 = first; let index2 = index"
                       [class.active]="selected === m1">
-                      <a (click)="select(m1)">{{m1.route}}</a>
-                      <input type="checkbox" id="isVisible" [(ngModel)]="m1.visible"  />
                       <i *ngIf="!first2" (click)="moveUp(m.children, index2)" class="glyphicon glyphicon-arrow-up"></i>
                       <i *ngIf="!last2" (click)="moveDown(m.children, index2)" class="glyphicon glyphicon-arrow-down"></i>
+                      <input type="checkbox" id="isVisible" [(ngModel)]="m1.visible"  />
+                      <a (click)="select(m, m1)">{{m1.route}}</a>
                     </li>
                   </ul>
                 </li>
               </ul>
 
               <button type="button" class="btn app-btn app-btn-default"
-                (click)="saveMenu()">{{'admin.Save_selected_pages' | translate}}</button>
+                (click)="addMenu()">{{'admin.add_menu' | translate}}</button>
+                <button type="button" class="btn app-btn app-btn-default"
+                  (click)="saveMenu()">{{'admin.save_menu' | translate}}</button>
             </div>
             <div class="col-xs-9" *ngIf="selected || selectedPage">
               <h3>
                 <!-- <span class="app-brand-text text-darken-1">({{state.currentLang}})</span> -->
-                <ng-container *ngIf="selectedPage">
+                <ng-container *ngIf="selectedPage && !selected">
                   {{ 'menu.' + selectedPage + '_' | translate }}
                 </ng-container>
                 <ng-container *ngIf="selected">

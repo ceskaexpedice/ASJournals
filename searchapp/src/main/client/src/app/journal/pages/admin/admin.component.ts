@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, ɵɵclassMapInterpolate1 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 
@@ -176,11 +176,14 @@ export class AdminComponent implements OnInit, OnDestroy {
   getText() {
 
     let page: string = '';
-    if (this.selected) {
-      page = this.selected?.id;
-    } else if (this.selectedPage) {
+    if (this.selectedPage) {
       page = this.selectedPage;
     }
+    // if (this.selected) {
+    //   page = this.selected?.id;
+    // } else if (this.selectedPage) {
+    //   page = this.selectedPage;
+    // }
     if (page === '') {
       return;
     }
@@ -196,9 +199,13 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.getText();
   }
 
-  select(m: MenuItem) {
-    this.selectedPage = undefined;
+  select(m: MenuItem, m1: MenuItem | null) {
+    this.selectedPage = m.id;
     this.selected = m;
+    if (m1) {
+       this.selectedPage = m.id + '/' + m1.id;
+       this.selected = m1;
+    }
     this.saved = false;
     this.indexed = false;
     this.deleted = false;
@@ -220,11 +227,14 @@ export class AdminComponent implements OnInit, OnDestroy {
     const m = JSON.stringify({ menu: this.menu, pages: this.pages });
 
     let page: string = '';
-    if (this.selected) {
-      page = this.selected?.id;
-    } else if (this.selectedPage) {
+    if (this.selectedPage) {
       page = this.selectedPage;
     }
+    // if (this.selected) {
+    //   page = this.selected?.id;
+    // } else if (this.selectedPage) {
+    //   page = this.selectedPage;
+    // }
     if (page === '') {
       return;
     }
@@ -441,6 +451,17 @@ export class AdminComponent implements OnInit, OnDestroy {
       route: m.route + '_' + m.children.length + '_new',
       cs: m.cs,
       en: m.en,
+      visible: true,
+      children: []
+    })
+  }
+
+  addMenu() {
+    this.menu.push({
+      id: 'menu_' + this.menu.length,
+      route: 'menu_' + this.menu.length + '_new',
+      cs: 'Nazev CS',
+      en: 'Name EN',
       visible: true,
       children: []
     })

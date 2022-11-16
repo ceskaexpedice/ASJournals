@@ -152,7 +152,8 @@
 	"admin" : {
 		"Upload": "Upload",
 		"Files": "Files",
-		"Save_selected_pages": "Save selected pages",
+		"save_menu": "Save menu",
+		"add_menu": "Add item",
 		"add_uuid": "Add uuid",
 		"cover": "Cover",
 		"Indexing": "Indexing",
