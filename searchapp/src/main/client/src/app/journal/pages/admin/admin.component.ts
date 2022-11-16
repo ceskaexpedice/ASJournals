@@ -40,6 +40,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   selectedPage: string | undefined;
   visibleChanged: boolean = false;
   saved: boolean = false;
+  sortBy = 'genre';
 
   text: string | null = null;
   elementId: string = 'editEl';
@@ -92,6 +93,11 @@ export class AdminComponent implements OnInit, OnDestroy {
     if (this.state?.ctx?.isK7) {
       this.isK7 = true
     }
+
+    if (this.state?.ctx?.sortByOrder) {
+      this.sortBy = 'order';
+    }
+
     this.cache[this.state.ctx!.journal!] = { label: 'root', licence: '' };
 
     this.getChildren(this.state.ctx!.journal!, this.state.ctx);
@@ -337,8 +343,6 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.licencesModal?.show();
   }
 
-
-
   setLabel(item: any) {
     let label = '';
     const mods = JSON.parse(item['mods']);
@@ -423,6 +427,15 @@ export class AdminComponent implements OnInit, OnDestroy {
     });
 
     this.licencesModal?.hide();
+  }
+
+  saveSortBy() {
+    this.state.ctx!.sortByOrder = this.sortBy === 'order';
+    this.service.saveMagazine(this.state.ctx!).subscribe(res => {
+      // this.service.getMagazines().subscribe(res2 => {
+      //   this.state.ctxs = res2['response']['docs'];
+      // });
+    });
   }
 
   showResetPwd() {

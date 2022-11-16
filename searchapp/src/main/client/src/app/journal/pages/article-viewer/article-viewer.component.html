@@ -22,7 +22,8 @@
             </div>
             <hr />
         </div>
-        <div style="flex:1;overflow:auto;">
+
+        <div style="flex:1;overflow:auto;" *ngIf="!state.ctx?.sortByOrder">
           <div class="app-section" *ngFor="let genre of journal.genres">
             <ng-container *ngIf="genre !== 'peer-reviewed'">
             <h4 class="app-clean-mg">{{'genre.' + genre | translate}}</h4>
@@ -32,6 +33,14 @@
             </div></ng-container>
           </div>
         </div>
+
+        <div style="flex:1;overflow:auto;" *ngIf="state.ctx?.sortByOrder">
+            <div *ngFor="let art of articles" class="app-item" [class.active]="art.pid === pid">
+              <app-article-result [article]="art" [active]="art.pid === pid" [parentJournal]="journal" ></app-article-result>
+            </div>
+        </div>
+
+
       </div>
 
       <div class="col-xs-12 app-col-zpetnaseznam app-mb-4" [ngClass]="!hideList ? 'app-col-zpetnaseznam-hidden' : ''">

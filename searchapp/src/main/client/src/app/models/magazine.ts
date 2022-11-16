@@ -23,4 +23,5 @@ export class Magazine {
   web: string | undefined = undefined;
   kramerius_version: string | undefined = undefined;
   isK7: boolean = false;
+  sortByOrder: boolean = false;
 }

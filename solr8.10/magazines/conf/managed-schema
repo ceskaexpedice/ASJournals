@@ -68,6 +68,7 @@
 	
     <!-- k5, k7 -->
     <field name="kramerius_version" type="string" indexed="true" stored="true" multiValued="false" />
+    <field name="sortByOrder" type="boolean" indexed="true" stored="true" multiValued="false"/>
     
     <!-- pro facety -->
     <field name="pristup" type="string" indexed="true" stored="true" multiValued="false" docValues="true"/>

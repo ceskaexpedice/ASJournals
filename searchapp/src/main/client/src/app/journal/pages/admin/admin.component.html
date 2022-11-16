@@ -23,7 +23,7 @@
         <ng-container *ngIf="tab === 'ui'">
           <div class="row">
             <div class="col-xs-3">
-              
+
               <ul class="list-unstyled app-admin-nav" *ngIf="menu.length > 0">
 
                 <li role="app-page-nav" [class.active]="selectedPage === 'home'">
@@ -46,24 +46,28 @@
                 </li>
                 <li> --- </li>
 
-                <li role="app-page-nav" *ngFor="let m of menu; let last = last; let first = first; let index = index" [class.active]="selected === m">
+                <li role="app-page-nav" *ngFor="let m of menu; let last = last; let first = first; let index = index"
+                  [class.active]="selected === m">
                   <strong>
-                    
+
                     <i *ngIf="!first" (click)="moveUp(menu, index)" class="glyphicon glyphicon-arrow-up"></i>
                     <i *ngIf="!last" (click)="moveDown(menu, index)" class="glyphicon glyphicon-arrow-down"></i>
                     <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" />
                     <a (click)="select(m, null)">{{m.route}}</a>
                   </strong>
                   <ul class="nav-pills nav-stacked">
-                    <li role="app-page-nav" *ngFor="let m1 of m.children; let last2 = last; let first2 = first; let index2 = index"
+                    <li role="app-page-nav"
+                      *ngFor="let m1 of m.children; let last2 = last; let first2 = first; let index2 = index"
                       [class.active]="selected === m1">
                       <i *ngIf="!first2" (click)="moveUp(m.children, index2)" class="glyphicon glyphicon-arrow-up"></i>
-                      <i *ngIf="!last2" (click)="moveDown(m.children, index2)" class="glyphicon glyphicon-arrow-down"></i>
-                      <input type="checkbox" id="isVisible" [(ngModel)]="m1.visible"  />
+                      <i *ngIf="!last2" (click)="moveDown(m.children, index2)"
+                        class="glyphicon glyphicon-arrow-down"></i>
+                      <input type="checkbox" id="isVisible" [(ngModel)]="m1.visible" />
                       <a (click)="select(m, m1)">{{m1.route}}</a>
                     </li>
                     <li role="app-page-nav">
-                      <i (click)="addChild(m)" class="glyphicon glyphicon-plus" [title]="'admin.add_child' | translate"></i>
+                      <i (click)="addChild(m)" class="glyphicon glyphicon-plus"
+                        [title]="'admin.add_child' | translate"></i>
                       <a (click)="addChild(m)">{{ 'admin.add_child' | translate }}</a>
                     </li>
                   </ul>
@@ -72,8 +76,8 @@
 
               <!-- <button type="button" class="btn app-btn app-btn-default"
                 (click)="addMenu()">{{'admin.add_menu' | translate}}</button> -->
-                <button type="button" class="btn app-btn app-btn-default"
-                  (click)="saveMenu()">{{'admin.save_menu' | translate}}</button>
+              <button type="button" class="btn app-btn app-btn-default" (click)="saveMenu()">{{'admin.save_menu' |
+                translate}}</button>
             </div>
             <div class="col-xs-9" *ngIf="selected || selectedPage">
               <h3>
@@ -83,7 +87,11 @@
                 </ng-container>
                 <ng-container *ngIf="selected">
                   <table>
-                    <tr><td>{{ 'menu.url' | translate }}</td><td>{{ 'menu.cs' | translate }}</td><td>{{ 'menu.en' | translate }}</td></tr>
+                    <tr>
+                      <td>{{ 'menu.url' | translate }}</td>
+                      <td>{{ 'menu.cs' | translate }}</td>
+                      <td>{{ 'menu.en' | translate }}</td>
+                    </tr>
                     <tr>
                       <td><input type="text" [(ngModel)]="selected.route" class="form-control" title="url" /></td>
                       <td><input type="text" [(ngModel)]="selected.cs" class="form-control" title="cs" /></td>
@@ -110,8 +118,8 @@
                 <div class="form-group app-mr-12">
                   <input type="text" class="form-control app-mr-2" id="indexUUID" name="indexUUID" placeholder="uuid"
                     size="80" [(ngModel)]="indexUUID">&#160;&#160;
-                    <label for="isK7">{{ 'magazines.isK7' | translate }}</label>&#160;&#160;
-                    <input [(ngModel)]="isK7" id="isK7" type="checkbox" [title]="'magazines.isK7' | translate" />
+                  <label for="isK7">{{ 'magazines.isK7' | translate }}</label>&#160;&#160;
+                  <input [(ngModel)]="isK7" id="isK7" type="checkbox" [title]="'magazines.isK7' | translate" />
                   <button type="button" class="btn app-btn app-btn-default app-mr-1"
                     (click)="index()">{{'admin.add_uuid' | translate}}</button>
                   <button type="button" class="btn app-btn app-btn-default"
@@ -120,7 +128,7 @@
               </div>
             </div>
           </div>
-          
+
 
           <div class="row">
             <div class="col-xs-12">
@@ -135,6 +143,7 @@
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-xs-12">
               <div class="form-inline pull-left">
@@ -151,17 +160,31 @@
               </div>
             </div>
           </div>
+
+          <div class="row">
+                <div class="form-group app-mr-6">&#160;&#160;
+                  <label >Řazení článků</label>:&#160;&#160;
+                  <label for="genre">rubriky</label>
+                  <input type="radio" name="sortBy" [(ngModel)]="sortBy" value="genre" id="genre" />&#160;&#160;
+                  <label for="order">pořadí</label>
+                  <input type="radio" name="sortBy" [(ngModel)]="sortBy" value="order" id="order" />&#160;&#160;
+                  <button type="button" class="btn app-btn app-btn-default app-mr-4"
+                    (click)="saveSortBy()">{{'magazines.save_sort' | translate}}</button>
+                </div>
+          </div>
+
           <div class="row">
             <div *ngIf="working">
               <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {{'admin.Indexing' |
               translate}} ...
             </div>
           </div>
+
           <alert *ngIf="newPwdOk" [type]="'success'" [dismissOnTimeout]="2000">{{ 'magazines.resetovat_heslo_ok' |
             translate }}</alert>
           <div *ngIf="resultMsg && !working" class="row">
             <div class="alert alert-success" role="alert">
-              {{resultMsg}} {{'text.indexed-note' | translate}}!
+              {{ resultMsg }} {{'text.indexed-note' | translate}}!
             </div>
           </div>
         </ng-container>

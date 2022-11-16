@@ -101,7 +101,6 @@ import { Magazine } from './models/magazine';
         return this.http.get(url)
         .toPromise()
         .then((res: any) => {
-            console.log(res)
             this.state.ctx = ctx;
             this.state.setConfig(res);
             this.state.config['color'] = ctx.color;
