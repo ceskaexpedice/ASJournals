@@ -48,7 +48,7 @@
 
                 <li role="app-page-nav" *ngFor="let m of menu; let last = last; let first = first; let index = index" [class.active]="selected === m">
                   <strong>
-                    <i (click)="addChild(m)" class="glyphicon glyphicon-plus"></i>
+                    
                     <i *ngIf="!first" (click)="moveUp(menu, index)" class="glyphicon glyphicon-arrow-up"></i>
                     <i *ngIf="!last" (click)="moveDown(menu, index)" class="glyphicon glyphicon-arrow-down"></i>
                     <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" />
@@ -62,12 +62,16 @@
                       <input type="checkbox" id="isVisible" [(ngModel)]="m1.visible"  />
                       <a (click)="select(m, m1)">{{m1.route}}</a>
                     </li>
+                    <li role="app-page-nav">
+                      <i (click)="addChild(m)" class="glyphicon glyphicon-plus" [title]="'admin.add_child' | translate"></i>
+                      <a (click)="addChild(m)">{{ 'admin.add_child' | translate }}</a>
+                    </li>
                   </ul>
                 </li>
               </ul>
 
-              <button type="button" class="btn app-btn app-btn-default"
-                (click)="addMenu()">{{'admin.add_menu' | translate}}</button>
+              <!-- <button type="button" class="btn app-btn app-btn-default"
+                (click)="addMenu()">{{'admin.add_menu' | translate}}</button> -->
                 <button type="button" class="btn app-btn app-btn-default"
                   (click)="saveMenu()">{{'admin.save_menu' | translate}}</button>
             </div>
