@@ -96,6 +96,13 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     this.getChildren(this.state.ctx!.journal!, this.state.ctx);
 
+    this.service.langSubject.subscribe(() => {
+      this.tinyInited = false;
+      setTimeout(() => {
+        this.initTiny();
+      }, 100);
+    })
+
   }
 
   ngAfterViewInit() {
@@ -125,6 +132,8 @@ export class AdminComponent implements OnInit, OnDestroy {
       base_url: '/tinymce',
       suffix: '.min',
 
+      language: this.state.currentLang,
+
       // selector: '#' + this.elementId,
       menubar: false,
       plugins: ['link', 'paste', 'table', 'save', 'code', 'image'],
@@ -145,8 +154,6 @@ export class AdminComponent implements OnInit, OnDestroy {
           }
         });
       },
-
-
 
       save_oncancelcallback: function () { console.log('Save canceled'); },
       save_onsavecallback: () => this.save()
@@ -221,24 +228,15 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   save() {
+    if (!this.selectedPage) {
+      return;
+    }
 
     const content = this.editor.getContent();
 
     const m = JSON.stringify({ menu: this.menu, pages: this.pages });
 
-    let page: string = '';
-    if (this.selectedPage) {
-      page = this.selectedPage;
-    }
-    // if (this.selected) {
-    //   page = this.selected?.id;
-    // } else if (this.selectedPage) {
-    //   page = this.selectedPage;
-    // }
-    if (page === '') {
-      return;
-    }
-    this.service.saveText(page, content, m).subscribe(res => {
+    this.service.saveText(this.selectedPage, content, m).subscribe(res => {
 
       this.saved = !res.hasOwnProperty('error');
       //if (res.hasOwnProperty('error')) {
