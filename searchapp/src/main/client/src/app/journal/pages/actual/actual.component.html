@@ -50,8 +50,9 @@
             </span>
           </button>
         </p>
-      </div><!--/.col -->
-      <div *ngIf="actual" class="col-xs-12 col-sm-8 col-md-9 app-col-right">
+      </div>
+
+      <div *ngIf="actual && !state.ctx?.sortByOrder" class="col-xs-12 col-sm-8 col-md-9 app-col-right">
         <ng-container *ngFor="let genre of actual.genres">
           <div class="app-section" *ngIf="actual.genresObject[genre].visible">
             <h4 class="app-clean-mg">{{'genre.' + genre | translate}}</h4>
@@ -59,9 +60,18 @@
             <div *ngFor="let art of actual.genresObject[genre].articles">
               <app-article-result *ngIf="!isHiddenByGenre(art['genre'])" [article]="art"></app-article-result>
             </div>
-          </div><!--/.app section -->
+          </div>
         </ng-container>
-      </div><!--/.col -->
+      </div>
+
+      
+
+      <div *ngIf="actual && state.ctx?.sortByOrder" class="col-xs-12 col-sm-8 col-md-9 app-col-right">
+            <div *ngFor="let art of actual.articles">
+              <app-article-result *ngIf="!isHiddenByGenre(art['genre'])" [article]="art"></app-article-result>
+            </div>
+      </div>
+
     </div><!--./row -->
   </div><!--/.container -->
 </section><!--/.app-content -->

@@ -32,7 +32,7 @@ export class ArticleViewerComponent implements OnInit {
   zoom = 1.0;
 
   journal: Journal = new Journal();
-  articles: any[] = [];
+  // articles: any[] = [];
 
   siblingIndex: number = 0;
   isPrintSupported = false;
@@ -150,7 +150,7 @@ magazine: any;
                 this.journal.mods = mods;
 
                 this.service.getArticles(a['pid']).subscribe((res: any) => {
-                  this.articles = res['response']['docs'];
+                  // this.articles = res['response']['docs'];
                   this.journal.setArticles(res, this.state.config['mergeGenres']);
                 });
                 

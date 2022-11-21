@@ -11,16 +11,15 @@ import { AppService } from 'src/app/services/app.service';
   styleUrls: ['./actual.component.scss']
 })
 export class ActualComponent implements OnInit {
-  
+
   img: string | null = null;
   actual: Journal | null = null;
   krameriusLink: string | null = null;
-  //articles: any[] = [];
-pidActual: string | null = null;
+  pidActual: string | null = null;
 
   constructor(
     private service: AppService,
-    private state: AppState,
+    public state: AppState,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -34,7 +33,7 @@ pidActual: string | null = null;
     this.state.stateChangedSubject.subscribe(
       () => {
         this.setData();
-//        this.findPid();
+        //        this.findPid();
       }
     );
   }
@@ -47,18 +46,18 @@ pidActual: string | null = null;
       //this.img = 'img/item/' + this.state.actualNumber.pid + '/thumb';
     }
   }
-  
-  findPid(){
+
+  findPid() {
     this.pidActual = null;
     this.findPidById(this.state.config['journal']);
   }
-  
-  findPidById(pid: string){
+
+  findPidById(pid: string) {
     this.service.getChildren(pid).subscribe(res => {
-      if(res.length === 0){
+      if (res.length === 0) {
         this.pidActual = null;
         console.log('ERROR. Cannot find actual number');
-      } else if(res[0]['datanode']){
+      } else if (res[0]['datanode']) {
         this.pidActual = pid;
         this.service.getJournal(pid).subscribe(j => {
           this.actual = j;
@@ -68,30 +67,30 @@ pidActual: string | null = null;
       }
     });
   }
-  
-  gotoArchiv(pid: string){
-    this.router.navigate(['archiv/', pid], {queryParamsHandling: "preserve"})
+
+  gotoArchiv(pid: string) {
+    this.router.navigate(['archiv/', pid], { queryParamsHandling: "preserve" })
   }
 
   isHiddenByGenre(genres: string[]) {
     return this.service.isHiddenByGenre(genres);
   }
-  
-  gotoArticle(){
+
+  gotoArticle() {
     this.findFirstdatanode(this.actual?.pid!);
   }
-  
+
 
   findFirstdatanode(pid: string) {
     this.service.getChildren(pid, 'asc').subscribe(res => {
       if (res[0]['datanode']) {
-        this.router.navigate(['../article', res[0]['pid']], {queryParamsHandling: "preserve", relativeTo: this.route });
+        this.router.navigate(['../article', res[0]['pid']], { queryParamsHandling: "preserve", relativeTo: this.route });
       } else {
         this.findFirstdatanode(res[0]['pid']);
       }
     });
   }
 
-  
+
 
 }

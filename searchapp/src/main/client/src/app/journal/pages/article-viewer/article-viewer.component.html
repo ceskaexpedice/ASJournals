@@ -35,7 +35,7 @@
         </div>
 
         <div style="flex:1;overflow:auto;" *ngIf="state.ctx?.sortByOrder">
-            <div *ngFor="let art of articles" class="app-item" [class.active]="art.pid === pid">
+            <div *ngFor="let art of journal.articles" class="app-item" [class.active]="art.pid === pid">
               <app-article-result [article]="art" [active]="art.pid === pid" [parentJournal]="journal" ></app-article-result>
             </div>
         </div>
