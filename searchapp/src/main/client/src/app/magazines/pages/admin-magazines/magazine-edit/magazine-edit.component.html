@@ -35,9 +35,25 @@
     <mat-checkbox id="showOldYears" [(ngModel)]="mag.showOldYears">{{ 'magazines.ukazat_starsi_rocniky' | translate }}</mat-checkbox><br/>
     <mat-checkbox id="kVersion" [(ngModel)]="mag.isK7">{{ 'magazines.isK7' | translate }}&#160;&#160;</mat-checkbox>
   </div>
-  <!-- <div fxFlex="calc(33.3333% - 16px)" fxFlexAlign="center">
-    <mat-checkbox id="showOldYears" [(ngModel)]="mag.showOldYears">{{ 'magazines.ukazat_starsi_rocniky' | translate }}</mat-checkbox>
-  </div> -->
+  
+  
+  <div fxFlex="calc(20% - 16px)">
+    <mat-checkbox id="showExtLink" [(ngModel)]="mag.showExtLink">{{ 'magazines.showExtLink' | translate }}</mat-checkbox>
+  </div>
+  <div fxFlex="calc(40% - 16px)">
+    <mat-form-field  class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.extLinkUrl' | translate }}</mat-label>
+      <input matInput id="extLinkUrl" name="extLinkUrl" type="text" [(ngModel)]="mag.extLinkUrl">
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(40% - 16px)" fxFlexAlign="center">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.extLinkText' | translate }}</mat-label>
+      <input matInput id="extLinkText" name="extLinkText" type="text" [(ngModel)]="mag.extLinkText">
+    </mat-form-field>
+  </div>
+
+
   <div fxFlex="calc(50% - 16px)">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.titulek' | translate }}</mat-label>

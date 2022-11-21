@@ -4,6 +4,9 @@ export class Magazine {
   color: string | undefined = undefined;
   showTitleLabel: boolean = false;
   showOldYears: boolean = true;
+  showExtLink: boolean = false;
+  extLinkUrl: string = '';
+  extLinkText: string = '';
   licence:string = '';
   licences:string | undefined = undefined;
   

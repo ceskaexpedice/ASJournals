@@ -70,6 +70,10 @@
     <field name="kramerius_version" type="string" indexed="true" stored="true" multiValued="false" />
     <field name="sortByOrder" type="boolean" indexed="true" stored="true" multiValued="false"/>
     <field name="keepLang" type="boolean" indexed="true" stored="true" multiValued="false"/>
+	
+    <field name="showExtLink" type="boolean" indexed="true" stored="true" multiValued="false"/>
+    <field name="extLinkUrl" type="string" indexed="true" stored="true" multiValued="false" />
+    <field name="extLinkText" type="string" indexed="true" stored="true" multiValued="false" />
     
     <!-- pro facety -->
     <field name="pristup" type="string" indexed="true" stored="true" multiValued="false" docValues="true"/>
