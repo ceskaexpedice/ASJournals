@@ -1,8 +1,9 @@
-
 package cz.incad.k5journals.searchapp;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -15,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author alberto
  */
 public class InitServlet extends HttpServlet {
-  public static final Logger LOGGER = Logger.getLogger(InitServlet.class.getName());
 
+  public static final Logger LOGGER = Logger.getLogger(InitServlet.class.getName());
 
   //Directory where cant override configuration  
   public static final String APP_DIR_KEY = "k5journals_app_dir";
@@ -32,7 +33,8 @@ public class InitServlet extends HttpServlet {
 
   //Default config directory in webapp
   public static String DEFAULT_I18N_DIR = "/assets/i18n";
-
+  
+  Timer timer;
 
   /**
    * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,21 +47,20 @@ public class InitServlet extends HttpServlet {
    */
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
-    
+
   }
 
   @Override
   public void init() throws ServletException {
-    
-  
+
     if (getServletContext().getInitParameter("def_config_dir") != null) {
       DEFAULT_CONFIG_DIR = getServletContext().getInitParameter("def_config_dir");
-    } 
-    
+    }
+
     DEFAULT_CONFIG_FILE = getServletContext().getRealPath(DEFAULT_CONFIG_DIR) + File.separator + DEFAULT_CONFIG_FILE;
     //System.out.println("-----> " + DEFAULT_CONFIG_FILE);
     DEFAULT_I18N_DIR = getServletContext().getRealPath(DEFAULT_I18N_DIR);
-    
+
     if (System.getProperty(APP_DIR_KEY) != null) {
       CONFIG_DIR = System.getProperty(APP_DIR_KEY);
     } else if (getServletContext().getInitParameter("app_dir") != null) {
@@ -68,8 +69,32 @@ public class InitServlet extends HttpServlet {
       CONFIG_DIR = System.getProperty("user.home") + File.separator + CONFIG_DIR;
     }
     LOGGER.log(Level.INFO, "app dir is {0}", CONFIG_DIR);
+
+    // Set timer for update
+    TimerTask task = new TimerTask() {
+      public void run() {
+        IndexerK7 indexer = new IndexerK7();
+        indexer.update();
+      }
+    };
+    timer = new Timer("Timer");
+
+    long delay = 1000L;
+    long period = 1000L * 60L * 60L * 24L; // jednou denne
+    timer.scheduleAtFixedRate(task, delay, period);
+
+  }
+
+  @Override
+  public void destroy() {
+    if (timer != null) {
+      timer.cancel();
+    }
+    super.destroy(); //To change body of generated methods, choose Tools | Templates.
     
   }
+  
+ 
 
   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
   /**

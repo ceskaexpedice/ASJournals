@@ -181,6 +181,38 @@ public class IndexServlet extends HttpServlet {
         }
       }
     },
+    UPDATE {
+      @Override
+      void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+
+        resp.setContentType("application/json;charset=UTF-8");
+
+        PrintWriter out = resp.getWriter();
+        JSONObject json = new JSONObject();
+        try {
+          
+          String kramerius_version = req.getParameter("kramerius_version");
+          if ("k7".equals(kramerius_version)) {
+            IndexerK7 indexer = new IndexerK7();
+            for (String pid : req.getParameterValues("pid")) {
+              json = indexer.updateJournal(pid); 
+            }
+          } else {
+            Indexer indexer = new Indexer();
+            for (String pid : req.getParameterValues("pid")) {
+              //json = indexer.indexDeep(pid);
+            }
+          }
+
+          //indexer.indexPidAndChildren(req.getParameter("pid"));
+
+        } catch (Exception ex) {
+          LOGGER.log(Level.SEVERE, null, ex);
+          json.put("error", ex.toString());
+        }
+        out.println(json.toString(2));
+      }
+    },
     CREATE_DOC {
       @Override
       void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {

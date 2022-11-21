@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.Date;
@@ -25,6 +26,8 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.util.ClientUtils;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -123,14 +126,14 @@ public class IndexerK7 {
       idoc.addField("kramerius_version", "k7");
       idoc.addField("mods", mods.toString());
       JSONObject item = getItem(pid);
-      
+
       idoc.addField("datanode", item.has("ds.img_full.mime"));
       idoc.addField("model", item.optString("model"));
       response.increment(item.optString("model"));
       idoc.addField("root_title", item.optString("root.title"));
       idoc.addField("root_pid", item.optString("root.pid"));
       idoc.addField("idx", item.optInt("rels_ext_index.sort"));
-      
+
       String parent = item.optString("own_parent.pid");
       idoc.addField("parents", parent);
       idoc.addField("model_paths", item.optString("own_model_path"));
@@ -140,7 +143,7 @@ public class IndexerK7 {
         idoc.addField("url_pdf", item.optString("ds.img_full.mime"));
         getPdf(pid, idoc);
       }
-      
+
 //      JSONArray ctx = item.getJSONArray("context");
 //      for (int i = 0; i < ctx.length(); i++) {
 //        String model_path = "";
@@ -157,8 +160,6 @@ public class IndexerK7 {
 //        idoc.addField("model_paths", model_path);
 //        idoc.addField("pid_paths", pid_path);
 //      }
-
-
       setTitleInfo(idoc, mods);
       setNames(idoc, mods);
       setKeywords(idoc, mods);
@@ -387,10 +388,10 @@ public class IndexerK7 {
       reqProps.put("Content-Type", "application/json");
       reqProps.put("Accept", "application/json");
       InputStream inputStream = RESTHelper.inputStream(k5host, reqProps);
-      
+
       JSONObject resp = new JSONObject(org.apache.commons.io.IOUtils.toString(inputStream, Charset.forName("UTF-8")));
       return resp.getJSONObject("response").getJSONArray("docs");
-      
+
     } catch (JSONException | IOException ex) {
       LOGGER.log(Level.SEVERE, null, ex);
       return null;
@@ -990,6 +991,73 @@ public class IndexerK7 {
     LOGGER.log(Level.INFO, "index finished. Indexed: {0}", total);
 
     return ret;
+  }
+
+  public void update() {
+    try (SolrClient solr = new HttpSolrClient.Builder(String.format("%s%s",
+            opts.getString("solr.host", "http://localhost:8983/solr/"),
+            "magazines")).build()) {
+      String q = "*";
+      SolrQuery query = new SolrQuery(q)
+              .setRows(100);
+      SolrDocumentList docs = solr.query(query).getResults();
+      for (SolrDocument doc : docs) {
+        updateJournal((String) doc.getFirstValue("journal"));
+      }
+    } catch (SolrServerException | IOException ex) {
+      LOGGER.log(Level.SEVERE, null, ex);
+    }
+  }
+
+  public JSONObject updateJournal(String pid) {
+    LOGGER.log(Level.INFO, "Updating pid {0}", pid);
+    try {
+ 
+      // Check if uuid is in our index
+      Options opts = Options.getInstance();
+
+      String index_time;
+      try (SolrClient solr = new HttpSolrClient.Builder(String.format("%s%s",
+              opts.getString("solr.host", "http://localhost:8983/solr/"),
+              "journal")).build()) {
+        String q = "root_pid:\"" + pid + "\"";
+        SolrQuery query = new SolrQuery(q)
+                .setRows(1)
+                .setSort("index_time", SolrQuery.ORDER.desc);
+        SolrDocumentList docs = solr.query(query).getResults();
+        long num = docs.getNumFound();
+        if (num == 0) {
+          LOGGER.log(Level.WARNING, "Not in index {0}", pid);
+          return new JSONObject().put("error", "Not in index");
+        } else {
+          Date d = (Date) docs.get(0).getFirstValue("index_time");
+          index_time = d.toInstant().toString();
+        }
+      } catch (SolrServerException | IOException ex) {
+        LOGGER.log(Level.SEVERE, null, ex);
+        return new JSONObject().put("error", ex);
+      }
+
+      String k5host = opts.getString(apiPointKey)
+              + "/search?fq=model:periodicalvolume%20OR%20model:periodicalitem&fq=indexed:" + URLEncoder.encode("[" + index_time + " TO NOW]", "UTF-8") + "&q=root.pid:" + ClientUtils.escapeQueryChars(pid);
+      Map<String, String> reqProps = new HashMap<>();
+      reqProps.put("Content-Type", "application/json");
+      // reqProps.put("Accept", "application/json");
+      InputStream inputStream = RESTHelper.inputStream(k5host, reqProps);
+      JSONObject resp = new JSONObject(org.apache.commons.io.IOUtils.toString(inputStream, Charset.forName("UTF-8")));
+      JSONArray jDocs = resp.getJSONObject("response").getJSONArray("docs");
+      if (jDocs.length()==0) {
+        LOGGER.log(Level.INFO, "Nothing to index {0}", index_time);
+      }
+      for (int i=0; i<jDocs.length(); i++) {
+        JSONObject jDoc = jDocs.getJSONObject(i);
+        indexDeep(jDoc.getString("pid"));
+      }
+      return resp;//.getJSONObject("response").getJSONArray("docs").getJSONObject(0);
+    } catch (JSONException | IOException ex) {
+      LOGGER.log(Level.SEVERE, null, ex);
+      return new JSONObject().put("error", ex);
+    }
   }
 
 }
