@@ -69,6 +69,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   cache: any = {};
   licences: any = {};
   isK7: boolean = false;
+  keepLang: boolean = false;
 
   newPwd = '';
   newPwdOk = false;
@@ -93,6 +94,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     if (this.state?.ctx?.isK7) {
       this.isK7 = true
     }
+
+    this.keepLang = !!this.state.ctx!.keepLang;
 
     if (this.state?.ctx?.sortByOrder) {
       this.sortBy = 'order';
@@ -429,8 +432,9 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.licencesModal?.hide();
   }
 
-  saveSortBy() {
+  saveMagazine() {
     this.state.ctx!.sortByOrder = this.sortBy === 'order';
+    this.state.ctx!.keepLang = this.keepLang;
     this.service.saveMagazine(this.state.ctx!).subscribe(res => {
       // this.service.getMagazines().subscribe(res2 => {
       //   this.state.ctxs = res2['response']['docs'];

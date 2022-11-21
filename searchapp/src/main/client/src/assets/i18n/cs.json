@@ -159,7 +159,11 @@
 		"cover": "Obálka",
 		"Indexing": "Indexing",
 		"delete_uuid": "Smazat UUID",
-		"confirm_delete": "Potvrdit smazání"
+		"confirm_delete": "Potvrdit smazání",
+		"sort": "Řazení článků",
+		"by_genre": "rubriky",
+		"by_order": "pořadí",
+		"keepLang": "Nechat názvy článků"
 	},
 	"a zároveň": "a zároveň",
 	"nebo": "nebo",
@@ -238,6 +242,6 @@
 		"skryt_cisla": "Skrýt čísla",
 		"nove_heslo": "Nové heslo",
 		"isK7": "Kramerius 7",
-		"save_sort": "Uložit"
+		"save": "Uložit"
 	}
 }

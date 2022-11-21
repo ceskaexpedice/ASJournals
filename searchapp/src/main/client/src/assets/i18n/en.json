@@ -159,7 +159,11 @@
 		"cover": "Cover",
 		"Indexing": "Indexing",
 		"delete_uuid": "Delete UUID",
-		"confirm_delete": "Confirm deleted"
+		"confirm_delete": "Confirm deleted",
+		"sort": "Articles sorting",
+		"by_genre": "genre",
+		"by_order": "order",
+		"keepLang": "Keep articles titles"
 	},
 	"a zároveň": "AND",
 	"nebo": "OR",
@@ -238,6 +242,6 @@
 		"skryt_cisla": "Hide numbers",
 		"nove_heslo": "New password",
 		"isK7": "Kramerius 7",
-		"save_sort": "Uložit"
+		"save": "Save"
 	}
 }

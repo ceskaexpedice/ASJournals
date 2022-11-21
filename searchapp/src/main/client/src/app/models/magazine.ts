@@ -24,4 +24,5 @@ export class Magazine {
   kramerius_version: string | undefined = undefined;
   isK7: boolean = false;
   sortByOrder: boolean = false;
+  keepLang: boolean = false;
 }

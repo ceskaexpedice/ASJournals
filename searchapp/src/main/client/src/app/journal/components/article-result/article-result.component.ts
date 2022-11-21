@@ -92,7 +92,7 @@ export class ArticleResultComponent implements OnInit {
         if (this.titleInfo.hasOwnProperty('length')) {
             this.title = this.titleInfo[0]["mods:title"];
             for (let i in this.titleInfo) {
-                if (this.titleInfo[i]["lang"] === modsLang) {
+                if (this.titleInfo[i]["lang"] === modsLang && !this.state.ctx?.keepLang) {
                     this.title = this.titleInfo[i]["mods:title"];
                     this.subTitle = this.titleInfo[i]["mods:subTitle"];
                     this.nonSort = this.titleInfo[i]["mods:nonSort"];

@@ -163,13 +163,16 @@
 
           <div class="row">
                 <div class="form-group app-mr-6">&#160;&#160;
-                  <label >Řazení článků</label>:&#160;&#160;
-                  <label for="genre">rubriky</label>
-                  <input type="radio" name="sortBy" [(ngModel)]="sortBy" value="genre" id="genre" />&#160;&#160;
-                  <label for="order">pořadí</label>
-                  <input type="radio" name="sortBy" [(ngModel)]="sortBy" value="order" id="order" />&#160;&#160;
-                  <button type="button" class="btn app-btn app-btn-default app-mr-4"
-                    (click)="saveSortBy()">{{'magazines.save_sort' | translate}}</button>
+                  <label >{{ 'admin.sort' | translate }}</label>:&#160;&#160;
+                  <label for="genre">{{ 'admin.by_genre' | translate }}</label>&#160;
+                  <input type="radio" name="sortBy" [(ngModel)]="sortBy" value="genre" id="genre" />&#160;&#160;&#160;
+                  <label for="order">{{ 'admin.by_order' | translate }}</label>&#160;
+                  <input type="radio" name="sortBy" [(ngModel)]="sortBy" value="order" id="order" />&#160;&#160;&#160;
+                  
+                    <label for="keepLang">{{ 'admin.keepLang' | translate }}</label>&#160;
+                    <input type="checkbox" name="keepLang" [(ngModel)]="keepLang" id="keepLang" />&#160;&#160;&#160;
+                    <button type="button" class="btn app-btn app-btn-default app-mr-4"
+                      (click)="saveMagazine()">{{'magazines.save' | translate}}</button>
                 </div>
           </div>
 
