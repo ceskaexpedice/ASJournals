@@ -43,7 +43,7 @@ export class ArchivComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+
     this.route.params
       .subscribe((params: Params) => {
         if (params.pid) {
@@ -87,8 +87,15 @@ export class ArchivComponent implements OnInit {
   setSort(s: any) {
     this.currentSort = s;
     let x = s.dir === 'asc' ? 1 : -1;
+
     this.items.sort((a, b) => {
-      return (a['idx'] - b['idx']) * x;
+      // return (a['idx'] - b['idx']) * x;
+      if (a['model'] === 'periodicalvolume') {
+        return (a['year'] - b['year']) * x;
+      } else {
+        return (a['idx'] - b['idx']) * x;
+      }
+
     });
   }
 
@@ -195,6 +202,20 @@ export class ArchivComponent implements OnInit {
       for (let i = start; i < end; i++) {
         this.visibleParentItems.push(this.parentItems[i]);
       }
+
+      let x = this.currentSort.dir === 'asc' ? 1 : -1;
+
+      this.visibleParentItems.sort((a, b) => {
+        // return (a['idx'] - b['idx']) * x;
+        if (a['model'] === 'periodicalvolume') {
+          return (a['year'] - b['year']) * x;
+        } else {
+          return (a['idx'] - b['idx']) * x;
+        }
+
+      });
+
+
     }
   }
 

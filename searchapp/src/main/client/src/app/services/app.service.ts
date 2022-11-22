@@ -290,7 +290,7 @@ export class AppService {
   getChildren(pid: string, dir: string = 'desc'): Observable<any> {
     let url = 'api/search/journal/select';
     const params = new HttpParams().set('q', '*:*').set('fq', 'parents:"' + pid + '"')
-      .set('wt', 'json').set('sort', 'idx ' + dir).set('rows', '500');
+      .set('wt', 'json').set('sort', 'year ' + dir +',idx ' + dir).set('rows', '500');
 
     return this.get(url, params).pipe(
       map((response: any) => {
