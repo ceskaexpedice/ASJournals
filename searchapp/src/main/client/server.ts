@@ -13,7 +13,7 @@ const request = require('request');
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
   const server = express();
-  const distFolder = join(process.cwd(), '.');
+  const distFolder = join(process.cwd(), 'dist/');
   //const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
   const indexHtml = existsSync(join(distFolder, 'index.ssr.html')) ? 'index.ssr.html' : 'index';
@@ -26,6 +26,9 @@ export function app() {
     console.log('Api server paramater missing. Start nodejs process as "node server/main.js "http://apiserverurl"');
     // process.exit();
   }
+
+  server.use(express.urlencoded());
+  server.use(express.json());      // if needed
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine('html', ngExpressEngine({
@@ -51,7 +54,34 @@ export function app() {
       } else {
         res.send('')
       }
-      
+
+    });
+  });
+
+
+  server.post('/api/**', (req, res) => {
+    console.log(req.url)
+    console.log(req.body)
+    request.post({
+      url: apiServer + req.url,  
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(req.body)
+
+    }, function (error: any, response: any, body: any) {
+      if (error) {
+        console.log('error:', error); // Print the error if one occurred and handle it
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+      }
+      if (body) {
+        console.log(body)
+        res.setHeader('content-type', response['headers']['content-type']);
+        res.send(body);
+      } else {
+        res.send('')
+      }
+
     });
   });
 
@@ -62,7 +92,7 @@ export function app() {
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
-    
+
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
   });
 
