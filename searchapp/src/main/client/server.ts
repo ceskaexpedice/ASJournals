@@ -75,7 +75,6 @@ export function app() {
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
       }
       if (body) {
-        console.log(body)
         res.setHeader('content-type', response['headers']['content-type']);
         res.send(body);
       } else {
