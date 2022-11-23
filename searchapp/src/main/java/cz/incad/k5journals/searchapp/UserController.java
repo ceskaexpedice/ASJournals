@@ -68,8 +68,10 @@ public class UserController {
       String username;
       String pwd;
       String ctx;
-      if (req.getMethod().equals("POST")) {
-        inputJs = new JSONObject(IOUtils.toString(req.getInputStream(), "UTF-8"));
+      
+      String body = IOUtils.toString(req.getInputStream(), "UTF-8");
+      if (req.getMethod().equals("POST") && !body.isBlank()) {
+        inputJs = new JSONObject(body);
         username = inputJs.getString("user");
         pwd = inputJs.getString("pwd");
         ctx = inputJs.getString("ctx");

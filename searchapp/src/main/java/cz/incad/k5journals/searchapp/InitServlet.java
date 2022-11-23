@@ -71,18 +71,12 @@ public class InitServlet extends HttpServlet {
     LOGGER.log(Level.INFO, "app dir is {0}", CONFIG_DIR);
 
     // Set timer for update
-    TimerTask task = new TimerTask() {
-      public void run() {
-        IndexerK7 indexer = new IndexerK7();
-        indexer.update();
-      }
-    };
+    TimerTask task = new UpdaterTask();
     timer = new Timer("Timer");
 
     long delay = 1000L;
     long period = 1000L * 60L * 60L * 24L; // jednou denne
     timer.scheduleAtFixedRate(task, delay, period);
-
   }
 
   @Override

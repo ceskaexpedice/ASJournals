@@ -993,22 +993,6 @@ public class IndexerK7 {
     return ret;
   }
 
-  public void update() {
-    try (SolrClient solr = new HttpSolrClient.Builder(String.format("%s%s",
-            opts.getString("solr.host", "http://localhost:8983/solr/"),
-            "magazines")).build()) {
-      String q = "*";
-      SolrQuery query = new SolrQuery(q)
-              .setRows(100);
-      SolrDocumentList docs = solr.query(query).getResults();
-      for (SolrDocument doc : docs) {
-        updateJournal((String) doc.getFirstValue("journal"));
-      }
-    } catch (SolrServerException | IOException ex) {
-      LOGGER.log(Level.SEVERE, null, ex);
-    }
-  }
-
   public JSONObject updateJournal(String pid) {
     LOGGER.log(Level.INFO, "Updating pid {0}", pid);
     try {
@@ -1059,5 +1043,4 @@ public class IndexerK7 {
       return new JSONObject().put("error", ex);
     }
   }
-
 }
