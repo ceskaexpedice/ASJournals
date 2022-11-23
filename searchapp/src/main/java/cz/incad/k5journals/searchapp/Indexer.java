@@ -1044,7 +1044,7 @@ public class Indexer {
       }
       for (int i=0; i<jDocs.length(); i++) {
         JSONObject jDoc = jDocs.getJSONObject(i);
-        indexDeep(jDoc.getString("pid"));
+        indexDeep(jDoc.getString("PID"));
       }
       return resp;//.getJSONObject("response").getJSONArray("docs").getJSONObject(0);
     } catch (JSONException | IOException ex) {

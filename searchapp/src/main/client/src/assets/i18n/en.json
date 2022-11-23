@@ -64,7 +64,10 @@
 		"kontakt_": "Contact",
 		"e-shop_": "E-shop",
 		"admin_": "Administration",
-		"prihlaseni_": "Login"
+		"prihlaseni_": "Login",
+		"url": "Path in URL",
+		"cs": "Czech label in menu",
+		"en": "English label in menu"
 	},
 	"ARCHIV STARŠÍCH ROČNÍKŮ": "ARCHIVE",
 	"PROHLÍŽET CELÉ ČÍSLO": "VIEW", 

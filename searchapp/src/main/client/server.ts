@@ -13,7 +13,7 @@ const request = require('request');
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
   const server = express();
-  const distFolder = join(process.cwd(), 'dist/');
+  const distFolder = join(process.cwd(), '.');
   //const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
   const indexHtml = existsSync(join(distFolder, 'index.ssr.html')) ? 'index.ssr.html' : 'index';
@@ -27,12 +27,12 @@ export function app() {
     // process.exit();
   }
 
-  server.use(express.urlencoded());
-  server.use(express.json());      // if needed
+  // server.use(express.urlencoded());
+  // server.use(express.json());      // if needed
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine('html', ngExpressEngine({
-    bootstrap: AppServerModule,
+    bootstrap: AppServerModule, inlineCriticalCss: false
   }));
 
   server.set('view engine', 'html');
@@ -60,8 +60,6 @@ export function app() {
 
 
   server.post('/api/**', (req, res) => {
-    console.log(req.url)
-    console.log(req.body)
     request.post({
       url: apiServer + req.url,  
       headers: {
