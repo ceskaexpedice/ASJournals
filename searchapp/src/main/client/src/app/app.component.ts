@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, Params, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription, Observable, of } from 'rxjs';
 import { AppState } from './app.state';
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
   subscription: Subscription = new Subscription;
   pathObserver: Subscription = new Subscription;
   paramsObserver: Subscription = new Subscription;
-  
+
   hasContext: boolean = false;
   noctx: boolean = false;
 
@@ -35,6 +36,8 @@ export class AppComponent implements OnInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private windowRef: AppWindowRef,
+    private titleService: Title,
+    private meta: Meta,
     public state: AppState,
     private service: AppService,
     private route: ActivatedRoute,
@@ -46,25 +49,36 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.route.params
       .subscribe((params: Params) => {
-          if (this.state.ctxs) {
+        if (this.state.ctxs) {
+          this.state.ctx = this.service.getCtx(params.ctx);
+          this.getConfig();
+        } else {
+          this.subscription = this.state.journalsInitilized.subscribe(cf => {
             this.state.ctx = this.service.getCtx(params.ctx);
             this.getConfig();
-          } else {
-            this.subscription = this.state.journalsInitilized.subscribe(cf => {
-              
-              this.state.ctx = this.service.getCtx(params.ctx);
-              this.getConfig();
-              this.subscription.unsubscribe();
-            });
-          }
+            this.subscription.unsubscribe();
+          });
+        }
       });
-      //this.service.setStyles();
-    
+    //this.service.setStyles();
+
+        if (this.state.ctx) {
+          this.titleService.setTitle(this.state.ctx.title!);
+          this.meta.removeTag('name=description');
+          this.meta.removeTag('name=author');
+          this.meta.removeTag('name=keywords');
+          this.meta.addTags([
+            { name: 'description', content: this.state.ctx.desc! },
+            { name: 'author', content: this.state.ctx.vydavatel! },
+            { name: 'keywords', content: this.state.ctx.keywords.join(',') }
+          ]);
+        }
+
   }
 
   initApp() {
-    var userLang = 'cs'; 
-    if (this.route.snapshot.queryParams['lang']){
+    var userLang = 'cs';
+    if (this.route.snapshot.queryParams['lang']) {
       userLang = this.route.snapshot.queryParams['lang'];
     } else {
       if (isPlatformBrowser(this.platformId)) {
@@ -76,11 +90,11 @@ export class AppComponent implements OnInit {
       }
     }
     this.service.changeLang(userLang);
-    
+
     //setTimeout(() => {
-      this.processUrl();
-      this.hasContext = true;
-      this.state.stateChanged();
+    this.processUrl();
+    this.hasContext = true;
+    this.state.stateChanged();
     //}, 500);
 
   }
@@ -99,7 +113,7 @@ export class AppComponent implements OnInit {
     } else {
       this.noctx = true;
     }
-    
+
   }
   processUrl() {
     //this.setMainClass(this.router.url);
@@ -115,7 +129,7 @@ export class AppComponent implements OnInit {
 
     this.state.paramsChanged();
   }
-  
+
   setMainClass(url: string) {
     let p = url.split('/');
     if (p.length > 2) {

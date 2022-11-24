@@ -48,10 +48,6 @@ public class SearchServlet extends HttpServlet {
       
       String solrhost = opts.getString("solr.host", "http://localhost:8983/solr/")
               + core  + handler + "?" + request.getQueryString();
-      
-//        String solrhost = opts.getString("api.point", "http://localhost:8080/search/api/v5.0")
-//                + "/search?" + request.getQueryString();
-        
 
         LOGGER.log(Level.FINE, "requesting url {0}", solrhost);
         Map<String, String> reqProps = new HashMap<>();
@@ -62,9 +58,7 @@ public class SearchServlet extends HttpServlet {
         //out.print(org.apache.commons.io.IOUtils.toString(inputStream, "UTF8"));
       
         
-    } catch (IOException ex) {
-      LOGGER.log(Level.SEVERE, null, ex);
-    } catch (JSONException ex) {
+    } catch (IOException | JSONException ex) {
       LOGGER.log(Level.SEVERE, null, ex);
     }
   }

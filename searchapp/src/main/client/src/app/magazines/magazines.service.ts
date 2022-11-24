@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';
 import {Observable, Subject, throwError} from 'rxjs';
@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import { catchError, map } from 'rxjs/operators';
 import { Magazine } from '../models/magazine';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class MagazinesService {
@@ -17,6 +18,7 @@ export class MagazinesService {
   public langSubject: Observable<any> = this._langSubject.asObservable();
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
     public state: MagazineState,
     private translate: TranslateService,
     private snackBar: MatSnackBar,
@@ -25,28 +27,33 @@ export class MagazinesService {
 
   private get<T>(url: string, params: HttpParams = new HttpParams(), responseType?: any): Observable<T> {
     const options = { params, responseType, withCredentials: true };
-    return this.http.get<T>(`api/${url}`, options)
-    .pipe(catchError(err => { return this.handleError(err) }));
+    
+    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
+
+    return this.http.get<T>(`${server}/api/${url}`, options)
+    .pipe(catchError(err => { return this.handleError(err, url) }));
   }
 
   private post(url: string, obj: any, params: HttpParams = new HttpParams()) {
-    return this.http.post<any>(`api/${url}`, obj, { params })
-    .pipe(catchError(this.handleError));
+    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
+    return this.http.post<any>(`${server}/api/${url}`, obj, { params })
+    .pipe(catchError(err => { return this.handleError(err, url) }));
+    //.pipe(catchError(this.handleError));
   }
 
-  private handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse, url: string) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error);
+      console.error('An error occurred:', url, error.error);
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
       console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
+        `Backend for ${url} returned code ${error.status}, body was: `, error.error);
     }
     // Return an observable with a user-facing error message.
     return throwError(
-      'Something bad happened; please try again later.');
+      `Error for ${url} returned code ${error.status}, ${error.error}`);
   }
 
   changeLang(lang: string) {

@@ -13,7 +13,7 @@ const request = require('request');
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
   const server = express();
-  const distFolder = join(process.cwd(), '.');
+  const distFolder = join(process.cwd(), 'dist/'); 
   //const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
   const indexHtml = existsSync(join(distFolder, 'index.ssr.html')) ? 'index.ssr.html' : 'index';
@@ -24,11 +24,12 @@ export function app() {
     apiServer = args[2];
   } else {
     console.log('Api server paramater missing. Start nodejs process as "node server/main.js "http://apiserverurl"');
+    console.log('Using default: ' + apiServer);
     // process.exit();
   }
 
-  // server.use(express.urlencoded());
-  // server.use(express.json());      // if needed
+  server.use(express.urlencoded({ extended: true }));
+  server.use(express.json());
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine('html', ngExpressEngine({
@@ -37,7 +38,8 @@ export function app() {
 
   server.set('view engine', 'html');
   server.set('views', distFolder);
-  // Example Express Rest API endpoints
+
+  // Rest API endpoints
   server.get('/api/img', (req, res) => {
     res.redirect(apiServer + req.url);
   });
@@ -50,7 +52,7 @@ export function app() {
       }
       if (body) {
         res.setHeader('content-type', response['headers']['content-type']);
-        res.send(body);
+        res.status(200).send(body);
       } else {
         res.send('')
       }
@@ -89,7 +91,6 @@ export function app() {
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
-
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
   });
 

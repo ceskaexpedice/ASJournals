@@ -32,7 +32,7 @@ import { Magazine } from './models/magazine';
                 if (args.length > 2) {
                     this.server = args[2];
                 } else {
-                    this.server = 'http://localhost:8080/';
+                    this.server = 'http://localhost:8080';
                 }
             }
         }
@@ -43,10 +43,7 @@ import { Magazine } from './models/magazine';
 
     public load(): Promise<any> {
         const url = this.server + '/api/assets/config.json';
-        if (!isPlatformBrowser(this.platformId)) {
-        } else {
-
-        }
+        
         console.log('loading config... ');
         const promise = this.http.get(url)
             .toPromise()

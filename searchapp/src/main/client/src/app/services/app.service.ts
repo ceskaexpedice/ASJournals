@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,7 +13,7 @@ import Utils from './utils';
 import { Subject, Observable, of, throwError } from 'rxjs';
 import { catchError, expand, map } from 'rxjs/operators';
 import { Magazine } from '../models/magazine';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { FreePageComponent } from '../journal/components/free-page/free-page.component';
 
 declare var xml2json: any;
@@ -30,6 +30,7 @@ export class AppService {
   public searchSubject: Observable<any> = this._searchSubject.asObservable();
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
     @Inject(DOCUMENT) private document: Document,
     private state: AppState,
     private search: SearchService,
@@ -58,12 +59,15 @@ export class AppService {
 
   private get<T>(url: string, params: HttpParams = new HttpParams(), responseType?: any): Observable<T> {
     const options = { params, responseType, withCredentials: true };
-    return this.http.get<T>(`api/${url}`, options)
+    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
+
+    return this.http.get<T>(`${server}/api/${url}`, options)
       .pipe(catchError(err => { return this.handleError(err) }));
   }
 
   private post(url: string, obj: any, params: HttpParams = new HttpParams()) {
-    return this.http.post<any>(`api/${url}`, obj, { params })
+    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
+    return this.http.post<any>(`${server}/api/${url}`, obj, { params })
       .pipe(catchError(this.handleError));
   }
 
