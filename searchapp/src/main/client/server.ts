@@ -13,7 +13,7 @@ const request = require('request');
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
   const server = express();
-  const distFolder = join(process.cwd(), 'dist/'); 
+  const distFolder = join(process.cwd(), '.'); 
   //const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
   const indexHtml = existsSync(join(distFolder, 'index.ssr.html')) ? 'index.ssr.html' : 'index';
@@ -41,7 +41,27 @@ export function app() {
 
   // Rest API endpoints
   server.get('/api/img', (req, res) => {
-    res.redirect(apiServer + req.url);
+    //res.redirect(apiServer + req.url);
+
+    request({url: apiServer + req.url, encoding:null}, function (error: any, response: any, body: any) {
+      if (error) {
+        console.log('error:', error); // Print the error if one occurred and handle it
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+      }
+      if (response.body) {
+        if (response['headers']['content-type']) {
+          res.type(response['headers']['content-type']);
+        } else {
+          res.setHeader('content-type', 'image/jpeg');
+        }
+        res.send(response.body);
+      } else {
+        res.send('')
+      }
+
+    });
+
+
   });
 
   server.get('/api/**', (req, res) => {
@@ -51,7 +71,10 @@ export function app() {
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
       }
       if (body) {
-        res.setHeader('content-type', response['headers']['content-type']);
+        if (response['headers']['content-type']) {
+          res.setHeader('content-type', response['headers']['content-type']);
+        }
+        
         res.status(200).send(body);
       } else {
         res.send('')

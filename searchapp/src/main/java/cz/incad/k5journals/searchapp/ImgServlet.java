@@ -48,6 +48,7 @@ public class ImgServlet extends HttpServlet {
         String path = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "cover.jpeg";
         File f = new File(path);
         if (f.exists()) {
+          response.setHeader("content-type", "image/jpeg");
           try (OutputStream out = response.getOutputStream()) {
             // response.setContentType("image/jpeg");
             BufferedImage bi = ImageIO.read(f);
@@ -101,16 +102,23 @@ public class ImgServlet extends HttpServlet {
     }
  
     //response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-    response.addHeader("Access-Control-Allow-Methods", "GET, POST");
-    response.addHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+//    response.addHeader("Access-Control-Allow-Methods", "GET, POST");
+//    response.addHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
     String imgPoint;
 
     String thumb = request.getParameter("thumb");
+      if (thumb != null) {
+        System.out.println("KKKK");
+        response.setContentType("image/jpeg");
+      } else {
+        response.setContentType("application/pdf");
+      }
+      
     if ("k7".equals(request.getParameter("kramerius_version"))) {
       imgPoint = opts.getString("api.point.k7")
               + "/items/" + pid + "/image";
       if (thumb != null) {
-        imgPoint += "/thumb";
+        imgPoint += "/thumb"; 
       }
     } else {
       imgPoint = opts.getString("img.point");
@@ -125,6 +133,7 @@ public class ImgServlet extends HttpServlet {
     LOGGER.log(Level.FINE, "requesting url {0}", imgPoint);
     Map<String, String> reqProps = new HashMap<>();
     InputStream inputStream = RESTHelper.inputStream(imgPoint, reqProps);
+    
     org.apache.commons.io.IOUtils.copy(inputStream, response.getOutputStream());
 
   }
