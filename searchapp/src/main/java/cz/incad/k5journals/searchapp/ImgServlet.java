@@ -108,7 +108,6 @@ public class ImgServlet extends HttpServlet {
 
     String thumb = request.getParameter("thumb");
       if (thumb != null) {
-        System.out.println("KKKK");
         response.setContentType("image/jpeg");
       } else {
         response.setContentType("application/pdf");
