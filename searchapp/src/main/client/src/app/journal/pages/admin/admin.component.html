@@ -23,7 +23,6 @@
         <ng-container *ngIf="tab === 'ui'">
           <div class="row">
             <div class="col-xs-3">
-
               <ul class="list-unstyled app-admin-nav" *ngIf="menu.length > 0">
 
                 <li role="app-page-nav" [class.active]="selectedPage === 'home'">
@@ -44,30 +43,27 @@
                     <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" />
                   </strong>
                 </li>
-                <li> --- </li>
 
-                <li role="app-page-nav" *ngFor="let m of menu; let last = last; let first = first; let index = index"
-                  [class.active]="selected === m">
-                  <strong>
+                <li class="app-list-divider"></li>
 
+                <li role="app-page-nav" *ngFor="let m of menu; let last = last; let first = first; let index = index" [class.active]="selected === m">
+                  <span class="app-icon-position">
                     <i *ngIf="!first" (click)="moveUp(menu, index)" class="glyphicon glyphicon-arrow-up"></i>
                     <i *ngIf="!last" (click)="moveDown(menu, index)" class="glyphicon glyphicon-arrow-down"></i>
-                    <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" />
-                    <a (click)="select(m, null)">{{m.route}}</a>
-                  </strong>
+                  </span>
+                  <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" />
+                  <a (click)="select(m, null)">{{m.route}}</a>
                   <ul class="nav-pills nav-stacked">
-                    <li role="app-page-nav"
-                      *ngFor="let m1 of m.children; let last2 = last; let first2 = first; let index2 = index"
-                      [class.active]="selected === m1">
-                      <i *ngIf="!first2" (click)="moveUp(m.children, index2)" class="glyphicon glyphicon-arrow-up"></i>
-                      <i *ngIf="!last2" (click)="moveDown(m.children, index2)"
-                        class="glyphicon glyphicon-arrow-down"></i>
+                    <li role="app-page-nav" *ngFor="let m1 of m.children; let last2 = last; let first2 = first; let index2 = index" [class.active]="selected === m1">
+                      <span class="app-icon-position">
+                        <i *ngIf="!first2" (click)="moveUp(m.children, index2)" class="glyphicon glyphicon-arrow-up"></i>
+                        <i *ngIf="!last2" (click)="moveDown(m.children, index2)" class="glyphicon glyphicon-arrow-down"></i>
+                      </span>
                       <input type="checkbox" id="isVisible" [(ngModel)]="m1.visible" />
                       <a (click)="select(m, m1)">{{m1.route}}</a>
                     </li>
                     <li role="app-page-nav">
-                      <i (click)="addChild(m)" class="glyphicon glyphicon-plus"
-                        [title]="'admin.add_child' | translate"></i>
+                      <i (click)="addChild(m)" class="glyphicon glyphicon-plus" [title]="'admin.add_child' | translate"></i>
                       <a (click)="addChild(m)">{{ 'admin.add_child' | translate }}</a>
                     </li>
                   </ul>

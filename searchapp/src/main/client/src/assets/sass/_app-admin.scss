@@ -28,12 +28,33 @@ app-admin {
         }
         > strong {
           > a {
-          padding: 0 7px 2px 7px;
-          border-radius: 4px;
+            padding: 0 7px 2px 7px;
+            border-radius: 4px;
+            
+            &:hover {
+              background-color: $app-brand-l-4;
+            }
+          } 
+        }
+
+        &.app-list-divider {
+          @extend .app-mt-3, .app-mb-3;
+          border-bottom: 1px solid $app-brand-l-2;
+        }
+
+        .glyphicon {
+          @extend .app-mr-1;
+          font-size: 14px;
+          cursor: pointer;
+          color: $app-brand-d-1;
+
           &:hover {
-            background-color: $app-brand-l-4;
+            color: black;
           }
-        } 
+        }
+
+        .app-icon-position {
+          @extend .app-mr-1;
         }
       }
       .nav-pills {
