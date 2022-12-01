@@ -24,35 +24,34 @@
           <div class="row">
             <div class="col-xs-3">
               <ul class="list-unstyled app-admin-nav" *ngIf="menu.length > 0">
-
                 <li role="app-page-nav" [class.active]="selectedPage === 'home'">
                   <strong>
                     <a (click)="selectPage('home')">{{'menu.home_' | translate}}</a>
                   </strong>
                 </li>
-
                 <li role="app-page-nav" [class.active]="selectedPage === 'footer'">
                   <strong>
                     <a (click)="selectPage('footer')">{{'menu.footer_' | translate}}</a>
                   </strong>
                 </li>
-
-                <li role="app-page-nav" *ngFor="let m of pages" [class.active]="selected === m">
+                <li role="app-page-nav" *ngFor="let m of pages" [class.active]="selectedPage === m.route">
                   <strong>
                     <a (click)="selectPage(m.id)">{{ 'menu.' + m.route +'_' | translate }}</a>
-                    <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" />
+                    <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" class="app-ml-1" />
                   </strong>
                 </li>
 
                 <li class="app-list-divider"></li>
 
-                <li role="app-page-nav" *ngFor="let m of menu; let last = last; let first = first; let index = index" [class.active]="selected === m">
-                  <span class="app-icon-position">
+                <li role="app-page-nav" *ngFor="let m of menu; let last = last; let first = first; let index = index" [class.active]="selectedPage === m.route">
+                  <strong>
+                    <span class="app-icon-position">
                     <i *ngIf="!first" (click)="moveUp(menu, index)" class="glyphicon glyphicon-arrow-up"></i>
                     <i *ngIf="!last" (click)="moveDown(menu, index)" class="glyphicon glyphicon-arrow-down"></i>
-                  </span>
-                  <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" />
-                  <a (click)="select(m, null)">{{m.route}}</a>
+                    </span>
+                    <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" />
+                    <a (click)="select(m, null)">{{m.route}}</a>
+                  </strong>
                   <ul class="nav-pills nav-stacked">
                     <li role="app-page-nav" *ngFor="let m1 of m.children; let last2 = last; let first2 = first; let index2 = index" [class.active]="selected === m1">
                       <span class="app-icon-position">
@@ -63,17 +62,15 @@
                       <a (click)="select(m, m1)">{{m1.route}}</a>
                     </li>
                     <li role="app-page-nav">
-                      <i (click)="addChild(m)" class="glyphicon glyphicon-plus" [title]="'admin.add_child' | translate"></i>
-                      <a (click)="addChild(m)">{{ 'admin.add_child' | translate }}</a>
+                      <strong>
+                        <i (click)="addChild(m)" class="glyphicon glyphicon-plus" [title]="'admin.add_child' | translate"></i>
+                        <a (click)="addChild(m)">{{ 'admin.add_child' | translate }}</a>
+                      </strong>
                     </li>
                   </ul>
                 </li>
               </ul>
-
-              <!-- <button type="button" class="btn app-btn app-btn-default"
-                (click)="addMenu()">{{'admin.add_menu' | translate}}</button> -->
-              <button type="button" class="btn app-btn app-btn-default" (click)="saveMenu()">{{'admin.save_menu' |
-                translate}}</button>
+              <button type="button" class="btn app-btn app-btn-default" (click)="saveMenu()">{{'admin.save_menu' | translate}}</button>
             </div>
             <div class="col-xs-9" *ngIf="selected || selectedPage">
               <h3>
@@ -82,7 +79,7 @@
                   {{ 'menu.' + selectedPage + '_' | translate }}
                 </ng-container>
                 <ng-container *ngIf="selected">
-                  <table>
+                  <!-- <table>
                     <tr>
                       <td>{{ 'menu.url' | translate }}</td>
                       <td>{{ 'menu.cs' | translate }}</td>
@@ -93,7 +90,21 @@
                       <td><input type="text" [(ngModel)]="selected.cs" class="form-control" title="cs" /></td>
                       <td><input type="text" [(ngModel)]="selected.en" class="form-control" title="en" /></td>
                     </tr>
-                  </table>
+                  </table> -->
+                  <div class="app-form-header">
+                    <div>
+                      <div class="app-input-desc">{{ 'menu.url' | translate }}</div>
+                      <input type="text" [(ngModel)]="selected.route" class="form-control" title="url" />
+                    </div>
+                    <div>
+                      <div class="app-input-desc">{{ 'menu.cs' | translate }}</div>
+                      <input type="text" [(ngModel)]="selected.cs" class="form-control" title="cs" />
+                    </div>
+                    <div>
+                      <div class="app-input-desc">{{ 'menu.en' | translate }}</div>
+                      <input type="text" [(ngModel)]="selected.en" class="form-control" title="en" />
+                    </div>
+                  </div>
                 </ng-container>
               </h3>
               <div *ngIf="saved" class="alert alert-success" role="alert">

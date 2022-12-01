@@ -11,36 +11,17 @@ app-admin {
     .mce-tinymce {
       margin-bottom: 20px;
     }
-    
-    .app-admin-nav {
-      > li {
-        &.active {
-          strong {
-            a {
-              background-color: $brand-primary;
-              color: $body-bg;
-              
-              &:hover {
-                background-color: $brand-primary;
-              }
-            }
-          } 
-        }
-        > strong {
-          > a {
-            padding: 0 7px 2px 7px;
-            border-radius: 4px;
-            
-            &:hover {
-              background-color: $app-brand-l-4;
-            }
-          } 
-        }
 
+    .app-admin-nav {
+      li {
         &.app-list-divider {
           @extend .app-mt-3, .app-mb-3;
           border-bottom: 1px solid $app-brand-l-2;
         }
+
+        a {
+          padding: 0 4px 2px 4px !important;
+        }     
 
         .glyphicon {
           @extend .app-mr-1;
@@ -57,26 +38,12 @@ app-admin {
           @extend .app-mr-1;
         }
       }
+
       .nav-pills {
-        > li {
-          list-style: none;
-          &.active {
-            a {
-              &:hover {
-                background-color: $brand-primary;
-              }
-            }
-          }
-          a {
-            padding: 0 7px 2px 7px;
-            &:hover {
-              background-color: $app-brand-l-4;
-            }
-          }
-        }
+        list-style: none;
       }
     }
-
+    
     .row {
       @extend .app-mb-4;
     }
@@ -85,4 +52,23 @@ app-admin {
   div.form-group{
     margin-right: 10px;
   }
-}
+
+  .app-form-header {
+    display: flex;
+
+    div {
+      flex: 1 1 100%;
+
+      &:not(:last-child) {
+        @extend .app-mr-2;
+      }
+
+      .app-input-desc {
+        @extend .app-mb-1;
+        font-family: 'Roboto-Condensed';
+        font-size: 1.6rem;
+        color: $app-brand-d-2;
+      }
+    }
+  }
+ }
