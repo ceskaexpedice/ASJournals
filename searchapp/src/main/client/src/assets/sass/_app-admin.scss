@@ -55,12 +55,13 @@ app-admin {
         }
       }
     }
+
+    .row {
+      margin-bottom: 10px;
+    }
   }
   
   div.form-group{
     margin-right: 10px;
-  }
-  .row {
-    margin-bottom: 10px;
   }
 }
