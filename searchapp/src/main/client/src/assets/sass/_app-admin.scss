@@ -57,7 +57,7 @@ app-admin {
     }
 
     .row {
-      margin-bottom: 10px;
+      @extend .app-mb-4;
     }
   }
   
