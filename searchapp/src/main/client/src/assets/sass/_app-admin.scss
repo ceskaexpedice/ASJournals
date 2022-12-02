@@ -15,7 +15,7 @@ app-admin {
     .app-admin-nav {
      & > li {
         &.app-list-divider {
-          @extend .app-mt-3, .app-mb-3;
+          @extend .app-mt-3, .app-mb-3 !optional;
           border-bottom: 1px solid $app-brand-l-2;
         }
 
@@ -24,7 +24,7 @@ app-admin {
         }     
 
         .glyphicon {
-          @extend .app-mr-1;
+          @extend .app-mr-1 !optional;
           font-size: 14px;
           cursor: pointer;
           color: $app-brand-d-1;
@@ -35,7 +35,7 @@ app-admin {
         }
 
         .app-icon-position {
-          @extend .app-mr-1;
+          @extend .app-mr-1 !optional;
         }
       }
 
@@ -45,7 +45,7 @@ app-admin {
     }
     
     .row {
-      @extend .app-mb-4;
+      @extend .app-mb-4 !optional;
     }
   }
   
@@ -60,11 +60,11 @@ app-admin {
       flex: 1 1 100%;
 
       &:not(:last-child) {
-        @extend .app-mr-2;
+        @extend .app-mr-2 !optional;
       }
 
       .app-input-desc {
-        @extend .app-mb-1;
+        @extend .app-mb-1 !optional;
         font-family: 'Roboto-Condensed';
         font-size: 1.6rem;
         color: $app-brand-d-2;
