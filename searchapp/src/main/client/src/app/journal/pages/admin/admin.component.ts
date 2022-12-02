@@ -216,6 +216,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   select(m: MenuItem, m1: MenuItem | null) {
+    console.log(m, m1);
     this.selectedPage = m.id;
     this.selected = m;
     if (m1) {

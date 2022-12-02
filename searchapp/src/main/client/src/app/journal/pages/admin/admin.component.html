@@ -43,7 +43,7 @@
 
                 <li class="app-list-divider"></li>
 
-                <li role="app-page-nav" *ngFor="let m of menu; let last = last; let first = first; let index = index" [class.active]="selectedPage === m.route">
+                <li role="app-page-nav" *ngFor="let m of menu; let last = last; let first = first; let index = index" [class.active]="selectedPage === m.id">
                   <strong>
                     <span class="app-icon-position">
                     <i *ngIf="!first" (click)="moveUp(menu, index)" class="glyphicon glyphicon-arrow-up"></i>
@@ -61,11 +61,9 @@
                       <input type="checkbox" id="isVisible" [(ngModel)]="m1.visible" />
                       <a (click)="select(m, m1)">{{m1.route}}</a>
                     </li>
-                    <li role="app-page-nav">
-                      <strong>
-                        <i (click)="addChild(m)" class="glyphicon glyphicon-plus" [title]="'admin.add_child' | translate"></i>
-                        <a (click)="addChild(m)">{{ 'admin.add_child' | translate }}</a>
-                      </strong>
+                    <li role="app-page-nav" class="app-add-item"> 
+                      <i (click)="addChild(m)" class="glyphicon glyphicon-plus" [title]="'admin.add_child' | translate"></i>
+                      <a (click)="addChild(m)">{{ 'admin.add_child' | translate }}</a>
                     </li>
                   </ul>
                 </li>

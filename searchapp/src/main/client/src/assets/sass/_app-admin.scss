@@ -13,7 +13,7 @@ app-admin {
     }
 
     .app-admin-nav {
-      li {
+     & > li {
         &.app-list-divider {
           @extend .app-mt-3, .app-mb-3;
           border-bottom: 1px solid $app-brand-l-2;
@@ -30,7 +30,7 @@ app-admin {
           color: $app-brand-d-1;
 
           &:hover {
-            color: black;
+            color: $gray-base;
           }
         }
 
