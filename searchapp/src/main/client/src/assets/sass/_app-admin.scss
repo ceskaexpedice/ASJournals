@@ -19,6 +19,14 @@ app-admin {
           border-bottom: 1px solid $app-brand-l-2;
         }
 
+        &.active {
+          > strong > a {
+            background-color: $app-brand;
+            color: white;
+            border-radius: 4px;
+          }
+        }
+
         a {
           padding: 0 4px 2px 4px !important;
         }     
