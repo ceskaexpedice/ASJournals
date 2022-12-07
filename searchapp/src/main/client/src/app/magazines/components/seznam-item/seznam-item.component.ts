@@ -31,7 +31,7 @@ export class SeznamItemComponent implements OnInit {
   
   addFilter(field: string, value: string){
     if (!this.state.isFacetUsed(field, value)){
-      this.state.addFilter(field, value);
+      this.service.addFilter(field, value);
     }
   }
   

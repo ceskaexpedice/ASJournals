@@ -5,7 +5,7 @@
   </h3>
   <div class="app-list-content-wrapper">
     <mat-list-item *ngFor="let facetUsed of state.filters; let idx = index;">
-      <a [matTooltip]="'Odstranit tento filtr'" matTooltipPosition="above" (click)="removeFilter(idx)" class="app-mr-1"><mat-icon>clear</mat-icon></a>
+      <a [matTooltip]="'Odstranit tento filtr'" matTooltipPosition="above" (click)="removeFilter(facetUsed.field, idx)" class="app-mr-1"><mat-icon>clear</mat-icon></a>
       <div>
         <span>{{ facetUsed.field | translate }}: </span>
         {{ facetUsed.value }}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import {MagazineState} from '../../magazine.state';
@@ -14,7 +15,9 @@ export class FacetsUsedComponent implements OnInit {
   
   subscriptions: Subscription[] = [];
 
-  constructor(public state: MagazineState, private service: MagazinesService) { }
+  constructor(public state: MagazineState, 
+    private service: MagazinesService,
+    private router: Router) { }
 
   ngOnInit() {
   }
@@ -26,15 +29,16 @@ export class FacetsUsedComponent implements OnInit {
     this.subscriptions = [];
   }
   
-  removeFilter(idx: number){
-    this.state.removeFilter(idx);
-    // this.service.getMagazines().subscribe();
+  removeFilter(field: string, idx: number){
+    this.service.removeFilter(field, idx);
   }
   
   removeAllFilters(){
-    this.state.filters = [];
-    this.state.paramsChanged();
-    // this.service.getMagazines().subscribe();
+    const p: any = {};
+    this.router.navigate(['.']);
+
+    // this.state.filters = [];
+    // this.state.paramsChanged();
   }
 
 }
