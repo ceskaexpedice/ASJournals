@@ -637,9 +637,9 @@ export class AppService {
     )
   }
 
-  saveText(id: string, text: string, menu: string | null = null): Observable<string> {
+  saveText(id: string, text: string, menu: string): Observable<string> {
 
-    //var url = 'texts?action=SAVE&id=' + id + '&lang=' + this.state.currentLang;
+    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
     let url = 'texts';
 
     let params = new HttpParams()
@@ -649,15 +649,19 @@ export class AppService {
       .set('lang', this.state.currentLang)
       .set('ctx', this.state.ctx?.ctx!);
 
-    if (menu) {
-      params = params.set('menu', menu);
-      //url += '&menu=' + menu;
-    }
+    // if (menu) {
+    //   params = params.set('menu', menu);
+    // }
 
-    const headers = new HttpHeaders({ 'Content-Type': 'text/plain;charset=UTF-8' });
-    const options = { headers: headers, params: params };
+    const body: any = {text: text, menu: menu}
 
-    return this.http.post<string>(url, text, options);
+    //const headers = new HttpHeaders({ 'Content-Type': 'text/plain;charset=UTF-8' });
+    //const options = { headers: headers, params: params };
+
+    //return this.http.post<string>(url, text, options);
+
+
+    return this.post(url, body, params);
 
 
   }

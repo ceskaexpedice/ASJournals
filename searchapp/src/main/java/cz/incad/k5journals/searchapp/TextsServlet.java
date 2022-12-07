@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -119,7 +120,12 @@ public class TextsServlet extends HttpServlet {
         String filename = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "texts"
                 + File.separator + id;
         File f;
-        String text = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+        
+        JSONObject body = new JSONObject(IOUtils.toString(request.getInputStream(), "UTF-8"));
+        
+        // JSONObject body = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
+        
+        String text = body.getString("text");
 
         if (lang != null) {
           f = new File(filename + "_" + lang + ".html");
@@ -129,13 +135,11 @@ public class TextsServlet extends HttpServlet {
           FileUtils.writeStringToFile(f, text, Charset.forName("UTF-8"));
         }
 
-        String menu = request.getParameter("menu");
-
-        LOGGER.log(Level.INFO, "menu is " + menu);
-        if (menu != null) {
+        // LOGGER.log(Level.INFO, "menu is " + menu);
+        if (body.has("menu")) {
           String fnmenu = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "menu.json";
           File fmenu = new File(fnmenu);
-          FileUtils.writeStringToFile(fmenu, menu, Charset.forName("UTF-8"));
+          FileUtils.writeStringToFile(fmenu, body.getString("menu"), Charset.forName("UTF-8"));
           Options.resetInstance();
         }
 

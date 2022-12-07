@@ -14,7 +14,7 @@ const request = require('request');
 export function app() {
   const server = express();
   const distFolder = join(process.cwd(), '.'); 
-  //const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
+  // const distFolder = join(process.cwd(), 'dist/'); 
 
   const indexHtml = existsSync(join(distFolder, 'index.ssr.html')) ? 'index.ssr.html' : 'index';
 
