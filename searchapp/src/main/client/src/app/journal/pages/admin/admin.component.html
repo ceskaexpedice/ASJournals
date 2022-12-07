@@ -46,8 +46,8 @@
                 <li role="app-page-nav" *ngFor="let m of menu; let last = last; let first = first; let index = index" [class.active]="selectedPage === m.id">
                   <strong>
                     <span class="app-icon-position">
-                    <i *ngIf="!first" (click)="moveUp(menu, index)" class="glyphicon glyphicon-arrow-up"></i>
-                    <i *ngIf="!last" (click)="moveDown(menu, index)" class="glyphicon glyphicon-arrow-down"></i>
+                      <i *ngIf="!first" (click)="moveUp(menu, index)" class="glyphicon glyphicon-arrow-up"></i>
+                      <i *ngIf="!last" (click)="moveDown(menu, index)" class="glyphicon glyphicon-arrow-down"></i>
                     </span>
                     <input type="checkbox" [(ngModel)]="m.visible" (change)="changeVisible()" />
                     <a (click)="select(m, null)">{{m.route}}</a>
@@ -55,6 +55,8 @@
                   <ul class="nav-pills nav-stacked">
                     <li role="app-page-nav" *ngFor="let m1 of m.children; let last2 = last; let first2 = first; let index2 = index" [class.active]="selected === m1">
                       <span class="app-icon-position">
+                        
+                        <i (click)="remove(m.children, index2)" class="glyphicon glyphicon-trash" [title]="'admin.remove_child' | translate"></i>
                         <i *ngIf="!first2" (click)="moveUp(m.children, index2)" class="glyphicon glyphicon-arrow-up"></i>
                         <i *ngIf="!last2" (click)="moveDown(m.children, index2)" class="glyphicon glyphicon-arrow-down"></i>
                       </span>

@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, ɵɵclassMapInter
 import { Subscription } from 'rxjs';
 
 
-import { BsModalRef, BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
-//import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import {  ModalDirective } from 'ngx-bootstrap/modal';
 import { FileUploader } from 'ng2-file-upload';
 import { Router } from '@angular/router';
 import { AppState } from 'src/app/app.state';
@@ -77,7 +76,6 @@ export class AdminComponent implements OnInit, OnDestroy {
   constructor(
     public state: AppState,
     private service: AppService,
-    private modalService: BsModalService,
     private router: Router) { }
 
   ngOnInit() {
@@ -155,7 +153,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         this.editor = editor;
         this.initData();
         editor.ui.registry.addButton('mybutton', {
-          tooltip: 'Insert link to file',
+          tooltip: this.service.translateKey('admin.insertLink'),
           icon: 'upload',
           //icon: false,
           onAction: function () {
@@ -480,6 +478,10 @@ export class AdminComponent implements OnInit, OnDestroy {
       visible: true,
       children: []
     })
+  }
+
+  remove(arr: any[], idx: number) {
+    arr.splice(idx, 1);
   }
 
   moveUp(arr: any[], idx: number) {
