@@ -826,12 +826,12 @@ public class Indexer {
 
               break;
             default:
-              idoc.addField(name, json.get(name));
+              idoc.setField(name, json.get(name));
               break;
           }
         }
       }
-      LOGGER.info(idoc.toString());
+      // LOGGER.info(idoc.toString());
       solr.add(idoc);
       solr.commit();
       ret.put("success", "magazine saved");
