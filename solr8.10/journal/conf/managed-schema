@@ -50,6 +50,7 @@
     <field name="_version_" type="plong" indexed="false" stored="false"/>
     <field name="_root_" type="string" indexed="true" stored="false" docValues="false" />
     <field name="index_time" type="pdate" indexed="true" stored="true" default="NOW" multiValued="false" />
+    <field name="indexed_k" type="pdate" indexed="true" stored="true" multiValued="false" />
     
     <field name="pid" type="string" indexed="true" stored="true" required="true" multiValued="false" />
     <field name="root_title" type="string" indexed="false" stored="true" multiValued="false" />

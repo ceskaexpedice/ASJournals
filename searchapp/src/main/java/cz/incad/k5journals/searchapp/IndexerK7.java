@@ -138,6 +138,9 @@ public class IndexerK7 {
       idoc.addField("parents", parent);
       idoc.addField("model_paths", item.optString("own_model_path"));
       idoc.addField("pid_paths", item.optString("own_pid_path"));
+      
+      System.out.println(item.opt("indexed"));
+      idoc.setField("indexed_k", item.opt("indexed"));
 
       if ("application/pdf".equals(item.optString("ds.img_full.mime"))) {
         idoc.addField("url_pdf", item.optString("ds.img_full.mime"));

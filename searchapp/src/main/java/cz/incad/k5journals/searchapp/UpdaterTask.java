@@ -34,6 +34,7 @@ public class UpdaterTask extends TimerTask {
               "magazines")).build()) {
         String q = "*";
         SolrQuery query = new SolrQuery(q)
+                .addFilterQuery("checkUpdates:true")
                 .setRows(100);
         SolrDocumentList docs = solr.query(query).getResults();
         for (SolrDocument doc : docs) {

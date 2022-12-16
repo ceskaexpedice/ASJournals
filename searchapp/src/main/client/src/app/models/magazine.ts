@@ -28,4 +28,5 @@ export class Magazine {
   isK7: boolean = false;
   sortByOrder: boolean = false;
   keepLang: boolean = false;
+  checkUpdates: boolean = false;
 }
