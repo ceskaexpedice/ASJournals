@@ -70,7 +70,7 @@
   <build>
     <plugins>
       
-<!--      <plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.6.0</version>
@@ -92,7 +92,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>-->
+      </plugin>
       
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
@@ -132,7 +132,7 @@
               <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
               <resources>
                 <resource>
-                  <directory>src/main/client/dist/client</directory>
+                  <directory>src/main/client/dist</directory>
                   <includes>
                     <include>*/**</include>
                   </includes>
@@ -141,7 +141,7 @@
             </configuration>
           </execution>
           
-          <execution>
+<!--          <execution>
             <id>copy-bootstrap-sass</id>
             <phase>generate-resources</phase>
             <goals>
@@ -177,29 +177,7 @@
                 </resource>
               </resources>
             </configuration>
-          </execution>
-          
-          
-          <!--
-          <execution>
-            <id>copy-app.js</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.basedir}/src/main/webapp/app/assets/js/</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>src/main/ngClient/src/app/assets/js</directory>
-                  <includes>
-                    <include>*/**</include>
-                  </includes>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-          -->
+          </execution>-->
     
         </executions>
         <configuration>

@@ -32,8 +32,10 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              { "glob": "**/*", "input": "node_modules/bootstrap-sass/assets/stylesheets", "output": "/assets/sass/" },
               { "glob": "**/*", "input": "node_modules/tinymce", "output": "/tinymce/" },
-              { "glob": "**/*", "input": "src/tinymce/langs", "output": "/tinymce/langs/" }
+              { "glob": "**/*", "input": "src/tinymce/langs", "output": "/tinymce/langs/" },
+              { "glob": "**/*", "input": "node_modules/nouislider/distribute", "output": "/assets/sass/" }
             ],
             "styles": [
               "src/styles.scss",
