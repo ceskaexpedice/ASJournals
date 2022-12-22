@@ -69,6 +69,10 @@
                     </li>
                   </ul>
                 </li>
+                <li role="app-page-nav" class="app-add-item">
+                  <i (click)="addMenu()" class="glyphicon glyphicon-plus" [title]="'admin.add_menu' | translate"></i>
+                  <a (click)="addMenu()">{{ 'admin.add_menu' | translate }}</a>
+                </li>
               </ul>
               <button type="button" class="btn app-btn app-btn-default" (click)="saveMenu()">{{'admin.save_menu' | translate}}</button>
             </div>
@@ -96,7 +100,7 @@
                 </ng-container>
               </h3>
               <div *ngIf="saved" class="alert alert-success" role="alert">
-                {{'text.save-note-1' | translate}} <strong>{{selected}} ({{state.currentLang}})</strong>
+                {{'text.save-note-1' | translate}} <strong>{{selected?.route}} ({{state.currentLang}})</strong>
                 {{'text.save-note-2' | translate}}!
               </div>
               <form class="clearfix">
