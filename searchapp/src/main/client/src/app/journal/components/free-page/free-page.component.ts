@@ -30,6 +30,7 @@ export class FreePageComponent implements OnInit {
     const url = this.router.url.substring(1);
     let route = url.substring(url.indexOf(this.state.ctx?.ctx!) + this.state.ctx?.ctx?.length!);
     route = route.split('?')[0]; // remove lang param
+    
     this.setPage(route);
     // this.langObserver = this.appService.langSubject.subscribe(
     //   () => {
@@ -57,11 +58,18 @@ export class FreePageComponent implements OnInit {
   }
 
   setPage(route: string) {
+
+
+    if (!route.startsWith('/')) {
+      route = '/' + route;
+    }
     this.page = route;
+
+
     
     // find page by menu config
     this.state.config.layout.menu.forEach((m: any) => {
-      if (m.route === ('/'+route)) {
+      if (route === ('/'+m.route)) {
         this.page = m.id;
         return;
       } else if (m.children.length > 0) {
