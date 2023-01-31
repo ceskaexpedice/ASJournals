@@ -189,6 +189,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   getText() {
 
+    console.log(this.selectedPage)
     let page: string = '';
     if (this.selectedPage) {
       page = this.selectedPage;
@@ -469,15 +470,30 @@ export class AdminComponent implements OnInit, OnDestroy {
     })
   }
 
+  findNewMenuId() {
+    let idx = this.menu.length;
+    let id = 'menu_' + idx;
+    while (this.menu.filter(m => m.id === id).length > 0) {
+      id = 'menu_' + idx++;
+    }
+    return id;
+  }
+
   addMenu() {
+    let id = this.findNewMenuId();
     this.menu.push({
-      id: 'menu_' + this.menu.length,
-      route: 'menu_' + this.menu.length + '_new',
+      id: id,
+      route: id + '_new',
       cs: 'Nazev CS',
       en: 'Name EN',
       visible: true,
+      added: true,
       children: []
     })
+  }
+
+  removeMenu(idx: number) {
+    this.menu.splice(idx, 1);
   }
 
   remove(arr: any[], idx: number) {

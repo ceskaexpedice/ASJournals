@@ -41,14 +41,14 @@ export class AppService {
   ) { }
 
   findMenuItem(route: string) {
-    for (let i=0; i<this.state.config.layout.menu.length; i++) {
+    for (let i = 0; i < this.state.config.layout.menu.length; i++) {
       const m = this.state.config.layout.menu[i];
-      if (m.route === ('/'+route)) {
+      if (m.route === ('/' + route)) {
         return m;
       } else if (m.children.length > 0) {
-        for (let j=0; j<m.children.length; j++) {
+        for (let j = 0; j < m.children.length; j++) {
           const m2 = m.children[j];
-          if (('/'+m.route + '/' + m2.route) === route) {
+          if (('/' + m.route + '/' + m2.route) === route) {
             return m2;
           }
         }
@@ -90,13 +90,16 @@ export class AppService {
     return this.get('texts?action=GET_CONFIG&ctx=' + ctx.ctx).pipe(
       map(res => {
         this.state.ctx = ctx;
+        if (!this.state.ctx.keywords) {
+          this.state.ctx.keywords = [];
+        }
         this.state.setConfig(res);
         this.state.config['color'] = ctx.color;
         this.state.config['journal'] = ctx.journal;
         this.state.config['showTitleLabel'] = ctx.showTitleLabel;
         // setTimeout(() => {
         //   console.log('switching 1')
-          this.switchStyle();
+        this.switchStyle();
         // }, 5000);
         this.findActual();
         this.getKeywords();
@@ -106,14 +109,14 @@ export class AppService {
         const menu = this.state.config.layout.menu;
         menu.forEach((m: any) => {
           const r = this.router.config.find((ro: any) => ro.path === ':ctx' && ro.children);
-          if (r && r.children && r.children.length> 0) {
+          if (r && r.children && r.children.length > 0) {
             const r1 = r.children.find((ro2: any) => ro2.path === m.route);
             if (!r1) {
               r.children.push({ path: m.route, component: FreePageComponent });
             }
             m.children.forEach((m1: any) => {
-  
-  
+
+
             });
           }
         });
@@ -294,7 +297,7 @@ export class AppService {
   getChildren(pid: string, dir: string = 'desc'): Observable<any> {
     let url = 'api/search/journal/select';
     const params = new HttpParams().set('q', '*:*').set('fq', 'parents:"' + pid + '"')
-      .set('wt', 'json').set('sort', 'year ' + dir +',idx ' + dir).set('rows', '500');
+      .set('wt', 'json').set('sort', 'year ' + dir + ',idx ' + dir).set('rows', '500');
 
     return this.get(url, params).pipe(
       map((response: any) => {
@@ -303,21 +306,21 @@ export class AppService {
     )
   }
 
-  
+
 
   getPeriodicalItems(pid: string) {
     let url = 'search/journal/select';
     const params = new HttpParams()
-    .set('q', '*')
-    .append('fq', 'model:periodicalitem')
-    .append('fq', `root_pid:"${pid}"`)
+      .set('q', '*')
+      .append('fq', 'model:periodicalitem')
+      .append('fq', `root_pid:"${pid}"`)
       .set('wt', 'json')
       .set('rows', '500')
       .set('fl', '*,mods:[json]')
       .set('sort', 'idx asc, year asc');
 
     return this.get(url, params);
-    
+
   }
 
   //  getActual(): Observable<Journal> {
@@ -451,20 +454,20 @@ export class AppService {
       genre !== 'advertisement' &&
       genre !== 'colophon';
   }
-  
+
 
   getArticles(pid: string): Observable<any[]> {
 
-      let url = this.state.config['context'] + 'search/journal/select';
-      const params = new HttpParams()
-        .set('q', '*:*')
-        .set('fq', 'parents:"' + pid + '"')
-        .set('wt', 'json')
-        .set('sort', 'idx asc')
-        .set('rows', '500');
+    let url = this.state.config['context'] + 'search/journal/select';
+    const params = new HttpParams()
+      .set('q', '*:*')
+      .set('fq', 'parents:"' + pid + '"')
+      .set('wt', 'json')
+      .set('sort', 'idx asc')
+      .set('rows', '500');
 
-      return this.get(url, params);
-    }
+    return this.get(url, params);
+  }
 
   getArticles2(pid: string): Observable<any[]> {
     const getRange = (pid: string): Observable<any> => {
@@ -653,7 +656,7 @@ export class AppService {
     //   params = params.set('menu', menu);
     // }
 
-    const body: any = {text: text, menu: menu}
+    const body: any = { text: text, menu: menu }
 
     //const headers = new HttpHeaders({ 'Content-Type': 'text/plain;charset=UTF-8' });
     //const options = { headers: headers, params: params };

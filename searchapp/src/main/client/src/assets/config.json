@@ -35,17 +35,19 @@
         "pages": [
             {
                 "route": "news",
-                "cs": "E-shop",
+                "id": "news",
+                "cs": "Aktuálně",
                 "visible": true,
                 "children": [],
-                "en": "E-shop"
+                "en": "News"
             },
             {
                 "route": "db",
-                "cs": "Kontakt",
+                "id": "db",
+                "cs": "Zařazení v databázích",
                 "visible": true,
                 "children": [],
-                "en": "Contact"
+                "en": "Databases"
             }
         ],
         "menu": [

@@ -99,6 +99,9 @@ import { Magazine } from './models/magazine';
         .toPromise()
         .then((res: any) => {
             this.state.ctx = ctx;
+            if (!this.state.ctx.keywords) {
+                this.state.ctx.keywords = [];
+            }
             this.state.setConfig(res);
             this.state.config['color'] = ctx.color;
             this.state.config['journal'] = ctx.journal;

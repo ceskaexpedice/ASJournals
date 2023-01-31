@@ -48,6 +48,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.meta.removeTag('name=description');
         this.meta.removeTag('name=author');
         this.meta.removeTag('name=keywords');
+        
         this.meta.addTags( [
           { name: 'description', content: this.state.ctx!.desc! },
           { name: 'author', content: this.state.ctx!.vydavatel! },

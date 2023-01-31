@@ -46,6 +46,7 @@
                 <li role="app-page-nav" *ngFor="let m of menu; let last = last; let first = first; let index = index" [class.active]="selectedPage === m.id">
                   <strong>
                     <span class="app-icon-position">
+                      <i *ngIf="m.added" (click)="removeMenu(index)" class="glyphicon glyphicon-trash" [title]="'admin.remove_child' | translate"></i>
                       <i *ngIf="!first" (click)="moveUp(menu, index)" class="glyphicon glyphicon-arrow-up"></i>
                       <i *ngIf="!last" (click)="moveDown(menu, index)" class="glyphicon glyphicon-arrow-down"></i>
                     </span>
