@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Inject, Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {Observable} from 'rxjs';
 
@@ -7,6 +7,7 @@ import { AppState } from 'src/app/app.state';
 import { Journal } from 'src/app/models/journal.model';
 import { AppService } from 'src/app/services/app.service';
 import Utils from 'src/app/services/utils';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-article-viewer',
@@ -56,6 +57,7 @@ export class ArticleViewerComponent implements OnInit {
 magazine: any;
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private service: AppService,
     public state: AppState,
     private route: ActivatedRoute,
@@ -259,12 +261,12 @@ magazine: any;
 
   url() {
     //return window.location.href;
-    return this.router.url;
+    return this.document.location.href;
   }
 
   _socialUrl() {
     //return window.location.href;
-    return this.router.url;
+    return this.document.location.href;
   }
 
   facebookShare() {
@@ -288,7 +290,7 @@ magazine: any;
   getCitace(){
     this.service.getCitace(this.pid!).subscribe(resp => {
       this.citace = resp;
-      this.location = this.router.url;
+      this.location = this.document.location.href;
     });
   }
 
