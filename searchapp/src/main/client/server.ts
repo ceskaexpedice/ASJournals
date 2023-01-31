@@ -13,8 +13,8 @@ const request = require('request');
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
   const server = express();
-  const distFolder = join(process.cwd(), '.'); 
-  // const distFolder = join(process.cwd(), 'dist/'); 
+  //const distFolder = join(process.cwd(), '.'); 
+  const distFolder = join(process.cwd(), 'dist/'); 
 
   const indexHtml = existsSync(join(distFolder, 'index.ssr.html')) ? 'index.ssr.html' : 'index';
 
@@ -74,6 +74,9 @@ export function app() {
         if (response['headers']['content-type']) {
           res.setHeader('content-type', response['headers']['content-type']);
         }
+        if (response['headers']['cookie']) {
+          res.setHeader('cookie', response['headers']['cookie']);
+        }
         
         res.status(200).send(body);
       } else {
@@ -88,7 +91,8 @@ export function app() {
     request.post({
       url: apiServer + req.url,  
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'cookie': req.headers['cookie']
       },
       body: JSON.stringify(req.body)
 
@@ -96,6 +100,10 @@ export function app() {
       if (error) {
         console.log('error:', error); // Print the error if one occurred and handle it
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+      }
+      
+      if (response['headers']['cookie']) {
+        res.setHeader('cookie', response['headers']['cookie']);
       }
       if (body) {
         res.setHeader('content-type', response['headers']['content-type']);
