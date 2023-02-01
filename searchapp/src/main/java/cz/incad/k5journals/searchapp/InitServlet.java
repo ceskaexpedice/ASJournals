@@ -69,7 +69,7 @@ public class InitServlet extends HttpServlet {
       CONFIG_DIR = System.getProperty("user.home") + File.separator + CONFIG_DIR;
     }
     LOGGER.log(Level.INFO, "app dir is {0}", CONFIG_DIR);
-
+ 
     // Set timer for update
 //    TimerTask task = new UpdaterTask();
 //    timer = new Timer("Timer");

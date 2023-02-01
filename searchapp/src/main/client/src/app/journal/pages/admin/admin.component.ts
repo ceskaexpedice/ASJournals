@@ -30,7 +30,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   public uploader: FileUploader = new FileUploader({ url: 'lf?action=UPLOAD' });
-  public coverUploader: FileUploader = new FileUploader({ url: 'lf?action=UPLOAD&cover=true' });
+  public coverUploader: FileUploader = new FileUploader({ url: 'lf?action=UPLOAD&cover=true'});
 
 
   menu: any[] = [];
@@ -146,7 +146,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       plugins: ['link', 'paste', 'table', 'save', 'code', 'image'],
       toolbar: 'save | undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code mybutton',
       // skin_url: this.state.config['context'] + 'assets/skins/lightgray',
-      images_upload_url: 'api/lf?action=UPLOAD&isImage=true&ctx=' + this.state.ctx?.ctx,
+      images_upload_url: 'lf?action=UPLOAD&isImage=true&ctx=' + this.state.ctx?.ctx,
       automatic_uploads: true,
       relative_urls: false,
       setup: (editor: any) => {

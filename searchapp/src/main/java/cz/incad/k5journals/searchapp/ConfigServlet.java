@@ -62,20 +62,19 @@ public class ConfigServlet extends HttpServlet {
       PrintWriter out = response.getWriter();
 
       JSONObject js = Options.getInstance().getClientConf();
-
+      js.put("configDir", InitServlet.CONFIG_DIR + File.separator);
       out.print(mergeCustom(request.getPathInfo(), js).toString(2));
     } catch (IOException ex) {
       LOGGER.log(Level.SEVERE, null, ex);
     } catch (JSONException ex) {
       LOGGER.log(Level.SEVERE, null, ex);
     }
-  }
+  } 
 
   private JSONObject mergeCustom(String ctx, JSONObject conf) throws IOException {
     JSONObject js = new JSONObject(conf.toString());
 
     File f = new File(InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "config.json");
-
     if (f.exists() && f.canRead()) {
       String json = FileUtils.readFileToString(f, "UTF-8");
       JSONObject customClientConf = new JSONObject(json).getJSONObject("client");
