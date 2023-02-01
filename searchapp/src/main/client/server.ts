@@ -15,11 +15,22 @@ const request = require('request');
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req: any, file: any, cb: any) {
-    cb(null, configDir + req.query['ctx'] )
+    if (req.query['cover']) {
+      cb(null, configDir + req.query['ctx'] )
+    } else {
+      cb(null, configDir + req.query['ctx'] + "/texts/files" )
+    }
+    
   },
   filename: function (req: any, file: any, cb: any) {
     // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, 'cover.jpeg')
+    if (req.query['cover']) {
+      cb(null, 'cover.jpeg');
+    } else {
+      console.log(file);
+      cb(null, file.originalname);
+    }
+    
   }
 });
 const upload = multer({ storage:   storage });
@@ -76,6 +87,28 @@ export function app() {
       }
     });
   });
+  
+  server.get('/api/lf', (req, res) => {
+    //res.redirect(apiServer + req.url);
+
+    request({ url: apiServer + req.url, encoding: null }, function (error: any, response: any, body: any) {
+      if (error) {
+        console.log('error:', error); // Print the error if one occurred and handle it
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+      }
+      if (response.body) {
+        if (response['headers']['content-type']) {
+          res.type(response['headers']['content-type']);
+        } else {
+          res.setHeader('content-type', 'image/jpeg');
+        }
+        res.send(response.body);
+      } else {
+        res.send('')
+      }
+    });
+  });
+
 
   server.get('/api/**', (req, res) => {
     request(apiServer + req.url, function (error: any, response: any, body: any) {
@@ -114,6 +147,14 @@ export function app() {
     { title: 'abc' }
      */
     console.log(req.file); 
+    const resp: any = {};
+    if (req.query['cover']) {
+      resp.msg = 'ok'
+    } else {
+      const action = req.query['isImage'] ? 'GET_IMAGE' : 'GET_FILE';
+      resp.location = '/api/lf?action='+action+'&id=' + req.file.originalname + '&ctx=' + req.query.ctx; 
+    }
+    res.send(resp);
     res.status(204).end();
   });
 
