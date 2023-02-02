@@ -6,7 +6,7 @@ import { join } from 'path';
 
 import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
-import { existsSync } from 'fs';
+import { existsSync, mkdirSync } from 'fs';
 
 let configDir = '';
 let config: any = {};
@@ -15,19 +15,23 @@ const request = require('request');
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req: any, file: any, cb: any) {
+    let path = configDir + req.query['ctx'];
     if (req.query['cover']) {
-      cb(null, configDir + req.query['ctx'] )
+      //console.log('bude ' + configDir + req.query['ctx']);
     } else {
-      cb(null, configDir + req.query['ctx'] + "/texts/files" )
+      //console.log('bude ' + configDir + req.query['ctx'] + "/texts/files");
+      path = path + "/texts/files";
     }
+    mkdirSync(path, { recursive: true })
+    cb(null, path )
     
   },
   filename: function (req: any, file: any, cb: any) {
+    console.log(req.query['cover']);
     // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
     if (req.query['cover']) {
       cb(null, 'cover.jpeg');
     } else {
-      console.log(file);
       cb(null, file.originalname);
     }
     
@@ -122,7 +126,7 @@ export function app() {
         if (req.url.indexOf('assets/config.json') > 0) {
           config = JSON.parse(response.body);
           configDir = config.configDir;
-          console.log(config);
+          // console.log(config);
         }
         if (response['headers']['set-cookie']) {
           res.setHeader('cookie', response['headers']['set-cookie']);
