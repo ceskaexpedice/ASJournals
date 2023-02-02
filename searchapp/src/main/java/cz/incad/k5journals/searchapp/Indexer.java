@@ -1026,7 +1026,7 @@ public class Indexer {
           Date d = (Date) docs.get(0).getFirstValue("indexed_k");
           index_time = d.toInstant().toString();
         }
-      } catch (SolrServerException | IOException ex) {
+      } catch (Exception ex) {
         LOGGER.log(Level.SEVERE, null, ex);
         return new JSONObject().put("error", ex);
       }

@@ -1010,14 +1010,14 @@ public class IndexerK7 {
         String q = "root_pid:\"" + pid + "\"";
         SolrQuery query = new SolrQuery(q)
                 .setRows(1)
-                .setSort("index_time", SolrQuery.ORDER.desc);
+                .setSort("indexed_k", SolrQuery.ORDER.desc);
         SolrDocumentList docs = solr.query(query).getResults();
         long num = docs.getNumFound();
         if (num == 0) {
           LOGGER.log(Level.WARNING, "Not in index {0}", pid);
           return new JSONObject().put("error", "Not in index");
         } else {
-          Date d = (Date) docs.get(0).getFirstValue("index_time");
+          Date d = (Date) docs.get(0).getFirstValue("indexed_k");
           index_time = d.toInstant().toString();
         }
       } catch (SolrServerException | IOException ex) {

@@ -38,7 +38,8 @@ public class UpdaterTask extends TimerTask {
                 .setRows(100);
         SolrDocumentList docs = solr.query(query).getResults();
         for (SolrDocument doc : docs) {
-          boolean k7 = "k7".equals((String) doc.getFirstValue("journal"));
+          System.out.println((String) doc.getFirstValue("kramerius_version"));
+          boolean k7 = "k7".equals((String) doc.getFirstValue("kramerius_version"));
           if (k7) {
             IndexerK7 indexer = new IndexerK7();
             indexer.updateJournal((String) doc.getFirstValue("journal"));
