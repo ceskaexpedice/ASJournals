@@ -52,53 +52,62 @@
         ],
         "menu": [
             {
+                "id": "o-casopisu",
                 "route": "o-casopisu",
                 "cs": "O časopisu",
                 "visible": true,
                 "children": [
                     {
+                        "id": "redakce",
                         "route": "redakce",
                         "cs": "Redakce",
                         "visible": true,
                         "en": "Editorial board"
                     },
                     {
+                        "id": "open-access",
                         "route": "open-access",
                         "cs": "Open Access",
                         "visible": true,
                         "en": "Open Access"
                     },
                     {
+                        "id": "zapojeni",
                         "route": "zapojeni",
                         "cs": "Zapojení do databází",
                         "visible": true,
                         "en": "Databases"
                     },
                     {
+                        "id": "historie",
                         "route": "historie",
                         "cs": "Historie",
                         "visible": true,
                         "en": "History"
                     },
                     {
+                        "id": "distribuce",
                         "route": "distribuce",
                         "cs": "Distribuce",
                         "visible": false,
                         "en": "Distribution"
                     },
                     {
+                        "id": "fotogalerie",
                         "route": "fotogalerie",
                         "cs": "Fotogalerie",
                         "visible": true,
                         "en": "Photogallery"
                     },
                     {
+                        "id": "oznameni-sefredaktora",
                         "route": "oznameni-sefredaktora",
                         "cs": "Oznámení šéfredaktora",
                         "visible": true,
                         "en": "Main editor's notes"
                     },
                     {
+                        "id": "pripravujeme",
                         "route": "pripravujeme",
                         "cs": "Připravujeme",
                         "visible": true,
@@ -108,41 +117,48 @@
                 "en": "About journal"
             },
             {
+                "id": "pro-autory",
                 "route": "pro-autory",
                 "cs": "Pro autory",
                 "visible": true,
                 "children": [
                     {
+                        "id": "recenzni-rizeni",
                         "route": "recenzni-rizeni",
                         "cs": "Recenzní řízení",
                         "visible": true,
                         "en": "Peer review process"
                     },
                     {
+                        "id": "citacni-pravidla",
                         "route": "citacni-pravidla",
                         "cs": "Citační pravidla",
                         "visible": true,
                         "en": "Citation rules"
                     },
                     {
+                        "id": "publikacni-etika",
                         "route": "publikacni-etika",
                         "cs": "Publikační etika",
                         "visible": true,
                         "en": "Publication ethics"
                     },
                     {
+                        "id": "recenzenti",
                         "route": "recenzenti",
                         "cs": "Recenzenti",
                         "visible": true,
                         "en": "Reviewers"
                     },
                     {
+                        "id": "odkazy",
                         "route": "odkazy",
                         "cs": "Odkazy",
                         "visible": true,
                         "en": "Links"
                     },
                     {
+                        "id": "caste-dotazy",
                         "route": "caste-dotazy",
                         "cs": "Časté dotazy",
                         "visible": true,
@@ -152,6 +168,7 @@
                 "en": "For authors"
             },
             {
+                "id": "e-shop",
                 "route": "e-shop",
                 "cs": "E-shop",
                 "visible": true,
@@ -159,6 +176,7 @@
                 "en": "E-shop"
             },
             {
+                "id": "kontakt",
                 "route": "kontakt",
                 "cs": "Kontakt",
                 "visible": true,
