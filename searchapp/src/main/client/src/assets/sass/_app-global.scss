@@ -88,6 +88,12 @@ h4+hr {
   margin-top: 5px;
 }
 
+label {
+  &.app-font-roboto-cb {
+    font-weight: normal;
+  }
+}
+
 //font size
 .app-font-s14 {
   font-size: 1.4rem !important;
