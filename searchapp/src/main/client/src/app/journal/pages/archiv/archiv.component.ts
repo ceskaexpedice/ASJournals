@@ -139,8 +139,19 @@ export class ArchivComponent implements OnInit {
         this.service.getChildren(this.currentPid).subscribe(res => {
           this.isDataNode = res[0]['datanode'];
 
-          this.cache[this.currentPid] = { items: res, parent: this.currentParent };
           this.items = res;
+          if (this.isDataNode) {
+            this.items.sort((a, b) => {
+              return a['idx'] - b['idx'];
+            });
+          } else {
+            this.items.sort((a, b) => {
+              const dateIssued1 = a.dateIssued.padStart(7, '0');
+              const dateIssued2 = b.dateIssued.padStart(7, '0');
+              return dateIssued1 - dateIssued2;
+            });
+          }
+          this.cache[this.currentPid] = { items: this.items, parent: this.currentParent };
 
           if (this.currentParent === null) {
             this.parentItems = [];
@@ -155,11 +166,6 @@ export class ArchivComponent implements OnInit {
             });
           }
 
-          if (this.isDataNode) {
-            this.items.sort((a, b) => {
-              return a['idx'] - b['idx'];
-            });
-          }
           this.setVisibleParentsItems();
 
         });
@@ -269,7 +275,7 @@ export class ArchivComponent implements OnInit {
           this.partName = mods['mods:titleInfo']['mods:partName'];
         }
       } else {
-
+console.log(mods)
 
         //podpora pro starsi mods. ne podle zadani
         if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
