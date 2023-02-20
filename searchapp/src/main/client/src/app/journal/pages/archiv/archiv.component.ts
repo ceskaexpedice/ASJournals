@@ -144,11 +144,15 @@ export class ArchivComponent implements OnInit {
             this.items.sort((a, b) => {
               return a['idx'] - b['idx'];
             });
-          } else {
+          } else if (this.currentItem.model === 'periodicalvolume'){
             this.items.sort((a, b) => {
               const dateIssued1 = a.dateIssued.padStart(7, '0');
               const dateIssued2 = b.dateIssued.padStart(7, '0');
-              return dateIssued1 - dateIssued2;
+              if (this.currentSort.dir === 'asc') {
+                return dateIssued1 - dateIssued2;
+              } else {
+                return dateIssued2 - dateIssued1;
+              }
             });
           }
           this.cache[this.currentPid] = { items: this.items, parent: this.currentParent };
