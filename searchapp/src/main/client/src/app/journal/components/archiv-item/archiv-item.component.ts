@@ -32,7 +32,6 @@ export class ArchivItemComponent implements OnInit {
 
     //let mods = res["mods:modsCollection"]["mods:mods"];
     let mods = JSON.parse(this.item['mods']);
-    console.log(this.item['model'], mods);
     if (this.item['model'] === 'periodicalvolume') {
 
       this.year = this.item.year;

@@ -43,7 +43,7 @@ export class AppService {
   findMenuItem(route: string) {
     for (let i = 0; i < this.state.config.layout.menu.length; i++) {
       const m = this.state.config.layout.menu[i];
-      if (m.route === ('/' + route)) {
+      if (route === ('/' + m.route)) {
         return m;
       } else if (m.children.length > 0) {
         for (let j = 0; j < m.children.length; j++) {
