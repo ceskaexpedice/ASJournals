@@ -301,7 +301,15 @@ export class AppService {
 
     return this.get(url, params).pipe(
       map((response: any) => {
-        return response['response']['docs'];
+        const childs = response['response']['docs'];
+        if (childs.length > 0 && !childs[0]['datanode']) {
+          childs.sort((a: any, b: any) => {
+            const dateIssued1 = a.dateIssued.padStart(7, '0');
+            const dateIssued2 = b.dateIssued.padStart(7, '0');
+              return dateIssued2 - dateIssued1;
+          });
+        }
+        return childs;
       })
     )
   }
