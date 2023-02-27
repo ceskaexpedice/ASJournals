@@ -99,14 +99,14 @@ import { User } from '../models/user';
     this._stateSubject.next(this);
   }
   
-  addFilter(field: string, value: string){
-    this.filters.push({field: field, value: value});
-    this.paramsChanged();
-  }
+  // addFilter(field: string, value: string){
+  //   this.filters.push({field: field, value: value});
+  //   this.paramsChanged();
+  // }
   
-  removeFilter(idx: number){
-    this.filters.splice(idx,1);
-    this.paramsChanged();
-  }
+  // removeFilter(idx: number){
+  //   this.filters.splice(idx,1);
+  //   this.paramsChanged();
+  // }
   
 }

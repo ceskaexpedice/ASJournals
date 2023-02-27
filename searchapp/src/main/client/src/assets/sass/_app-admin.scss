@@ -11,52 +11,72 @@ app-admin {
     .mce-tinymce {
       margin-bottom: 20px;
     }
-    
+
     .app-admin-nav {
-      > li {
+     & > li {
+        &.app-list-divider {
+          @extend .app-mt-3, .app-mb-3 !optional;
+          border-bottom: 1px solid $app-brand-l-2;
+        }
+
         &.active {
-          strong {
-            a {
-              background-color: $brand-primary;
-              color: $body-bg;
-              
-              &:hover {
-                background-color: $brand-primary;
-              }
-            }
-          } 
+          > strong > a {
+            background-color: $app-brand;
+            color: white;
+            border-radius: 4px;
+          }
         }
-        > strong {
-          > a {
-          padding: 0 7px 2px 7px;
-          border-radius: 4px;
+
+        a {
+          padding: 0 4px 2px 4px !important;
+        }     
+
+        .glyphicon {
+          @extend .app-mr-1 !optional;
+          font-size: 14px;
+          cursor: pointer;
+          color: $app-brand-d-1;
+
           &:hover {
-            background-color: $app-brand-l-4;
+            color: $gray-base;
           }
-        } 
+        }
+
+        .app-icon-position {
+          @extend .app-mr-1 !optional;
         }
       }
+
       .nav-pills {
-        > li {
-          &.active {
-            a {
-              &:hover {
-                background-color: $brand-primary;
-              }
-            }
-          }
-          a {
-            padding: 0 7px 2px 7px;
-            &:hover {
-              background-color: $app-brand-l-4;
-            }
-          }
-        }
+        list-style: none;
       }
+    }
+    
+    .row {
+      @extend .app-mb-4 !optional;
     }
   }
   
   div.form-group{
     margin-right: 10px;
   }
-}
+
+  .app-form-header {
+    display: flex;
+
+    div {
+      flex: 1 1 100%;
+
+      &:not(:last-child) {
+        @extend .app-mr-2 !optional;
+      }
+
+      .app-input-desc {
+        @extend .app-mb-1 !optional;
+        font-family: 'Roboto-Condensed';
+        font-size: 1.6rem;
+        color: $app-brand-d-2;
+      }
+    }
+  }
+ }

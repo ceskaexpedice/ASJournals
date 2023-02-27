@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Inject, Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {Observable} from 'rxjs';
 
@@ -7,6 +7,7 @@ import { AppState } from 'src/app/app.state';
 import { Journal } from 'src/app/models/journal.model';
 import { AppService } from 'src/app/services/app.service';
 import Utils from 'src/app/services/utils';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-article-viewer',
@@ -32,6 +33,7 @@ export class ArticleViewerComponent implements OnInit {
   zoom = 1.0;
 
   journal: Journal = new Journal();
+  // articles: any[] = [];
 
   siblingIndex: number = 0;
   isPrintSupported = false;
@@ -55,6 +57,7 @@ export class ArticleViewerComponent implements OnInit {
 magazine: any;
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private service: AppService,
     public state: AppState,
     private route: ActivatedRoute,
@@ -126,11 +129,11 @@ magazine: any;
             this.downloadFilename = this.pid + '.pdf';
           }
 
-          this.fullSrc = this.state.config['context'] + 'api/img?uuid=' + this.pid + '&stream=IMG_FULL&action=GETRAW';
+          this.fullSrc = this.state.config['context'] + 'api/img?uuid=' + this.pid + '&kramerius_version=' + res['kramerius_version'];
         } else {
           this.isPdf = false;
           this.downloadFilename = this.pid;
-          this.fullSrc = this.state.config['context'] + 'api/img?uuid=' + this.pid + '&stream=IMG_FULL&action=GETRAW';
+          this.fullSrc = this.state.config['context'] + 'api/img?uuid=' + this.pid + '&kramerius_version=' + res['kramerius_version'];
           this.loading = false;
         }
 
@@ -148,7 +151,8 @@ magazine: any;
               this.service.getMods(a['pid']).subscribe(mods => {
                 this.journal.mods = mods;
 
-                this.service.getArticles(a['pid']).subscribe(res => {
+                this.service.getArticles(a['pid']).subscribe((res: any) => {
+                  // this.articles = res['response']['docs'];
                   this.journal.setArticles(res, this.state.config['mergeGenres']);
                 });
                 
@@ -256,13 +260,13 @@ magazine: any;
   }
 
   url() {
-    return window.location.href;
-    //return this.router.url;
+    //return window.location.href;
+    return this.document.location.href;
   }
 
   _socialUrl() {
-    return window.location.href;
-    //return this.route.snapshot.pathFromRoot;
+    //return window.location.href;
+    return this.document.location.href;
   }
 
   facebookShare() {
@@ -286,7 +290,7 @@ magazine: any;
   getCitace(){
     this.service.getCitace(this.pid!).subscribe(resp => {
       this.citace = resp;
-      this.location = window.location.href;
+      this.location = this.document.location.href;
     });
   }
 

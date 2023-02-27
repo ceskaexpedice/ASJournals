@@ -13,6 +13,7 @@ export class Journal{
     mods: any = null;
     genres : string[] = [];
     genresObject: any = {};
+    articles : any[] = [];
     year: number = 0;
   constructor(){
     
@@ -24,6 +25,7 @@ export class Journal{
     }
     this.genresObject = {};
     let res = res1['response']['docs'];
+    this.articles = res1['response']['docs'];
     for (let j in res) {
       let art = res[j];
       if (art && art['pid']) {

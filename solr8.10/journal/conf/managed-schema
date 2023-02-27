@@ -50,6 +50,7 @@
     <field name="_version_" type="plong" indexed="false" stored="false"/>
     <field name="_root_" type="string" indexed="true" stored="false" docValues="false" />
     <field name="index_time" type="pdate" indexed="true" stored="true" default="NOW" multiValued="false" />
+    <field name="indexed_k" type="pdate" indexed="true" stored="true" multiValued="false" />
     
     <field name="pid" type="string" indexed="true" stored="true" required="true" multiValued="false" />
     <field name="root_title" type="string" indexed="false" stored="true" multiValued="false" />
@@ -60,7 +61,9 @@
     <field name="pid_paths" type="string" indexed="true" stored="true" multiValued="true"/>
     
     <field name="policy" type="string" indexed="true" stored="true" multiValued="false" />
-    
+	
+    <!-- k5, k7 -->
+    <field name="kramerius_version" type="string" indexed="true" stored="true" multiValued="false" />
     
     <field name="datanode" type="boolean" indexed="true" stored="true" multiValued="false"/>
     <field name="url_pdf" type="string" indexed="true" stored="true" multiValued="false"/>

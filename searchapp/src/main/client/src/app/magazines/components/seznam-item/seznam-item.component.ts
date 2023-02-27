@@ -31,12 +31,7 @@ export class SeznamItemComponent implements OnInit {
   
   addFilter(field: string, value: string){
     if (!this.state.isFacetUsed(field, value)){
-      this.state.addFilter(field, value);
-      if (this.route.snapshot.url[0].path.indexOf('seznam-casopisu') > -1){
-        this.service.getMagazines().subscribe();
-      } else {
-        this.router.navigate(['/seznam-casopisu'], {queryParamsHandling: "preserve"});
-      }
+      this.service.addFilter(field, value);
     }
   }
   

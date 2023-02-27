@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,6 +13,8 @@ import Utils from './utils';
 import { Subject, Observable, of, throwError } from 'rxjs';
 import { catchError, expand, map } from 'rxjs/operators';
 import { Magazine } from '../models/magazine';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { FreePageComponent } from '../journal/components/free-page/free-page.component';
 
 declare var xml2json: any;
 
@@ -28,6 +30,8 @@ export class AppService {
   public searchSubject: Observable<any> = this._searchSubject.asObservable();
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
+    @Inject(DOCUMENT) private document: Document,
     private state: AppState,
     private search: SearchService,
     private translate: TranslateService,
@@ -36,14 +40,34 @@ export class AppService {
     private route: ActivatedRoute
   ) { }
 
+  findMenuItem(route: string) {
+    for (let i = 0; i < this.state.config.layout.menu.length; i++) {
+      const m = this.state.config.layout.menu[i];
+      if (route === ('/' + m.route)) {
+        return m;
+      } else if (m.children.length > 0) {
+        for (let j = 0; j < m.children.length; j++) {
+          const m2 = m.children[j];
+          if (('/' + m.route + '/' + m2.route) === route) {
+            return m2;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   private get<T>(url: string, params: HttpParams = new HttpParams(), responseType?: any): Observable<T> {
     const options = { params, responseType, withCredentials: true };
-    return this.http.get<T>(`api/${url}`, options)
+    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
+
+    return this.http.get<T>(`${server}/api/${url}`, options)
       .pipe(catchError(err => { return this.handleError(err) }));
   }
 
   private post(url: string, obj: any, params: HttpParams = new HttpParams()) {
-    return this.http.post<any>(`api/${url}`, obj, { params })
+    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
+    return this.http.post<any>(`${server}/api/${url}`, obj, { params })
       .pipe(catchError(this.handleError));
   }
 
@@ -66,38 +90,63 @@ export class AppService {
     return this.get('texts?action=GET_CONFIG&ctx=' + ctx.ctx).pipe(
       map(res => {
         this.state.ctx = ctx;
+        if (!this.state.ctx.keywords) {
+          this.state.ctx.keywords = [];
+        }
         this.state.setConfig(res);
         this.state.config['color'] = ctx.color;
         this.state.config['journal'] = ctx.journal;
         this.state.config['showTitleLabel'] = ctx.showTitleLabel;
+        // setTimeout(() => {
+        //   console.log('switching 1')
         this.switchStyle();
+        // }, 5000);
         this.findActual();
         this.getKeywords();
         this.getGenres();
         this.state.stateChanged();
+
+        const menu = this.state.config.layout.menu;
+        menu.forEach((m: any) => {
+          const r = this.router.config.find((ro: any) => ro.path === ':ctx' && ro.children);
+          if (r && r.children && r.children.length > 0) {
+            const r1 = r.children.find((ro2: any) => ro2.path === m.route);
+            if (!r1) {
+              r.children.push({ path: m.route, component: FreePageComponent });
+            }
+            m.children.forEach((m1: any) => {
+
+
+            });
+          }
+        });
+
         return res;
       })
     )
   }
 
-  addJournal(ctx: Magazine) {
-    this.state.ctxs.push(ctx);
-    return this.get('texts?action=ADD_JOURNAL&ctxs=' + JSON.stringify(this.state.ctxs)).pipe(
-      map(res => {
-        this.state.ctx = ctx;
-        this.state.setConfig(res);
-        this.state.config['color'] = ctx.color;
-        this.state.config['journal'] = ctx.journal;
-        this.state.config['showTitleLabel'] = ctx.showTitleLabel;
-        this.switchStyle();
-        this.findActual();
-        this.getKeywords();
-        this.getGenres();
-        this.state.stateChanged();
-        return res;
-      })
-    )
-  }
+  // addJournal(ctx: Magazine) {
+  //   this.state.ctxs.push(ctx);
+  //   return this.get('texts?action=ADD_JOURNAL&ctxs=' + JSON.stringify(this.state.ctxs)).pipe(
+  //     map(res => {
+  //       this.state.ctx = ctx;
+  //       this.state.setConfig(res);
+  //       this.state.config['color'] = ctx.color;
+  //       this.state.config['journal'] = ctx.journal;
+  //       this.state.config['showTitleLabel'] = ctx.showTitleLabel;
+  //       setTimeout(() => {
+  //         console.log('switching 2')
+  //         this.switchStyle();
+  //       }, 5000);
+  //       this.findActual();
+  //       this.getKeywords();
+  //       this.getGenres();
+  //       this.state.stateChanged();
+  //       return res;
+  //     })
+  //   )
+  // }
 
 
   getCtx(ctx: string) {
@@ -113,19 +162,20 @@ export class AppService {
 
     for (let i = 0; i < this.state.ctxs.length; i++) {
       if (!this.findStyle(this.state.ctxs[i].ctx)) {
-        const link = document.createElement('link');
-        link.href = 'api/theme?ctx=' + this.state.ctxs[i].ctx + '&color=' + this.state.ctxs[i]['color'];
+        const link = this.document.createElement('link');
+        link.type = 'text/css';
+        link.href = '/api/theme?ctx=' + this.state.ctxs[i].ctx + '&color=' + this.state.ctxs[i]['color'];
         link.rel = 'stylesheet';
         link.id = 'css-theme-' + this.state.ctxs[i].ctx;
         link.title = this.state.ctxs[i].ctx!;
         link.disabled = true;
-        document.getElementsByTagName('head')[0].appendChild(link);
+        this.document.getElementsByTagName('head')[0].appendChild(link);
       }
     }
   }
 
   findStyle(theme: any) {
-    let links = document.getElementsByTagName('link');
+    let links = this.document.getElementsByTagName('link');
     for (let i = 0; i < links.length; i++) {
       let link = links[i];
       if (link.rel.indexOf('stylesheet') != -1 && link.title) {
@@ -140,16 +190,17 @@ export class AppService {
   switchStyle() {
     let exists: boolean = this.findStyle(this.state.ctx!.ctx);
     if (!exists) {
-      const link = document.createElement('link');
-      link.href = 'theme?ctx=' + this.state.ctx!.ctx + '&color=' + this.state.config['color']; // insert url in between quotes
+      const link = this.document.createElement('link');
+      link.href = '/api/theme?ctx=' + this.state.ctx!.ctx + '&color=' + this.state.config['color']; // insert url in between quotes
       link.rel = 'stylesheet';
+      link.type = 'text/css';
       link.id = 'css-theme-' + this.state.ctx!.ctx;
       link.title = this.state.ctx?.ctx!;
-      link.disabled = false;
-      document.getElementsByTagName('head')[0].appendChild(link);
+      link.disabled = true;
+      this.document.getElementsByTagName('head')[0].appendChild(link);
     }
 
-    let links = document.getElementsByTagName('link');
+    let links = this.document.getElementsByTagName('link');
     for (let i = 0; i < links.length; i++) {
       let link = links[i];
       if (link.rel.indexOf('stylesheet') != -1 && link.title) {
@@ -246,30 +297,38 @@ export class AppService {
   getChildren(pid: string, dir: string = 'desc'): Observable<any> {
     let url = 'api/search/journal/select';
     const params = new HttpParams().set('q', '*:*').set('fq', 'parents:"' + pid + '"')
-      .set('wt', 'json').set('sort', 'idx ' + dir).set('rows', '500');
+      .set('wt', 'json').set('sort', 'year ' + dir + ',dateIssued ' + dir + ',idx ' + dir).set('rows', '500');
 
     return this.get(url, params).pipe(
       map((response: any) => {
-        return response['response']['docs'];
+        const childs = response['response']['docs'];
+        if (childs.length > 0 && !childs[0]['datanode']) {
+          childs.sort((a: any, b: any) => {
+            const dateIssued1 = a.dateIssued.padStart(7, '0');
+            const dateIssued2 = b.dateIssued.padStart(7, '0');
+              return dateIssued2 - dateIssued1;
+          });
+        }
+        return childs;
       })
     )
   }
 
-  
+
 
   getPeriodicalItems(pid: string) {
     let url = 'search/journal/select';
     const params = new HttpParams()
-    .set('q', '*')
-    .append('fq', 'model:periodicalitem')
-    .append('fq', `root_pid:"${pid}"`)
+      .set('q', '*')
+      .append('fq', 'model:periodicalitem')
+      .append('fq', `root_pid:"${pid}"`)
       .set('wt', 'json')
       .set('rows', '500')
       .set('fl', '*,mods:[json]')
       .set('sort', 'idx asc, year asc');
 
     return this.get(url, params);
-    
+
   }
 
   //  getActual(): Observable<Journal> {
@@ -403,20 +462,20 @@ export class AppService {
       genre !== 'advertisement' &&
       genre !== 'colophon';
   }
-  
+
 
   getArticles(pid: string): Observable<any[]> {
 
-      let url = this.state.config['context'] + 'search/journal/select';
-      const params = new HttpParams()
-        .set('q', '*:*')
-        .set('fq', 'parents:"' + pid + '"')
-        .set('wt', 'json')
-        .set('sort', 'idx asc')
-        .set('rows', '500');
+    let url = this.state.config['context'] + 'search/journal/select';
+    const params = new HttpParams()
+      .set('q', '*:*')
+      .set('fq', 'parents:"' + pid + '"')
+      .set('wt', 'json')
+      .set('sort', 'idx asc')
+      .set('rows', '500');
 
-      return this.get(url, params);
-    }
+    return this.get(url, params);
+  }
 
   getArticles2(pid: string): Observable<any[]> {
     const getRange = (pid: string): Observable<any> => {
@@ -496,21 +555,6 @@ export class AppService {
       .set('action', 'SET_VIEW')
       .set('pid', pid);
     return this.get(url, params);
-
-
-    //    let url = this.state.config['context'] + 'search/views/update';
-    //    let headers = new Headers({ 'Content-Type': 'application/json' });
-    //    let options = new RequestOptions({ headers: headers });
-    //    let add = { add: { doc: {}, commitWithin: 10 } };
-    //    let body = add['add']['doc'];
-    //    body['pid'] = pid;
-    //    body['views'] = { 'inc': 1 };
-
-    //    return this.http.post(url, JSON.stringify(add), options)
-    //      .map((response: Response) => {
-    //        return response.json();
-    //
-    //      });
   }
 
   getViewed(pid: string): Observable<number> {
@@ -604,9 +648,9 @@ export class AppService {
     )
   }
 
-  saveText(id: string, text: string, menu: string | null = null): Observable<string> {
+  saveText(id: string, text: string, menu: string): Observable<string> {
 
-    //var url = 'texts?action=SAVE&id=' + id + '&lang=' + this.state.currentLang;
+    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
     let url = 'texts';
 
     let params = new HttpParams()
@@ -616,15 +660,19 @@ export class AppService {
       .set('lang', this.state.currentLang)
       .set('ctx', this.state.ctx?.ctx!);
 
-    if (menu) {
-      params = params.set('menu', menu);
-      //url += '&menu=' + menu;
-    }
+    // if (menu) {
+    //   params = params.set('menu', menu);
+    // }
 
-    const headers = new HttpHeaders({ 'Content-Type': 'text/plain;charset=UTF-8' });
-    const options = { headers: headers, params: params };
+    const body: any = { text: text, menu: menu }
 
-    return this.http.post<string>(url, text, options);
+    //const headers = new HttpHeaders({ 'Content-Type': 'text/plain;charset=UTF-8' });
+    //const options = { headers: headers, params: params };
+
+    //return this.http.post<string>(url, text, options);
+
+
+    return this.post(url, body, params);
 
 
   }
@@ -657,10 +705,10 @@ export class AppService {
 
     var url = 'index';
     let params = new HttpParams()
-      .set('action', 'SAVE_MAGAZINE')
-      .set('mag', JSON.stringify(mag));
+      .set('action', 'SAVE_MAGAZINE');
+    //  .set('mag', JSON.stringify(mag));
 
-    return this.get(url, params);
+    return this.post(url, mag, params);
   }
 
   resetPwd(username: string, newpwd: string) {
@@ -673,8 +721,11 @@ export class AppService {
     return this.post(url, user, params);
   }
 
-  index(uuid: string) {
+  index(uuid: string, isK7: boolean) {
     let url = 'index?action=INDEX_DEEP&pid=' + uuid;
+    if (isK7) {
+      url += '&kramerius_version=k7';
+    }
 
     return this.get(url).pipe(
       map((response: any) => {

@@ -4,6 +4,9 @@ export class Magazine {
   color: string | undefined = undefined;
   showTitleLabel: boolean = false;
   showOldYears: boolean = true;
+  showExtLink: boolean = false;
+  extLinkUrl: string = '';
+  extLinkText: string = '';
   licence:string = '';
   licences:string | undefined = undefined;
   
@@ -21,4 +24,9 @@ export class Magazine {
   desc: string | undefined = undefined;
   desc_en: string | undefined = undefined;
   web: string | undefined = undefined;
+  kramerius_version: string | undefined = undefined;
+  isK7: boolean = false;
+  sortByOrder: boolean = false;
+  keepLang: boolean = false;
+  checkUpdates: boolean = false;
 }

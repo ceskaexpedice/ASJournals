@@ -1,8 +1,10 @@
 import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY_PROVIDER_FACTORY } from '@angular/cdk/overlay/overlay-directives';
-import {Component, OnInit} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {ActivatedRoute, Params, Router, NavigationEnd, NavigationStart} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
 import {AppState} from '../app.state';
+import { AppWindowRef } from '../app.window-ref';
 import { AppService } from '../services/app.service';
 
 @Component({
@@ -32,6 +34,8 @@ export class ContextsComponent implements OnInit {
   theClass: string = '';
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
+    private windowRef: AppWindowRef,
     public state: AppState,
     private service: AppService,
     private router: Router,
@@ -63,11 +67,13 @@ export class ContextsComponent implements OnInit {
   }
 
   initApp() {
-    let userLang;
+    let userLang = 'cs';
     if (this.route.snapshot.queryParams['lang']){
       userLang = this.route.snapshot.queryParams['lang'];
     } else {
-      userLang = navigator.language.split('-')[0]; // use navigator lang if available
+      if (isPlatformBrowser(this.platformId)) {
+        userLang = this.windowRef.nativeWindow.navigator.language.split('-')[0]; // use navigator lang if available
+      }
       userLang = /(cs|en)/gi.test(userLang) ? userLang : 'cs';
       if (this.state.config.hasOwnProperty('defaultLang')) {
         userLang = this.state.config['defaultLang'];
@@ -76,11 +82,11 @@ export class ContextsComponent implements OnInit {
     this.service.changeLang(userLang);
     //this.setCtx(false);
     
-    setTimeout(() => {
+    //setTimeout(() => {
       this.processUrl();
       this.hasContext = true;
       this.state.stateChanged();
-    }, 500);
+    //}, 500);
 
   }
 

@@ -138,10 +138,10 @@ public class JsassServlet extends HttpServlet {
    */
   private Collection<Import> doImport(String url1, Import previous) {
     try {
-      //LOGGER.info("importing " + url1);
+      LOGGER.info("importing " + url1);
       //LOGGER.info("previous.getAbsoluteUri() " + previous.getAbsoluteUri().getPath());
       //LOGGER.info("previous getImportUri  " + previous.getImportUri());
-String url = url1;
+      String url = url1;
       if (!url.startsWith("/")) {
         url = "/" + url;
       }
@@ -163,7 +163,7 @@ String url = url1;
         final String previousPath = previous.getAbsoluteUri().getPath().substring(1);
         //LOGGER.info("previousPath " + previousPath.toString());
         try {
-          LOGGER.fine("resolve " + Paths.get(previousPath).toString());
+          LOGGER.info("resolve " + Paths.get(previousPath).toString());
         } catch (InvalidPathException ee) {
           LOGGER.log(Level.SEVERE, null, ee);
         }
@@ -251,7 +251,7 @@ String url = url1;
             return resource;
           }
         } catch (Exception eee) {
-          LOGGER.fine("no resource " + eee.toString());
+          LOGGER.info("no resource " + eee.toString());
         }
       }
     }

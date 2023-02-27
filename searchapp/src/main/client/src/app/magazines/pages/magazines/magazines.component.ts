@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router, NavigationStart, NavigationEnd } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http';
@@ -7,6 +7,8 @@ import { MagazinesService } from '../../magazines.service';
 import { map } from 'rxjs/operators';
 import { AppState } from 'src/app/app.state';
 import { AppConfiguration } from 'src/app/app-configuration';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { AppWindowRef } from 'src/app/app.window-ref';
 
 @Component({
   selector: 'magazines-root',
@@ -16,6 +18,9 @@ import { AppConfiguration } from 'src/app/app-configuration';
 export class MagazinesComponent implements OnInit {
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
+    @Inject(DOCUMENT) private document: Document,
+    private windowRef: AppWindowRef,
     public config: AppConfiguration,
     public state: MagazineState,
     private service: MagazinesService,
@@ -25,7 +30,7 @@ export class MagazinesComponent implements OnInit {
 
   }
   setStyles() {
-    var links = document.getElementsByTagName('link');
+    var links = this.document.getElementsByTagName('link');
     for (var i = 0; i < links.length; i++) {
       var link = links[i];
       if (link.rel.indexOf('stylesheet') != -1 && link.title) {
@@ -44,7 +49,10 @@ export class MagazinesComponent implements OnInit {
       
       this.state.setConfig(this.config.config);
       // this.state.ctxs
-      var userLang = navigator.language.split('-')[0]; // use navigator lang if available
+      var userLang = 'cs';
+      if (isPlatformBrowser(this.platformId)) {
+        userLang = this.windowRef.nativeWindow.navigator.language.split('-')[0]; // use navigator lang if available
+      }
       userLang = /(cs|en)/gi.test(userLang) ? userLang : 'cs';
       userLang = this.config.defaultLang;
       this.service.changeLang(userLang);

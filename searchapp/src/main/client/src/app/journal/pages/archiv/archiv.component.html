@@ -75,6 +75,9 @@
         <p *ngIf="state.ctx?.showOldYears && isRoot()">
           {{'Starší ročníky najdete v' | translate}} <a [href]="state.ctx?.k5url! + state.config?.journal!" [title]="'k5_title' | translate" target="_blank">{{'Digitální knihovně AV ČR' | translate}}</a>
         </p>
+        <p *ngIf="state.ctx?.showExtLink && isRoot()">
+          <a [href]="state.ctx?.extLinkUrl" [title]="state.ctx?.extLinkText" target="_blank"><i class="glyphicon glyphicon-new-window"></i>&#160;{{ state.ctx?.extLinkText }}</a>
+        </p>
       </div><!--/.col -->
     </div><!--./row -->
   </div><!--/.container -->

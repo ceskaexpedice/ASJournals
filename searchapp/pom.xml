@@ -84,7 +84,7 @@
               <workingDirectory>${project.basedir}/src/main/client</workingDirectory>  
               <arguments>
                 <argument>run</argument>
-                <argument>build.prod</argument>
+                <argument>build:ssr</argument>
               </arguments>
             </configuration>
             <goals>
@@ -102,13 +102,6 @@
             <fileset>
               <directory>${project.basedir}/src/main/webapp</directory>
               <includes>
-              <!--
-                <include>*.bundle.css</include>
-                <include>*.js</include>
-                <include>*.bundle.js.gz</include>
-                <include>*.bundle.map</include>
-                <include>index.html</include>
-              -->
                 <include>assets/*/**</include>
                 <include>*.*</include>
               </includes>
@@ -139,7 +132,7 @@
               <outputDirectory>${project.basedir}/src/main/webapp</outputDirectory>
               <resources>
                 <resource>
-                  <directory>src/main/client/dist/client</directory>
+                  <directory>src/main/client/dist</directory>
                   <includes>
                     <include>*/**</include>
                   </includes>
@@ -148,7 +141,7 @@
             </configuration>
           </execution>
           
-          <execution>
+<!--          <execution>
             <id>copy-bootstrap-sass</id>
             <phase>generate-resources</phase>
             <goals>
@@ -184,35 +177,14 @@
                 </resource>
               </resources>
             </configuration>
-          </execution>
-          
-          
-          <!--
-          <execution>
-            <id>copy-app.js</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.basedir}/src/main/webapp/app/assets/js/</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>src/main/ngClient/src/app/assets/js</directory>
-                  <includes>
-                    <include>*/**</include>
-                  </includes>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-          -->
+          </execution>-->
     
         </executions>
         <configuration>
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
+
     
       <!-- Insert jsp pageEncoding tag to index.html -->
       <plugin> 
@@ -229,10 +201,10 @@
             <configuration> 
               <file>${project.basedir}/src/main/webapp/index.html</file> 
               <replacements> 
-                <replacement> 
+<!--                <replacement> 
                   <token>&lt;!doctype html&gt;</token> 
                   <value>&lt;%@page contentType="text/html" pageEncoding="UTF-8"%&gt;&lt;!doctype html&gt;</value> 
-                </replacement> 
+                </replacement> -->
                 <replacement> 
                   <token>base href="/"</token> 
                   <value>base href="${context.name}"</value> 

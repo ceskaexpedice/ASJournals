@@ -25,7 +25,7 @@
 	"menu": {
 		"home_": "Home",
 		"db_": "Databases",
-		"footer": "Footer",
+		"footer_": "Footer",
 		"home": {
 			"home_": "Home",
 			"news_": "News"
@@ -64,7 +64,10 @@
 		"kontakt_": "Contact",
 		"e-shop_": "E-shop",
 		"admin_": "Administration",
-		"prihlaseni_": "Login"
+		"prihlaseni_": "Login",
+		"url": "Path in URL",
+		"cs": "Czech label in menu",
+		"en": "English label in menu"
 	},
 	"ARCHIV STARŠÍCH ROČNÍKŮ": "ARCHIVE",
 	"PROHLÍŽET CELÉ ČÍSLO": "VIEW", 
@@ -152,12 +155,20 @@
 	"admin" : {
 		"Upload": "Upload",
 		"Files": "Files",
-		"Save_selected_pages": "Save selected pages",
+		"save_menu": "Save menu",
+		"add_menu": "Add item",
+		"add_child": "Add child",
+		"remove_child": "Remove child",
 		"add_uuid": "Add uuid",
 		"cover": "Cover",
 		"Indexing": "Indexing",
 		"delete_uuid": "Delete UUID",
-		"confirm_delete": "Confirm deleted"
+		"confirm_delete": "Confirm deleted",
+		"sort": "Articles sorting",
+		"by_genre": "genre",
+		"by_order": "order",
+		"keepLang": "Keep articles titles",
+		"insertLink": "Insert link to file"
 	},
 	"a zároveň": "AND",
 	"nebo": "OR",
@@ -173,6 +184,7 @@
 		"kontakt": "Contact",
 		"administrace": "Administration",
 		"prihlasit": "Login",
+		"prihlasit_tooltip": "For Magazines administrators",
 		"prihlaseni_do_administrace": "Login to the administration",
 		"uzivatel": "User",
 		"heslo": "Password",
@@ -233,6 +245,12 @@
 		"zavrit": "Close",
 		"zobrazit_cisla": "Show numbers",
 		"skryt_cisla": "Hide numbers",
-		"nove_heslo": "New password"
+		"nove_heslo": "New password",
+		"isK7": "Kramerius 7",
+		"checkUpdates": "Auto updates",
+		"save": "Save",
+		"showExtLink": "Show external link",
+		"extLinkUrl": "External link URL",
+		"extLinkText": "External link text"
 	}
 }

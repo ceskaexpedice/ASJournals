@@ -191,14 +191,17 @@ export class AdminMagazinesComponent implements OnInit {
 
 
   save() {
-    if (this.currentMag?.ctx === '') {
+    if (!this.currentMag || this.currentMag.ctx === '') {
       //error
       alert('Context is required');
       return;
     }
+    this.currentMag.kramerius_version = this.currentMag.isK7 ? 'k7' : 'k5';
+
     this.service.saveMagazine(this.currentMag!).subscribe(res => {
       this.service.getMagazines().subscribe(res2 => {
         this.state.ctxs = res2['response']['docs'];
+        this.state.ctxs.forEach((m: Magazine) => m.isK7 = m.kramerius_version === 'k7');
         this.service.showSnackBar('Saved success!');
       });
     });

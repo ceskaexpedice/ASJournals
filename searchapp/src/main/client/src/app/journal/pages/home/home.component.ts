@@ -19,6 +19,8 @@ export class HomeComponent implements OnInit {
   volumeNumber: string | null = null;
   issueNumber: string | null = null;
   partName: string | null = null;
+  supplement: string | null = null;
+  home_text: string = '';
 
   constructor(
     private service: AppService,
@@ -30,13 +32,24 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.home_text = this.state.config.home; 
     this.setData();
-
+    //this.service.getText('home').subscribe(t => this.home_text = t);
     this.state.stateChangedSubject.subscribe(
       () => {
         this.setData();
       }
     );
+  }
+
+  showDb() {
+    const db =  this.state.config.layout.pages.find((m:any) => m.route === 'db');
+    return db && db.visible
+  }
+
+  showNews() {
+    const db =  this.state.config.layout.pages.find((m:any) => m.route === 'news');
+    return db && db.visible
   }
 
   setData() {
@@ -107,6 +120,14 @@ export class HomeComponent implements OnInit {
           }
         }
 
+      } else if (this.actual.model === 'supplement') {
+        if (mods['mods:titleInfo']) {
+          if (mods['mods:titleInfo'].hasOwnProperty('length')) {
+            this.supplement = mods['mods:titleInfo'][0]['mods:partName'];
+          } else {
+            this.supplement = mods['mods:titleInfo']['mods:partNumber'];
+          }
+        }
       }
     } else if (this.actual?.pid) {
       // this.appService.getMods(this.actual?.pid!).subscribe(mods => {

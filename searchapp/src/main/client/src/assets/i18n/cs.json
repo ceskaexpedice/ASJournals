@@ -25,7 +25,7 @@
 	"menu": {
 		"home_": "Hlavní stránka",
 		"db_": "Zařazení v databázích",
-		"footer": "Patička",
+		"footer_": "Patička",
 		"home": {
 			"home_": "Hlavní stránka",
 			"news_": "Aktuálně"
@@ -64,7 +64,10 @@
 		"kontakt_": "Kontakt",
 		"e-shop_": "E-shop",
 		"admin_": "Administrace",
-		"prihlaseni_": "Přihlášení"
+		"prihlaseni_": "Přihlášení",
+		"url": "Cesta v URL",
+		"cs": "Český název v menu",
+		"en": "Anglický název v menu"
 	},
 	"ARCHIV STARŠÍCH ROČNÍKŮ": "ARCHIV STARŠÍCH ROČNÍKŮ",
 	"PROHLÍŽET CELÉ ČÍSLO": "PROHLÍŽET",
@@ -152,12 +155,20 @@
 	"admin": {
 		"Upload": "Nahrát",
 		"Files": "Soubory",
-		"Save_selected_pages": "Uložit výběr stran",
+		"save_menu": "Uložit menu",
+		"add_menu": "Přidat položku",
+		"add_child": "Přidat podrubriku",
+		"remove_child": "Smazat podrubriku",
 		"add_uuid": "Přidat uuid",
 		"cover": "Obálka",
 		"Indexing": "Indexing",
 		"delete_uuid": "Smazat UUID",
-		"confirm_delete": "Potvrdit smazání"
+		"confirm_delete": "Potvrdit smazání",
+		"sort": "Řazení článků",
+		"by_genre": "rubriky",
+		"by_order": "pořadí",
+		"keepLang": "Nechat názvy článků",
+		"insertLink": "Vložit odkaz na soubor"
 	},
 	"a zároveň": "a zároveň",
 	"nebo": "nebo",
@@ -173,6 +184,7 @@
 		"kontakt": "Kontakt",
 		"administrace": "Administrace",
 		"prihlasit": "Přihlásit",		
+		"prihlasit_tooltip": "Pro administrátora celého webu",	
 		"prihlaseni_do_administrace": "Přihlášení do administrace",
 		"uzivatel": "Uživatel",
 		"heslo": "Heslo",
@@ -181,7 +193,7 @@
 		"odhlasit": "Odhlásit",
 		"casopisy": "Časopisy",
 		"editori": "Editoři",
-		"sprava_uzivatelu": "Spáva uživatelů",
+		"sprava_uzivatelu": "Správa uživatelů",
 		"pridat_casopis": "Přidat časopis",
 		"ulozit_casopis": "Uložit časopis",
 		"smazat_casopis": "Smazat časopis",
@@ -204,7 +216,7 @@
 		"popis_angl": "Popis anglicky",
 		"pridat_editora": "Přidat editora",
 		"id": "Id",
-		"typ": "Tyo",
+		"typ": "Typ",
 		"jmeno": "Jméno",
 		"web": "Web",
 		"adresa": "Adresa",
@@ -233,6 +245,12 @@
 		"zavrit": "Zavřít",
 		"zobrazit_cisla": "Zobrazit čísla",
 		"skryt_cisla": "Skrýt čísla",
-		"nove_heslo": "Nové heslo"
+		"nove_heslo": "Nové heslo",
+		"isK7": "Kramerius 7",
+		"checkUpdates": "Automatická kontrola nových čísel/ročníků",
+		"save": "Uložit",
+		"showExtLink": "Ukázat externí odkaz",
+		"extLinkUrl": "URL na externí odkaz",
+		"extLinkText": "Text pro externí odkaz"
 	}
 }

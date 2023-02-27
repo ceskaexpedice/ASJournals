@@ -30,7 +30,7 @@ export class AppState {
   //Holds client configuration
   config: any;
   //ctx: {ctx: string, color: string, journal: string, showTitleLabel: boolean, licence:string};
-  ctx: Magazine | null = null;
+  ctx: Magazine | null | undefined= null;
 
   //ctxs: {ctx: string, color: string, journal: string, showTitleLabel: boolean, licence:string}[];
   ctxs: Magazine[] = [];
@@ -129,7 +129,7 @@ export class AppState {
     this.currentSort = cfg[0];
     this.krameriusUrl = this.config['k5'] + this.config['journal'];
 
-    this.imgSrc = this.config['context'] + 'api/img?obalka=true&ctx=' + this.ctx?.ctx + '&uuid=' + this.config['journal'] + '&stream=IMG_THUMB&action=SCALE&scaledWidth=220';
+    this.imgSrc = this.config['context'] + 'api/img?obalka=true&ctx=' + this.ctx?.ctx + '&uuid=' + this.config['journal'] + '&kramerius_version=' + (this.ctx?.isK7 ? 'k7' : 'k5') + '&thumb=true';
 
     this._configSubject.next(cfg);
   }
@@ -154,6 +154,7 @@ export class AppState {
   //params
   setJournals(res: any) {
     this.ctxs = res['response']['docs'];
+    this.ctxs.forEach((m: Magazine) => m.isK7 = m.kramerius_version === 'k7');
     //this.ctxs = res["journals"];
     //this.ctx = this.ctxs[0];
     this._journalsSubject.next(this);

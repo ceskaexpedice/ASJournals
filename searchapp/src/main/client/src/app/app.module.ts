@@ -14,10 +14,10 @@ import { SearchService } from './services/search.service';
 import { MagazinesModule } from './magazines/magazines.module';
 import { JournalModule } from './journal/journal.module';
 import { AppConfiguration } from './app-configuration';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+import {TransferHttpCacheModule} from '@nguniversal/common';
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, '/api/assets/i18n/', '.json');
 }
 
 @NgModule({
@@ -25,7 +25,9 @@ export function createTranslateLoader(http: HttpClient) {
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    // BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'K5Journals' }),
+    TransferHttpCacheModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -40,7 +42,7 @@ export function createTranslateLoader(http: HttpClient) {
     JournalModule,
   ],
   providers: [
-    AppState, AppConfiguration, HttpClient, 
+    AppState, AppConfiguration, HttpClient,
     { provide: APP_INITIALIZER, useFactory: (config: AppConfiguration) => () => config.load(), deps: [AppConfiguration], multi: true },
       AppService, SearchService, AuthGuard, TranslateService],
   bootstrap: [AppComponent]

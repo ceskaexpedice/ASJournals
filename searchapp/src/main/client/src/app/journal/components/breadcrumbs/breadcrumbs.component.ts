@@ -13,10 +13,10 @@ import { AppService } from 'src/app/services/app.service';
 export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
-  
-  page : string = 'home';
-  params : string = '';
-  
+
+  page: string = 'home';
+  params: string = '';
+
   crumbs: any = [];
 
   constructor(private state: AppState,
@@ -49,38 +49,42 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     });
     this.subscriptions = [];
   }
-  
-  setPage(url: string){
+
+  setPage(url: string) {
     this.page = url.split(";")[0];
     //page is /k5journals/journal/dalsi/veci
     this.page = this.page.split("/").slice(1).join("/");
-    if (url.split(";").length > 1){
+    if (url.split(";").length > 1) {
       this.params = url.split(";")[1];
     } else {
       this.params = '';
     }
   }
-  
-  setCrumbs(){
+
+  setCrumbs() {
     this.crumbs = [];
-    this.crumbs.push({link: 'home', label: 'menu.home_'});
-    
-    if(this.page === 'home'){
-      
-    } else if(this.page.indexOf('article') === 0){
-      
-//    } else if(this.page.indexOf('hledat') === 0){
-//      
-//      console.log(this.route.snapshot);
-//      console.log(this.route.snapshot.children[0].url[0].path);
-      
-    } else if (this.page !== 'search'){
+    this.crumbs.push({ link: 'home', label: this.appService.translateKey('menu.home_') });
+
+    if (this.page === '') {
+
+    } else if (this.page === 'home') {
+
+    } else if (this.page.indexOf('article') === 0) {
+
+    } else if (this.page !== 'search') {
       let parts = this.page.split('?')[0].split('/');
-      for (let s = 0; s < parts.length; s++){
-        let link = parts.slice(0, s+1);
-        this.crumbs.push({link: link.join('/'), label: 'menu.'+link.join('.')+'_'});
+      for (let s = 0; s < parts.length; s++) {
+        let link = parts.slice(0, s + 1);
+        let label = '';
+        let mi = this.appService.findMenuItem('/' + link.join('/'));
+        if (mi === null) {
+          label = this.appService.translateKey('menu.' + link.join('.') + '_');
+        } else {
+          label = mi[this.state.currentLang]
+        }
+        this.crumbs.push({ link: link.join('/'), label });
       }
-    } 
+    }
   }
 
 }

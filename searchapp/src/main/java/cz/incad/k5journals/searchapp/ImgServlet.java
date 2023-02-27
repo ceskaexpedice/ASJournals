@@ -15,6 +15,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.json.JSONException;
 
 /**
@@ -37,13 +41,14 @@ public class ImgServlet extends HttpServlet {
   protected void processRequest(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
     try {
-
+      response.addHeader("Access-Control-Allow-Origin", "*");
       if (request.getParameter("obalka") != null) {
 
         String ctx = request.getParameter("ctx");
         String path = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "cover.jpeg";
         File f = new File(path);
         if (f.exists()) {
+          response.setHeader("content-type", "image/jpeg");
           try (OutputStream out = response.getOutputStream()) {
             // response.setContentType("image/jpeg");
             BufferedImage bi = ImageIO.read(f);
@@ -78,25 +83,57 @@ public class ImgServlet extends HttpServlet {
   }
 
   private void getFromUrl(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    //response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-    response.addHeader("Access-Control-Allow-Methods", "GET, POST");
-    response.addHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+    // Check if uuid is in our index
     Options opts = Options.getInstance();
+    String pid = request.getParameter("uuid");
+    try (SolrClient solr = new HttpSolrClient.Builder(String.format("%s%s",
+            opts.getString("solr.host", "http://localhost:8983/solr/"),
+            "journal")).build()) {
+      String q = "pid:\"" + pid + "\"";
+      long num = solr.query(new SolrQuery(q)).getResults().getNumFound();
+      if (num == 0) {
+        LOGGER.log(Level.WARNING, "Not in index {0}", pid);
+        return;
+      }
+    } catch (SolrServerException | IOException ex) {
+      LOGGER.log(Level.SEVERE, null, ex);
+      return;
+    }
+ 
+    //response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+//    response.addHeader("Access-Control-Allow-Methods", "GET, POST");
+//    response.addHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    String imgPoint;
 
-    String solrhost = opts.getString("img.point", "http://localhost:8080/search/img");
-    //        + request.getPathInfo();
-    if (request.getQueryString() != null && !request.getQueryString().equals("")) {
-      solrhost += "?" + request.getQueryString();
+    String thumb = request.getParameter("thumb");
+      if (thumb != null) {
+        response.setContentType("image/jpeg");
+      } else {
+        response.setContentType("application/pdf");
+      }
+      
+    if ("k7".equals(request.getParameter("kramerius_version"))) {
+      imgPoint = opts.getString("api.point.k7")
+              + "/items/" + pid + "/image";
+      if (thumb != null) {
+        imgPoint += "/thumb"; 
+      }
+    } else {
+      imgPoint = opts.getString("img.point");
+      imgPoint += "?uuid=" + pid;
+      if (thumb != null) {
+        imgPoint += "&stream=IMG_THUMB&action=SCALE&scaledHeight=140";
+      } else {
+        imgPoint += "&stream=IMG_FULL&action=GETRAW";
+      }
     }
 
-    LOGGER.log(Level.INFO, "requesting url {0}", solrhost);
+    LOGGER.log(Level.FINE, "requesting url {0}", imgPoint);
     Map<String, String> reqProps = new HashMap<>();
-//    reqProps.put("Content-Type", "application/json");
-//    reqProps.put("Accept", "application/json");
-    InputStream inputStream = RESTHelper.inputStream(solrhost, reqProps);
+    InputStream inputStream = RESTHelper.inputStream(imgPoint, reqProps);
+    
     org.apache.commons.io.IOUtils.copy(inputStream, response.getOutputStream());
-    //out.print(org.apache.commons.io.IOUtils.toString(inputStream, "UTF8"));
 
   }
 

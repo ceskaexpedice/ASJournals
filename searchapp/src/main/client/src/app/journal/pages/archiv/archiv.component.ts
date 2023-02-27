@@ -43,7 +43,7 @@ export class ArchivComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+
     this.route.params
       .subscribe((params: Params) => {
         if (params.pid) {
@@ -87,8 +87,15 @@ export class ArchivComponent implements OnInit {
   setSort(s: any) {
     this.currentSort = s;
     let x = s.dir === 'asc' ? 1 : -1;
+
     this.items.sort((a, b) => {
-      return (a['idx'] - b['idx']) * x;
+      // return (a['idx'] - b['idx']) * x;
+      if (a['model'] === 'periodicalvolume') {
+        return (a['year'] - b['year']) * x;
+      } else {
+        return (a['idx'] - b['idx']) * x;
+      }
+
     });
   }
 
@@ -132,8 +139,23 @@ export class ArchivComponent implements OnInit {
         this.service.getChildren(this.currentPid).subscribe(res => {
           this.isDataNode = res[0]['datanode'];
 
-          this.cache[this.currentPid] = { items: res, parent: this.currentParent };
           this.items = res;
+          if (this.isDataNode) {
+            this.items.sort((a, b) => {
+              return a['idx'] - b['idx'];
+            });
+          } else if (this.currentItem.model === 'periodicalvolume'){
+            this.items.sort((a, b) => {
+              const dateIssued1 = a.dateIssued.padStart(7, '0');
+              const dateIssued2 = b.dateIssued.padStart(7, '0');
+              if (this.currentSort.dir === 'asc') {
+                return dateIssued1 - dateIssued2;
+              } else {
+                return dateIssued2 - dateIssued1;
+              }
+            });
+          }
+          this.cache[this.currentPid] = { items: this.items, parent: this.currentParent };
 
           if (this.currentParent === null) {
             this.parentItems = [];
@@ -148,11 +170,6 @@ export class ArchivComponent implements OnInit {
             });
           }
 
-          if (this.isDataNode) {
-            this.items.sort((a, b) => {
-              return a['idx'] - b['idx'];
-            });
-          }
           this.setVisibleParentsItems();
 
         });
@@ -195,6 +212,20 @@ export class ArchivComponent implements OnInit {
       for (let i = start; i < end; i++) {
         this.visibleParentItems.push(this.parentItems[i]);
       }
+
+      let x = this.currentSort.dir === 'asc' ? 1 : -1;
+
+      this.visibleParentItems.sort((a, b) => {
+        // return (a['idx'] - b['idx']) * x;
+        if (a['model'] === 'periodicalvolume') {
+          return (a['year'] - b['year']) * x;
+        } else {
+          return (a['idx'] - b['idx']) * x;
+        }
+
+      });
+
+
     }
   }
 
@@ -248,7 +279,7 @@ export class ArchivComponent implements OnInit {
           this.partName = mods['mods:titleInfo']['mods:partName'];
         }
       } else {
-
+console.log(mods)
 
         //podpora pro starsi mods. ne podle zadani
         if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
@@ -263,8 +294,8 @@ export class ArchivComponent implements OnInit {
   }
 
 
-  img(pid: string) {
-    return this.state.config['context'] + 'api/img?uuid=' + pid + '&stream=IMG_THUMB&action=SCALE&scaledHeight=140';
+  img(pid: string, kramerius_version: string) {
+    return this.state.config['context'] + 'api/img?uuid=' + pid + '&kramerius_version=' + kramerius_version + '&thumb=true';
   }
 
 }

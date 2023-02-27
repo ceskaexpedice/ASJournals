@@ -18,7 +18,7 @@ export class FreePageComponent implements OnInit {
   routeObserver: Subscription = new Subscription;
 
   text: string = '';
-  id: string | null = null;
+  page: string | null = null;
   img: string | null = null;
 
   constructor(public state: AppState,
@@ -28,16 +28,15 @@ export class FreePageComponent implements OnInit {
   ngOnInit() {
     this.setImg();
     const url = this.router.url.substring(1);
-    this.id = url.substring(url.indexOf(this.state.ctx?.ctx!) + this.state.ctx?.ctx?.length!);
-    this.id = this.id.split('?')[0]; // remove lang param
+    let route = url.substring(url.indexOf(this.state.ctx?.ctx!) + this.state.ctx?.ctx?.length!);
+    route = route.split('?')[0]; // remove lang param
     
-
-    this.appService.getText(this.id).subscribe(t => this.text = t);
-    this.langObserver = this.appService.langSubject.subscribe(
-      () => {
-        //this.appService.getText(this.id).subscribe(t => this.text = t);
-      }
-    );
+    this.setPage(route);
+    // this.langObserver = this.appService.langSubject.subscribe(
+    //   () => {
+    //     this.appService.getText(this.id).subscribe(t => this.text = t);
+    //   }
+    // );
 
     this.stateObserver = this.state.stateChangedSubject.subscribe(
       () => {
@@ -48,18 +47,48 @@ export class FreePageComponent implements OnInit {
     this.routeObserver = this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
         const url = this.router.url.substring(1);
-        this.id = url.substring(url.indexOf(this.state.ctx?.ctx!) + this.state.ctx?.ctx?.length!);
-        this.id = this.id.split('?')[0]; // remove lang param
+        let route = url.substring(url.indexOf(this.state.ctx?.ctx!) + this.state.ctx?.ctx?.length!);
+        route = route.split('?')[0]; // remove lang param
         if (this.state.currentLang) {
-          this.appService.getText(this.id).subscribe(t => this.text = t);
+          this.setPage(route);
         }
       }
     });
 
   }
 
+  setPage(route: string) {
+
+
+    if (!route.startsWith('/')) {
+      route = '/' + route;
+    }
+    this.page = route;
+
+
+    
+    // find page by menu config
+    this.state.config.layout.menu.forEach((m: any) => {
+      if (route === ('/'+m.route)) {
+        this.page = m.id;
+        return;
+      } else if (m.children.length > 0) {
+        m.children.forEach((m2: any) => {
+          if (('/'+m.route + '/' + m2.route) === route) {
+            this.page = m.id + '/' + m2.id;
+            return;
+          }
+        });
+      }
+    });
+    if (!this.page) {
+      this.page = 'home';
+    }
+    this.appService.getText(this.page).subscribe(t => this.text = t);
+  }
+
   ngOnDestroy() {
-    this.langObserver.unsubscribe();
+    //this.langObserver.unsubscribe();
     this.stateObserver.unsubscribe();
     this.routeObserver.unsubscribe();
   }

@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, ɵɵclassMapInterpolate1 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 
-import { BsModalRef, BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
-//import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+import {  ModalDirective } from 'ngx-bootstrap/modal';
 import { FileUploader } from 'ng2-file-upload';
 import { Router } from '@angular/router';
 import { AppState } from 'src/app/app.state';
@@ -13,11 +12,6 @@ import { AppService } from 'src/app/services/app.service';
 
 
 declare var tinymce: any;
-
-interface menuItem {
-  route: string;
-  visible: boolean;
-};
 
 @Component({
   selector: 'app-admin',
@@ -36,13 +30,16 @@ export class AdminComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   public uploader: FileUploader = new FileUploader({ url: 'lf?action=UPLOAD' });
-  public coverUploader: FileUploader = new FileUploader({ url: 'lf?action=UPLOAD&cover=true' });
+  public coverUploader: FileUploader = new FileUploader({ url: 'lf?action=UPLOAD&cover=true'});
 
 
   menu: any[] = [];
-  selected: string = 'home';
+  pages: any[] = [];
+  selected: MenuItem | undefined;
+  selectedPage: string | undefined;
   visibleChanged: boolean = false;
   saved: boolean = false;
+  sortBy = 'genre';
 
   text: string | null = null;
   elementId: string = 'editEl';
@@ -57,6 +54,8 @@ export class AdminComponent implements OnInit, OnDestroy {
   deleted: boolean = false;
   coverMsg: string | null = null;
 
+  description: string = '';
+
   newctx: string = '';
 
   currentMag: Magazine | null = null;
@@ -68,9 +67,16 @@ export class AdminComponent implements OnInit, OnDestroy {
   tab: string = 'config';
   cache: any = {};
   licences: any = {};
+  isK7: boolean = false;
+  keepLang: boolean = false;
 
   newPwd = '';
   newPwdOk = false;
+
+  constructor(
+    public state: AppState,
+    private service: AppService,
+    private router: Router) { }
 
   ngOnInit() {
     this.subscriptions.push(this.state.configSubject.subscribe(val => {
@@ -82,17 +88,29 @@ export class AdminComponent implements OnInit, OnDestroy {
     if (this.state?.ctx?.licences && this.state?.ctx?.journal) {
       this.licences = JSON.parse(this.state.ctx.licences);
     }
+
+    if (this.state?.ctx?.isK7) {
+      this.isK7 = true
+    }
+
+    this.keepLang = !!this.state.ctx!.keepLang;
+
+    if (this.state?.ctx?.sortByOrder) {
+      this.sortBy = 'order';
+    }
+
     this.cache[this.state.ctx!.journal!] = { label: 'root', licence: '' };
 
     this.getChildren(this.state.ctx!.journal!, this.state.ctx);
 
-  }
+    this.service.langSubject.subscribe(() => {
+      this.tinyInited = false;
+      setTimeout(() => {
+        this.initTiny();
+      }, 100);
+    })
 
-  constructor(
-    public state: AppState,
-    private service: AppService,
-    private modalService: BsModalService,
-    private router: Router) { }
+  }
 
   ngAfterViewInit() {
     if (this.state.config) {
@@ -121,6 +139,8 @@ export class AdminComponent implements OnInit, OnDestroy {
       base_url: '/tinymce',
       suffix: '.min',
 
+      language: this.state.currentLang,
+
       // selector: '#' + this.elementId,
       menubar: false,
       plugins: ['link', 'paste', 'table', 'save', 'code', 'image'],
@@ -133,7 +153,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         this.editor = editor;
         this.initData();
         editor.ui.registry.addButton('mybutton', {
-          tooltip: 'Insert link to file',
+          tooltip: this.service.translateKey('admin.insertLink'),
           icon: 'upload',
           //icon: false,
           onAction: function () {
@@ -141,8 +161,6 @@ export class AdminComponent implements OnInit, OnDestroy {
           }
         });
       },
-
-
 
       save_oncancelcallback: function () { console.log('Save canceled'); },
       save_onsavecallback: () => this.save()
@@ -164,27 +182,44 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   fillMenu() {
 
-    this.menu = [];
-    for (let m in this.state.config['menu']) {
-      this.menu.push({ label: m, menu: this.state.config['menu'][m]['submenu'], visible: this.state.config['menu'][m]['visible'] })
-      //this.menu = this.state.config['menu'];
-    }
+    this.pages = JSON.parse(JSON.stringify(this.state.config.layout.pages));
+    this.menu = JSON.parse(JSON.stringify(this.state.config.layout.menu));
 
-    this.getText();
   }
 
   getText() {
-    this.service.getText(this.selected).subscribe(t => {
+
+    console.log(this.selectedPage)
+    let page: string = '';
+    if (this.selectedPage) {
+      page = this.selectedPage;
+    }
+    // if (this.selected) {
+    //   page = this.selected?.id;
+    // } else if (this.selectedPage) {
+    //   page = this.selectedPage;
+    // }
+    if (page === '') {
+      return;
+    }
+    this.service.getText(page).subscribe(t => {
       this.text = t;
       // this.editor.setContent(this.text);
     });
   }
 
-  select(m: string, m1: string | null) {
+  selectPage(page: string) {
+    this.selected = undefined;
+    this.selectedPage = page;
+    this.getText();
+  }
+
+  select(m: MenuItem, m1: MenuItem | null) {
+    this.selectedPage = m.id;
+    this.selected = m;
     if (m1) {
-      this.selected = m + '/' + m1;
-    } else {
-      this.selected = m;
+       this.selectedPage = m.id + '/' + m1.id;
+       this.selected = m1;
     }
     this.saved = false;
     this.indexed = false;
@@ -193,28 +228,23 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   saveMenu() {
-    let menuToSave: any = {};
-    for (let i = 0; i < this.menu.length; i++) {
-      menuToSave[this.menu[i].label] = { submenu: this.menu[i].menu, visible: this.menu[i].visible };
-    }
+    const m = JSON.stringify({ menu: this.menu, pages: this.pages });
 
-    this.service.saveMenu(JSON.stringify(menuToSave)).subscribe((res: any) => {
+    this.service.saveMenu(m).subscribe((res: any) => {
       this.saved = !res.hasOwnProperty('error');
     });
   }
 
   save() {
+    if (!this.selectedPage) {
+      return;
+    }
 
     const content = this.editor.getContent();
-    let m = null;
-    if (this.visibleChanged) {
-      let menuToSave: any = {};
-      for (let i = 0; i < this.menu.length; i++) {
-        menuToSave[this.menu[i].label] = { submenu: this.menu[i].menu, visible: this.menu[i].visible };
-      }
-      m = JSON.stringify(menuToSave);
-    }
-    this.service.saveText(this.selected, content, m).subscribe(res => {
+
+    const m = JSON.stringify({ menu: this.menu, pages: this.pages });
+
+    this.service.saveText(this.selectedPage, content, m).subscribe(res => {
 
       this.saved = !res.hasOwnProperty('error');
       //if (res.hasOwnProperty('error')) {
@@ -239,7 +269,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   index() {
     this.working = true;
     this.resultMsg = '';
-    this.service.index(this.indexUUID!).subscribe(res => {
+    this.service.index(this.indexUUID!, this.isK7).subscribe(res => {
       this.resultMsg = res.hasOwnProperty('error') ? res.error : res.msg;
       this.working = false;
     });
@@ -315,8 +345,6 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.licencesModal?.show();
   }
 
-
-
   setLabel(item: any) {
     let label = '';
     const mods = JSON.parse(item['mods']);
@@ -388,6 +416,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     pids.forEach(pid => {
       if (this.cache[pid]?.licence !== '') {
         this.licences[pid] = this.cache[pid].licence;
+      } else if (this.cache[pid]?.licence === '') {
+        delete (this.licences[pid]);
       }
     });
     this.state.ctx!.licences = JSON.stringify(this.licences);
@@ -401,22 +431,95 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.licencesModal?.hide();
   }
 
+  saveMagazine() {
+    this.state.ctx!.sortByOrder = this.sortBy === 'order';
+    this.state.ctx!.keepLang = this.keepLang;
+    this.service.saveMagazine(this.state.ctx!).subscribe(res => {
+      // this.service.getMagazines().subscribe(res2 => {
+      //   this.state.ctxs = res2['response']['docs'];
+      // });
+    });
+  }
+
   showResetPwd() {
     this.resetpwdModal?.show();
   }
 
   resetPwd() {
     this.newPwdOk = false;
-      if (this.newPwd !== '') {
-        this.service.resetPwd(this.state.username, this.newPwd).subscribe(res => {
-          if (res.error) {
-            alert(res.error)
-          } else {
-            this.newPwdOk = true;
-            this.resetpwdModal?.hide();
-          }
-        });
-      }
+    if (this.newPwd !== '') {
+      this.service.resetPwd(this.state.username, this.newPwd).subscribe(res => {
+        if (res.error) {
+          alert(res.error)
+        } else {
+          this.newPwdOk = true;
+          this.resetpwdModal?.hide();
+        }
+      });
+    }
   }
 
+  addChild(m: MenuItem) {
+    m.children.push({
+      id: m.route + '_' + m.children.length,
+      route: m.route + '_' + m.children.length + '_new',
+      cs: m.cs,
+      en: m.en,
+      visible: true,
+      children: []
+    })
+  }
+
+  findNewMenuId() {
+    let idx = this.menu.length;
+    let id = 'menu_' + idx;
+    while (this.menu.filter(m => m.id === id).length > 0) {
+      id = 'menu_' + idx++;
+    }
+    return id;
+  }
+
+  addMenu() {
+    let id = this.findNewMenuId();
+    this.menu.push({
+      id: id,
+      route: id + '_new',
+      cs: 'Nazev CS',
+      en: 'Name EN',
+      visible: true,
+      added: true,
+      children: []
+    })
+  }
+
+  removeMenu(idx: number) {
+    this.menu.splice(idx, 1);
+  }
+
+  remove(arr: any[], idx: number) {
+    arr.splice(idx, 1);
+  }
+
+  moveUp(arr: any[], idx: number) {
+    this.moveArr(arr, idx, idx - 1);
+  }
+
+  moveDown(arr: any[], idx: number) {
+    this.moveArr(arr, idx, idx + 1);
+  }
+
+  moveArr(arr: any[], old_index: number, new_index: number) {
+    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+    
+  }
+
+}
+
+interface MenuItem {
+  id: string,
+  route: string,
+  cs: string,
+  en: string,
+  visible: boolean,
+  children: MenuItem[]
 }

@@ -31,7 +31,7 @@
       </div>
       <div>
         <label class="app-label">{{ 'magazines.kontakt' | translate }}: </label>
-        <a [href]="'mailto:' + resultItem.kontakt" [title]="resultItem.kontakt">{{ resultItem.kontakt }}</a>
+        <a target="_blank" [href]="'mailto:' + resultItem.kontakt" [title]="resultItem.kontakt">{{ resultItem.kontakt }}</a>
       </div>
     </div>
   </div>

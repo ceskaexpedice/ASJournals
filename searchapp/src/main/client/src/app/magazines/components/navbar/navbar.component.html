@@ -17,7 +17,7 @@
       <a mat-flat-button routerLink="vydavatele" routerLinkActive="app-active" color="primary" [title]="'magazines.vydavatele' | translate">{{ 'magazines.vydavatele' | translate }}</a>
       <a mat-flat-button routerLink="kontakt" routerLinkActive="app-active" color="primary" [title]="'magazines.kontakt' | translate">{{ 'magazines.kontakt' | translate }}</a>
       <a mat-flat-button *ngIf="state.logged" routerLink="admin" routerLinkActive="app-active" color="primary" [title]="'magazines.administrace' | translate">{{ 'magazines.administrace' | translate }}</a>
-      <a mat-flat-button *ngIf="!state.logged" routerLink="prihlaseni" routerLinkActive="app-active" color="primary" [title]="'magazines.prihlasit' | translate">{{ 'magazines.prihlasit' | translate }}</a>
+      <a mat-flat-button *ngIf="!state.logged" routerLink="prihlaseni" routerLinkActive="app-active" color="primary" [title]="'magazines.prihlasit_tooltip' | translate">{{ 'magazines.prihlasit' | translate }}</a>
       <a mat-flat-button *ngIf="state.logged" (click)="logout()" color="primary" [title]="'magazines.odhlasit' | translate">{{ 'magazines.odhlasit' | translate }}</a>
       <a mat-flat-button *ngIf="translate.currentLang === 'cs'" color="primary" (click)="translate.use('en')" [title]="'desc.en' | translate">{{ 'EN' | translate }}</a>
       <a mat-flat-button *ngIf="translate.currentLang === 'en'" color="primary" (click)="translate.use('cs')" [title]="'desc.cs' | translate">{{ 'CS' | translate }}</a>

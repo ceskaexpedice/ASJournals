@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import {MagazineState} from '../../magazine.state';
@@ -14,7 +15,10 @@ export class FacetsComponent implements OnInit {
   subscriptions: Subscription[] = [];
   active : boolean = false;
   
-  constructor(public state: MagazineState, private service: MagazinesService) {
+  constructor(
+    public state: MagazineState, 
+    private service: MagazinesService,
+    private router: Router ) {
     
   }
 
@@ -47,8 +51,7 @@ export class FacetsComponent implements OnInit {
   
   addFilter(field: string, value: string){
     if (!this.state.isFacetUsed(field, value)){
-      this.state.addFilter(field, value);
-      // this.service.getMagazines().subscribe();
+      this.service.addFilter(field, value);
     }
   }
 

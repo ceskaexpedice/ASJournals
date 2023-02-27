@@ -121,7 +121,7 @@ public class LoginServlet extends HttpServlet {
 
         JSONObject jo = new JSONObject();
         try {
-          jo = (JSONObject) req.getSession().getAttribute("user");
+          jo = (JSONObject) req.getSession().getAttribute("login");
           if(jo == null){
             jo = new JSONObject();
             jo.put("error", "nologged");
