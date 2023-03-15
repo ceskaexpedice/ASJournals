@@ -36,7 +36,7 @@
       <div class="col-xs-12 col-sm-8 col-md-9 app-col-right">
         <!-- <app-free-text [page]="'home'"></app-free-text> -->
 
-        <span [innerHTML]="home_text"></span>
+        <span [innerHTML]="home_text | safeHtml"></span>
 
         <div *ngIf="showNews()" class="app-card z-depth-3">
           <div>

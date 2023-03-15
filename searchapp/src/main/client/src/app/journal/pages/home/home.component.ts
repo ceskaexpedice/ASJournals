@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.state';
 import { Journal } from 'src/app/models/journal.model';
 import { AppService } from 'src/app/services/app.service';
@@ -22,6 +23,8 @@ export class HomeComponent implements OnInit {
   supplement: string | null = null;
   home_text: string = '';
 
+  routeObserver: Subscription = new Subscription;
+
   constructor(
     private service: AppService,
     public state: AppState,
@@ -29,6 +32,11 @@ export class HomeComponent implements OnInit {
   ) {
 
     //this.actualNumber = this.store.select<Journal>('actual');
+  }
+
+  ngOnDestroy() {
+    //this.langObserver.unsubscribe();
+    this.routeObserver.unsubscribe();
   }
 
   ngOnInit() {
@@ -40,6 +48,18 @@ export class HomeComponent implements OnInit {
         this.setData();
       }
     );
+
+    this.routeObserver = this.router.events.subscribe(val => {
+      if (val instanceof NavigationEnd) {
+        const url = this.router.url.substring(1);
+        let route = url.substring(url.indexOf(this.state.ctx?.ctx!) + this.state.ctx?.ctx?.length!);
+        route = route.split('?')[0]; // remove lang param
+        if (this.state.currentLang) {
+          this.service.getText('home').subscribe(t => this.home_text = t);
+        }
+      }
+    });
+
   }
 
   showDb() {

@@ -3,10 +3,10 @@
 /searchapp/src/main/webapp/assets/
 /searchapp/target/
 
-/solr8.10/**/data
-**/solr8.10/**/data
-/solr8.10/filestore/
-/solr8.10/userfiles/
+/solr/**/data
+**/solr/**/data
+/solr/filestore/
+/solr/userfiles/
 
 .DS_Store
 searchapp/src/main/webapp/tinymce/bower.json
