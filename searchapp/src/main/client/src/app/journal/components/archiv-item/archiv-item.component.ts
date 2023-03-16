@@ -86,7 +86,6 @@ export class ArchivItemComponent implements OnInit {
 
       }
     } else if (this.item['model'] === 'supplement') {
-      console.log(mods)
       if (mods['mods:titleInfo']) {
         if (mods['mods:titleInfo'].hasOwnProperty('length')) {
           this.supplement = mods['mods:titleInfo'][0]['mods:partName'];

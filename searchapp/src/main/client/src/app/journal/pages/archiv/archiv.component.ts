@@ -146,12 +146,33 @@ export class ArchivComponent implements OnInit {
             });
           } else if (this.currentItem.model === 'periodicalvolume'){
             this.items.sort((a, b) => {
-              const dateIssued1 = a.dateIssued.padStart(7, '0');
-              const dateIssued2 = b.dateIssued.padStart(7, '0');
+              const mods1 = JSON.parse(a['mods']);
+              const mods2 = JSON.parse(b['mods']);
+              
+              let dateIssued1: string = a.dateIssued.padStart(7, '0');
+              let dateIssued2: string = b.dateIssued.padStart(7, '0');
+
+              // Using mods
+              // if (mods1['mods:titleInfo']) {
+              //   if (mods1['mods:titleInfo'].hasOwnProperty('length')) {
+              //     dateIssued1 = mods1['mods:titleInfo'][0]['mods:partNumber'];
+              //   } else {
+              //     dateIssued1 = mods1['mods:titleInfo']['mods:partNumber'];1
+              //   }
+              //   if (mods2['mods:titleInfo'].hasOwnProperty('length')) {
+              //     dateIssued2 = mods2['mods:titleInfo'][0]['mods:partNumber'];
+              //   } else {
+              //     dateIssued2 = mods2['mods:titleInfo']['mods:partNumber'];1
+              //   }
+              // }
+
+              // Using dateIssued mm.yyyy
+              dateIssued1 = dateIssued1.split('.').reverse().join('');
+              dateIssued2 = dateIssued2.split('.').reverse().join('');
               if (this.currentSort.dir === 'asc') {
-                return dateIssued1 - dateIssued2;
+                return parseInt(dateIssued1) - parseInt(dateIssued2);
               } else {
-                return dateIssued2 - dateIssued1;
+                return parseInt(dateIssued2) - parseInt(dateIssued1);
               }
             });
           }
