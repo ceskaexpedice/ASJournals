@@ -2,6 +2,7 @@ package cz.incad.k5journals.searchapp;
 
 import cz.incad.FormatUtils;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -866,6 +868,13 @@ public class IndexerK7 {
     try (SolrClient solr = getClient("magazines")) {
       solr.deleteById(ctx);
       solr.commit();
+      
+      // Delete folder in config
+      String filename = InitServlet.CONFIG_DIR + File.separator + ctx;
+        File f = new File(filename);
+        if (f.exists()) {
+          FileUtils.deleteDirectory(f);
+        }
       ret.put("success", "magazine deleted");
     } catch (SolrServerException | IOException ex) {
       ret.put("error", ex);
