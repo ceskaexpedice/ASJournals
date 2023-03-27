@@ -304,8 +304,12 @@ export class AppService {
         const childs = response['response']['docs'];
         if (childs.length > 0 && !childs[0]['datanode']) {
           childs.sort((a: any, b: any) => {
-            const dateIssued1 = a.dateIssued.padStart(7, '0');
-            const dateIssued2 = b.dateIssued.padStart(7, '0');
+            let dateIssued1 = a.dateIssued.padStart(7, '0');
+            let dateIssued2 = b.dateIssued.padStart(7, '0');
+            
+            dateIssued1 = dateIssued1.split('.').reverse().join('');
+            dateIssued2 = dateIssued2.split('.').reverse().join('');
+
               return dateIssued2 - dateIssued1;
           });
         }
