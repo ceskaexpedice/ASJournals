@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit {
     this.state.stateChangedSubject.subscribe(
       () => {
         this.setData();
+        this.service.getText('home').subscribe(t => this.home_text = t);
       }
     );
 

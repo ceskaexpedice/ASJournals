@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { AppState } from 'src/app/app.state';
 import { AppService } from 'src/app/services/app.service';
 
@@ -20,7 +20,7 @@ export class FreeTextComponent implements OnInit, OnDestroy {
 
   text: SafeHtml | null = null;
   id: string | null = null;
-  img: string  | null = null;
+  img: string | null = null;
 
   constructor(private state: AppState,
     private appService: AppService,
@@ -38,7 +38,7 @@ export class FreeTextComponent implements OnInit, OnDestroy {
       this.subscriptions.push(this.router.events.subscribe(val => {
         if (val instanceof NavigationEnd) {
           this.id = val.url.substring(1);
-          console.log(this.id)
+
           if (this.state.currentLang) {
             this.getText();
           }
@@ -46,7 +46,9 @@ export class FreeTextComponent implements OnInit, OnDestroy {
       }));
     } else {
       this.id = this.page;
-      this.getText();
+      //if (this.state.currentLang) {
+        this.getText();
+      //}
     }
 
   }
