@@ -11,10 +11,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDividerModule} from '@angular/material/divider';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule, MatToolbarModule, MatIconModule, MatCardModule, MatTooltipModule,MatDividerModule],
+  imports: [CommonModule, RouterModule, TranslateModule, MatToolbarModule, MatIconModule, MatCardModule, MatTooltipModule,MatDividerModule, FlexLayoutModule  ],
   selector: 'app-seznam-item',
   templateUrl: './seznam-item.component.html',
   styleUrls: ['./seznam-item.component.scss']

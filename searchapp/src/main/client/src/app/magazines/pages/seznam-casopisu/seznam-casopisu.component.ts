@@ -7,12 +7,16 @@ import { MagazinesService } from '../../magazines.service';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { SeznamItemComponent } from '../../components/seznam-item/seznam-item.component';
+import { FacetsComponent } from '../../components/facets/facets.component';
+import { FacetsUsedComponent } from '../../components/facets-used/facets-used.component';
+import { SortBarComponent } from '../../components/sort-bar/sort-bar.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @Component({
   standalone: true,
-  imports: [RouterModule, CommonModule, TranslateModule, SeznamItemComponent],
-  selector: 'app-seznam-casopisu',
+  imports: [RouterModule, CommonModule, TranslateModule, SeznamItemComponent, FacetsComponent, FacetsUsedComponent, SortBarComponent, FlexLayoutModule],
+  selector: 'app-seznam-casopisu', 
   templateUrl: './seznam-casopisu.component.html',
   styleUrls: ['./seznam-casopisu.component.scss']
 })

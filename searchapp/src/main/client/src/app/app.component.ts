@@ -4,13 +4,12 @@ import { RouterOutlet } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MaterialCssVarsModule, MaterialCssVarsService } from 'angular-material-css-vars';
 import { EditorModule } from '@tinymce/tinymce-angular';
-import { FormsModule } from '@angular/forms';
 import { AppState } from './app.state';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule , MatButtonModule, MaterialCssVarsModule, EditorModule],
+  imports: [CommonModule, RouterOutlet , MatButtonModule, MaterialCssVarsModule, EditorModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
