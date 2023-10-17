@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
@@ -10,7 +10,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatToolbarModule, MatIconModule, FlexLayoutModule],
+  imports: [CommonModule, RouterModule, TranslateModule, MatToolbarModule, MatIconModule, FlexLayoutModule],
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
