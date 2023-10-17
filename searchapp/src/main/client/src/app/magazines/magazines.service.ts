@@ -1,4 +1,4 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, importProvidersFrom } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, throwError } from 'rxjs';
@@ -7,8 +7,11 @@ import { MagazineState } from './magazine.state';
 import { Router } from '@angular/router';
 import { catchError, map } from 'rxjs/operators';
 import { Magazine } from '../models/magazine';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { isPlatformBrowser } from '@angular/common';
+import { error } from 'console';
+import { get } from 'http';
+import server from 'server';
 
 @Injectable()
 export class MagazinesService {

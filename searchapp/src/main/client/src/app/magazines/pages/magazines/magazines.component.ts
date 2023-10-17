@@ -1,16 +1,22 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { ActivatedRoute, Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router, NavigationStart, NavigationEnd, RouterModule } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http';
 import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
 import { map } from 'rxjs/operators';
-import { AppState } from 'src/app/app.state';
 import { AppConfiguration } from 'src/app/app-configuration';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { AppWindowRef } from 'src/app/app.window-ref';
+import { FooterComponent } from '../../components/footer/footer.component';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { SidenavListComponent } from '../../components/sidenav-list/sidenav-list.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
+  standalone: true,
+  imports: [RouterModule, NavbarComponent, SidenavListComponent, FooterComponent, MatSidenavModule, MatListModule],
   selector: 'magazines-root',
   templateUrl: './magazines.component.html',
   styleUrls: ['./magazines.component.scss']
@@ -65,6 +71,7 @@ export class MagazinesComponent implements OnInit {
         this.setStyles();
       // }
     // );
+    console.log(this.state)
   }
 
 

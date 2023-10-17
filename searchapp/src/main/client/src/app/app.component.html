@@ -1,9 +1,3 @@
-<ng-container *ngIf="hasContext">
-  <main [class]="state.mainClass" *ngIf="state.config">
-    <router-outlet></router-outlet>
-  </main>
-</ng-container>
-
-<ng-container *ngIf="noctx">
+<main [class]="state.mainClass" *ngIf="state.config || true">
   <router-outlet></router-outlet>
-</ng-container>
+</main>

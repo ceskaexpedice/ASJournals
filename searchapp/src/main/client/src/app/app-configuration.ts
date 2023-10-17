@@ -1,7 +1,6 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Configuration } from './models/configuration';
-import { Observable } from 'rxjs';
 import { AppState } from './app.state';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Magazine } from './models/magazine';
@@ -11,7 +10,6 @@ import { Magazine } from './models/magazine';
 }) export class AppConfiguration {
 
     public config!: Configuration;
-
 
     public get context() {
         return this.config.context;

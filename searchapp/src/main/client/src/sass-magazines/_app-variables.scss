@@ -60,8 +60,6 @@ $app-mat-radio-button-size: 16px !default;
 // button
 $mat-button-line-height: 36px;
 $mat-button-border-radius: calc(#{$mat-button-line-height} / 2);
-@import '~@angular/material/button/_button-base.scss';
-
 
 // mq break point
 $xxs: 'only screen and (min-width: 400px) and (max-width: 599px)';

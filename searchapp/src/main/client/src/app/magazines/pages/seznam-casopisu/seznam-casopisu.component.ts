@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Magazine } from 'src/app/models/magazine';
 import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { SeznamItemComponent } from '../../components/seznam-item/seznam-item.component';
 
 
 @Component({
+  standalone: true,
+  imports: [RouterModule, CommonModule, TranslateModule, SeznamItemComponent],
   selector: 'app-seznam-casopisu',
   templateUrl: './seznam-casopisu.component.html',
   styleUrls: ['./seznam-casopisu.component.scss']
