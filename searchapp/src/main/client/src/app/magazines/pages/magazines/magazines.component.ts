@@ -72,7 +72,6 @@ export class MagazinesComponent implements OnInit {
         this.setStyles();
       // }
     // );
-    console.log(this.state)
   }
 
 

@@ -1,0 +1,15 @@
+<section class="app-content">
+  <div class="container">
+      <a (click)="print()" style="float:right;">{{'print' | translate}}</a>
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-3 app-col-left">
+          <p>
+            <a [routerLink]="['/', state.ctx?.ctx, 'home']" queryParamsHandling="preserve" title="Seznam článků z nejnovějšího čísla "> 
+            <img [src]="img" alt="" />
+            </a>
+          </p>
+        </div><!--/.col -->
+        <div class="col-xs-12 col-sm-8 col-md-9 app-col-right" [innerHTML]="text | safeHtml"></div><!--/.col -->
+    </div><!--./row -->
+  </div><!--/.container -->
+</section><!--/.app-content -->            

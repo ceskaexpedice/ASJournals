@@ -13,6 +13,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MagazineState } from './magazines/magazine.state';
 import { MagazinesService } from './magazines/magazines.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AuthGuard } from './services/auth-guard';
+import { MagazinesAuthGuard } from './magazines/magazines-auth-guard';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -20,7 +22,7 @@ export function createTranslateLoader(http: HttpClient) {
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideAnimations(),
-    AppState, AppWindowRef, MagazineState,  MagazinesService, 
+    AppState, AppWindowRef, MagazineState,  MagazinesService, AuthGuard, MagazinesAuthGuard,
     { provide: APP_INITIALIZER, useFactory: (config: AppConfiguration) => () => config.load(), deps: [AppConfiguration], multi: true },
     importProvidersFrom(MatSnackBarModule),
     importProvidersFrom(MaterialCssVarsModule.forRoot()),

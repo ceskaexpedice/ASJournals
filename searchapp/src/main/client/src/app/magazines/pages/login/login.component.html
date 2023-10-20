@@ -9,11 +9,13 @@
         <input matInput type="text" #loginuser id="loginuser" type="text" name="loginuser" value="" [placeholder]="'magazines.uzivatel' | translate" (keyup.enter)="focusp($event, loginpwd)" [(ngModel)]="state.loginuser">
         <mat-icon matSuffix>person</mat-icon>
       </mat-form-field>
+
       <mat-form-field class="example-form-field" appearance="outline" class="app-w-100">
         <mat-label>{{ 'magazines.heslo' | translate }}</mat-label>
         <input matInput type="password" id="loginpwd" type="password" name="loginpwd" [placeholder]="'magazines.heslo' | translate" #loginpwd (keyup.enter)="service.login()" [(ngModel)]="state.loginpwd">
         <mat-icon matSuffix>lock</mat-icon>
       </mat-form-field>
+      
       <mat-card class="app-alert app-warning app-mb-4" *ngIf="state.loginError">
         <mat-card-content><mat-icon>error</mat-icon>{{ 'magazines.spatne_prihlasovaci_udaje' | translate }}.</mat-card-content>
       </mat-card>

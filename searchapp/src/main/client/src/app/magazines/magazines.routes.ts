@@ -7,6 +7,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { OProjektuComponent } from './pages/o-projektu/o-projektu.component';
 import { VydavateleDetailComponent } from './pages/vydavatele/vydavatele-detail/vydavatele-detail.component';
 import { VydavateleComponent } from './pages/vydavatele/vydavatele.component';
+import { AdminMagazinesComponent } from './pages/admin-magazines/admin-magazines.component';
+import { MagazinesAuthGuard } from './magazines-auth-guard';
 
 export const Magazines_Routes: Routes = [
     {
@@ -16,7 +18,7 @@ export const Magazines_Routes: Routes = [
             { path: 'seznam-casopisu', component: SeznamCasopisuComponent },
             { path: 'casopisy', component: SeznamCasopisuComponent },
 
-            //   {path: 'admin', component: AdminMagazinesComponent, canActivate: [AuthGuard]},
+            {path: 'admin', component: AdminMagazinesComponent},//, canActivate: [MagazinesAuthGuard]},
               {path: 'prihlaseni', component: LoginComponent},
               {path: 'o-projektu', component: OProjektuComponent},
               {path: 'vydavatele', component: VydavateleComponent},

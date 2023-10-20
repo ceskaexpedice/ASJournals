@@ -1,0 +1,32 @@
+<div fxLayout="row wrap" class="app-layout-wrap-16">
+  <div fxFlex="calc(33.3333% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.id' | translate }}</mat-label>
+      <input matInput id="editor_id" name="editor_id" type="text" [(ngModel)]="editor.id" required><span class="validity"></span>
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(33.3333% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.typ' | translate }}</mat-label>
+      <input matInput id="editor_typ" name="editor_typ" type="text" [(ngModel)]="editor.typ">
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(33.3333% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.jmeno' | translate }}</mat-label>
+      <input matInput id="editor_name" name="editor_name" type="text" [(ngModel)]="editor.name" required><span class="validity"></span>
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(50% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.web' | translate }}</mat-label>
+      <input matInput id="editor_web" name="editor_web" type="text" [(ngModel)]="editor.web">
+    </mat-form-field>
+  </div>
+  <div fxFlex="calc(50% - 16px)">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.adresa' | translate }}</mat-label>
+      <input matInput id="editor_adresa" name="editor_adresa" type="text" [(ngModel)]="editor.adresa">
+    </mat-form-field>
+  </div>
+</div>

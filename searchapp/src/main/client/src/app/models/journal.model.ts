@@ -1,6 +1,8 @@
 import {AppState} from "../app.state";
 
-
+/**
+ * Represents journal number, periodicalitem
+ *  */
 export class Journal{
     pid: string | null =null;
     parent: string | null = null;

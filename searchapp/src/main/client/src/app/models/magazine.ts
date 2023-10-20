@@ -1,3 +1,6 @@
+/**
+ * Represents one configured magazine 
+ *  */
 export class Magazine {
   ctx: string | undefined = undefined;
   journal: string | undefined = undefined;
