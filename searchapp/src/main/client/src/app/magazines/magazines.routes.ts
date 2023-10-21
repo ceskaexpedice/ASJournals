@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { SeznamCasopisuComponent } from './pages/seznam-casopisu/seznam-casopisu.component';
-import * as path from 'path';
 import { MagazinesComponent } from './pages/magazines/magazines.component';
 import { KontaktComponent } from './pages/kontakt/kontakt.component';
 import { LoginComponent } from './pages/login/login.component';

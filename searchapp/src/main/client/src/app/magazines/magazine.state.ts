@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { User } from '../models/user';
+import { Magazine } from '../models/magazine';
   
 @Injectable()
   export class MagazineState {
@@ -33,7 +34,7 @@ import { User } from '../models/user';
   currentLang: string = 'cs';
   
   //Seznam casopisu
-  magazines = [];
+  magazines: Magazine[] = [];
   facets: any[] = [];
   filters: {field: string, value: string}[] = [];
   currentSortDir: string = 'asc';

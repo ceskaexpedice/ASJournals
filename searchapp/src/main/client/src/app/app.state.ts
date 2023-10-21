@@ -29,8 +29,7 @@ export class AppState {
 
   //Holds client configuration
   config: any;
-  //ctx: {ctx: string, color: string, journal: string, showTitleLabel: boolean, licence:string};
-  ctx: Magazine | null | undefined= null;
+  currentMagazine: Magazine;
 
   //ctxs: {ctx: string, color: string, journal: string, showTitleLabel: boolean, licence:string}[];
   ctxs: Magazine[] = [];
@@ -73,7 +72,7 @@ export class AppState {
   //Controls full screen viewer
   public isFull: boolean = false;
 
-  public breadcrumbs = [];
+  public breadcrumbs: any[] = [];
 
   dateMin: number = 2000;
   dateMax: number = 2019;
@@ -129,7 +128,7 @@ export class AppState {
     this.currentSort = cfg[0];
     this.krameriusUrl = this.config['k5'] + this.config['journal'];
 
-    this.imgSrc = this.config['context'] + 'api/img?obalka=true&ctx=' + this.ctx?.ctx + '&uuid=' + this.config['journal'] + '&kramerius_version=' + (this.ctx?.isK7 ? 'k7' : 'k5') + '&thumb=true';
+    this.imgSrc = this.config['context'] + 'api/img?obalka=true&ctx=' + this.currentMagazine?.ctx + '&uuid=' + this.config['journal'] + '&kramerius_version=' + (this.currentMagazine?.isK7 ? 'k7' : 'k5') + '&thumb=true';
 
     this._configSubject.next(cfg);
   }

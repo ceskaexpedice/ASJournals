@@ -82,7 +82,8 @@ import { Magazine } from './models/magazine';
                     }
                     
                 }
-                return;
+                return null;
+                
             })
             .catch(res => {
                 console.log(res);
@@ -96,9 +97,9 @@ import { Magazine } from './models/magazine';
         return this.http.get(url)
         .toPromise()
         .then((res: any) => {
-            this.state.ctx = ctx;
-            if (!this.state.ctx.keywords) {
-                this.state.ctx.keywords = [];
+            this.state.currentMagazine = ctx;
+            if (!this.state.currentMagazine.keywords) {
+                this.state.currentMagazine.keywords = [];
             }
             this.state.setConfig(res);
             this.state.config['color'] = ctx.color;

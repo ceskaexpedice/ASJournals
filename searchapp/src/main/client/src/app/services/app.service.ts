@@ -89,9 +89,9 @@ export class AppService {
   getJournalConfig(ctx: Magazine) {
     return this.get('texts?action=GET_CONFIG&ctx=' + ctx.ctx).pipe(
       map(res => {
-        this.state.ctx = ctx;
-        if (!this.state.ctx.keywords) {
-          this.state.ctx.keywords = [];
+        this.state.currentMagazine = ctx;
+        if (!this.state.currentMagazine.keywords) {
+          this.state.currentMagazine.keywords = [];
         }
         this.state.setConfig(res);
         this.state.config['color'] = ctx.color;
@@ -188,14 +188,14 @@ export class AppService {
   }
 
   switchStyle() {
-    let exists: boolean = this.findStyle(this.state.ctx!.ctx);
+    let exists: boolean = this.findStyle(this.state.currentMagazine!.ctx);
     if (!exists) {
       const link = this.document.createElement('link');
-      link.href = '/api/theme?ctx=' + this.state.ctx!.ctx + '&color=' + this.state.config['color']; // insert url in between quotes
+      link.href = '/api/theme?ctx=' + this.state.currentMagazine!.ctx + '&color=' + this.state.config['color']; // insert url in between quotes
       link.rel = 'stylesheet';
       link.type = 'text/css';
-      link.id = 'css-theme-' + this.state.ctx!.ctx;
-      link.title = this.state.ctx?.ctx!;
+      link.id = 'css-theme-' + this.state.currentMagazine!.ctx;
+      link.title = this.state.currentMagazine?.ctx!;
       link.disabled = true;
       this.document.getElementsByTagName('head')[0].appendChild(link);
     }
@@ -204,7 +204,7 @@ export class AppService {
     for (let i = 0; i < links.length; i++) {
       let link = links[i];
       if (link.rel.indexOf('stylesheet') != -1 && link.title) {
-        if (link.title === this.state.ctx?.ctx) {
+        if (link.title === this.state.currentMagazine?.ctx) {
           link.disabled = false;
           exists = true;
         } else {
@@ -241,14 +241,14 @@ export class AppService {
 
   saveJournalConfig() {
 
-    this.state.config['color'] = this.state.ctx?.color;
-    this.state.config['journal'] = this.state.ctx?.journal;
-    this.state.config['showTitleLabel'] = this.state.ctx?.showTitleLabel;
+    this.state.config['color'] = this.state.currentMagazine?.color;
+    this.state.config['journal'] = this.state.currentMagazine?.journal;
+    this.state.config['showTitleLabel'] = this.state.currentMagazine?.showTitleLabel;
 
     const params = new HttpParams()
       .set('journals', JSON.stringify({ 'journals': this.state.ctxs }))
       .set('cfg', JSON.stringify(this.state.config))
-      .set('ctx', this.state.ctx?.ctx!);
+      .set('ctx', this.state.currentMagazine?.ctx!);
     return this.get('texts?action=SAVE_JOURNALS', params);
   }
 
@@ -616,7 +616,7 @@ export class AppService {
   }
 
   getUploadedFiles(): Observable<any> {
-    let url = 'lf?action=LIST&ctx=' + this.state.ctx?.ctx;
+    let url = 'lf?action=LIST&ctx=' + this.state.currentMagazine?.ctx;
 
     return this.get(url).pipe(
       catchError((error: any) => of('error gettting content: ' + error))
@@ -627,7 +627,7 @@ export class AppService {
     let url = 'texts';
     let params = new HttpParams()
       .set('action', 'LOAD')
-      .set('ctx', this.state.ctx?.ctx!)
+      .set('ctx', this.state.currentMagazine?.ctx!)
       .set('id', id)
       .set('lang', this.state.currentLang);
 
@@ -662,7 +662,7 @@ export class AppService {
       .set('id', id)
       .set('action', 'SAVE')
       .set('lang', this.state.currentLang)
-      .set('ctx', this.state.ctx?.ctx!);
+      .set('ctx', this.state.currentMagazine?.ctx!);
 
     // if (menu) {
     //   params = params.set('menu', menu);
@@ -688,7 +688,7 @@ export class AppService {
 
     let params = new HttpParams()
       .set('action', 'SAVE_MENU')
-      .set('ctx', this.state.ctx?.ctx!)
+      .set('ctx', this.state.currentMagazine?.ctx!)
       .set('menu', menu);
 
     return this.get(url, params);
@@ -771,7 +771,7 @@ export class AppService {
           if (this.state.redirectUrl.startsWith('/')) {
             this.router.navigate([this.state.redirectUrl], { queryParamsHandling: 'preserve' });
           } else {
-            this.router.navigate([this.state.ctx ? this.state.ctx.ctx : '/admin'], { queryParamsHandling: 'preserve' });
+            this.router.navigate([this.state.currentMagazine ? this.state.currentMagazine.ctx : '/admin'], { queryParamsHandling: 'preserve' });
           }
         }
       }
@@ -787,7 +787,7 @@ export class AppService {
     let params = new HttpParams()
       .set('user', this.state.loginuser!)
       .set('pwd', this.state.loginpwd!)
-      .set('ctx', this.state.ctx?.ctx!)
+      .set('ctx', this.state.currentMagazine?.ctx!)
       .set('action', 'LOGIN');
     return this.get(url, params);
 
@@ -804,7 +804,7 @@ export class AppService {
       this.state.loginuser = '';
       this.state.loginpwd = '';
       this.state.logged = false;
-      this.router.navigate([this.state.ctx ? this.state.ctx.ctx : '/home'], { queryParamsHandling: 'preserve' });
+      this.router.navigate([this.state.currentMagazine ? this.state.currentMagazine.ctx : '/home'], { queryParamsHandling: 'preserve' });
     });
   }
 

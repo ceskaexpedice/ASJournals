@@ -34,7 +34,7 @@ export class FreePageComponent implements OnInit {
   ngOnInit() {
     this.setImg();
     const url = this.router.url.substring(1);
-    let route = url.substring(url.indexOf(this.state.ctx?.ctx!) + this.state.ctx?.ctx?.length!);
+    let route = url.substring(url.indexOf(this.state.currentMagazine?.ctx!) + this.state.currentMagazine?.ctx?.length!);
     route = route.split('?')[0]; // remove lang param
     
     this.setPage(route);
@@ -53,7 +53,7 @@ export class FreePageComponent implements OnInit {
     this.routeObserver = this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
         const url = this.router.url.substring(1);
-        let route = url.substring(url.indexOf(this.state.ctx?.ctx!) + this.state.ctx?.ctx?.length!);
+        let route = url.substring(url.indexOf(this.state.currentMagazine?.ctx!) + this.state.currentMagazine?.ctx?.length!);
         route = route.split('?')[0]; // remove lang param
         if (this.state.currentLang) {
           this.setPage(route);

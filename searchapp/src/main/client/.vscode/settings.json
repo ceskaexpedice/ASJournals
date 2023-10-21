@@ -1,3 +1,4 @@
 {
-    "explorer.openEditors.sortOrder": "alphabetical"
+    "explorer.openEditors.sortOrder": "alphabetical",
+    "npm-scripts.showStartNotification": false
 }

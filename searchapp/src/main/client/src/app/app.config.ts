@@ -1,5 +1,5 @@
 import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { ActivatedRoute, provideRouter } from '@angular/router';
+import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -15,6 +15,8 @@ import { MagazinesService } from './magazines/magazines.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthGuard } from './services/auth-guard';
 import { MagazinesAuthGuard } from './magazines/magazines-auth-guard';
+import { AppService } from './services/app.service';
+import { SearchService } from './services/search.service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -22,7 +24,7 @@ export function createTranslateLoader(http: HttpClient) {
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideAnimations(),
-    AppState, AppWindowRef, MagazineState,  MagazinesService, AuthGuard, MagazinesAuthGuard,
+    AppState, SearchService, AppService, AppWindowRef, MagazineState,  MagazinesService, AuthGuard, MagazinesAuthGuard,
     { provide: APP_INITIALIZER, useFactory: (config: AppConfiguration) => () => config.load(), deps: [AppConfiguration], multi: true },
     importProvidersFrom(MatSnackBarModule),
     importProvidersFrom(MaterialCssVarsModule.forRoot()),
