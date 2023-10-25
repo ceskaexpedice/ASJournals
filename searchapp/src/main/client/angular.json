@@ -39,10 +39,10 @@
               { "glob": "**/*", "input": "src/tinymce/langs", "output": "/tinymce/langs/" }
             ],
             "styles": [
-              "src/styles.scss",
               {
                 "input": "src/styles-magazines.scss", "bundleName": "magazines"
-              }
+              },
+              "src/styles.scss"
             ],
             "scripts": [
               "node_modules/tinymce/tinymce.min.js"

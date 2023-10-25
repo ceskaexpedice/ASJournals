@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.state';
@@ -10,7 +11,7 @@ import { AppService } from 'src/app/services/app.service';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, FlexLayoutModule],
+  imports: [CommonModule, RouterModule, FlexLayoutModule, MatButtonModule],
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']

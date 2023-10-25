@@ -1,7 +1,10 @@
+<ng-container *ngIf="hasContext">
 <!-- <app-header></app-header> -->
 <div>header</div>
-<main [class]="mainClass" *ngIf="state.currentMagazine">
+<main [class]="mainClass">
+  <button mat-raised-button color="primary" (click)="setColor()">test</button>
   <router-outlet></router-outlet>
 </main>
 <div>footer</div>
 <!-- <app-footer></app-footer> -->
+</ng-container>

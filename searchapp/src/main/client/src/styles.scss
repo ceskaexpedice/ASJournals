@@ -1,11 +1,16 @@
 
 @use "sass:map";
-@use '@angular/material' as mat;
 
 
 @use "angular-material-css-vars" as mat-css-vars;
+@use '@angular/material' as mat;
 
 @include mat-css-vars.init-material-css-vars();
+
+@include mat-css-vars.mat-css-set-palette-defaults(
+  mat.$light-blue-palette,
+  "primary"
+);
 
 
 html, body { height: 100%; }

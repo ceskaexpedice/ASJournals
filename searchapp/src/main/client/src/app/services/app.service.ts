@@ -97,10 +97,9 @@ export class AppService {
         this.state.config['color'] = ctx.color;
         this.state.config['journal'] = ctx.journal;
         this.state.config['showTitleLabel'] = ctx.showTitleLabel;
-        // setTimeout(() => {
-        //   console.log('switching 1')
-        this.switchStyle();
-        // }, 5000);
+        
+        //this.switchStyle();
+        
         this.findActual();
         this.getKeywords();
         this.getGenres();

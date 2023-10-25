@@ -20,9 +20,8 @@ export class AppComponent implements OnInit {
     public state: AppState) { }
 
   ngOnInit() {
-    // const hex = "#ccCC00";
-    // this.materialCssVarsService.setDarkTheme(true);
-    // this.materialCssVarsService.setPrimaryColor(hex);
-    // this.materialCssVarsService.setAccentColor("#333");
+    if (this.state.currentMagazine) {
+      this.materialCssVarsService.setPrimaryColor('#' + this.state.currentMagazine.color);
+    }
   }
 }
