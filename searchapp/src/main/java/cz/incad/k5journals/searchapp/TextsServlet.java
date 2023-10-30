@@ -236,7 +236,7 @@ public class TextsServlet extends HttpServlet {
         String ctx = request.getParameter("ctx");
         JSONObject conf = Options.getInstance().getClientConf();
 
-        JSONObject js = new JSONObject(conf.toString());
+        JSONObject js = new JSONObject(conf.toString()); 
 
         File f = new File(InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "config.json");
 
@@ -257,6 +257,32 @@ public class TextsServlet extends HttpServlet {
         if (fmenu.exists()) {
           JSONObject layout = new JSONObject(FileUtils.readFileToString(fmenu, "UTF-8"));
           js.put("layout", layout);
+        }
+
+        String home = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "texts"
+                + File.separator + "home_cs.html";
+        File fhome = new File(home);
+        if (fmenu.exists()) {
+          js.put("home", FileUtils.readFileToString(fhome, "UTF-8"));
+        }
+        
+        out.println(js.toString(2));
+      }
+    }, 
+    GET_LAYOUT {
+      @Override
+      void doPerform(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        response.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        String ctx = request.getParameter("ctx");
+        JSONObject js = new JSONObject();
+
+        String fnmenu = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "menu.json";
+        File fmenu = new File(fnmenu);
+        if (fmenu.exists()) {
+          js = new JSONObject(FileUtils.readFileToString(fmenu, "UTF-8"));
         }
 
         String home = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "texts"

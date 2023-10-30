@@ -120,6 +120,10 @@ export class AppState {
     this.dateRange = [this.dateOd, this.dateDo];
   }
 
+  setLayout(layout: any) {
+    this.config['layout'] = layout;
+  }
+
   setConfig(cfg: any) {
     this.config = cfg;
 

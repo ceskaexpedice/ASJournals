@@ -50,21 +50,23 @@ export class JournalComponent {
   ngOnInit() {
 
     // this.materialCssVarsService.setDarkTheme(true);
-    
-    // this.initApp();
-    // this.materialCssVarsService.setAccentColor("#333");
 
     if (this.state.currentMagazine) {
       this.materialCssVarsService.setPrimaryColor('#'+this.state.currentMagazine.color);
+        this.initApp();
+    } else {
+      // navigate to magazines home
+      this.router.navigate(['/']);
     }
-    this.route.params
-      .subscribe((params: Params) => {
-          if (this.state.ctxs && this.state.ctxs.length > 0) {
-            this.state.currentMagazine = this.service.getCtx(params['ctx']);
-            this.materialCssVarsService.setPrimaryColor('#'+this.state.currentMagazine.color);
-            this.getConfig();
-          } 
-      });
+
+    // this.route.params
+    //   .subscribe((params: Params) => {
+    //       if (this.state.ctxs && this.state.ctxs.length > 0) {
+    //         this.state.currentMagazine = this.service.getCtx(params['ctx']);
+    //         this.materialCssVarsService.setPrimaryColor('#'+this.state.currentMagazine.color);
+    //         this.getConfig();
+    //       } 
+    //   });
   }
 
   setColor() {

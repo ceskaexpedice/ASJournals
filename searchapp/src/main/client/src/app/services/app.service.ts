@@ -334,10 +334,6 @@ export class AppService {
 
   }
 
-  //  getActual(): Observable<Journal> {
-  //    return this.getJournalByPid(this.state.config['journal'], this.state.config['model']);
-  //  }
-
   getJournal(pid: string): Observable<Journal> {
 
     let url = this.state.config['context'] + 'search/journal/select';

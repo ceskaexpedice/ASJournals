@@ -47,6 +47,7 @@ import { Magazine } from './models/magazine';
             .toPromise()
             .then(cfg => {
                 this.config = cfg as Configuration;
+                this.state.setConfig(cfg);
                 console.log('config loaded');
             }).then(() => {
                 return this.getMagazines();
@@ -93,7 +94,7 @@ import { Magazine } from './models/magazine';
 
     getJournalConfig(ctx: Magazine) {
         console.log('loading journal config...' + ctx.ctx);
-        let url = this.server + '/api/texts?action=GET_CONFIG&ctx=' + ctx.ctx;
+        let url = this.server + '/api/texts?action=GET_LAYOUT&ctx=' + ctx.ctx;
         return this.http.get(url)
         .toPromise()
         .then((res: any) => {
@@ -101,7 +102,7 @@ import { Magazine } from './models/magazine';
             if (!this.state.currentMagazine.keywords) {
                 this.state.currentMagazine.keywords = [];
             }
-            this.state.setConfig(res);
+            this.state.setLayout(res);
             this.state.config['color'] = ctx.color;
             this.state.config['journal'] = ctx.journal;
             this.state.config['showTitleLabel'] = ctx.showTitleLabel;
