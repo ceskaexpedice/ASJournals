@@ -6,6 +6,7 @@ import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.state';
+import { Configuration } from 'src/app/models/configuration';
 import { AppService } from 'src/app/services/app.service';
 import { SafeHtmlPipe } from 'src/app/services/safe-html.pipe';
 
@@ -27,7 +28,9 @@ export class FreePageComponent implements OnInit {
   page: string | null = null;
   img: string | null = null;
 
-  constructor(public state: AppState,
+  constructor(
+    private config: Configuration,
+    public state: AppState,
     private appService: AppService,
     private router: Router) { }
 
@@ -74,7 +77,7 @@ export class FreePageComponent implements OnInit {
 
     
     // find page by menu config
-    this.state.config.layout.menu.forEach((m: any) => {
+    this.config.layout.menu.forEach((m: any) => {
       if (route === ('/'+m.route)) {
         this.page = m.id;
         return;

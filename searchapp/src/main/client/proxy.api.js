@@ -11,7 +11,7 @@ const PROXY_CONFIG = {
         "secure": false
     },
     "/api/**": {
-         "target": "http://localhost:8080/api",
+        "target": "http://localhost:8080/api",
         //"target": "https://k5journals.inovatika.dev/api",
         "changeOrigin": true,
         "secure": false,

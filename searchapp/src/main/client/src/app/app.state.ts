@@ -27,8 +27,6 @@ export class AppState {
   private _journalsSubject: ReplaySubject<any> = new ReplaySubject(2);
   public journalsInitilized: Observable<any> = this._journalsSubject.asObservable();
 
-  //Holds client configuration
-  config: any;
   currentMagazine: Magazine;
 
   //ctxs: {ctx: string, color: string, journal: string, showTitleLabel: boolean, licence:string}[];
@@ -120,19 +118,16 @@ export class AppState {
     this.dateRange = [this.dateOd, this.dateDo];
   }
 
-  setLayout(layout: any) {
-    this.config['layout'] = layout;
-  }
+  
 
   setConfig(cfg: any) {
-    this.config = cfg;
 
     this.rows = cfg['searchParams']['rows'];
     this.sorts = cfg['sorts'];
     this.currentSort = cfg[0];
-    this.krameriusUrl = this.config['k5'] + this.config['journal'];
+    this.krameriusUrl = cfg['k5'] + cfg['journal'];
 
-    this.imgSrc = this.config['context'] + 'api/img?obalka=true&ctx=' + this.currentMagazine?.ctx + '&uuid=' + this.config['journal'] + '&kramerius_version=' + (this.currentMagazine?.isK7 ? 'k7' : 'k5') + '&thumb=true';
+    this.imgSrc = cfg['context'] + 'api/img?obalka=true&ctx=' + this.currentMagazine?.ctx + '&uuid=' + cfg['journal'] + '&kramerius_version=' + (this.currentMagazine?.isK7 ? 'k7' : 'k5') + '&thumb=true';
 
     this._configSubject.next(cfg);
   }

@@ -15,6 +15,7 @@ import { catchError, expand, map } from 'rxjs/operators';
 import { Magazine } from '../models/magazine';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { FreePageComponent } from '../shared/free-page/free-page.component';
+import { Configuration } from '../models/configuration';
 
 declare var xml2json: any;
 
@@ -32,6 +33,7 @@ export class AppService {
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     @Inject(DOCUMENT) private document: Document,
+    private config: Configuration,
     private state: AppState,
     private search: SearchService,
     private translate: TranslateService,
@@ -41,8 +43,8 @@ export class AppService {
   ) { }
 
   findMenuItem(route: string) {
-    for (let i = 0; i < this.state.config.layout.menu.length; i++) {
-      const m = this.state.config.layout.menu[i];
+    for (let i = 0; i < this.config.layout.menu.length; i++) {
+      const m = this.config.layout.menu[i];
       if (route === ('/' + m.route)) {
         return m;
       } else if (m.children.length > 0) {
@@ -94,9 +96,9 @@ export class AppService {
           this.state.currentMagazine.keywords = [];
         }
         this.state.setConfig(res);
-        this.state.config['color'] = ctx.color;
-        this.state.config['journal'] = ctx.journal;
-        this.state.config['showTitleLabel'] = ctx.showTitleLabel;
+        this.config['color'] = ctx.color;
+        this.config['journal'] = ctx.journal;
+        this.config['showTitleLabel'] = ctx.showTitleLabel;
         
         //this.switchStyle();
         
@@ -105,7 +107,7 @@ export class AppService {
         this.getGenres();
         this.state.stateChanged();
 
-        const menu = this.state.config.layout.menu;
+        const menu = this.config.layout.menu;
         menu.forEach((m: any) => {
           const r = this.router.config.find((ro: any) => ro.path === ':ctx' && ro.children);
           if (r && r.children && r.children.length > 0) {
@@ -131,9 +133,9 @@ export class AppService {
   //     map(res => {
   //       this.state.ctx = ctx;
   //       this.state.setConfig(res);
-  //       this.state.config['color'] = ctx.color;
-  //       this.state.config['journal'] = ctx.journal;
-  //       this.state.config['showTitleLabel'] = ctx.showTitleLabel;
+  //       this.config['color'] = ctx.color;
+  //       this.config['journal'] = ctx.journal;
+  //       this.config['showTitleLabel'] = ctx.showTitleLabel;
   //       setTimeout(() => {
   //         console.log('switching 2')
   //         this.switchStyle();
@@ -190,7 +192,7 @@ export class AppService {
     let exists: boolean = this.findStyle(this.state.currentMagazine!.ctx);
     if (!exists) {
       const link = this.document.createElement('link');
-      link.href = '/api/theme?ctx=' + this.state.currentMagazine!.ctx + '&color=' + this.state.config['color']; // insert url in between quotes
+      link.href = '/api/theme?ctx=' + this.state.currentMagazine!.ctx + '&color=' + this.config['color']; // insert url in between quotes
       link.rel = 'stylesheet';
       link.type = 'text/css';
       link.id = 'css-theme-' + this.state.currentMagazine!.ctx;
@@ -240,13 +242,13 @@ export class AppService {
 
   saveJournalConfig() {
 
-    this.state.config['color'] = this.state.currentMagazine?.color;
-    this.state.config['journal'] = this.state.currentMagazine?.journal;
-    this.state.config['showTitleLabel'] = this.state.currentMagazine?.showTitleLabel;
+    this.config['color'] = this.state.currentMagazine?.color;
+    this.config['journal'] = this.state.currentMagazine?.journal;
+    this.config['showTitleLabel'] = this.state.currentMagazine?.showTitleLabel;
 
     const params = new HttpParams()
       .set('journals', JSON.stringify({ 'journals': this.state.ctxs }))
-      .set('cfg', JSON.stringify(this.state.config))
+      .set('cfg', JSON.stringify(this.config))
       .set('ctx', this.state.currentMagazine?.ctx!);
     return this.get('texts?action=SAVE_JOURNALS', params);
   }
@@ -268,7 +270,7 @@ export class AppService {
   }
 
   getItem(pid: string): Observable<any> {
-    let url = this.state.config['context'] + 'search/journal/select';
+    let url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams()
       .set('q', 'pid:"' + pid + '"')
       .set('wt', 'json');
@@ -282,13 +284,13 @@ export class AppService {
   }
 
   getItemK5(pid: string): Observable<any> {
-    let url = this.state.config['api_point'] + '/item/' + pid;
+    let url = this.config['api_point'] + '/item/' + pid;
 
     return this.get(url);
   }
 
   getChildrenApi(pid: string): Observable<any> {
-    let url = this.state.config['api_point'] + '/item/' + pid + '/children';
+    let url = this.config['api_point'] + '/item/' + pid + '/children';
 
     return this.get(url);
   }
@@ -336,7 +338,7 @@ export class AppService {
 
   getJournal(pid: string): Observable<Journal> {
 
-    let url = this.state.config['context'] + 'search/journal/select';
+    let url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams()
       .set('q', 'pid:"' + pid + '"')
       .set('wt', 'json')
@@ -368,7 +370,7 @@ export class AppService {
 
   getJournalK5(pid: string): Observable<Journal> {
 
-    let url = this.state.config['api_point'] + '/item/' + pid;
+    let url = this.config['api_point'] + '/item/' + pid;
 
 
     return this.get(url).pipe(
@@ -394,7 +396,7 @@ export class AppService {
   }
 
   //  getJournalByPid(pid: string, model: string): Observable<Journal> {
-  //    var url = this.state.config['api_point'] + '/item/' + pid + '/children';
+  //    var url = this.config['api_point'] + '/item/' + pid + '/children';
   //
   //    return this.get(url).map((response: Response) => {
   //      let childs: any[] = response.json();
@@ -465,7 +467,7 @@ export class AppService {
 
   getArticles(pid: string): Observable<any[]> {
 
-    let url = this.state.config['context'] + 'search/journal/select';
+    let url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams()
       .set('q', '*:*')
       .set('fq', 'parents:"' + pid + '"')
@@ -479,7 +481,7 @@ export class AppService {
   getArticles2(pid: string): Observable<any[]> {
     const getRange = (pid: string): Observable<any> => {
 
-      let url = this.state.config['context'] + 'search/journal/select';
+      let url = this.config['context'] + 'search/journal/select';
       const params = new HttpParams()
         .set('q', '*:*')
         .set('fq', 'parents:"' + pid + '"')
@@ -532,7 +534,7 @@ export class AppService {
     if (this.modsCache.hasOwnProperty(pid)) {
       return of(this.modsCache[pid]);
     }
-    const url = this.state.config['context'] + 'search/journal/select';
+    const url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams()
       .set('q', '*:*')
       .set('fq', 'pid:"' + pid + '"')
@@ -549,7 +551,7 @@ export class AppService {
   }
 
   setViewed(pid: string): Observable<any> {
-    const url = this.state.config['context'] + 'index';
+    const url = this.config['context'] + 'index';
     const params = new HttpParams()
       .set('action', 'SET_VIEW')
       .set('pid', pid);
@@ -557,7 +559,7 @@ export class AppService {
   }
 
   getViewed(pid: string): Observable<number> {
-    const url = this.state.config['context'] + 'search/views/select';
+    const url = this.config['context'] + 'search/views/select';
     const params = new HttpParams().set('q', '*:*')
       .set('fq', 'pid:"' + pid + '"')
       .set('wt', 'json')
@@ -577,7 +579,7 @@ export class AppService {
 
 
   getModsK5(pid: string): Observable<any> {
-    const url = this.state.config['api_point'] + '/item/' + pid + '/streams/BIBLIO_MODS';
+    const url = this.config['api_point'] + '/item/' + pid + '/streams/BIBLIO_MODS';
     return this.get(url).pipe(
       map((res: any) => {
         return JSON.parse(xml2json(res.text(), ''))['mods:modsCollection']['mods:mods'];
@@ -586,7 +588,7 @@ export class AppService {
   }
 
   getSiblings(pid: string): Observable<any> {
-    const url = this.state.config['context'] + 'search/journal/select';
+    const url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams()
       .set('q', 'pid:"' + pid + '"')
       .set('wt', 'json')
@@ -601,7 +603,7 @@ export class AppService {
   }
 
   getSiblingsk5(pid: string): Observable<any> {
-    const url = this.state.config['api_point'] + '/item/' + pid + '/siblings';
+    const url = this.config['api_point'] + '/item/' + pid + '/siblings';
     return this.get(url).pipe(
       map((res: any) => {
 
@@ -692,7 +694,7 @@ export class AppService {
   }
 
   getMagazine(web: string) {
-    const url = this.state.config['context'] + 'search/magazines/select';
+    const url = this.config['context'] + 'search/magazines/select';
     const params = new HttpParams()
       .set('q', 'web:"' + web + '"')
       .set('wt', 'json');
@@ -813,10 +815,10 @@ export class AppService {
   }
 
   isHiddenByGenre(genres: string[]) {
-    //console.log(this.state.config['hiddenGenres'], genres);
+    //console.log(this.config['hiddenGenres'], genres);
     for (const g in genres) {
       //console.log(g);
-      if (this.state.config['hiddenGenres'].indexOf(genres[g]) > -1) {
+      if (this.config['hiddenGenres'].indexOf(genres[g]) > -1) {
         return true;
       }
     }
@@ -827,7 +829,7 @@ export class AppService {
   pidActual: string | null | undefined;
   findActual() {
     this.pidActual = null;
-    this.findActualByPid(this.state.config['journal']);
+    this.findActualByPid(this.config['journal']);
   }
 
   findActualByPid(pid: string) {
@@ -841,7 +843,7 @@ export class AppService {
         this.getJournal(pid).subscribe(a => {
           this.state.setActual(a);
           this.getArticles(this.state.actualNumber!['pid']!).subscribe((res: any) => {
-            this.state.actualNumber!.setArticles(res, this.state.config['mergeGenres']);
+            this.state.actualNumber!.setArticles(res, this.config['mergeGenres']);
             //this.service.getMods(this.state.actualNumber['pid']).subscribe(mods => this.state.actualNumber.mods = mods);
             this.state.stateChanged();
           });

@@ -9,8 +9,6 @@ import { Magazine } from './models/magazine';
     providedIn: 'root'
 }) export class AppConfiguration {
 
-    public config!: Configuration;
-
     public get context() {
         return this.config.context;
     }
@@ -24,6 +22,7 @@ import { Magazine } from './models/magazine';
         @Inject(PLATFORM_ID) private platformId: any,
         @Inject(DOCUMENT) private document: Document,
         private http: HttpClient,
+        private config: Configuration,
         private state: AppState) {
             if (!isPlatformBrowser(this.platformId)) {
                 const args = process.argv;
@@ -46,7 +45,7 @@ import { Magazine } from './models/magazine';
         const promise = this.http.get(url)
             .toPromise()
             .then(cfg => {
-                this.config = cfg as Configuration;
+                this.config.fromJSON(cfg);
                 this.state.setConfig(cfg);
                 console.log('config loaded');
             }).then(() => {
@@ -93,7 +92,7 @@ import { Magazine } from './models/magazine';
     }
 
     getJournalConfig(ctx: Magazine) {
-        console.log('loading journal config...' + ctx.ctx);
+        console.log('loading journal config... ' + ctx.ctx);
         let url = this.server + '/api/texts?action=GET_LAYOUT&ctx=' + ctx.ctx;
         return this.http.get(url)
         .toPromise()
@@ -102,11 +101,11 @@ import { Magazine } from './models/magazine';
             if (!this.state.currentMagazine.keywords) {
                 this.state.currentMagazine.keywords = [];
             }
-            this.state.setLayout(res);
-            this.state.config['color'] = ctx.color;
-            this.state.config['journal'] = ctx.journal;
-            this.state.config['showTitleLabel'] = ctx.showTitleLabel;
-            this.state.stateChanged();
+            this.config.setLayout(res);
+            // this.state.config['color'] = ctx.color;
+            // this.state.config['journal'] = ctx.journal;
+            // this.state.config['showTitleLabel'] = ctx.showTitleLabel;
+            // this.state.stateChanged();
           })
           .catch(res => {
               console.log(res);

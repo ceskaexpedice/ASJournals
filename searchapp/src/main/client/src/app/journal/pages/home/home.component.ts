@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.state';
+import { Configuration } from 'src/app/models/configuration';
 import { Journal } from 'src/app/models/journal.model';
 import { AppService } from 'src/app/services/app.service';
 
@@ -31,6 +32,7 @@ export class HomeComponent implements OnInit {
   routeObserver: Subscription = new Subscription;
 
   constructor(
+    private config: Configuration,
     private service: AppService,
     public state: AppState,
     private router: Router
@@ -42,7 +44,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.home_text = this.state.config.home; 
+    //this.home_text = this.config.home; 
     this.setData();
     //this.service.getText('home').subscribe(t => this.home_text = t);
     this.state.stateChangedSubject.subscribe(
@@ -66,12 +68,12 @@ export class HomeComponent implements OnInit {
   }
 
   showDb() {
-    const db =  this.state.config.layout.pages.find((m:any) => m.route === 'db');
+    const db =  this.config.layout.pages.find((m:any) => m.route === 'db');
     return db && db.visible
   }
 
   showNews() {
-    const db =  this.state.config.layout.pages.find((m:any) => m.route === 'news');
+    const db =  this.config.layout.pages.find((m:any) => m.route === 'news');
     return db && db.visible
   }
 

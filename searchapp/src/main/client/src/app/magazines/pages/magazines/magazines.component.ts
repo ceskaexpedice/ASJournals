@@ -54,7 +54,7 @@ export class MagazinesComponent implements OnInit {
     // this.getConfig().subscribe(
     //   (cfg: any) => {
       
-      this.state.setConfig(this.config.config);
+      this.state.setConfig(this.config);
       // this.state.ctxs
       var userLang = 'cs';
       if (isPlatformBrowser(this.platformId)) {

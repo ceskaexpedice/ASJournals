@@ -8,6 +8,7 @@ import { AppService } from '../services/app.service';
 import { Subscription } from 'rxjs';
 import { MaterialCssVarsModule, MaterialCssVarsService } from 'angular-material-css-vars';
 import { MatButtonModule } from '@angular/material/button';
+import { Configuration } from '../models/configuration';
 
 @Component({
   standalone: true,
@@ -42,6 +43,7 @@ export class JournalComponent {
     @Inject(PLATFORM_ID) private platformId: any,
     private windowRef: AppWindowRef,
     public materialCssVarsService: MaterialCssVarsService,
+    private config: Configuration,
     public state: AppState,
     private service: AppService,
     private router: Router,
@@ -49,15 +51,15 @@ export class JournalComponent {
 
   ngOnInit() {
 
-    // this.materialCssVarsService.setDarkTheme(true);
-
     if (this.state.currentMagazine) {
-      this.materialCssVarsService.setPrimaryColor('#'+this.state.currentMagazine.color);
+        this.materialCssVarsService.setPrimaryColor('#'+this.state.currentMagazine.color);
         this.initApp();
     } else {
       // navigate to magazines home
       this.router.navigate(['/']);
     }
+
+    console.log(this.config)
 
     // this.route.params
     //   .subscribe((params: Params) => {
@@ -82,15 +84,14 @@ export class JournalComponent {
         userLang = this.windowRef.nativeWindow.navigator.language.split('-')[0]; // use navigator lang if available
       }
       userLang = /(cs|en)/gi.test(userLang) ? userLang : 'cs';
-      if (this.state.config.hasOwnProperty('defaultLang')) {
-        userLang = this.state.config['defaultLang'];
+      if (this.config.hasOwnProperty('defaultLang')) {
+        userLang = this.config['defaultLang'];
       }
     }
     this.service.changeLang(userLang);
     //this.setCtx(false);
 
     this.processUrl();
-    console.log(this.hasContext)
     this.hasContext = true;
     this.state.stateChanged();
 
@@ -101,11 +102,11 @@ export class JournalComponent {
       return this.service.getJournalConfig(this.state.currentMagazine).subscribe(res => {
         //return this.http.get("assets/config.json").map(res => {
         let cfg = res;
-        if (!this.state.config) {
+        if (!this.config) {
           this.state.setConfig(cfg);
         }
         this.initApp();
-        return this.state.config;
+        return this.config;
       });
     } else {
       // navigate to magazines home

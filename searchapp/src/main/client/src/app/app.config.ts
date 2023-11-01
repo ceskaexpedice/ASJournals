@@ -17,6 +17,7 @@ import { AuthGuard } from './services/auth-guard';
 import { MagazinesAuthGuard } from './magazines/magazines-auth-guard';
 import { AppService } from './services/app.service';
 import { SearchService } from './services/search.service';
+import { Configuration } from './models/configuration';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -24,6 +25,7 @@ export function createTranslateLoader(http: HttpClient) {
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideAnimations(),
+    Configuration,
     AppState, SearchService, AppService, AppWindowRef, MagazineState,  MagazinesService, AuthGuard, MagazinesAuthGuard,
     { provide: APP_INITIALIZER, useFactory: (config: AppConfiguration) => () => config.load(), deps: [AppConfiguration], multi: true },
     importProvidersFrom(MatSnackBarModule),
