@@ -1,10 +1,8 @@
 <ng-container *ngIf="hasContext">
-<!-- <app-header></app-header> -->
-<div>header</div>
+<app-header></app-header>
 <main [class]="mainClass">
   <button mat-raised-button color="primary" (click)="setColor()">test</button>
   <router-outlet></router-outlet>
 </main>
-<div>footer</div>
-<!-- <app-footer></app-footer> -->
+<app-footer></app-footer>
 </ng-container>

@@ -102,9 +102,6 @@ import { Magazine } from './models/magazine';
                 this.state.currentMagazine.keywords = [];
             }
             this.config.setLayout(res);
-            // this.state.config['color'] = ctx.color;
-            // this.state.config['journal'] = ctx.journal;
-            // this.state.config['showTitleLabel'] = ctx.showTitleLabel;
             // this.state.stateChanged();
           })
           .catch(res => {

@@ -9,13 +9,15 @@ import { Subscription } from 'rxjs';
 import { MaterialCssVarsModule, MaterialCssVarsService } from 'angular-material-css-vars';
 import { MatButtonModule } from '@angular/material/button';
 import { Configuration } from '../models/configuration';
+import { FooterComponent } from "./components/footer/footer.component";
+import { HeaderComponent } from "./components/header/header.component";
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, RouterModule, FlexLayoutModule, MaterialCssVarsModule, MatButtonModule],
-  selector: 'app-journal',
-  templateUrl: './journal.component.html',
-  styleUrls: ['./journal.component.scss']
+    standalone: true,
+    selector: 'app-journal',
+    templateUrl: './journal.component.html',
+    styleUrls: ['./journal.component.scss'],
+    imports: [CommonModule, RouterModule, FlexLayoutModule, MaterialCssVarsModule, MatButtonModule, FooterComponent, HeaderComponent]
 })
 export class JournalComponent {
 
@@ -58,8 +60,6 @@ export class JournalComponent {
       // navigate to magazines home
       this.router.navigate(['/']);
     }
-
-    console.log(this.config)
 
     // this.route.params
     //   .subscribe((params: Params) => {
