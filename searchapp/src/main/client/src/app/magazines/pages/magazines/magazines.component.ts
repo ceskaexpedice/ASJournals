@@ -69,7 +69,7 @@ export class MagazinesComponent implements OnInit {
         });
 
         this.processUrl();
-        this.setStyles();
+        // this.setStyles();
       // }
     // );
   }

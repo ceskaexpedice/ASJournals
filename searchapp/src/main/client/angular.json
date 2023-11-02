@@ -39,9 +39,6 @@
               { "glob": "**/*", "input": "src/tinymce/langs", "output": "/tinymce/langs/" }
             ],
             "styles": [
-              {
-                "input": "src/styles-magazines.scss", "bundleName": "magazines"
-              },
               "src/styles.scss"
             ],
             "scripts": [

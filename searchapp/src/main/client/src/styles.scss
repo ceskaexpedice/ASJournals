@@ -1,9 +1,17 @@
 
 @use "sass:map";
 
-
 @use "angular-material-css-vars" as mat-css-vars;
 @use '@angular/material' as mat;
+
+@import "sass-magazines/app-functions";
+@import "sass-magazines/app-theme-default";
+@import "sass-magazines/app-variables";
+@import "sass-magazines/app-mixins";
+@import "sass-magazines/app-gaps";
+@import "sass-magazines/app-global";
+@import "sass-magazines/app-mat-override";
+@import "sass-magazines/app-layout";
 
 @include mat-css-vars.init-material-css-vars();
 
@@ -11,6 +19,7 @@
   mat.$light-blue-palette,
   "primary"
 );
+
 
 
 html, body { height: 100%; }
