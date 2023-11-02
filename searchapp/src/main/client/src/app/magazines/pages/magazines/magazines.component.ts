@@ -14,6 +14,8 @@ import { SidenavListComponent } from '../../components/sidenav-list/sidenav-list
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MaterialCssVarsService } from 'angular-material-css-vars';
+import { Configuration } from 'src/app/models/configuration';
 
 @Component({
   standalone: true,
@@ -27,8 +29,9 @@ export class MagazinesComponent implements OnInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     @Inject(DOCUMENT) private document: Document,
+    public materialCssVarsService: MaterialCssVarsService,
     private windowRef: AppWindowRef,
-    public config: AppConfiguration,
+    public config: Configuration,
     public state: MagazineState,
     private service: MagazinesService,
     private http: HttpClient,
@@ -36,19 +39,20 @@ export class MagazinesComponent implements OnInit {
     private router: Router) {
 
   }
-  setStyles() {
-    var links = this.document.getElementsByTagName('link');
-    for (var i = 0; i < links.length; i++) {
-      var link = links[i];
-      if (link.rel.indexOf('stylesheet') != -1 && link.title) {
-        link.disabled = true;
-      } else if (link.rel.indexOf('stylesheet') != -1 && link.href.indexOf('magazines') != -1) {
-        link.disabled = false;
-      } else if (link.rel.indexOf('stylesheet') != -1 && link.href.indexOf('styles') != -1) {
-        link.disabled = true;
-      }
-    }
-  }
+
+  // setStyles() {
+  //   var links = this.document.getElementsByTagName('link');
+  //   for (var i = 0; i < links.length; i++) {
+  //     var link = links[i];
+  //     if (link.rel.indexOf('stylesheet') != -1 && link.title) {
+  //       link.disabled = true;
+  //     } else if (link.rel.indexOf('stylesheet') != -1 && link.href.indexOf('magazines') != -1) {
+  //       link.disabled = false;
+  //     } else if (link.rel.indexOf('stylesheet') != -1 && link.href.indexOf('styles') != -1) {
+  //       link.disabled = true;
+  //     }
+  //   }
+  // }
 
   ngOnInit() {
     // this.getConfig().subscribe(
@@ -69,6 +73,9 @@ export class MagazinesComponent implements OnInit {
         });
 
         this.processUrl();
+        this.materialCssVarsService.setPrimaryColor(this.config.color);
+        
+
         // this.setStyles();
       // }
     // );

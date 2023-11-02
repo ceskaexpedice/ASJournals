@@ -3,6 +3,7 @@
     "defaultLang": "cs",
     "api_point": "k5api",
     "sort_field": "datum_end",
+    "color": "#0097a7",
     "k5": "https://kramerius.lib.cas.cz/client/handle/",
     "searchParams": {
         "rows": 20
