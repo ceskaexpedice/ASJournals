@@ -13,6 +13,8 @@
 @import "sass-magazines/app-mat-override";
 @import "sass-magazines/app-layout";
 
+@import "sass/app-flex-layout";
+
 @include mat-css-vars.init-material-css-vars();
 
 @include mat-css-vars.mat-css-set-palette-defaults(

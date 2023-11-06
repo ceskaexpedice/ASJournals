@@ -24,6 +24,24 @@ app-navbar {
             border-color: rgba($app-color-lightnes, .6);
           }
         }
+
+        &.app-desktop {
+          display: none;
+        }
+    
+        &.app-mobile {
+          display: block;
+        }
+    
+        @media #{$gt-md} {
+          &.app-desktop {
+            display: block;
+          }
+    
+          &.app-mobile {
+            display: none;
+          }
+        }
       }
     }
   
@@ -41,6 +59,24 @@ app-navbar {
               @include setIcon($size: 20, $position: sub);
             }
           }
+        }
+      }
+
+      &.app-desktop {
+        display: none;
+      }
+  
+      &.app-mobile {
+        display: block;
+      }
+  
+      @media #{$gt-md} {
+        &.app-desktop {
+          display: block;
+        }
+  
+        &.app-mobile {
+          display: none;
         }
       }
     }
