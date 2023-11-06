@@ -29,7 +29,7 @@ app-navbar {
   
     .app-right {
       a {
-        &.mat-flat-button {
+        &.mat-mdc-button-base{
           @extend .app-clean-border;
 
           &.app-active {
