@@ -6,9 +6,10 @@
 @import "../../../../sass-magazines/app-global";
 @import "../../../../sass-magazines/app-mat-override";
 @import "../../../../sass-magazines/app-layout";
+@import "../../../../sass/app-flex-layout";
 
 .app-fxLayout {
-  flex-flow: wrap;
+  @extend .app-fxLayout-wrap;
 
   .app-left {
     flex: 1 1 100%;

@@ -39,8 +39,8 @@
     <mat-divider></mat-divider>
     {{ translate.currentLang === 'en' ? resultItem.desc_en :  resultItem.desc }}
   </mat-card-content>
-  <mat-card-actions fxLayout="row" fxLayoutGap="32px">
-    <div fxFlex>
+  <mat-card-actions class="app-fxLayout app-fxLayout-row">
+    <div class="app-fxFlex">
       <a mat-flat-button [href]="resultItem.ctx" [matTooltip]="resultItem.ctx" matTooltipPosition="above" target="_blank">
         <mat-icon>link</mat-icon> {{ 'magazines.vstup_na_web' | translate }}
       </a>

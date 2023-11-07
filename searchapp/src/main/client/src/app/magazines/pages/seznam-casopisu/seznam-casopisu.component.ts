@@ -15,7 +15,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, CommonModule, TranslateModule, SeznamItemComponent, FacetsComponent, FacetsUsedComponent, SortBarComponent, FlexLayoutModule],
+  imports: [RouterModule, CommonModule, TranslateModule, SeznamItemComponent, FacetsComponent, FacetsUsedComponent, SortBarComponent],
   selector: 'app-seznam-casopisu', 
   templateUrl: './seznam-casopisu.component.html',
   styleUrls: ['./seznam-casopisu.component.scss']
