@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule, MatToolbarModule, MatIconModule, MatCardModule, MatTooltipModule, MatDividerModule, FlexLayoutModule, MatButtonModule ],
+  imports: [CommonModule, RouterModule, TranslateModule, MatToolbarModule, MatIconModule, MatCardModule, MatTooltipModule, MatDividerModule, FlexLayoutModule, MatButtonModule],
   selector: 'app-seznam-item',
   templateUrl: './seznam-item.component.html',
   styleUrls: ['./seznam-item.component.scss']

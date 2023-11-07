@@ -12,6 +12,10 @@
     flex-direction: column; 
   }
 
+  &.app-fxLayout-wrap {
+    flex-flow: wrap;
+  }
+
   &.app-fxFlexFill {
     height: 100%; 
     min-height: 100%; 
