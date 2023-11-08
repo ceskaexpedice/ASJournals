@@ -27,7 +27,6 @@ app-root {
       .app-page-wrapper {
         @extend .app-pt-8, .app-pb-8, .app-pl-4, .app-pr-4;
 
-        @import "app-facets";
         @import "app-facets-used";
       }
 
