@@ -1,0 +1,22 @@
+@import "../../../../sass-magazines/app-theme-default";
+@import "../../../../sass-magazines/app-variables";
+
+footer {
+  padding: 16px;
+  display: block;
+  color: $app-footer-color;
+  background-color: $app-footer-bg;
+
+  .app-left {
+    a {
+      margin-left: 4px;
+    }
+  }
+
+  .app-right {  
+    .app-logo-inovatika {
+      height: 16px;
+      vertical-align: text-bottom;
+    }
+  }
+}
