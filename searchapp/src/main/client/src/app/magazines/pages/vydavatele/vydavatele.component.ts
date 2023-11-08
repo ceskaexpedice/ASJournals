@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -11,7 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule, FlexLayoutModule],
+  imports: [CommonModule, RouterModule, TranslateModule],
   selector: 'app-vydavatele',
   templateUrl: './vydavatele.component.html',
   styleUrls: ['./vydavatele.component.scss']
