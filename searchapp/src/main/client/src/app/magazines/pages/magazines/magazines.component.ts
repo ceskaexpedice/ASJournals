@@ -13,13 +13,12 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { SidenavListComponent } from '../../components/sidenav-list/sidenav-list.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialCssVarsService } from 'angular-material-css-vars';
 import { Configuration } from 'src/app/models/configuration';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, NavbarComponent, SidenavListComponent, FooterComponent, MatSidenavModule, MatListModule, FlexLayoutModule],
+  imports: [RouterModule, NavbarComponent, SidenavListComponent, FooterComponent, MatSidenavModule, MatListModule],
   selector: 'magazines-root',
   templateUrl: './magazines.component.html',
   styleUrls: ['./magazines.component.scss']
