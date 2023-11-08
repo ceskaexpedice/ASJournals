@@ -1,5 +1,5 @@
 <mat-card class="app-mb-4">
-  <div class="app-fxLayout app-fxLayout-row app-p-4 app-mb-n4">
+  <div class="app-fxLayout app-row app-p-4 app-mb-n4">
     <div class="app-left app-mr-4">
       <a [href]="resultItem.ctx" queryParamsHandling="preserve" [matTooltip]="resultItem.title" matTooltipPosition="above" target="_blank" >
         <img [src]="resultItem.img" alt="thumb" />
@@ -39,7 +39,7 @@
     <mat-divider></mat-divider>
     {{ translate.currentLang === 'en' ? resultItem.desc_en :  resultItem.desc }}
   </mat-card-content>
-  <mat-card-actions class="app-fxLayout app-fxLayout-row">
+  <mat-card-actions class="app-fxLayout app-row">
     <div class="app-fxFlex">
       <a mat-flat-button [href]="resultItem.ctx" [matTooltip]="resultItem.ctx" matTooltipPosition="above" target="_blank">
         <mat-icon>link</mat-icon> {{ 'magazines.vstup_na_web' | translate }}

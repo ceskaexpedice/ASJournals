@@ -5,11 +5,11 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div class="app-fxLayout app-fxLayout-column app-fxFlexFill">
+    <div class="app-fxLayout app-column app-fill">
       <header>
         <app-navbar (sidenavToggle)="sidenav.toggle()"></app-navbar>
       </header>
-      <main class="app-fxFlex app-fxLayout app-fxLayout-column app-oa-y">
+      <main class="app-fxFlex app-fxLayout app-column app-oa-y">
         <div class="app-fxFlex app-page-wrapper">
           <router-outlet></router-outlet>
         </div>

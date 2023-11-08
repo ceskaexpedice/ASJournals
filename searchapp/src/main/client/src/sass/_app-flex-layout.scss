@@ -4,27 +4,31 @@
   display: flex;
   box-sizing: border-box;
 
-  &.app-fxLayout-row {
+  &.app-row {
     flex-direction: row;
   }
 
-  &.app-fxLayout-column {
+  &.app-column {
     flex-direction: column; 
   }
 
-  &.app-fxLayout-wrap {
+  &.app-wrap {
     flex-flow: wrap;
   }
 
-  &.app-fxFlexFill {
+  &.app-center-v {
+    align-items: center;
+  }
+
+  &.app-center-h {
+    place-content: center;
+  }
+
+  &.app-fill {
     height: 100%; 
     min-height: 100%; 
     min-width: 100%; 
     width: 100%; 
-  }
-
-  &.app-fxLayout-center-v {
-    align-items: center;
   }
 }
 
