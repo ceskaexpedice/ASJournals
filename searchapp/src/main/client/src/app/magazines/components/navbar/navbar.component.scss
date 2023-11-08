@@ -1,0 +1,87 @@
+@import "../../../../sass-magazines/app-theme-default";
+@import "../../../../sass-magazines/app-variables";
+@import "../../../../sass-magazines/app-mixins";
+@import "../../../../sass-magazines/app-gaps";
+@import "../../../../sass-magazines/app-global";
+@import "../../../../sass-magazines/app-mat-override";
+
+.mat-toolbar {
+  height: $app-navbar-height;
+
+  a {
+    color: $app-color-lightnes;
+  }
+  
+  .app-left {
+    .app-logo {
+      font-weight: 400;
+      font-size: 24px;
+
+      span {
+        color: rgba($app-color-lightnes, .6);
+
+        &:not(.app-pipe) {
+          font-weight: 200;
+        }
+
+        &.app-pipe {
+          border-color: rgba($app-color-lightnes, .6);
+        }
+      }
+
+      &.app-desktop {
+        display: none;
+      }
+  
+      &.app-mobile {
+        display: block;
+      }
+  
+      @media #{$gt-md} {
+        &.app-desktop {
+          display: block;
+        }
+  
+        &.app-mobile {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .app-right {
+    a {
+      &.mat-mdc-button-base{
+        @extend .app-clean-border;
+
+        &.app-active {
+          background-color: rgba($app-color-lightnes, .15);
+        }
+
+        .mat-icon {
+          &:not(.app-menu .mat-icon) {
+            @include setIcon($size: 20, $position: sub);
+          }
+        }
+      }
+    }
+
+    &.app-desktop {
+      display: none;
+    }
+
+    &.app-mobile {
+      display: block;
+    }
+
+    @media #{$gt-md} {
+      &.app-desktop {
+        display: block;
+      }
+
+      &.app-mobile {
+        display: none;
+      }
+    }
+  }
+}

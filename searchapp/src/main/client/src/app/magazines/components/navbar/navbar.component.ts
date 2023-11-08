@@ -6,12 +6,11 @@ import { MagazinesService } from '../../magazines.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule, MatToolbarModule, MatIconModule, FlexLayoutModule, MatButtonModule],
+  imports: [CommonModule, RouterModule, TranslateModule, MatToolbarModule, MatIconModule, MatButtonModule],
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
