@@ -1,0 +1,27 @@
+@import "../../../../sass-magazines/app-theme-default";
+@import "../../../../sass-magazines/app-variables";
+@import "../../../../sass-magazines/app-mixins";
+@import "../../../../sass-magazines/app-gaps";
+
+// collapse content show more / less
+.app-collapse {
+  @extend .app-mb-0;
+  opacity: 0;
+  max-height: 0;
+  transition: .25s ease;
+
+  .mat-divider {
+    transition: .25s ease;
+  }
+
+  &.app-in {
+    @extend .app-mb-4;
+    opacity: 1;
+    font-size: inherit;
+    max-height: 300px;
+
+    .mat-divider {
+      @extend .app-mt-4, .app-mb-4;
+    }
+  }
+}

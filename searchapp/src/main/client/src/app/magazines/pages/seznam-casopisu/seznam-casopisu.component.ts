@@ -10,7 +10,6 @@ import { SeznamItemComponent } from '../../components/seznam-item/seznam-item.co
 import { FacetsComponent } from '../../components/facets/facets.component';
 import { FacetsUsedComponent } from '../../components/facets-used/facets-used.component';
 import { SortBarComponent } from '../../components/sort-bar/sort-bar.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @Component({

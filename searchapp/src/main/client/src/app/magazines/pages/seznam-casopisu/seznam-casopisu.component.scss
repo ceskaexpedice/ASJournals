@@ -1,15 +1,8 @@
-@import "../../../../sass-magazines/app-functions";
 @import "../../../../sass-magazines/app-theme-default";
 @import "../../../../sass-magazines/app-variables";
-@import "../../../../sass-magazines/app-mixins";
-@import "../../../../sass-magazines/app-gaps";
-@import "../../../../sass-magazines/app-global";
-@import "../../../../sass-magazines/app-mat-override";
-@import "../../../../sass-magazines/app-layout";
-@import "../../../../sass/app-flex-layout";
 
 .app-fxLayout {
-  @extend .app-fxLayout-wrap;
+  flex-flow: wrap;
 
   .app-left {
     flex: 1 1 100%;
