@@ -1,0 +1,55 @@
+@import "../../../../sass-magazines/app-theme-default";
+@import "../../../../sass-magazines/app-variables";
+@import "../../../../sass-magazines/app-mixins";
+@import "../../../../sass-magazines/app-gaps";
+@import "../../../../sass-magazines/app-global";
+@import "../../../../sass-magazines/app-mat-override";
+
+
+::ng-deep .mat-mdc-list {
+  .mat-mdc-subheader {
+    border-bottom: 1px solid $app-brand-border-color;
+    font-size: 15px;
+    font-weight: 900;
+    color: initial;
+    padding: 0 24px 4px 24px;
+
+    a {
+      @extend .app-color-warning;
+
+      .mat-icon {
+        @include setIcon(20, $app-color-warning);
+      }
+    }
+  }
+
+  .app-list-content-wrapper {
+    .mat-mdc-list-item {
+      height: auto;
+      font-size: 14px;
+
+      .mdc-list-item__primary-text {
+        display: flex;
+        flex-direction: row;
+        white-space: break-spaces;
+        font-size: 14px;
+        //line-height: normal;
+        
+        a {
+          margin-right: $app-gap-icon;
+          @extend .app-color-warning;
+
+          .mat-icon {
+            @include setIcon(20, $app-color-warning);
+          }
+        }
+
+        div {
+          span {
+            color: $app-gray-6;
+          }
+        }
+      }
+    }
+  }
+}
