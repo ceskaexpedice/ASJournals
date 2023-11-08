@@ -20,7 +20,6 @@ app-root {
     }
     
     mat-sidenav {
-      @import "./app-sidenav-list";
       width: $app-sidenav-width;
     }
 

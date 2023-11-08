@@ -5,10 +5,11 @@ import { MagazinesService } from '../../magazines.service';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatSidenavModule, MatListModule],
+  imports: [CommonModule, RouterModule,TranslateModule, MatSidenavModule, MatListModule],
   selector: 'app-sidenav-list',
   templateUrl: './sidenav-list.component.html',
   styleUrls: ['./sidenav-list.component.scss']
