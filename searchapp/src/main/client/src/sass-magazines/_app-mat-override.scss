@@ -1,7 +1,7 @@
 // --- MATERIAL OVERRIDE ---
 
 // checkbox
-.mat-checkbox {
+.mat-mdc-checkbox {
 
   .mat-checkbox-inner-container {
     @extend .app-mt-1;
@@ -17,12 +17,12 @@
 }
 
 // button
-.mat-button-base {
+.mat-mdc-button-base {
   .mat-icon {
     @extend .app-mr-1;
   }
 
-  &.mat-flat-button {
+  &.mdc-button--unelevated{
     &.mat-primary {
       .mat-icon {
         @include setIcon($color: $app-color-lightnes);
@@ -76,14 +76,14 @@
 }
 
 // list
-.mat-list {
+.mat-mdc-list {
   &.app-view-admin {
     @extend .app-pt-0;
     border-width: 1px 1px 0 1px;
     border-style: solid;
     border-color: $app-brand-border-color;
 
-    .mat-list-item {
+    .mat-mdc-list-item {
       @extend .app-pt-2, .app-pb-2;
       border-bottom: 1px solid $app-brand-border-color;
       height: auto !important;
@@ -247,6 +247,22 @@
       .mat-form-field-wrapper {
         margin-bottom: -1.34375em;
       }
+    }
+  }
+}
+
+// --- new ----
+
+// tab
+.mat-mdc-tab-group {
+  .mat-mdc-tab-header {
+    border-bottom: 1px solid $app-gray-3;
+  }
+
+  .mat-mdc-tab-body {
+    &.mat-mdc-tab-body-active,
+    .mat-mdc-tab-body-content  {
+      overflow: unset;
     }
   }
 }

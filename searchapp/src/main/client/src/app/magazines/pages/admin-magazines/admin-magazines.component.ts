@@ -10,7 +10,6 @@ import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
 import { LicencesDialogComponent } from './licences-dialog/licences-dialog.component';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,10 +24,8 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslateModule, FlexLayoutModule, 
-    MagazineEditComponent, EditorEditComponent, UserEditComponent,
-    MatButtonModule, 
-    MatFormFieldModule, MatListModule, MatSelectModule, MatIconModule, MatTabsModule, MatDialogModule],
+  imports: [CommonModule, FormsModule, RouterModule, TranslateModule, MagazineEditComponent, EditorEditComponent, UserEditComponent,
+    MatButtonModule, MatFormFieldModule, MatListModule, MatSelectModule, MatIconModule, MatTabsModule, MatDialogModule],
   selector: 'app-admin-magazines',
   templateUrl: './admin-magazines.component.html',
   styleUrls: ['./admin-magazines.component.scss']
