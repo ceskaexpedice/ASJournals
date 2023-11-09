@@ -4,8 +4,12 @@
 @import "../../../../sass-magazines/app-mixins";
 
 
-.mat-mdc-list-item {
+::ng-deep .mat-mdc-list-item {
   background-color: transparent !important;
+
+  &:before {
+    background-color: transparent !important;
+  }
 
   &.app-active {
     background-color: $app-gray-1 !important;

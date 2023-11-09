@@ -33,7 +33,7 @@
         flex-direction: row;
         white-space: break-spaces;
         font-size: 14px;
-        //line-height: normal;
+        line-height: inherit;
         
         a {
           margin-right: $app-gap-icon;
