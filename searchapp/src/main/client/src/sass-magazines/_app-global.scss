@@ -159,6 +159,36 @@ h4 {
       @extend .app-clean-bottom-gap;
     }
   }
+
+  .app-fxFlex-1x {
+    flex: 1 1 calc(100% - 16px);
+    box-sizing: border-box;
+    min-width: calc(100% - 16px);
+  }
+
+  .app-fxFlex-2x {
+    flex: 1 1 calc(50% - 16px);
+    box-sizing: border-box;
+    min-width: calc(50% - 16px);
+  }
+
+  .app-fxFlex-3x {
+    flex: 1 1 calc(33.3333% - 16px);
+    box-sizing: border-box;
+    min-width: calc(33.3333% - 16px);
+  }
+
+  .app-fxFlex-25 {
+    flex: 1 1 calc(25% - 16px);
+    box-sizing: border-box;
+    min-width: calc(25% - 16px);
+  }
+
+  .app-fxFlex-75 {
+    flex: 1 1 calc(75% - 16px);
+    box-sizing: border-box;
+    min-width: calc(75% - 16px);
+  }
 }
 
 

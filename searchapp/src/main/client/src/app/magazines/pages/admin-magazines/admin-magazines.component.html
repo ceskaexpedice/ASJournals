@@ -37,7 +37,7 @@
          </div>
       </div>
     </mat-tab>
-    <mat-tab *ngIf="magState.user?.isAdmin" [label]="'magazines.sprava_uzivatelu' | translate | translate">
+    <mat-tab  [label]="'magazines.sprava_uzivatelu' | translate | translate"><!-- *ngIf="magState.user?.isAdmin" -->
       <div class="app-fxLayout app-row app-mt-8">
         <div class="app-left">
           <button mat-flat-button (click)="addUser()" color="primary" class="app-w-100 app-text-left app-mb-4"><mat-icon>add</mat-icon>{{ 'magazines.pridat_uzivatele' | translate }}</button>

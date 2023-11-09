@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
@@ -19,7 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslateModule, FlexLayoutModule, MatButtonModule,
+  imports: [CommonModule, FormsModule, RouterModule, TranslateModule, MatButtonModule,
     MatFormFieldModule, MatListModule, MatSelectModule, MatIconModule, MatTooltipModule, MatInputModule, MatCheckboxModule, MatOptionModule],
   selector: 'app-magazine-edit',
   templateUrl: './magazine-edit.component.html',
