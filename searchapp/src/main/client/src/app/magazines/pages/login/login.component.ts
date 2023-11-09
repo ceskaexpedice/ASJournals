@@ -14,8 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslateModule,
-    MatIconModule, MatCardModule, MatTooltipModule, MatFormFieldModule, MatInputModule, MatButtonModule ], 
+  imports: [CommonModule, FormsModule, RouterModule, TranslateModule, MatIconModule, MatCardModule, MatTooltipModule, MatFormFieldModule, MatInputModule, MatButtonModule], 
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
