@@ -1,9 +1,9 @@
 import { keyframes } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,7 +11,7 @@ import { AppService } from 'src/app/services/app.service';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslateModule, FlexLayoutModule, MatIconModule],
+  imports: [CommonModule, FormsModule, RouterModule, TranslateModule, MatIconModule, MatButtonModule, MatDialogModule],
   selector: 'app-licences-dialog',
   templateUrl: './licences-dialog.component.html',
   styleUrls: ['./licences-dialog.component.scss']
