@@ -11,7 +11,8 @@ body {
 }
 
 app-root {
-  magazines-root {
+  magazines-root,
+  app-journal {
     // sidenav
     mat-sidenav-container, 
     mat-sidenav-content, 

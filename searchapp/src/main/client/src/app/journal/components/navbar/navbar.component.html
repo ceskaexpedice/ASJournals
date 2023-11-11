@@ -1,0 +1,43 @@
+<h1>
+  <a routerLink="home" queryParamsHandling="preserve" title="Home" > 
+    <span *ngIf="config['showTitleLabel']">{{'ČASOPIS' | translate}} </span>
+    <span *ngIf="state.currentMagazine?.title">{{state.currentMagazine?.title! | translate}}</span>
+    <span *ngIf="state.currentMagazine?.subtitle"></span>
+    <span *ngIf="state.currentMagazine?.subtitle">{{state.currentMagazine?.subtitle! | translate}}</span>
+  </a>
+</h1>
+
+<mat-toolbar color="primary">
+  <div class="app-container-fluid app-fxLayout app-row app-fill app-center-v">
+    <div class="app-left app-fxFlex">
+      <ng-container *ngIf="menu">
+        <a mat-flat-button color="primary" routerLink="actual" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'menu.actual_' | translate">{{ 'menu.actual_' | translate }}</a>
+        <ng-container *ngFor="let m of menu">
+          <a mat-flat-button color="primary" [routerLink]="m.route" routerLinkActive="app-active" [matMenuTriggerFor]="menu" [title]="m[state.currentLang]" *ngIf="m.visible && m.children.length > 0" queryParamsHandling="preserve" [title]="m[state.currentLang]">
+            {{ m[state.currentLang] }}<mat-icon>expand_more</mat-icon>
+          </a>
+          <mat-menu #menu="matMenu">
+            <ng-container *ngFor="let m1 of m.children">
+              <button mat-menu-item *ngIf="m1.visible" [routerLink]="[m.route, m1.route]" queryParamsHandling="preserve">{{ m1[state.currentLang ]}}</button>
+            </ng-container>
+          </mat-menu>
+          <a mat-flat-button color="primary" *ngIf="m.visible && m.children.length === 0" routerLinkActive="app-active" [routerLink]="m.route" queryParamsHandling="preserve" [title]="m[state.currentLang]">{{ m[state.currentLang] }}</a>
+        </ng-container>
+        <a mat-flat-button color="primary" routerLink="archiv" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'menu.archiv_' | translate">{{ 'menu.archiv_' | translate }}</a>
+        <a mat-flat-button color="primary" routerLink="hledat" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'Vyhledat' | translate">
+          {{ 'Vyhledat' | translate }}<mat-icon>search</mat-icon>
+        </a>
+      </ng-container>
+    </div>
+    <div class="app-right app-mobile">
+      <a mat-flat-button color="primary" (click)="onToggleSidenav()" [title]="'magazines.navigace' | translate"><mat-icon>menu</mat-icon></a> 
+    </div>
+    <div class="app-right app-desktop">
+      <a *ngIf="state.logged" mat-flat-button color="primary" routerLink="admin" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'Admin' | translate">{{ 'Admin' | translate }}<mat-icon>settings</mat-icon></a>
+      <a *ngIf="!state.logged" mat-flat-button color="primary" routerLink="prihlaseni" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'Přihlásit' | translate">{{ 'Přihlásit' | translate }}</a>
+      <a *ngIf="state.logged" mat-flat-button color="primary" (click)="appservice.logout()" [title]="'Odhlásit' | translate">{{ 'Odhlásit' | translate }}</a>
+      <a mat-flat-button *ngIf="translate.currentLang === 'cs'" color="primary" (click)="changeLang('en')" [title]="'desc.en' | translate">{{ 'EN' | translate }}</a>
+      <a mat-flat-button *ngIf="translate.currentLang === 'en'" color="primary" (click)="changeLang('cs')" [title]="'desc.cs' | translate">{{ 'CS' | translate }}</a>
+    </div>
+  </div>
+</mat-toolbar>

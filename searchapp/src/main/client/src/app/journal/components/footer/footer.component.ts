@@ -16,6 +16,7 @@ import { AppService } from 'src/app/services/app.service';
 })
 export class FooterComponent implements OnInit {
 
+  public currentYear = new Date().getFullYear();
   foot: SafeHtml | null = null;
   routeObserver: Subscription = new Subscription;
 

@@ -1,8 +1,39 @@
-<ng-container *ngIf="hasContext">
+<!-- <ng-container *ngIf="hasContext">
 <app-header></app-header>
 <main [class]="mainClass">
   <button mat-raised-button color="primary" (click)="setColor()">test</button>
   <router-outlet></router-outlet>
 </main>
 <app-footer></app-footer>
+</ng-container> -->
+
+<ng-container *ngIf="hasContext">
+  <!-- <button mat-raised-button color="primary" (click)="setColor()">test</button> -->
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation">
+      <mat-nav-list>
+        <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="app-fxLayout app-column app-fill">
+        <header>
+          <app-navbar (sidenavToggle)="sidenav.toggle()"></app-navbar>
+        </header>
+        <main class="app-fxFlex app-fxLayout app-column app-oa-y" style="background-color: green;">
+          <div class="app-fxFlex app-page-wrapper">
+            <div>obsah</div><br />
+            <div>obsah</div><br />
+            <div>obsah</div><br />
+            <div>obsah</div><br />
+            <div>obsah</div><br />
+            <div>obsah</div><br />
+            <div>obsah</div><br />
+            <!-- <router-outlet></router-outlet> -->
+          </div>
+          <app-footer></app-footer>
+        </main>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </ng-container>

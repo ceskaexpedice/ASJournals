@@ -1,6 +1,5 @@
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Params, Router, RouterModule } from '@angular/router';
 import { AppState } from '../app.state';
 import { AppWindowRef } from '../app.window-ref';
@@ -10,14 +9,17 @@ import { MaterialCssVarsModule, MaterialCssVarsService } from 'angular-material-
 import { MatButtonModule } from '@angular/material/button';
 import { Configuration } from '../models/configuration';
 import { FooterComponent } from "./components/footer/footer.component";
-import { HeaderComponent } from "./components/header/header.component";
+import { NavbarComponent } from "./components/navbar/navbar.component";
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { SidenavListComponent } from './components/sidenav-list/sidenav-list.component';
 
 @Component({
     standalone: true,
     selector: 'app-journal',
     templateUrl: './journal.component.html',
     styleUrls: ['./journal.component.scss'],
-    imports: [CommonModule, RouterModule, FlexLayoutModule, MaterialCssVarsModule, MatButtonModule, FooterComponent, HeaderComponent]
+    imports: [CommonModule, RouterModule, MaterialCssVarsModule, MatButtonModule, FooterComponent, NavbarComponent, MatSidenavModule, MatListModule, SidenavListComponent]
 })
 export class JournalComponent {
 
