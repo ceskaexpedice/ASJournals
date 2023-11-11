@@ -1,12 +1,3 @@
-<h1>
-  <a routerLink="home" queryParamsHandling="preserve" title="Home" > 
-    <span *ngIf="config['showTitleLabel']">{{'ČASOPIS' | translate}} </span>
-    <span *ngIf="state.currentMagazine?.title">{{state.currentMagazine?.title! | translate}}</span>
-    <span *ngIf="state.currentMagazine?.subtitle"></span>
-    <span *ngIf="state.currentMagazine?.subtitle">{{state.currentMagazine?.subtitle! | translate}}</span>
-  </a>
-</h1>
-
 <mat-toolbar color="primary">
   <div class="app-container-fluid app-fxLayout app-row app-fill app-center-v">
     <div class="app-left app-fxFlex">
