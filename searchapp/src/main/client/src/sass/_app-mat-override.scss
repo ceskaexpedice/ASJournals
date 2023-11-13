@@ -25,7 +25,7 @@
   &.mdc-button--unelevated{
     &.mat-primary {
       .mat-icon {
-        @include setIcon($color: $app-color-lightnes);
+        @include setIcon($color: var(--app-color-lightnes-rgb));
       }
     }
   }
@@ -135,8 +135,8 @@
     .mat-radio-container, 
     .mat-radio-outer-circle,
     .mat-radio-inner-circle {
-      width: $app-mat-radio-button-size;
-      height: $app-mat-radio-button-size;
+      width: var(--app-mat-radio-button-size);
+      height: var(--app-mat-radio-button-size);
     }
 
     /* .mat-radio-ripple {

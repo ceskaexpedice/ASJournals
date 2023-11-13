@@ -30,14 +30,14 @@ app-root {
       }
 
       .mat-icon {
-        color: $app-color-primary;
+        color: var(--palette-primary-500);
       }
     }
 
     // container
     .app-container {
       margin: 0 auto;
-      max-width: $app-container;
+      max-width: var(--app-container);
       width: 100%;
       min-width: auto !important;
     }

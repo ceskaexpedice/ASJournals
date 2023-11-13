@@ -1,13 +1,10 @@
 @import "../../../../sass/app-theme-default";
 @import "../../../../sass/app-variables";
 @import "../../../../sass/app-mixins";
-@import "../../../../sass/app-gaps";
-@import "../../../../sass/app-global";
-@import "../../../../sass/app-mat-override";
 
 .mat-toolbar {
   a {
-    color: $app-color-lightnes;
+    color: var(--app-color-lightnes);
   }
   
   .app-left {
@@ -16,14 +13,14 @@
       font-size: 24px;
 
       span {
-        color: rgba($app-color-lightnes, .6);
+        color: rgba(var(--app-color-lightnes-rgb), .6);
 
         &:not(.app-pipe) {
           font-weight: 200;
         }
 
         &.app-pipe {
-          border-color: rgba($app-color-lightnes, .6);
+          border-color: rgba(var(--app-color-lightnes-rgb), .6);
         }
       }
 
@@ -50,10 +47,10 @@
   .app-right {
     a {
       &.mat-mdc-button-base{
-        @extend .app-clean-border;
+        border: none !important;
 
         &.app-active {
-          background-color: rgba($app-color-lightnes, .15);
+          background-color: rgba(var(--app-color-lightnes-rgb), .15);
         }
 
         .mat-icon {

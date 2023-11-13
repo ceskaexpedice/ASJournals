@@ -1,11 +1,6 @@
-@import "../../../../sass/app-theme-default";
-@import "../../../../sass/app-variables";
-@import "../../../../sass/app-mixins";
-@import "../../../../sass/app-gaps";
-
 // collapse content show more / less
 .app-collapse {
-  @extend .app-mb-0;
+  margin-bottom: 0 !important;
   opacity: 0;
   max-height: 0;
   transition: .25s ease;
@@ -15,19 +10,14 @@
   }
 
   &.app-in {
-    @extend .app-mb-4;
+    margin-bottom: 16px;
     opacity: 1;
     font-size: inherit;
     max-height: 300px;
 
     .mat-divider {
-      @extend .app-mt-4, .app-mb-4;
+      margin-top: 16px;
+      margin-bottom: 16px;
     }
   }
 }
-
-/* test
-.mat-mdc-card {
-  background-color: var(--color-red);
-} 
-*/

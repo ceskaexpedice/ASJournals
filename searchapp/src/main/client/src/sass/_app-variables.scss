@@ -1,13 +1,15 @@
 // --- VARIABLES ---
 
-// new css styles
+// css variables
 :root {
-  // common
-  --app-sidenav-width: 350px;
-
   // colors
   --app-color-lightnes: #ffffff;
+  --app-color-lightnes-rgb: 255, 255, 255;
   --app-color-darknes: #000000;
+  --app-color-darknes-rgb: 0, 0, 0;
+  --app-color-warning: #{mat-color($app-warn)};
+  --app-color-info: #{mat-color($mat-amber, 900)};
+  --app-color-success: #{mat-color($mat-green, 800)};
 
   // gray colors
   --app-gray-0: #{mat-color($mat-gray, 50)};
@@ -21,6 +23,9 @@
   --app-gray-8: #{mat-color($mat-gray, 800)};
   --app-gray-9: #{mat-color($mat-gray, 900)};
 
+  // common
+  --app-sidenav-width: 350px;
+
   app-journal {
     --mat-toolbar-standard-height: 54px;
   }
@@ -29,11 +34,18 @@
     // global
     --app-brand-border-color: var(--mat-divider-color);
 
+    // layout
+    --app-gap-icon: 4px;
+    --app-gap-card: 16px;
+    --app-container: 1280px;
+    --app-border-radius: 4px;
+
     // footer
     --app-footer-bg: var(--app-gray-9);
-    --app-footer-color: #{rgba(white, .6)};
-
+    --app-footer-color: rgba(var(--app-color-lightnes-rgb), .6);
+    --app-mat-radio-button-size: 16px;
     // mat override
+
     --mat-toolbar-standard-height: 64px;
   }
 }
@@ -51,21 +63,12 @@ $gaps: (
   "8": 32,
 );
 
-// layout
-$app-gap-icon: getGap("1") !default;
-$app-gap-button: getGap("2") !default;
-$app-gap-card: getGap("4") !default;
-$app-container: 1280px !default;
-$app-border-radius: getGap("1") !default;
-
-// mat radio button
-$app-mat-radio-button-size: 16px !default;
-
-// --- override mat variables ---
-
-// button
-$mat-button-line-height: 36px;
-$mat-button-border-radius: calc(#{$mat-button-line-height} / 2);
+// alerts
+$alerts: (
+  warning: var(--app-color-warning),
+  info: var(--app-color-info),
+  success: var(--app-color-success)
+);
 
 // mq break point
 $xxs: 'only screen and (min-width: 400px) and (max-width: 599px)';
@@ -87,4 +90,4 @@ $gt-md:	'only screen and (min-width: 1280px)';
 $gt-lg:	'only screen and (min-width: 1920px)';
 
 
-//@debug map-get($states, "insolvence_navrh");
+//@debug var(--gt-md);
