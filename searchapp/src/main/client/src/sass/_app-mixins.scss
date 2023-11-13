@@ -12,7 +12,8 @@
   }
   @if ($position != null) {
     vertical-align: $position !important;  
-  }  
+  }
+  
 }
 
 // clearfix
@@ -38,50 +39,19 @@
 
 // set alert card
 @mixin setAlertCard() {
-  @each $alert, $item in $alerts {
+  @each $alert, $color in $alerts {
     &.app-#{$alert} {
-      color: map-get( $item , color );
-      background-color: map-get( $item , bg );
-      border-color: map-get( $item , border );
-    }
-  }
-}
+      text-align: center;
+      color: $color;
+      border-color: rgba($color, .2);
+      background-color: rgba($color, .1) !important;
 
-// set badge color
-@mixin setStateColor($type: null) {
-  @each $state, $color in $states {
-    @if ($type == 'icon') {
-      &.app-#{$state} {
-        color: $color !important;
-      }
-    } @else if ($type == 'badge') {
-      &.app-#{$state} {
-        background-color: $color;
+      .mat-icon {
+        color: $color;
       }
     }
   }
 }
-
-// set dashboard color
-@mixin setDashboardColor() {
-  @each $type, $color in $dashboard {
-    &.app-#{$type} {
-      background-color: $color !important;
-    }
-  }
-}
-
-// set icon size
-@mixin setIconSize() {
-  @each $size, $val in $iconSize {
-    &.app-#{$size} {
-      font-size: #{$val}px;
-      width: #{$val}px;
-      height: #{$val}px;
-    }
-  }
-}
-
 
 // set gap
 @mixin setGap() {
@@ -153,5 +123,16 @@
     .app-pb-n#{$gap} {
       padding-bottom: -#{$val}px !important;
     }
+  }
+}
+
+// set flex breakpoing
+@mixin setFlexBreakpointGap($val, $gap: null) {
+  @if ($gap == null) {
+    flex: 0 0 calc(#{$val}% - #{$app-gap-card});
+    max-width: calc(#{$val}% - #{$app-gap-card});
+  } @else {
+    flex: 0 0 calc(#{$val}% - #{$gap}px);
+    max-width: calc(#{$val}% - #{$gap}px);
   }
 }

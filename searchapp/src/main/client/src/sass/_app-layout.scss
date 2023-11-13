@@ -1,29 +1,49 @@
 // --- LAYOUT ---
 
-html {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-*, *:before, *:after {
-  -webkit-box-sizing: inherit;
-  -moz-box-sizing: inherit;
-  box-sizing: inherit;
-}
-
-html, body { 
+html,
+body {
   height: 100%;
 }
 
 body {
-  @extend .app-m-0;
-  font-family: Roboto, "Helvetica Neue", sans-serif; 
-  background: $app-body-bg;
-  color: $app-body-color;
-
-  .app-content-wrapper {
-    padding: $app-default-wrapper;
-  }
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+app-root {
+  magazines-root,
+  app-journal {
+    // sidenav
+    mat-sidenav-container, 
+    mat-sidenav-content, 
+    mat-sidenav {
+      height: 100%;
+    }
+    
+    mat-sidenav {
+      width: $app-sidenav-width;
+    }
+
+    main {
+      .app-page-wrapper {
+        @extend .app-pt-8, .app-pb-8, .app-pl-4, .app-pr-4;
+      }
+
+      .mat-icon {
+        color: $app-color-primary;
+      }
+    }
+
+    // container
+    .app-container {
+      margin: 0 auto;
+      max-width: $app-container;
+      width: 100%;
+      min-width: auto !important;
+    }
+
+    .app-container-fluid {
+      max-width: 100%;
+    }   
+  }
+}

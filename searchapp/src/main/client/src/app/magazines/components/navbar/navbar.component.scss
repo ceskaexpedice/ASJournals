@@ -1,9 +1,9 @@
-@import "../../../../sass-magazines/app-theme-default";
-@import "../../../../sass-magazines/app-variables";
-@import "../../../../sass-magazines/app-mixins";
-@import "../../../../sass-magazines/app-gaps";
-@import "../../../../sass-magazines/app-global";
-@import "../../../../sass-magazines/app-mat-override";
+@import "../../../../sass/app-theme-default";
+@import "../../../../sass/app-variables";
+@import "../../../../sass/app-mixins";
+@import "../../../../sass/app-gaps";
+@import "../../../../sass/app-global";
+@import "../../../../sass/app-mat-override";
 
 .mat-toolbar {
   height: $app-navbar-height;
