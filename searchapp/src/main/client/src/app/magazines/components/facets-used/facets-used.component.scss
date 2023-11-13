@@ -8,7 +8,7 @@
 
 ::ng-deep .mat-mdc-list {
   .mat-mdc-subheader {
-    border-bottom: 1px solid $app-brand-border-color;
+    border-bottom: 1px solid var(--app-brand-border-color);
     font-size: 15px;
     font-weight: 900;
     color: initial;
@@ -46,7 +46,7 @@
 
         div {
           span {
-            color: $app-gray-6;
+            color: var(--app-gray-6);
           }
         }
       }

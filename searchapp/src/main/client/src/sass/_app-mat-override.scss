@@ -8,7 +8,7 @@
  }
   
   .mat-checkbox-frame {
-    border-color: $app-gray-4;
+    border-color: var(--app-gray-4);
   }
 
   .mat-checkbox-layout {
@@ -51,7 +51,7 @@
     @extend .app-clean-shadow, .app-clean-bg, .app-m-0;
 
     .mat-expansion-panel-header {
-      border-bottom: 1px solid $app-brand-border-color;
+      border-bottom: 1px solid var(--app-brand-border-color);
       
       .mat-expansion-panel-header-title {
         font-weight: 500;
@@ -63,12 +63,12 @@
 
       .app-fx-facets & {
         a {
-          color: $app-gray-6;
+          color: var(--app-gray-6);
         }
       }
 
       .app-count {
-        color: $app-gray-5;
+        color: var(--app-gray-5);
         font-size: 13px;
       }
     }
@@ -81,11 +81,11 @@
     @extend .app-pt-0;
     border-width: 1px 1px 0 1px;
     border-style: solid;
-    border-color: $app-brand-border-color;
+    border-color: var(--app-brand-border-color);
 
     .mat-mdc-list-item {
       @extend .app-pt-2, .app-pb-2;
-      border-bottom: 1px solid $app-brand-border-color;
+      border-bottom: 1px solid var(--app-brand-border-color);
       height: auto !important;
 
       .mat-icon {
@@ -94,11 +94,11 @@
       }
 
       &:hover {
-        background-color: $app-gray-2;
+        background-color: var(--app-gray-2);
       }
 
       &.app-active {
-        background-color: $app-brand-border-color;
+        background-color: var(--app-brand-border-color);
         font-weight: 900;
       }
     }
@@ -121,70 +121,6 @@
   .mat-divider {
     &.mat-divider-horizontal {
       position: relative;
-    }
-  }
-}
-
-// table
-.mat-table {
-  @extend .app-w-100;
-
-  tr {
-    &.mat-row {
-      height: auto;
-    }
-  }
-
-  th, td {
-    &:first-of-type {
-      @extend .app-pl-4;
-    }
-
-    &:last-of-type {
-      @extend .app-pr-4;
-    }
-  }
-
-
-  tbody {
-    td {
-      &.mat-column-actions {
-        @extend .app-p-0;
-        height:100%;
-
-        .mat-button-toggle-group {
-          @extend .app-clean-radius;
-          border-width: 0 0 0 1px;
-
-          .mat-button-toggle-button {
-            .mat-button-toggle-label-content {
-              line-height: 38px;
-            }
-          }
-        }
-      }
-
-      &.mat-column-pozadavek {
-        .app-text-cutter {
-          max-width: 80px;
-        }
-      }
-
-      &.mat-column-poznamka {
-        .app-text-cutter {
-          width: 80px;
-        }
-      }
-
-      &.mat-column-state {
-        .mat-icon {
-          @include setIcon($position: middle);
-        }
-      }
-
-      .mat-icon {
-        @include setIcon(22);
-      }
     }
   }
 }
@@ -256,7 +192,7 @@
 // tab
 .mat-mdc-tab-group {
   .mat-mdc-tab-header {
-    border-bottom: 1px solid $app-gray-3;
+    border-bottom: 1px solid var(--app-gray-3);
   }
 
   .mat-mdc-tab-body {

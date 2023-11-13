@@ -79,7 +79,7 @@ h4 {
 // common
 .app-pipe {
   @extend .app-ml-2, .app-mr-2;
-  border-left: 1px solid $app-gray-4;
+  border-left: 1px solid var(--app-gray-4);
 
   &:not(.app-in-element) {
     &:last-child {
@@ -197,7 +197,7 @@ h4 {
   tbody {
     tr {
       &:nth-child(odd) {
-        background-color: $app-gray-1;
+        background-color: var(--app-gray-1);
       }
 
       td {
@@ -207,7 +207,7 @@ h4 {
         .app-input {
           @extend .app-pl-2, .app-pr-2;
           height: 34px;
-          border: 1px solid $app-gray-4;
+          border: 1px solid var(--app-gray-4);
           border-radius: $app-border-radius;
         }
 

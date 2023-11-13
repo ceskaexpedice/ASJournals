@@ -1,6 +1,3 @@
-
-@import "../../../../sass/app-theme-default";
-@import "../../../../sass/app-variables";
 @import "../../../../sass/app-mixins";
 
 
@@ -12,7 +9,7 @@
   }
 
   &.app-active {
-    background-color: $app-gray-1 !important;
+    background-color: var(--app-gray-1) !important;
     font-weight: bold;
     border-radius: 0;
 
@@ -23,6 +20,5 @@
 
   .mat-icon {
     @include setIcon(20, inherit, sub);
-    margin-right: $app-gap-icon;
   } 
 }

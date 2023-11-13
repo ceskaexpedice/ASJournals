@@ -21,7 +21,7 @@ app-root {
     }
     
     mat-sidenav {
-      width: $app-sidenav-width;
+      width: var(--app-sidenav-width);
     }
 
     main {
