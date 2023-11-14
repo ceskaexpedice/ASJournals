@@ -23,8 +23,11 @@
   --app-gray-8: #{mat-color($mat-gray, 800)};
   --app-gray-9: #{mat-color($mat-gray, 900)};
 
-  // common
+  // global
   --app-sidenav-width: 350px;
+
+  // layout
+  --app-container: 1280px;
 
   app-journal {
     // component
@@ -42,7 +45,6 @@
     // layout
     --app-gap-icon: 4px;
     --app-gap-card: 16px;
-    --app-container: 1280px;
     --app-border-radius: 4px;
 
     // footer

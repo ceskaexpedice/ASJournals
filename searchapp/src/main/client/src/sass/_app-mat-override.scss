@@ -202,3 +202,8 @@
     }
   }
 }
+
+// divider
+.mat-divider {
+  @extend .app-mt-4, .app-mb-4;
+}
