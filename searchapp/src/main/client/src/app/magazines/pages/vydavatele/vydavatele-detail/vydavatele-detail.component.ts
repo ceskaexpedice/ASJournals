@@ -35,21 +35,12 @@ export class VydavateleDetailComponent implements OnInit {
     if(this.state.editorsbyId.hasOwnProperty(id)){
       this.setData(id!);
     } else {
-      if (this.state.config){
         this.service.getEditors().subscribe(res => {
 
             this.setData(id!);
 
           });
-      } else {
-        this.subscriptions.push(this.state.configSubject.subscribe((state) => {
-          this.service.getEditors().subscribe(res => {
-
-            this.setData(id!);
-
-          });
-        }));
-      }
+      
     }
     
   }

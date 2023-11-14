@@ -131,7 +131,7 @@ export class AppService {
   //   this.state.ctxs.push(ctx);
   //   return this.get('texts?action=ADD_JOURNAL&ctxs=' + JSON.stringify(this.state.ctxs)).pipe(
   //     map(res => {
-  //       this.state.ctx = ctx;
+  //       this.state.currentMagazine = ctx;
   //       this.state.setConfig(res);
   //       this.config['color'] = ctx.color;
   //       this.config['journal'] = ctx.journal;

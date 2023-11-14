@@ -38,9 +38,9 @@ export class SeznamCasopisuComponent implements OnInit {
     this.subscriptions.push(this.route.queryParams.subscribe((p: Params) => {
       this.processParams(p);
     }));
-    if (this.state.config) {
+    
       this.getData();
-    }
+      
   }
 
   processParams(p: Params) {

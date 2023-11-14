@@ -12,7 +12,7 @@ import { AppService } from 'src/app/services/app.service';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, FlexLayoutModule, MatButtonModule],
+  imports: [CommonModule, RouterModule, MatButtonModule],
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']

@@ -26,7 +26,7 @@ export class VydavateleComponent implements OnInit {
     this.subscriptions.push(this.state.paramsSubject.subscribe((state) => {
       this.service.getEditors().subscribe();
     }));
-    if(this.state.config)
+    
       this.service.getEditors().subscribe();
   }
 

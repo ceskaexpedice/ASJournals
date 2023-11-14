@@ -4,10 +4,11 @@
       <ng-container *ngIf="menu">
         <a mat-flat-button color="primary" routerLink="actual" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'menu.actual_' | translate">{{ 'menu.actual_' | translate }}</a>
         <ng-container *ngFor="let m of menu">
-          <a mat-flat-button color="primary" [routerLink]="m.route" routerLinkActive="app-active" [matMenuTriggerFor]="menu" [title]="m[state.currentLang]" *ngIf="m.visible && m.children.length > 0" queryParamsHandling="preserve" [title]="m[state.currentLang]">
+          <a mat-flat-button color="primary" [matMenuTriggerFor]="menu"  routerLinkActive="app-active" [title]="m[state.currentLang]" *ngIf="m.visible && m.children.length > 0" queryParamsHandling="preserve" [title]="m[state.currentLang]">
             {{ m[state.currentLang] }}<mat-icon>expand_more</mat-icon>
           </a>
           <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="m.route"  queryParamsHandling="preserve" [title]="m[state.currentLang]">{{ m[state.currentLang] }}</button>
             <ng-container *ngFor="let m1 of m.children">
               <button mat-menu-item *ngIf="m1.visible" [routerLink]="[m.route, m1.route]" queryParamsHandling="preserve">{{ m1[state.currentLang ]}}</button>
             </ng-container>

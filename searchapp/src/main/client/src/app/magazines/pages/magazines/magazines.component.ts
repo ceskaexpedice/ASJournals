@@ -93,7 +93,7 @@ export class MagazinesComponent implements OnInit {
           userLang = cfg['defaultLang'];
         }
         this.service.changeLang(userLang);
-        return this.state.config;
+        return this.config;
       })
     )
   }
