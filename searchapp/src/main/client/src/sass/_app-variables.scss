@@ -27,7 +27,12 @@
   --app-sidenav-width: 350px;
 
   app-journal {
+    // component
+    --mat-breadcrumb-height: 40px;
+
+    // mat override
     --mat-toolbar-standard-height: 54px;
+    --mat-sidenav-container-background-color: var(--app-gray-1);
   }
 
   magazines-root {
@@ -44,8 +49,8 @@
     --app-footer-bg: var(--app-gray-9);
     --app-footer-color: rgba(var(--app-color-lightnes-rgb), .6);
     --app-mat-radio-button-size: 16px;
+    
     // mat override
-
     --mat-toolbar-standard-height: 64px;
   }
 }

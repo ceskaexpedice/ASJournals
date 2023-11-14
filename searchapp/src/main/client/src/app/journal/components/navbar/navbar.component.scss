@@ -1,0 +1,21 @@
+.mat-toolbar {
+  .app-left {
+    &.app-desktop {
+      display: none;
+    }
+
+    &.app-mobile {
+      display: block;
+    }
+    
+    @media only screen and (min-width: 960px) {
+      &.app-desktop {
+        display: block;
+      }
+
+      &.app-mobile {
+        display: none;
+      }
+    }
+  }
+}

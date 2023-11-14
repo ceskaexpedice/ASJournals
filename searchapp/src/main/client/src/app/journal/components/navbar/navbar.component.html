@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <div class="app-container-fluid app-fxLayout app-row app-fill app-center-v">
-    <div class="app-left app-fxFlex">
+    <div class="app-left app-fxFlex app-desktop">
       <ng-container *ngIf="menu">
         <a mat-flat-button color="primary" routerLink="actual" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'menu.actual_' | translate">{{ 'menu.actual_' | translate }}</a>
         <ng-container *ngFor="let m of menu">
@@ -20,10 +20,10 @@
         </a>
       </ng-container>
     </div>
-    <div class="app-right app-mobile">
+    <div class="app-left app-fxFlex app-mobile">
       <a mat-flat-button color="primary" (click)="onToggleSidenav()" [title]="'magazines.navigace' | translate"><mat-icon>menu</mat-icon></a> 
     </div>
-    <div class="app-right app-desktop">
+    <div class="app-right">
       <a *ngIf="state.logged" mat-flat-button color="primary" routerLink="admin" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'Admin' | translate">{{ 'Admin' | translate }}<mat-icon>settings</mat-icon></a>
       <a *ngIf="!state.logged" mat-flat-button color="primary" routerLink="prihlaseni" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'Přihlásit' | translate">{{ 'Přihlásit' | translate }}</a>
       <a *ngIf="state.logged" mat-flat-button color="primary" (click)="appservice.logout()" [title]="'Odhlásit' | translate">{{ 'Odhlásit' | translate }}</a>

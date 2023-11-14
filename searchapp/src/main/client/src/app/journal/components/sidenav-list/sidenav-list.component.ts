@@ -4,11 +4,12 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-sidenav-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule, MatSidenavModule, MatListModule],
+  imports: [CommonModule, RouterModule, TranslateModule, MatSidenavModule, MatListModule, NavbarComponent],
   templateUrl: './sidenav-list.component.html',
   styleUrls: ['./sidenav-list.component.scss']
 })

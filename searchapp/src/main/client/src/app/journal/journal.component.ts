@@ -14,13 +14,14 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { SidenavListComponent } from './components/sidenav-list/sidenav-list.component';
 import { HeadingComponent } from "./components/heading/heading.component";
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 @Component({
     standalone: true,
     selector: 'app-journal',
     templateUrl: './journal.component.html',
     styleUrls: ['./journal.component.scss'],
-    imports: [CommonModule, RouterModule, MaterialCssVarsModule, MatButtonModule, FooterComponent, NavbarComponent, MatSidenavModule, MatListModule, SidenavListComponent, HeadingComponent]
+    imports: [CommonModule, RouterModule, MaterialCssVarsModule, MatButtonModule, FooterComponent, NavbarComponent, MatSidenavModule, MatListModule, SidenavListComponent, HeadingComponent, BreadcrumbComponent]
 })
 export class JournalComponent {
 
