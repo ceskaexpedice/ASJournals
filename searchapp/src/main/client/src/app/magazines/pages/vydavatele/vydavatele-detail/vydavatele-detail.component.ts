@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { Router, ActivatedRoute, ParamMap, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -11,7 +10,7 @@ import { MagazinesService } from 'src/app/magazines/magazines.service';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule, FlexLayoutModule, SeznamItemComponent],
+  imports: [CommonModule, RouterModule, TranslateModule, SeznamItemComponent],
   selector: 'app-vydavatele-detail',
   templateUrl: './vydavatele-detail.component.html',
   styleUrls: ['./vydavatele-detail.component.scss']

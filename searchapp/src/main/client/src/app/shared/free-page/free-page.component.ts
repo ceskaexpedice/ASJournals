@@ -1,7 +1,6 @@
 
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -13,7 +12,7 @@ import { SafeHtmlPipe } from 'src/app/services/safe-html.pipe';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule, FlexLayoutModule, SafeHtmlPipe ],
+  imports: [CommonModule, RouterModule, TranslateModule, SafeHtmlPipe ],
   selector: 'app-free-page',
   templateUrl: './free-page.component.html',
   styleUrls: ['./free-page.component.scss']
