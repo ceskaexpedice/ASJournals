@@ -24,7 +24,7 @@
     @extend .app-mr-2;
   }
 
-  &.mdc-button--unelevated{
+  &.mdc-button--unelevated {
     &.mat-primary {
       .mat-icon {
         @include setIcon($color: var(--app-color-lightnes-rgb));

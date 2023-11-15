@@ -29,12 +29,14 @@
   // layout
   --app-container: 1280px;
 
+  // mat override
+  --app-button-height: 32px;
+
   app-journal {
     // component
     --mat-breadcrumb-height: 40px;
 
     // mat override
-    --app-button-height: 32px;
     --mat-toolbar-standard-height: 54px;
     --mat-sidenav-container-background-color: var(--app-gray-1);
   }
