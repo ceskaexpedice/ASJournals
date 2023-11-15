@@ -1,6 +1,8 @@
 
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -12,7 +14,7 @@ import { SafeHtmlPipe } from 'src/app/services/safe-html.pipe';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule, SafeHtmlPipe ],
+  imports: [CommonModule, RouterModule, TranslateModule, SafeHtmlPipe, MatIconModule, MatButtonModule ],
   selector: 'app-free-page',
   templateUrl: './free-page.component.html',
   styleUrls: ['./free-page.component.scss']

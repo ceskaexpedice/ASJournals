@@ -18,6 +18,8 @@
 
 // button
 .mat-mdc-button-base {
+  height: var(--app-button-height) !important;
+
   .mat-icon {
     @extend .app-mr-2;
   }

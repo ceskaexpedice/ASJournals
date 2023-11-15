@@ -24,6 +24,12 @@ h4 {
   color: var(--palette-primary-500);
 }
 
+hr {
+  @extend .app-mt-4, .app-mb-4; 
+  border-top: 1px solid var(--mat-divider-color);
+  border-bottom: 0;
+}
+
 
 // cleaners
 .app-cleanfix {
