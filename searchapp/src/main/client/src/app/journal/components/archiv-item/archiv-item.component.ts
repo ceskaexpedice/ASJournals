@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { AppState } from 'src/app/app.state';
 import { Configuration } from 'src/app/models/configuration';
@@ -7,7 +9,7 @@ import { AppService } from 'src/app/services/app.service';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatIconModule, MatButtonModule],
   selector: 'app-archiv-item',
   templateUrl: './archiv-item.component.html',
   styleUrls: ['./archiv-item.component.scss']

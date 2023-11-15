@@ -6,11 +6,18 @@ import { switchMap } from 'rxjs/operators';
 import { AppState } from 'src/app/app.state';
 import { Configuration } from 'src/app/models/configuration';
 import { AppService } from 'src/app/services/app.service';
+import { ArchivItemComponent } from '../../components/archiv-item/archiv-item.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ArchivItemComponent, MatSelectModule, MatInputModule, MatFormFieldModule, TranslateModule, MatIconModule, MatButtonModule],
   selector: 'app-archiv',
   templateUrl: './archiv.component.html',
   styleUrls: ['./archiv.component.scss']

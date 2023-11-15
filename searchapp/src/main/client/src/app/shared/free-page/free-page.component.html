@@ -5,7 +5,6 @@
   <div class="app-fxLayout app-row app-fill">
     <div class="app-left app-mr-8">
       <a [routerLink]="['/', state.currentMagazine!.ctx, 'home']" queryParamsHandling="preserve" [title]="'Seznam článků z nejnovějšího čísla' | translate">
-        <!-- <img src="https://k5journals.inovatika.dev/api/img?obalka=true&ctx=knihyadejiny&uuid=uuid:fc144bf1-8d61-4f4b-80f9-e4a772db32dc&kramerius_version=k7&thumb=true" [title]="" class="app-mb-2" /> -->
         <img [src]="img" onerror="this.src='assets/img/thumb-no-image.png'" [alt]="" />
       </a>
     </div>
