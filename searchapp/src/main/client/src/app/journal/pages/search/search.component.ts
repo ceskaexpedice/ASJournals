@@ -11,12 +11,14 @@ import { AppService } from 'src/app/services/app.service';
 import { SearchService } from 'src/app/services/search.service';
 import { CommonModule } from '@angular/common';
 import { Configuration } from 'src/app/models/configuration';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatTabsModule, TranslateModule],
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']

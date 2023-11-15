@@ -1,1 +1,12 @@
-<div class="app-nav-search" style="background-color: red;">Test</div>
+
+<nav mat-tab-nav-bar>
+ <a mat-tab-link [routerLink]="'cokoliv'" [active]="'cokoliv'">{{ 'cokoliv' | translate }}</a>
+ <a mat-tab-link [routerLink]="'autory'" [active]="'autory'">{{ 'rejstřík autorů' | translate }}</a>
+ <a mat-tab-link [routerLink]="'rubriky'" [active]="'rubriky'">{{ 'rubriky' | translate }}</a>
+ <a mat-tab-link [routerLink]="'keywords'" [active]="'keywords'">{{ 'rejstřík klíčových slov' | translate }}</a>
+</nav>
+<div class="app-page-wrapper">
+  <div class="app-container">
+    Vyhledavani
+  </div>
+</div>

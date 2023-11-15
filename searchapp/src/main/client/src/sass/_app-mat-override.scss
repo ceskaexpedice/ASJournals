@@ -205,6 +205,12 @@
   }
 }
 
+.mat-mdc-tab-nav-bar {
+  .mat-mdc-tab-links {
+    border-bottom: 1px solid var(--app-gray-3);
+  }
+}
+
 // divider
 .mat-divider {
   @extend .app-mt-4, .app-mb-4;
