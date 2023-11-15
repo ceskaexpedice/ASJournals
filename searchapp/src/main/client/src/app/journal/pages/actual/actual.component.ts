@@ -1,5 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { AppState } from 'src/app/app.state';
 import { Configuration } from 'src/app/models/configuration';
@@ -9,7 +12,7 @@ import { AppService } from 'src/app/services/app.service';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatButtonModule, MatDividerModule, MatIconModule],
   selector: 'app-actual',
   templateUrl: './actual.component.html',
   styleUrls: ['./actual.component.scss']

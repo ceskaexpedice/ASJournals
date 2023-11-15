@@ -26,7 +26,7 @@ app-root {
 
     main {
       .app-page-wrapper {
-        @extend .app-p-4;
+        @extend .app-pt-8, .app-pb-8, .app-pl-4, .app-pr-4;
       }
 
       .mat-icon {
