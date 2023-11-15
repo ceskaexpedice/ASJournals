@@ -1,18 +1,22 @@
 <div class="app-container">
   <div class="app-fxLayout app-row app-fill">
-    <div class="app-left app-mr-4">
-      <img src="https://k5journals.inovatika.dev/api/img?obalka=true&ctx=knihyadejiny&uuid=uuid:fc144bf1-8d61-4f4b-80f9-e4a772db32dc&kramerius_version=k7&thumb=true" [title]="" class="app-mb-2" />
-      <button mat-stroked-button color="primary" class="app-db app-w-100 app-mb-2">aktualni cislo</button>
-      <button mat-stroked-button color="primary" class="app-db app-w-100">archiv starscih rocniku</button>      
+    <div class="app-left app-mr-8">
+      <img src="assets/img/thumb.png" onerror="this.src='assets/img/thumb-no-image.png'" [title]="" class="app-mb-2" />
+      <button mat-stroked-button color="primary" class="app-db app-w-100 app-mb-2"><mat-icon>menu_book</mat-icon>aktualni cislo</button>
+      <button mat-stroked-button color="primary" class="app-db app-w-100"><mat-icon>inventory</mat-icon>archiv starscih rocniku</button>      
     </div>
     <div class="app-right app-fxFlex">
       <h1>Journal {{ state.currentMagazine.title }}</h1>
+      <p>
+        Časopis Knihy a dějiny je odborné recenzované periodikum, které od roku 1994 vydává s roční periodicitou Knihovna AV ČR. Je zaměřen na zveřejňování výsledků bádání v 
+        oblasti dějin české knižní kultury do poloviny 19. století. Vedle pramenných a materiálových studií časopis uveřejňuje recenze a zprávy o domácí a zahraniční knihovědné 
+        literatuře a informuje o konferencích a výstavách k dané tematice. Publikačním jazykem časopisu je čeština, příspěvky jsou opatřeny anglickým překladem abstraktu, klíčových slov a resumé.
+      </p>
+      <h2 class="app-headline">{{ 'Aktuálně' | translate }}</h2>
+      <strong>Připravujeme pro vás nové číslo Knih a dějin 2021</strong>
       <mat-divider></mat-divider>
-      text
-      <mat-divider></mat-divider>
-      aktualne
-      <mat-divider></mat-divider>
-      loga
+      <strong>Časopis je zařazen v databázích:</strong>
+      <!-- <app-free-text [page]="'db'"></app-free-text> -->
     </div>
   </div>
 </div>

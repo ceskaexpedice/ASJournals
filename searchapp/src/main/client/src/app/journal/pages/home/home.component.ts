@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.state';
 import { Configuration } from 'src/app/models/configuration';
@@ -12,7 +14,7 @@ import { AppService } from 'src/app/services/app.service';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, MatButtonModule, MatDividerModule],
+  imports: [CommonModule, RouterModule, MatButtonModule, MatDividerModule, MatIconModule, TranslateModule],
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']

@@ -231,3 +231,22 @@ hr {
     }
   }
 }
+
+// headline style
+.app-headline {
+  position: relative;
+  line-height: 1.2em !important;
+  color: var(--app-color-darknes);
+  margin-bottom: 8px;
+  font-weight: 200 !important;
+
+  &:before {
+    position: absolute;
+    left: 0;
+    top: 1.2em;
+    height: 0;
+    width: 30px;
+    content: '';
+    border-top: 1px solid var(--app-color-darknes);
+  }
+}
