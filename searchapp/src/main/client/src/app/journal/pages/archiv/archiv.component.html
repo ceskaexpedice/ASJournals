@@ -1,23 +1,25 @@
-<div class="app-container">
-  <div class="app-fxLayout app-row app-fill">
-    <h1 class="app-fxFlex app-m-0">Ročníky</h1>
-    <div>
-      <mat-form-field>
-        <mat-label>{{ 'Výsledky řadit' | translate }}</mat-label>
-        <mat-select matNativeControl required>
-          <mat-option value="">{{ 'od nejnovějšího' | translate }} </mat-option>
-          <mat-option value="">{{ 'od nejstaršího' | translate }}</mat-option>
-        </mat-select>
-      </mat-form-field>     
+<div class="app-page-wrapper">
+  <div class="app-container">
+    <div class="app-fxLayout app-row app-fill">
+      <h1 class="app-fxFlex app-m-0">Ročníky</h1>
+      <div>
+        <mat-form-field>
+          <mat-label>{{ 'Výsledky řadit' | translate }}</mat-label>
+          <mat-select matNativeControl required>
+            <mat-option value="">{{ 'od nejnovějšího' | translate }} </mat-option>
+            <mat-option value="">{{ 'od nejstaršího' | translate }}</mat-option>
+          </mat-select>
+        </mat-form-field>     
+      </div>
     </div>
+    <div>
+      <app-archiv-item></app-archiv-item>
+      <app-archiv-item></app-archiv-item>
+      <app-archiv-item></app-archiv-item>
+    </div>
+    <p>
+      {{'Starší ročníky najdete v' | translate}} <a [href]="" [title]="'k5_title' | translate" target="_blank">{{'Digitální knihovně AV ČR' | translate}}</a>
+    </p>
+    <a mat-stroked-button color="primary" [href]=""><mat-icon>open_in_new</mat-icon>{{ 'Externi odkaz na stare cisla' | translate }}</a>
   </div>
-  <div>
-    <app-archiv-item></app-archiv-item>
-    <app-archiv-item></app-archiv-item>
-    <app-archiv-item></app-archiv-item>
-  </div>
-  <p>
-    {{'Starší ročníky najdete v' | translate}} <a [href]="" [title]="'k5_title' | translate" target="_blank">{{'Digitální knihovně AV ČR' | translate}}</a>
-  </p>
-  <a mat-stroked-button color="primary" [href]=""><mat-icon>open_in_new</mat-icon>{{ 'Externi odkaz na stare cisla' | translate }}</a>
 </div>
