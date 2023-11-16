@@ -40,6 +40,8 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   onlyPeerReviewed: boolean = false;
 
+  public currentRoute: any = '';
+
   //  public dateForm: FormGroup;
 
   subscriptions: Subscription[] = [];
@@ -80,6 +82,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.currentRoute = this.route.children;
 
     this.currentSort = this.state.sorts[0];
     this.state.fulltextQuery = '';
