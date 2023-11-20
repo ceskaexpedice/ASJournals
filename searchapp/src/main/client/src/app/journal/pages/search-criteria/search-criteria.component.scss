@@ -1,0 +1,12 @@
+.app-onsite-count {
+  .mdc-button {
+    min-width: 36px;
+    padding: 0;
+  }
+}
+
+.app-item {
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+}

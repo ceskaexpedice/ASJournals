@@ -40,8 +40,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   onlyPeerReviewed: boolean = false;
 
-  public currentRoute: any = '';
-
   //  public dateForm: FormGroup;
 
   subscriptions: Subscription[] = [];
@@ -80,9 +78,9 @@ export class SearchComponent implements OnInit, OnDestroy {
       }
     }
   }
+  
 
   ngOnInit() {
-    this.currentRoute = this.route.children;
 
     this.currentSort = this.state.sorts[0];
     this.state.fulltextQuery = '';
@@ -313,5 +311,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.router.navigate(['cokoliv', p], {relativeTo: this.route, queryParamsHandling: "preserve"});
   }
 
-
+  isRouteActive(currentRoute: string): boolean {
+    return this.router.isActive(this.router.createUrlTree([currentRoute], {relativeTo: this.route}).toString(), true);
+  }
 }

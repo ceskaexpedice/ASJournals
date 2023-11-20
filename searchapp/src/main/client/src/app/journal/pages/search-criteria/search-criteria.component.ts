@@ -2,16 +2,28 @@ import {Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild, ElementRe
 import {Router, ActivatedRoute, Params, RouterModule} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
 
-import {TranslateService} from '@ngx-translate/core';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 // import {TypeaheadMatch} from 'ngx-bootstrap/typeahead';
 import { AppState } from 'src/app/app.state';
 import { Criterium } from 'src/app/models/criterium';
 import { AppService } from 'src/app/services/app.service';
 import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatMenuModule, 
+            TranslateModule, MatCardModule, MatCheckboxModule, MatDividerModule, MatPaginatorModule, MatTooltipModule
+  ],
   selector: 'app-search-criteria',
   templateUrl: './search-criteria.component.html',
   styleUrls: ['./search-criteria.component.scss']
@@ -41,6 +53,8 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
   genretr: string = '';
   genre: string | null = null;
 
+  isSiteCountActive: any = [];
+
   constructor(
     public state: AppState,
     private service: AppService,
@@ -50,6 +64,7 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.isSiteCountActive[10] = true;
     this.criteria.push(new Criterium());
     this.route.params
       .subscribe((params: Params) => {

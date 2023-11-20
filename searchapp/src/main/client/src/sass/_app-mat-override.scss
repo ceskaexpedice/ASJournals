@@ -18,7 +18,7 @@
 
 // button
 .mat-mdc-button-base {
-  height: var(--app-button-height) !important;
+  //height: var(--app-button-height) !important;
 
   .mat-icon {
     @extend .app-mr-2;
@@ -214,4 +214,11 @@
 // divider
 .mat-divider {
   @extend .app-mt-4, .app-mb-4;
+}
+
+// paginator
+.mat-mdc-paginator {
+  .mat-mdc-paginator-container {
+    //justify-content: center;
+  }
 }
