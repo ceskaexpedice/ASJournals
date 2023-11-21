@@ -32,6 +32,7 @@
     "@tinymce/tinymce-angular": "^7.0.0",
     "@types/multer": "^1.4.9",
     "angular-material-css-vars": "^5.0.2",
+    "angular-split": "^17.0.0",
     "express": "^4.15.2",
     "express-fileupload": "^1.4.1",
     "multer": "^1.4.5-lts.1",
