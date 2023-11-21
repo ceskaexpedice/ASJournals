@@ -1,1 +1,12 @@
-Admin
+<div class="app-container">
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link routerLink="configuration" [active]="isRouteActive('/knihyadejiny/admin/configuration')">{{ 'cokoliv' | translate }}</a>
+    <a mat-tab-link routerLink="interface" [active]="isRouteActive('/knihyadejiny/admin/interface')">{{ 'rejstřík autorů' | translate }}</a>
+   </nav>
+</div>
+
+<div class="app-page-wrapper">
+  <div class="app-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

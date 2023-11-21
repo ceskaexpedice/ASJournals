@@ -13,6 +13,8 @@ import { SearchCriteriaComponent } from "./pages/search-criteria/search-criteria
 import { SearchGenresComponent } from "./pages/search-genres/search-genres.component";
 import { SearchKeywordsComponent } from "./pages/search-keywords/search-keywords.component";
 import { SearchComponent } from "./pages/search/search.component";
+import { AdminConfigurationComponent } from "./pages/admin-configuration/admin-configuration.component";
+import { AdminInterfaceComponent } from "./pages/admin-interface/admin-interface.component";
 
 const routes: Routes = [
 
@@ -20,9 +22,7 @@ const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'actual', component: ActualComponent },
     { path: 'archiv', component: ArchivComponent },
-  
-    {
-      path: 'hledat', component: SearchComponent,
+    { path: 'hledat', component: SearchComponent,
       children: [
         { path: '', redirectTo: 'cokoliv', pathMatch: 'full' },
         { path: 'cokoliv', component: SearchCriteriaComponent },
@@ -35,9 +35,14 @@ const routes: Routes = [
     },
     { path: 'article/:pid', component: ArticleViewerComponent },
     { path: 'prihlaseni', component: LoginComponent },
-    {
-      path: 'admin',
-      canActivate: [AuthGuard], component: AdminComponent
+    { path: 'admin', component: AdminComponent,
+      children: [
+        { path: '', redirectTo: 'configuration', pathMatch: 'full' },
+        { path: 'configuration', component: AdminConfigurationComponent },
+        { path: 'interface', component: AdminInterfaceComponent }
+      ]
+     /*  path: 'admin',
+      canActivate: [AuthGuard], component: AdminComponent */
     },
     { path: '**', component: FreePageComponent },
   ];

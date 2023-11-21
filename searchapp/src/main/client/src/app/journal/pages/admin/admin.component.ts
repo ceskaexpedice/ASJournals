@@ -3,12 +3,14 @@ import { Subscription } from 'rxjs';
 
 
 // import { FileUploader } from 'ng2-file-upload';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AppState } from 'src/app/app.state';
 import { Magazine } from 'src/app/models/magazine';
 import { AppService } from 'src/app/services/app.service';
 import { CommonModule } from '@angular/common';
 import { Configuration } from 'src/app/models/configuration';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -16,7 +18,7 @@ declare var tinymce: any;
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatTabsModule, TranslateModule],
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
@@ -80,7 +82,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     private config: Configuration,
     public state: AppState,
     private service: AppService,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     // this.subscriptions.push(this.configSubject.subscribe(val => {
@@ -511,6 +514,10 @@ export class AdminComponent implements OnInit, OnDestroy {
   moveArr(arr: any[], old_index: number, new_index: number) {
     arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
 
+  }
+
+  isRouteActive(currentRoute: string): boolean {
+    return this.router.isActive(this.router.createUrlTree([currentRoute], {relativeTo: this.route}).toString(), true);
   }
 
 }
