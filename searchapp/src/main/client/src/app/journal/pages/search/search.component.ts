@@ -13,12 +13,18 @@ import { CommonModule } from '@angular/common';
 import { Configuration } from 'src/app/models/configuration';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+import { ArticleResultComponent } from '../../components/article-result/article-result.component';
 
 
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, MatTabsModule, TranslateModule],
+  imports: [CommonModule, RouterModule, TranslateModule, ArticleResultComponent,
+    MatTabsModule, MatPaginatorModule, MatIconModule, MatMenuModule, MatDividerModule],
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']

@@ -20,7 +20,7 @@ export class SearchService {
     private http: HttpClient) { }
 
   search(params : HttpParams) {
-    let p = params.append('fq', 'root_pid:"' + this.config['journal'] + '"');
+    let p = params.append('fq', 'root_pid:"' + this.state.currentMagazine.journal + '"');
     var url = 'api/search/journal/select';    
     return this.http.get(url, { params: p });
   }

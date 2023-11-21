@@ -10,20 +10,24 @@
 </mat-form-field>
 
 <div class="app-letters-wrapper app-mb-4">
-  <button mat-button color="primary" class="app-mr-2 mdc-button--unelevated mat-mdc-unelevated-button">A</button><!-- selected -->
-  <button mat-button color="primary" class="app-mr-2 mdc-button--outlined mat-mdc-outlined-button">B</button><!-- unselected  -->
-  <button mat-button color="primary" class="app-mr-2 mdc-button--outlined mat-mdc-outlined-button" disabled>C</button><!-- no data for this letter -->
+  <button mat-button color="primary" 
+    [disabled]="isEmptyNumbers()" class="app-mr-2" (click)="setLetter('0-9')" 
+    [class.mdc-button--unelevated]="'0-9' === letter" [class.mdc-unelevated-button]="'0-9' === letter"
+    [class.mdc-button--outlined]="'0-9' !== letter" [class.mat-mdc-outlined-button]="'0-9' !== letter">0-9</button>
+    <button *ngFor="let l of state.letters" mat-button color="primary" 
+      [disabled]="isEmpty(l)" class="app-mr-2" (click)="setLetter(l)" 
+      [class.mdc-button--unelevated]="l === letter" [class.mdc-unelevated-button]="l === letter"
+      [class.mdc-button--outlined]="l !== letter" [class.mat-mdc-outlined-button]="l !== letter">{{l}}</button>
 </div>
 
 <div class="app-results-wrapper app-fxLayout app-row app-mb-4">
   <div class="app-fxFlex">
-    <h3 class="app-m-0"><a href="" title="">14-15th century</a></h3>
-    <h3 class="app-m-0"><a href="" title="">14.-19. století</a></h3>
+    <h3 class="app-m-0" *ngFor="let k of keywords1"><a (click)="search(k.val)" [title]="k.val">{{ k.val }}</a></h3>
   </div>
   <div class="app-fxFlex">
-    <h3 class="app-m-0"><a href="" title="">1620s-1630s</a></h3>
-    <h3 class="app-m-0"><a href="" title="">16th century</a></h3>
+    <h3 class="app-m-0" *ngFor="let k of keywords2"><a (click)="search(k.val)" [title]="k.val">{{ k.val }}</a></h3>
   </div>
 </div>
 
-<mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>
+<mat-paginator [length]="state.keywords.length" (page)="pageChanged($event)"
+[pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>

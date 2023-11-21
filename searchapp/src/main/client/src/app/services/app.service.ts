@@ -89,6 +89,7 @@ export class AppService {
   }
 
   getJournalConfig(ctx: Magazine) {
+    console.log('KK')
     return this.get('texts?action=GET_CONFIG&ctx=' + ctx.ctx).pipe(
       map(res => {
         this.state.currentMagazine = ctx;
@@ -866,6 +867,7 @@ export class AppService {
     this.search.search(params).subscribe((res: any) => {
       this.state.keywords = [];
 
+
       for (const i in res['facet_counts']['facet_fields']['keywords_facet']) {
         const val: string = res['facet_counts']['facet_fields']['keywords_facet'][i][0];
         if (val && val !== '') {
@@ -873,6 +875,7 @@ export class AppService {
           this.state.keywords.push({ val: val, val_lower: val_lower, valq: '"' + val + '"' });
         }
       }
+
 
       this.state.keywords.sort((a, b) => {
         return a.val_lower.localeCompare(b.val_lower, 'cs');

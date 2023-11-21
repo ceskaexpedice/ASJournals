@@ -1,29 +1,34 @@
 <mat-form-field class="app-w-100" appearance="outline">
   <mat-label>{{ 'q_authors_placeholder' | translate }}</mat-label>
-  <input matInput type="text" #input>
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let aut of authorsFiltered" [value]="aut.val">
+      {{aut.val}}
+    </mat-option>
+  </mat-autocomplete>
+  <input matInput [matAutocomplete]="auto" type="text" #input (keyup)="filterAuto()" [(ngModel)]="qautor" name="qautor">
   <div matSuffix class="app-fxLayout app-row app-center-v app-mr-4">
     <a *ngIf="input.value.length !== 0" [matTooltip]="'Zrušit filter' | translate">
       <mat-icon color="primary">clear</mat-icon>
     </a>
-    <button mat-flat-button color="primary" class="app-ml-4"><mat-icon>search</mat-icon>{{ 'Vyhledat' | translate }}</button>
+    <button mat-flat-button color="primary" class="app-ml-4" (click)="searchInput()"><mat-icon>search</mat-icon>{{ 'Vyhledat' | translate }}</button>
   </div>
 </mat-form-field>
 
 <div class="app-letters-wrapper app-mb-4">
-  <button mat-button color="primary" class="app-mr-2 mdc-button--unelevated mat-mdc-unelevated-button">A</button><!-- selected -->
-  <button mat-button color="primary" class="app-mr-2 mdc-button--outlined mat-mdc-outlined-button">B</button><!-- unselected  -->
-  <button mat-button color="primary" class="app-mr-2 mdc-button--outlined mat-mdc-outlined-button" disabled>C</button><!-- no data for this letter -->
+  <button *ngFor="let l of state.letters" mat-button color="primary" 
+    [disabled]="isEmpty(l)" class="app-mr-2" (click)="setLetter(l)" 
+    [class.mdc-button--unelevated]="l === letter" [class.mdc-unelevated-button]="l === letter"
+    [class.mdc-button--outlined]="l !== letter" [class.mat-mdc-outlined-button]="l !== letter">{{l}}</button>
 </div>
 
 <div class="app-results-wrapper app-fxLayout app-row app-mb-4">
   <div class="app-fxFlex">
-    <h3 class="app-m-0"><a href="" title="">Andresová, Klára</a></h3>
-    <h3 class="app-m-0"><a href="" title="">Antošíková, Lucie</a></h3>
+    <h3 class="app-m-0" *ngFor="let k of authors1"><a (click)="search(k.val)" [title]="k.val">{{ k.val }}</a></h3>
   </div>
   <div class="app-fxFlex">
-    <h3 class="app-m-0"><a href="" title="">Fiedlerová, Ludmila</a></h3>
-    <h3 class="app-m-0"><a href="" title="">Frimmová, Eva</a></h3>
+    <h3 class="app-m-0" *ngFor="let k of authors2"><a (click)="search(k.val)" [title]="k.val">{{ k.val }}</a></h3>
   </div>
 </div>
 
-<mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>
+<mat-paginator [length]="authors.length" (page)="pageChanged($event)"
+[pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>

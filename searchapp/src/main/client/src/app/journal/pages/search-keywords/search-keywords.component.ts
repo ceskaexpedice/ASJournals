@@ -85,6 +85,10 @@ export class SearchKeywordsComponent implements OnInit, OnDestroy {
     }
   }
 
+  pageChanged(e: any) {
+    this.setPage(e.pageIndex);
+  }
+
   setPage(p: number) {
     this.page = p;
     this.setCols();

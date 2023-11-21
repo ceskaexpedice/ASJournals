@@ -15,14 +15,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   standalone: true,
   imports: [CommonModule, RouterModule, MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatMenuModule, 
-            TranslateModule, MatCardModule, MatCheckboxModule, MatDividerModule, MatPaginatorModule, MatTooltipModule
+            TranslateModule, MatCardModule, MatCheckboxModule, MatPaginatorModule, MatTooltipModule
   ],
   selector: 'app-search-criteria',
   templateUrl: './search-criteria.component.html',

@@ -7,10 +7,11 @@ import { Criterium } from 'src/app/models/criterium';
 import { AppService } from 'src/app/services/app.service';
 import { SearchService } from 'src/app/services/search.service';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslateModule],
   selector: 'app-search-genres',
   templateUrl: './search-genres.component.html',
   styleUrls: ['./search-genres.component.scss']

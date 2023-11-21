@@ -15,12 +15,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, TranslateModule, MatTooltipModule, MatPaginatorModule],
+  imports: [CommonModule, RouterModule, TranslateModule, FormsModule,
+    MatFormFieldModule, MatInputModule, MatButtonModule, 
+    MatAutocompleteModule, MatIconModule, MatTooltipModule, MatPaginatorModule],
   selector: 'app-search-authors',
   templateUrl: './search-authors.component.html',
   styleUrls: ['./search-authors.component.scss']
@@ -118,6 +121,10 @@ export class SearchAuthorsComponent implements OnInit, OnDestroy {
     }
   }
 
+  pageChanged(e: any) {
+    this.setPage(e.pageIndex);
+  }
+
   setPage(p: number) {
     this.page = p;
     this.setCols();
@@ -136,6 +143,12 @@ export class SearchAuthorsComponent implements OnInit, OnDestroy {
       }
     });
     return !has;
+  }
+
+  filterAuto() {
+    this.authorsFiltered = [];
+    const filterValue = this.qautor.toLowerCase();
+    this.authorsFiltered = this.authors.filter(autor => autor.val.toLowerCase().includes(filterValue));
   }
 
   filter() {
