@@ -8,12 +8,19 @@ import { AppService } from 'src/app/services/app.service';
 import { SearchService } from 'src/app/services/search.service';
 import Utils from 'src/app/services/utils';
 import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, TranslateModule, MatTooltipModule, MatPaginatorModule],
   selector: 'app-search-authors',
   templateUrl: './search-authors.component.html',
   styleUrls: ['./search-authors.component.scss']
@@ -35,6 +42,8 @@ export class SearchAuthorsComponent implements OnInit, OnDestroy {
   letter: string | null = null;
   page: number = 0;
   totalPages: number = 0;
+
+  isLetterActive: any = [];
 
   constructor(
     private router: Router,
