@@ -9,10 +9,11 @@ import { AppService } from 'src/app/services/app.service';
 import Utils from 'src/app/services/utils';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Configuration } from 'src/app/models/configuration';
+import { AngularSplitModule } from 'angular-split';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, AngularSplitModule],
   selector: 'app-article-viewer',
   templateUrl: './article-viewer.component.html',
   styleUrls: ['./article-viewer.component.scss']

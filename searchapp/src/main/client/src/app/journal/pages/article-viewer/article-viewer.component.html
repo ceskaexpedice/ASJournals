@@ -1,3 +1,6 @@
 <div class="app-page-wrapper">
-  article
+  <as-split unit="percent" [direction]="'horizontal'" #split="asSplit">
+    <as-split-area size="30" #area1="asSplitArea">left</as-split-area>
+    <as-split-area size="70" #area2="asSplitArea">right</as-split-area>
+  </as-split>
 </div>
