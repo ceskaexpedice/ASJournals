@@ -7,10 +7,17 @@ import { AppService } from 'src/app/services/app.service';
 import { SearchService } from 'src/app/services/search.service';
 import Utils from 'src/app/services/utils';
 import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatTooltipModule, MatPaginatorModule, TranslateModule],
   selector: 'app-search-keywords',
   templateUrl: './search-keywords.component.html',
   styleUrls: ['./search-keywords.component.scss']

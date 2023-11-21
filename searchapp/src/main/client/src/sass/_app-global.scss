@@ -250,3 +250,11 @@ hr {
     border-top: 1px solid var(--app-color-darknes);
   }
 }
+
+// letters wrapper
+.app-letters-wrapper {
+  .mdc-button {
+    min-width: 36px;
+    padding: 0;
+  }
+}

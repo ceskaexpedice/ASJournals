@@ -1,11 +1,13 @@
 
-<!-- <h1>{{  getCurrentRoute() }}</h1> -->
-<nav mat-tab-nav-bar>
- <a mat-tab-link routerLink="cokoliv" [active]="isRouteActive('/knihyadejiny/hledat/cokoliv')">{{ 'cokoliv' | translate }}</a>
- <a mat-tab-link routerLink="autory" [active]="isRouteActive('/knihyadejiny/hledat/autory')">{{ 'rejstřík autorů' | translate }}</a>
- <a mat-tab-link routerLink="rubriky" [active]="isRouteActive('/knihyadejiny/hledat/rubriky')">{{ 'rubriky' | translate }}</a>
- <a mat-tab-link routerLink="keywords" [active]="isRouteActive('/knihyadejiny/hledat/keywords')">{{ 'rejstřík klíčových slov' | translate }}</a>
-</nav>
+<div class="app-container">
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link routerLink="cokoliv" [active]="isRouteActive('/knihyadejiny/hledat/cokoliv')">{{ 'cokoliv' | translate }}</a>
+    <a mat-tab-link routerLink="autory" [active]="isRouteActive('/knihyadejiny/hledat/autory')">{{ 'rejstřík autorů' | translate }}</a>
+    <a mat-tab-link routerLink="rubriky" [active]="isRouteActive('/knihyadejiny/hledat/rubriky')">{{ 'rubriky' | translate }}</a>
+    <a mat-tab-link routerLink="keywords" [active]="isRouteActive('/knihyadejiny/hledat/keywords')">{{ 'rejstřík klíčových slov' | translate }}</a>
+   </nav>
+</div>
+
 <div class="app-page-wrapper">
   <div class="app-container">
     <router-outlet></router-outlet>
