@@ -10,11 +10,13 @@ import { AppState } from 'src/app/app.state';
 import { Configuration } from 'src/app/models/configuration';
 import { Journal } from 'src/app/models/journal.model';
 import { AppService } from 'src/app/services/app.service';
+import { FreeTextComponent } from '../../components/free-text/free-text.component';
 
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, MatButtonModule, MatDividerModule, MatIconModule, TranslateModule],
+  imports: [CommonModule, RouterModule, MatButtonModule, MatDividerModule, MatIconModule, TranslateModule,
+  FreeTextComponent],
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
@@ -44,28 +46,16 @@ export class HomeComponent implements OnInit {
     //this.langObserver.unsubscribe();
     this.routeObserver.unsubscribe();
   }
+  
 
   ngOnInit() {
-    //this.home_text = this.config.home; 
+    this.home_text = this.config.home; 
     this.setData();
-    //this.service.getText('home').subscribe(t => this.home_text = t);
     this.state.stateChangedSubject.subscribe(
       () => {
         this.setData();
-        this.service.getText('home').subscribe(t => this.home_text = t);
       }
     );
-
-    this.routeObserver = this.router.events.subscribe(val => {
-      if (val instanceof NavigationEnd) {
-        const url = this.router.url.substring(1);
-        let route = url.substring(url.indexOf(this.state.currentMagazine?.ctx!) + this.state.currentMagazine?.ctx?.length!);
-        route = route.split('?')[0]; // remove lang param
-        if (this.state.currentLang) {
-          this.service.getText('home').subscribe(t => this.home_text = t);
-        }
-      }
-    });
 
   }
 

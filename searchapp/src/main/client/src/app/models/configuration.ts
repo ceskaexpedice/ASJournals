@@ -19,6 +19,7 @@ export class Configuration {
   mergeGenres: {[key: string]: string};
   hiddenGenres: string[];
   layout: any;
+  home: string;
 
   fromJSON(obj: any) {
     Object.keys(obj).forEach((key) => {
@@ -28,6 +29,7 @@ export class Configuration {
 
   setLayout(layout: any) {
     this.layout = layout;
+    this.home = layout.home;
   }
 
 }
