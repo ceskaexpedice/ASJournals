@@ -211,6 +211,13 @@
   }
 }
 
+// form field
+.mat-mdc-form-field {
+  &.app-form-field-center-v-fix {
+    margin-bottom: -22px;
+  }
+}
+
 // divider
 .mat-divider {
   @extend .app-mt-4, .app-mb-4;
