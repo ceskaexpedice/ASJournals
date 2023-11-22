@@ -1,0 +1,31 @@
+.app-nav {
+  a {
+    display: inline-flex;
+    padding: 4px 8px;
+
+    &.app-active {
+      background-color: var(--palette-primary-50);
+    }
+  }
+}
+
+::ng-deep .mat-mdc-unelevated-button {
+  .mat-mdc-button-touch-target {
+    height: 36px;
+  }
+}
+
+::ng-deep .mdc-checkbox {
+  padding: calc((var(--mdc-checkbox-state-layer-size) - 14px) / 2);
+  margin: calc((var(--mdc-checkbox-state-layer-size) - var(--mdc-checkbox-state-layer-size)) / 2);
+  width: 14px !important;
+  height: 14px !important;
+  flex: 0 0 14px !important;
+
+  .mdc-checkbox__background {
+    width: 14px;
+    height: 14px;
+    top: calc((var(--mdc-checkbox-state-layer-size) - 14px) / 2);
+    left: calc((var(--mdc-checkbox-state-layer-size) - 14px) / 2);
+  }
+}

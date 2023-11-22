@@ -1,46 +1,49 @@
-<div class="app-fxLayout app-row app-center-v app-mb-4">
-  <mat-form-field appearance="outline" class="app-fxFlex app-mr-2 app-form-field-center-v-fix">
-    <mat-label>{{ 'Zadat uuid' | translate }}</mat-label>
-    <input matInput type="text" #input>
-  </mat-form-field>
-  <div>
-    <mat-checkbox class="app-mr-4">Kramerius 7</mat-checkbox>
-    <button mat-flat-button color="primary"  class="app-mr-2">{{ 'Přidat UUID' | translate }}</button>
-    <button mat-flat-button color="primary">{{ 'Smazat UUID' | translate }}</button>
+<div class="app-page-wrapper">
+  <div class="app-container">
+    <div class="app-fxLayout app-row app-center-v app-mb-4">
+      <mat-form-field appearance="outline" class="app-fxFlex app-mr-2 app-form-field-center-v-fix">
+        <mat-label>{{ 'Zadat uuid' | translate }}</mat-label>
+        <input matInput type="text" #input>
+      </mat-form-field>
+      <div>
+        <mat-checkbox class="app-mr-4">Kramerius 7</mat-checkbox>
+        <button mat-flat-button color="primary"  class="app-mr-2">{{ 'Přidat UUID' | translate }}</button>
+        <button mat-flat-button color="primary">{{ 'Smazat UUID' | translate }}</button>
+      </div>
+    </div>
+    
+    <mat-divider></mat-divider>
+    
+    <div class="app-fxLayout app-row app-center-v app-mb-4">
+      <mat-form-field appearance="outline" class="app-fxFlex app-form-field-center-v-fix app-mr-2">
+        <input matInput type="text" #input>
+        <button matPrefix mat-stroked-button color="primary" class="app-mr-2 app-ml-2">{{ 'Vybrat soubor' | translate }}</button>
+      </mat-form-field>
+      <button mat-flat-button color="primary">{{ 'Nahr8t' | translate }}</button>
+    </div>
+    
+    <mat-divider></mat-divider>
+    
+    <div class="app-fxLayout app-row app-center-v app-mb-4">
+      <mat-form-field appearance="outline" class="app-fxFlex app-mr-4 app-form-field-center-v-fix">
+        <input matInput type="text" #input>
+      </mat-form-field>
+      <div>
+        <button mat-flat-button color="primary"  class="app-mr-2">{{ 'Nastavit' | translate }}</button>
+        <button mat-flat-button color="primary">{{ 'Resetovat heslo' | translate }}</button>
+      </div>
+    </div>
+    
+    <mat-divider></mat-divider>
+    
+    <div class="app-fxLayout app-row app-center-v app-mb-4">
+      <strong>Řazení článků:</strong>
+      <mat-radio-group aria-label="Select an option">
+        <mat-radio-button value="1" checked>{{ 'rubriky' | translate }}</mat-radio-button>
+        <mat-radio-button value="2">{{ 'pořadí' | translate }}</mat-radio-button>
+      </mat-radio-group>
+      <mat-checkbox class="app-mr-4">Nechat názvy článků</mat-checkbox>
+      <button mat-flat-button color="primary"  class="app-mr-2">{{ 'Uložit' | translate }}</button>
+    </div>    
   </div>
 </div>
-
-<mat-divider></mat-divider>
-
-<div class="app-fxLayout app-row app-center-v app-mb-4">
-  <mat-form-field appearance="outline" class="app-fxFlex app-form-field-center-v-fix app-mr-2">
-    <input matInput type="text" #input>
-    <button matPrefix mat-stroked-button color="primary" class="app-mr-2 app-ml-2">{{ 'Vybrat soubor' | translate }}</button>
-  </mat-form-field>
-  <button mat-flat-button color="primary">{{ 'Nahr8t' | translate }}</button>
-</div>
-
-<mat-divider></mat-divider>
-
-<div class="app-fxLayout app-row app-center-v app-mb-4">
-  <mat-form-field appearance="outline" class="app-fxFlex app-mr-4 app-form-field-center-v-fix">
-    <input matInput type="text" #input>
-  </mat-form-field>
-  <div>
-    <button mat-flat-button color="primary"  class="app-mr-2">{{ 'Nastavit' | translate }}</button>
-    <button mat-flat-button color="primary">{{ 'Resetovat heslo' | translate }}</button>
-  </div>
-</div>
-
-<mat-divider></mat-divider>
-
-<div class="app-fxLayout app-row app-center-v app-mb-4">
-  <strong>Řazení článků:</strong>
-  <mat-radio-group aria-label="Select an option">
-    <mat-radio-button value="1" checked>{{ 'rubriky' | translate }}</mat-radio-button>
-    <mat-radio-button value="2">{{ 'pořadí' | translate }}</mat-radio-button>
-  </mat-radio-group>
-  <mat-checkbox class="app-mr-4">Nechat názvy článků</mat-checkbox>
-  <button mat-flat-button color="primary"  class="app-mr-2">{{ 'Uložit' | translate }}</button>
-</div>
-

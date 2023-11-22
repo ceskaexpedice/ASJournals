@@ -258,3 +258,14 @@ hr {
     padding: 0;
   }
 }
+
+// list unstyled
+ul {
+  &.app-list-unstyled {
+    list-style: none;
+    
+    .mat-icon {
+      @include setIcon($size: 18);
+    }
+  }
+}

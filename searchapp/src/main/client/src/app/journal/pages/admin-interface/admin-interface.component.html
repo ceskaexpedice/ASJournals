@@ -1,1 +1,92 @@
-<p>admin-interface works!</p>
+
+<div class="app-fxLayout app-column app-fill app-page-wrapper">
+  <div class="app-container">
+    <as-split unit="percent" [direction]="'horizontal'" #split="asSplit" gutterAriaLabel="adjustable divider between two views">
+      <as-split-area size="30" #area1="asSplitArea">
+        <div class="app-pl-4 app-pr-4 app-pt-4">
+          <div class="app-nav">
+            <div>
+              <a href="" [title]="'Hlavní stránka' | translate" class="app-active">{{ 'Hlavní stránka' | translate }}</a>
+            </div>
+            <div>
+              <a href="" [title]="'Patička' | translate">{{ 'Patička' | translate }}</a>
+            </div>
+            <div>
+              <a href="" [title]="'Aktuálně' | translate">{{ 'Aktuálně' | translate }}</a><mat-checkbox></mat-checkbox>
+            </div>
+            <div>
+              <a href="" [title]="'Zařazení v databázích' | translate">{{ 'Zařazení v databázích' | translate }}</a><mat-checkbox></mat-checkbox>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <ul class="app-list-unstyled app-p-0 app-nav">
+            <li class="app-fxLayout app-row app-center-v">
+              <mat-icon>south</mat-icon>
+              <mat-icon>north</mat-icon>
+              <a>o-casopisu</a>
+              <mat-checkbox></mat-checkbox>
+            </li>
+            <li>
+              <ul class="app-list-unstyled">
+                <li class="app-fxLayout app-row app-center-v">
+                  <mat-icon>delete</mat-icon>
+                  <mat-icon>south</mat-icon>
+                  <mat-icon>north</mat-icon>
+                  <a class="app-active">o-casopisu</a>
+                  <mat-checkbox></mat-checkbox>
+                </li>
+                <li>
+                  <mat-icon>delete</mat-icon>
+                  <mat-icon>south</mat-icon>
+                  <mat-icon>north</mat-icon>
+                  <a>o-casopisu</a>
+                  <mat-checkbox></mat-checkbox>
+                </li>
+                <li>
+                  <mat-icon>delete</mat-icon>
+                  <mat-icon>south</mat-icon>
+                  <mat-icon>north</mat-icon>
+                  <a>o-casopisu</a>
+                  <mat-checkbox></mat-checkbox>
+                </li>
+                <li class="app-fxLayout app-row app-center-v">
+                  <mat-icon>add</mat-icon>
+                  <strong><a>Přidat podrubriku</a></strong>
+                </li>
+              </ul>
+            </li>
+            <li class="app-fxLayout app-row app-center-v">
+              <mat-icon>add</mat-icon>
+              <strong><a>Přidat podrubriku</a></strong>
+            </li>
+          </ul>
+          <mat-divider></mat-divider>
+          <button mat-flat-button color="primary">{{ 'Uložit menu' | translate }}</button>
+        </div>
+        
+      </as-split-area>
+      <as-split-area size="70" #area2="asSplitArea">
+        <div class="app-pl-4 app-pt-4">
+          <div class="app-fxLayout app-row app-fill">
+            <mat-form-field appearance="outline" class="app-fxFlex app-mr-2">
+              <mat-label>{{ 'Cesta v URL' | translate }}</mat-label>
+              <input matInput type="text" #input>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="app-fxFlex  app-mr-2">
+              <mat-label>{{ 'Český název v menu' | translate }}</mat-label>
+              <input matInput type="text" #input>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="app-fxFlex">
+              <mat-label>{{ 'Anglický název v menu' | translate }}</mat-label>
+              <input matInput type="text" #input>
+            </mat-form-field>
+          </div>
+          <div style="border: 1px solid silver; height: 300px">
+            editor
+          </div>
+        </div>
+      </as-split-area>
+    </as-split>
+  </div>
+</div>
+
