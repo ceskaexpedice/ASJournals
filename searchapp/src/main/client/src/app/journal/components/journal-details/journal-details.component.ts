@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { Journal } from 'src/app/models/journal.model';
 import { AppService } from 'src/app/services/app.service';
 
@@ -8,7 +9,7 @@ import { AppService } from 'src/app/services/app.service';
 
 @Component({
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   selector: 'app-journal-details',
   templateUrl: './journal-details.component.html',
   styleUrls: ['./journal-details.component.scss']

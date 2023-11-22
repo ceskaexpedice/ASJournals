@@ -14,53 +14,34 @@
       <router-outlet></router-outlet>
 
       <ng-container *ngIf="showResults()">
+              
+      <div class="app-fxLayout app-row app-center-v">
+        <h1 class="app-fxFlex app-m-0">{{ 'Výsledky vyhledávání' | translate }}</h1>
+        <div>
+          {{ 'Výsledky řadit' | translate }}:
+          <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
+            {{ state.sorts[0].label }}<mat-icon>expand_more</mat-icon>
+          </button>
+          <mat-menu #menuSort="matMenu">
+            <button mat-menu-item *ngFor="let sort of state.sorts" (click)="setSort(sort)">{{ sort.label | translate }}</button>
+          </mat-menu>
+        </div>
+      </div>
 
-        
-<div class="app-fxLayout app-row app-center-v">
-  <h1 class="app-fxFlex app-m-0">{{ 'Výsledky vyhledávání' | translate }}</h1>
-  <div>
-    {{ 'Výsledky řadit' | translate }}:
-    <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
-      {{ state.sorts[0].label }}<mat-icon>expand_more</mat-icon>
-    </button>
-    <mat-menu #menuSort="matMenu">
-      <button mat-menu-item *ngFor="let sort of state.sorts">{{ sort.label | translate }}</button>
-    </mat-menu>
-  </div>
-</div>
+      <mat-divider></mat-divider>
 
-<mat-divider></mat-divider>
+      <div class="app-fxLayout app-row app-center-v app-mb-4">
+        <div class="app-fxFlex">
+          Zobrazeny výsledky: <strong>{{start + 1}} – {{lastResult()}}</strong> z celkového počtu <strong>{{numFound}}</strong>
+        </div>
+      </div>
 
-<!-- <div class="app-fxLayout app-row app-center-v app-mb-4">
-  <div class="app-fxFlex">
-    Zobrazeny výsledky: <strong>1 – 10</strong> z celkového počtu <strong>278</strong>
-  </div>
-  <div class="app-onsite-count">
-    Počet výsledků na stránku:
-    <button mat-button color="primary" class="app-mr-2" [ngClass]="isSiteCountActive[10] ? 'mdc-button--unelevated mat-mdc-unelevated-button' : 'mdc-button--outlined mat-mdc-outlined-button'" (click)="isSiteCountActive[10] = true;isSiteCountActive[20] = false;isSiteCountActive[30] = false;">10</button>
-    <button mat-button color="primary" class="app-mr-2" [ngClass]="isSiteCountActive[20] ? 'mdc-button--unelevated mat-mdc-unelevated-button' : 'mdc-button--outlined mat-mdc-outlined-button'" (click)="isSiteCountActive[10] = false;isSiteCountActive[20] = true;isSiteCountActive[30] = false;">20</button>
-    <button mat-button color="primary" [ngClass]="isSiteCountActive[30] ? 'mdc-button--unelevated mat-mdc-unelevated-button' : 'mdc-button--outlined mat-mdc-outlined-button'" (click)="isSiteCountActive[10] = false;isSiteCountActive[20] = false;isSiteCountActive[30] = true;">30</button>
-  </div>
-</div> -->
+      <div class="app-results-wrapper app-mb-4">
+        <app-article-result class="app-item" *ngFor="let doc of docs" [article]="doc"></app-article-result>
+      </div>
 
-<div class="app-results-wrapper app-mb-4">
-  <app-article-result *ngFor="let doc of docs" [article]="doc"></app-article-result>
-  <!-- <div class="app-item" *ngFor="let doc of docs">
-    <div>
-      <h3 class="app-m-0"><a href="" title="">Czech Books in the 1765 Auction of the Strängnäs Cathedral Library</a></h3>
-      <a href="" title="">Veselá, Lenka</a>
-      <span class="app-pipe"></span>
-      Pocet zobrazeni: <strong>33</strong>
-    </div>
-    <div>
-      Rok 2022, ročník 29, číslo 1-2<span class="app-pipe"></span>
-      s: <strong>3 - 4</strong>
-    </div>
-  </div> -->
-  
-</div>
-
-<mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>
+      <mat-paginator [length]="numFound" (page)="pageChanged($event)"
+       [pageSize]="rows" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>
 
       </ng-container>
     </mat-tab-nav-panel>

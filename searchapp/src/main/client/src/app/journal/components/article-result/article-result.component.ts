@@ -8,11 +8,13 @@ import { Journal } from 'src/app/models/journal.model';
 import { AppService } from 'src/app/services/app.service';
 import Utils from 'src/app/services/utils';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { JournalDetailsComponent } from '../journal-details/journal-details.component';
 
 
 @Component({
     standalone: true,
-    imports: [CommonModule, RouterModule],
+    imports: [CommonModule, RouterModule, TranslateModule, JournalDetailsComponent],
     selector: 'app-article-result',
     templateUrl: './article-result.component.html',
     styleUrls: ['./article-result.component.scss']

@@ -50,14 +50,14 @@ export class ActualComponent implements OnInit {
     if (this.state.actualNumber) {
       this.actual = this.state.actualNumber;
       this.img = this.state.imgSrc;
-      this.krameriusLink = this.config['k5'] + this.config['journal'];
+      this.krameriusLink = this.config['k5'] + this.state.currentMagazine['journal'];
       //this.img = 'img/item/' + this.state.actualNumber.pid + '/thumb';
     }
   }
 
   findPid() {
     this.pidActual = null;
-    this.findPidById(this.config['journal']);
+    this.findPidById(this.state.currentMagazine['journal']);
   }
 
   findPidById(pid: string) {

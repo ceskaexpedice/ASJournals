@@ -830,7 +830,7 @@ export class AppService {
   pidActual: string | null | undefined;
   findActual() {
     this.pidActual = null;
-    this.findActualByPid(this.config['journal']);
+    this.findActualByPid(this.state.currentMagazine['journal']);
   }
 
   findActualByPid(pid: string) {

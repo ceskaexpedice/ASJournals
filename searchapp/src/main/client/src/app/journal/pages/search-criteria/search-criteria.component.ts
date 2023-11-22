@@ -17,10 +17,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatMenuModule, 
+  imports: [CommonModule, RouterModule, FormsModule,
+            MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatMenuModule, 
             TranslateModule, MatCardModule, MatCheckboxModule, MatPaginatorModule, MatTooltipModule
   ],
   selector: 'app-search-criteria',
@@ -65,8 +67,7 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isSiteCountActive[10] = true;
     this.criteria.push(new Criterium());
-    this.route.params
-      .subscribe((params: Params) => {
+    this.route.params.subscribe((params: Params) => {
         if (params['criteria']) {
           this.criteria = [];
           let j = JSON.parse(params['criteria']);

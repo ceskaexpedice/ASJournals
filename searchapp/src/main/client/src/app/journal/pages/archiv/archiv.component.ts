@@ -85,14 +85,14 @@ export class ArchivComponent implements OnInit {
   }
 
   isRoot() {
-    return this.config && this.currentPid === this.config['journal'];
+    return this.config && this.currentPid === this.state.currentMagazine['journal'];
   }
 
   goToRoot() {
     this.parentItems = [];
-    this.setItems(this.config['journal']);
+    this.setItems(this.state.currentMagazine['journal']);
     let p: any = {};
-    p['pid'] = this.config['journal'];
+    p['pid'] = this.state.currentMagazine['journal'];
     this.router.navigate(['.', p], { queryParamsHandling: "preserve", relativeTo: this.route });
   }
 
@@ -134,7 +134,7 @@ export class ArchivComponent implements OnInit {
     this.setMainClass();
 
     this.service.getItem(this.currentPid).subscribe(res => {
-      if (this.currentPid === this.config['journal']) {
+      if (this.currentPid === this.state.currentMagazine['journal']) {
         this.currentItem = { pid: this.currentPid, parents: null, model: 'periodical' };
       } else {
         this.currentItem = res;
@@ -265,7 +265,7 @@ export class ArchivComponent implements OnInit {
   initData() {
     if (this.state.actualNumber) {
       if (!this.currentPid) {
-        this.setItems(this.config['journal']);
+        this.setItems(this.state.currentMagazine['journal']);
       } else {
         this.setItems(this.currentPid);
       }

@@ -18,12 +18,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { ArticleResultComponent } from '../../components/article-result/article-result.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 
 
 
 @Component({
   standalone: true,
   imports: [CommonModule, RouterModule, TranslateModule, ArticleResultComponent,
+    MatInputModule, MatButtonModule, 
     MatTabsModule, MatPaginatorModule, MatIconModule, MatMenuModule, MatDividerModule],
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -96,6 +99,52 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.getStats();
     this.subscriptions.push(this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
+        this.processParams();
+      } else if (val instanceof NavigationStart) {
+
+      }
+    }));
+    this.processParams();
+    this.subscriptions.push(this.route.params
+      .subscribe((params: Params) => {
+        if (params['start']) {
+          this.start = +params['start'];
+        }
+        if (params['rows']) {
+          this.rows = +params['rows'];
+        }
+        if (params['onlyPeerReviewed']) {
+          this.onlyPeerReviewed = params['onlyPeerReviewed'] === 'true';
+        }
+        if (params['sort']) {
+          let s= params['sort'];
+          for (let i in this.state.sorts) {
+            //console.log(this.state.sorts[i].field);
+            if (this.state.sorts[i].field === s) {
+              this.currentSort = this.state.sorts[i];
+              break
+            }
+          }
+        }
+        if (params['date']) {
+          let j = JSON.parse(params['date']);
+          this.changeRangeFormValue(j[0], j[1]);
+        }
+      }));
+
+    this.subscriptions.push(this.service.searchSubject.subscribe((criteria: Criterium[]) => {
+      this.search(criteria);
+    }));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s: Subscription) => {
+      s.unsubscribe();
+    });
+    this.subscriptions = [];
+  }
+
+  processParams() {
         if (this.route.snapshot.firstChild?.params.hasOwnProperty('start')) {
           this.start = +this.route.snapshot.firstChild.params['start'];
         }
@@ -118,31 +167,6 @@ export class SearchComponent implements OnInit, OnDestroy {
         }
 
         this.setDateFilter();
-      } else if (val instanceof NavigationStart) {
-
-      }
-    }));
-    this.subscriptions.push(this.route.params
-      .subscribe((params: Params) => {
-        if (params['start']) {
-          this.start = +params['start'];
-        }
-        if (params['date']) {
-          let j = JSON.parse(params['date']);
-          this.changeRangeFormValue(j[0], j[1]);
-        }
-      }));
-
-    this.subscriptions.push(this.service.searchSubject.subscribe((criteria: Criterium[]) => {
-      this.search(criteria);
-    }));
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach((s: Subscription) => {
-      s.unsubscribe();
-    });
-    this.subscriptions = [];
   }
 
   showResults() {
@@ -284,6 +308,14 @@ export class SearchComponent implements OnInit, OnDestroy {
     return;
   }
 
+  pageChanged(e: any) {
+    if (e.pageSize !== this.rows) {
+      this.setRows(e.pageSize);
+    } else {
+      this.setPage(e.pageIndex);
+    }
+    
+  }
 
   setPage(page: number) {
     this.start = page * this.rows;

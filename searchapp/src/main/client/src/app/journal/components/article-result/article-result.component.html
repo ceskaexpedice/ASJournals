@@ -4,9 +4,14 @@
       <span *ngFor="let author of authors; let last = last"><a (click)="onAuthorClicked(author)">{{author}}</a><span *ngIf="!last"> - </span></span>
       <span class="app-pipe"></span>
       Pocet zobrazeni: <strong>{{viewed}}</strong>
+      <ng-container *ngIf="isPeerReviewed">
+        <span class="app-pipe"></span>
+        <strong>{{ 'recenzovaný článek' | translate}}</strong>
+      </ng-container>
     </div>
     <div>
-      Rok 2022, ročník 29, číslo 1-2<span class="app-pipe"></span>
-      s: <strong>3 - 4</strong>
+      <app-journal-details *ngIf="parentJournal" [journal]="parentJournal" ></app-journal-details>
+      <span class="app-pipe"></span>
+      {{'rozsah_zkratka' | translate}}: <strong>{{rozsah}}</strong>
     </div>
   </div>
