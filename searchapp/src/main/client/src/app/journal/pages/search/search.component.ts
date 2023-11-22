@@ -20,13 +20,16 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ArticleResultComponent } from '../../components/article-result/article-result.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
 
 
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule, ArticleResultComponent,
-    MatInputModule, MatButtonModule, 
+  imports: [CommonModule, FormsModule, RouterModule, TranslateModule, ArticleResultComponent,
+    MatInputModule, MatButtonModule, MatCardModule, MatCheckboxModule,
     MatTabsModule, MatPaginatorModule, MatIconModule, MatMenuModule, MatDividerModule],
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -295,6 +298,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   dateChange() {
     this.onDateChange([this.state.dateOd, this.state.dateDo]);
   }
+  
   onDateChange(e: any) {
     if (e) {
       this.changeRangeFormValue(e[0], e[1]);
