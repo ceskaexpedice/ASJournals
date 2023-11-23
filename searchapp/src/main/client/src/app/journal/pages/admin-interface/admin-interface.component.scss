@@ -15,17 +15,19 @@
   }
 }
 
-::ng-deep .mdc-checkbox {
-  padding: calc((var(--mdc-checkbox-state-layer-size) - 14px) / 2);
+::ng-deep .app-nav .mdc-checkbox {
+  --mdc-checkbox-state-layer-size: 28px;
+  
+  padding: calc((var(--mdc-checkbox-state-layer-size) - var(--app-checkbox-size)) / 2);
   margin: calc((var(--mdc-checkbox-state-layer-size) - var(--mdc-checkbox-state-layer-size)) / 2);
-  width: 14px !important;
-  height: 14px !important;
-  flex: 0 0 14px !important;
+  width: var(--app-checkbox-size) !important;
+  height: var(--app-checkbox-size) !important;
+  flex: 0 0 var(--app-checkbox-size) !important;
 
   .mdc-checkbox__background {
-    width: 14px;
-    height: 14px;
-    top: calc((var(--mdc-checkbox-state-layer-size) - 14px) / 2);
-    left: calc((var(--mdc-checkbox-state-layer-size) - 14px) / 2);
+    width: var(--app-checkbox-size);
+    height: var(--app-checkbox-size);
+    top: calc((var(--mdc-checkbox-state-layer-size) - var(--app-checkbox-size)) / 2);
+    left: calc((var(--mdc-checkbox-state-layer-size) - var(--app-checkbox-size)) / 2);
   }
 }
