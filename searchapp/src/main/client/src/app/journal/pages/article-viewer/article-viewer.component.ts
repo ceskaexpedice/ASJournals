@@ -9,11 +9,13 @@ import { AppService } from 'src/app/services/app.service';
 import Utils from 'src/app/services/utils';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { Configuration } from 'src/app/models/configuration';
-import { AngularSplitModule } from 'angular-split';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, AngularSplitModule],
+  imports: [CommonModule, RouterModule, MatTabsModule, TranslateModule, MatIconModule],
   selector: 'app-article-viewer',
   templateUrl: './article-viewer.component.html',
   styleUrls: ['./article-viewer.component.scss']
@@ -23,6 +25,9 @@ export class ArticleViewerComponent implements OnInit {
   // @ViewChild(PdfViewerComponent) private pdfComponent: PdfViewerComponent | null = null;
   @ViewChild('linkModal') private linkModal: any;
   @ViewChild('citaceModal') private citaceModal: any;
+
+  tabs = ['detail', 'pdf'];
+  activeLink = this.tabs[0];
 
   pid: string | null = null;
   article: any;

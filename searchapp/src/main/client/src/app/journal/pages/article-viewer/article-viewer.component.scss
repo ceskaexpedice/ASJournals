@@ -1,0 +1,18 @@
+.app-fxLayout {
+  .app-left {
+    $width: 350px;
+    flex: 1 1 $width;
+    max-width: $width;
+    min-width: $width;
+
+    //padding-top: var(--mdc-secondary-navigation-tab-container-height);
+  }
+}
+
+.app-controls {
+  .mdc-tab {
+    min-width: 40px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
