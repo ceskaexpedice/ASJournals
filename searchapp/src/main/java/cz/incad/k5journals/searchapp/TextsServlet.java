@@ -285,11 +285,18 @@ public class TextsServlet extends HttpServlet {
           js = new JSONObject(FileUtils.readFileToString(fmenu, "UTF-8"));
         }
 
-        String home = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "texts"
+        String home_cs = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "texts"
                 + File.separator + "home_cs.html";
-        File fhome = new File(home);
-        if (fmenu.exists()) {
-          js.put("home", FileUtils.readFileToString(fhome, "UTF-8"));
+        File fhome = new File(home_cs);
+        if (fhome.exists()) {
+          js.put("home_cs", FileUtils.readFileToString(fhome, "UTF-8"));
+        }
+
+        String home_en = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "texts"
+                + File.separator + "home_en.html";
+        File fhomeen = new File(home_en);
+        if (fhomeen.exists()) {
+          js.put("home_en", FileUtils.readFileToString(fhomeen, "UTF-8"));
         }
         
         out.println(js.toString(2));

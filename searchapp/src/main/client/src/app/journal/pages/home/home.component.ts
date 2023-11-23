@@ -49,13 +49,26 @@ export class HomeComponent implements OnInit {
   
 
   ngOnInit() {
-    this.home_text = this.config.home; 
+    if (this.state.currentLang === 'en') {
+      this.home_text = this.config.home_en; 
+    } else {
+      this.home_text = this.config.home_cs; 
+    }
+    
     this.setData();
     this.state.stateChangedSubject.subscribe(
       () => {
         this.setData();
       }
     );
+
+    this.routeObserver = this.router.events.subscribe(val => {
+      if (val instanceof NavigationEnd) {
+        if (this.state.currentLang) {
+          this.service.getText('home').subscribe(t => this.home_text = t);
+        }
+      }
+    });
 
   }
 

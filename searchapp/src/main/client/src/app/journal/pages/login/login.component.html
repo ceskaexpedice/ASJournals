@@ -6,13 +6,13 @@
     <mat-card-content>
       <mat-form-field class="example-form-field" appearance="outline" class="app-w-100">
         <mat-label>{{ 'magazines.uzivatel' | translate }}</mat-label>
-        <input matInput type="text" #loginuser id="loginuser" type="text" name="loginuser" value="" [placeholder]="'magazines.uzivatel' | translate" (keyup.enter)="focusp($event, loginpwd)">
+        <input matInput type="text" #loginuser id="loginuser" type="text" name="loginuser" [(ngModel)]="state.loginuser" [placeholder]="'magazines.uzivatel' | translate" (keyup.enter)="focusp($event, loginpwd)">
         <mat-icon matSuffix>person</mat-icon>
       </mat-form-field>
 
       <mat-form-field class="example-form-field" appearance="outline" class="app-w-100">
         <mat-label>{{ 'magazines.heslo' | translate }}</mat-label>
-        <input matInput type="password" id="loginpwd" type="password" name="loginpwd" [placeholder]="'magazines.heslo' | translate" #loginpwd (keyup.enter)="service.login()">
+        <input matInput type="password" id="loginpwd" type="password" name="loginpwd" [(ngModel)]="state.loginpwd" [placeholder]="'magazines.heslo' | translate" #loginpwd (keyup.enter)="service.login()">
         <mat-icon matSuffix>lock</mat-icon>
       </mat-form-field>
       

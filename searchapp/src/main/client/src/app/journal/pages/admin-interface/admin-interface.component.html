@@ -6,58 +6,45 @@
         <div class="app-pl-4 app-pr-4 app-pt-4">
           <div class="app-nav">
             <div>
-              <a href="" [title]="'Hlavní stránka' | translate" class="app-active">{{ 'Hlavní stránka' | translate }}</a>
+              <a (click)="selectPage('home')" [title]="'Hlavní stránka' | translate" [class.app-active]="selectedPage === 'home'">{{ 'Hlavní stránka' | translate }}</a>
             </div>
             <div>
-              <a href="" [title]="'Patička' | translate">{{ 'Patička' | translate }}</a>
+              <a (click)="selectPage('footer')" [title]="'Patička' | translate" [class.app-active]="selectedPage === 'footer'">{{ 'Patička' | translate }}</a>
             </div>
-            <div>
-              <a href="" [title]="'Aktuálně' | translate">{{ 'Aktuálně' | translate }}</a><mat-checkbox></mat-checkbox>
-            </div>
-            <div>
-              <a href="" [title]="'Zařazení v databázích' | translate">{{ 'Zařazení v databázích' | translate }}</a><mat-checkbox></mat-checkbox>
+            <div *ngFor="let m of pages">
+              <a (click)="selectPage(m.id)" [title]="'menu.' + m.route +'_' | translate" [class.app-active]="selectedPage === m.id">{{ 'menu.' + m.route +'_' | translate }}</a><mat-checkbox></mat-checkbox>
             </div>
           </div>
           <mat-divider></mat-divider>
           <ul class="app-list-unstyled app-p-0 app-nav">
+            <ng-container *ngFor="let m of menu; let last = last; let first = first; let index = index">
             <li class="app-fxLayout app-row app-center-v">
-              <mat-icon>south</mat-icon>
-              <mat-icon>north</mat-icon>
-              <a>o-casopisu</a>
-              <mat-checkbox></mat-checkbox>
+              <mat-icon *ngIf="m.added" (click)="removeMenu(index)" >delete</mat-icon>
+              <mat-icon *ngIf="!last" (click)="moveDown(menu, index)">south</mat-icon>
+              <mat-icon *ngIf="!first" (click)="moveUp(menu, index)">north</mat-icon>
+              <a (click)="select(m, null)">{{m.route}}</a>
+              <mat-checkbox [(ngModel)]="m.visible" (change)="changeVisible()" [name]="m.route"></mat-checkbox>
             </li>
             <li>
               <ul class="app-list-unstyled">
-                <li class="app-fxLayout app-row app-center-v">
-                  <mat-icon>delete</mat-icon>
-                  <mat-icon>south</mat-icon>
-                  <mat-icon>north</mat-icon>
-                  <a class="app-active">o-casopisu</a>
-                  <mat-checkbox></mat-checkbox>
-                </li>
-                <li>
-                  <mat-icon>delete</mat-icon>
-                  <mat-icon>south</mat-icon>
-                  <mat-icon>north</mat-icon>
-                  <a>o-casopisu</a>
-                  <mat-checkbox></mat-checkbox>
-                </li>
-                <li>
-                  <mat-icon>delete</mat-icon>
-                  <mat-icon>south</mat-icon>
-                  <mat-icon>north</mat-icon>
-                  <a>o-casopisu</a>
-                  <mat-checkbox></mat-checkbox>
+                <li class="app-fxLayout app-row app-center-v" *ngFor="let m1 of m.children; let last2 = last; let first2 = first; let index2 = index">
+                  <mat-icon (click)="remove(m.children, index2)" >delete</mat-icon>
+                  <mat-icon *ngIf="!last2" (click)="moveDown(m.children, index2)">south</mat-icon>
+                  <mat-icon *ngIf="!first2" (click)="moveUp(m.children, index2)">north</mat-icon>
+                  <a (click)="select(m, m1)" [class.app-active]="selected === m1">{{m1.route}}</a>
+                  <mat-checkbox id="m1.route" [(ngModel)]="m1.visible" [name]="m1.route"></mat-checkbox>
                 </li>
                 <li class="app-fxLayout app-row app-center-v">
                   <mat-icon>add</mat-icon>
-                  <strong><a>Přidat podrubriku</a></strong>
+                  <strong><a (click)="addChild(m)">{{ 'admin.add_child' | translate }}</a></strong>
                 </li>
               </ul>
             </li>
+            </ng-container>
+            
             <li class="app-fxLayout app-row app-center-v">
               <mat-icon>add</mat-icon>
-              <strong><a>Přidat podrubriku</a></strong>
+              <strong><a (click)="addMenu()">{{ 'admin.add_menu' | translate }}</a></strong>
             </li>
           </ul>
           <mat-divider></mat-divider>
@@ -66,23 +53,23 @@
         
       </as-split-area>
       <as-split-area size="70" #area2="asSplitArea">
-        <div class="app-pl-4 app-pt-4">
+        <div class="app-pl-4 app-pt-4" *ngIf="selected">
           <div class="app-fxLayout app-row app-fill">
             <mat-form-field appearance="outline" class="app-fxFlex app-mr-2">
-              <mat-label>{{ 'Cesta v URL' | translate }}</mat-label>
-              <input matInput type="text" #input>
+              <mat-label>{{ 'menu.url' | translate }}</mat-label>
+              <input matInput type="text" [(ngModel)]="selected.route" name="route">
             </mat-form-field>
             <mat-form-field appearance="outline" class="app-fxFlex  app-mr-2">
-              <mat-label>{{ 'Český název v menu' | translate }}</mat-label>
-              <input matInput type="text" #input>
+              <mat-label>{{ 'menu.cs' | translate }}</mat-label>
+              <input matInput type="text" [(ngModel)]="selected.cs" name="cs">
             </mat-form-field>
             <mat-form-field appearance="outline" class="app-fxFlex">
-              <mat-label>{{ 'Anglický název v menu' | translate }}</mat-label>
-              <input matInput type="text" #input>
+              <mat-label>{{ 'menu.en' | translate }}</mat-label>
+              <input matInput type="text" [(ngModel)]="selected.en" name="en">
             </mat-form-field>
           </div>
-          <div style="border: 1px solid silver; height: 300px">
-            editor
+          <div style="border: 1px solid silver; height: 400px">
+            <editor *ngIf="tinyInited" name="editor" [(ngModel)]="text" [init]="tinyConfig"></editor>
           </div>
         </div>
       </as-split-area>

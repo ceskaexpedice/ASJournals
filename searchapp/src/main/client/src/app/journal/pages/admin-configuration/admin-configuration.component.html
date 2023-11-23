@@ -3,24 +3,26 @@
     <div class="app-fxLayout app-row app-center-v app-mb-4">
       <mat-form-field appearance="outline" class="app-fxFlex app-mr-2 app-form-field-center-v-fix">
         <mat-label>{{ 'Zadat uuid' | translate }}</mat-label>
-        <input matInput type="text" #input>
+        <input matInput type="text" [(ngModel)]="indexUUID" name="indexUUID" >
       </mat-form-field>
       <div>
-        <mat-checkbox class="app-mr-4">Kramerius 7</mat-checkbox>
-        <button mat-flat-button color="primary"  class="app-mr-2">{{ 'Přidat UUID' | translate }}</button>
-        <button mat-flat-button color="primary">{{ 'Smazat UUID' | translate }}</button>
+        <mat-checkbox class="app-mr-4" [(ngModel)]="isK7" id="isK7">Kramerius 7</mat-checkbox>
+        <button mat-flat-button color="primary"  class="app-mr-2" (click)="index()">{{ 'Přidat UUID' | translate }}</button>
+        <button mat-flat-button color="primary" (click)="openConfirm()">{{ 'Smazat UUID' | translate }}</button>
       </div>
     </div>
     
     <mat-divider></mat-divider>
     
+    <input type="file" #fileUpload ng2FileSelect [uploader]="coverUploader" style="display:none;" (change)="onFileSelected($event)">
     <div class="app-fxLayout app-row app-center-v app-mb-4">
       <mat-form-field appearance="outline" class="app-fxFlex app-form-field-center-v-fix app-mr-2">
-        <input matInput type="text" #input>
-        <button matPrefix mat-stroked-button color="primary" class="app-mr-2 app-ml-2">{{ 'Vybrat soubor' | translate }}</button>
+        <input matInput type="text" name="selectedCover" [(ngModel)]="selectedCover">
+        <button matPrefix mat-stroked-button color="primary" class="app-mr-2 app-ml-2" (click)="fileUpload.click()">{{ 'admin.cover' | translate }}: {{ 'Vybrat soubor' | translate }}</button>   
       </mat-form-field>
-      <button mat-flat-button color="primary">{{ 'Nahr8t' | translate }}</button>
+      <button mat-flat-button color="primary" (click)="uploadCover()">{{ 'Nahrat' | translate }}</button>
     </div>
+    <mat-progress-bar mode="determinate" [value]="coverUploader.progress"></mat-progress-bar>
     
     <mat-divider></mat-divider>
     
@@ -29,21 +31,21 @@
         <input matInput type="text" #input>
       </mat-form-field>
       <div>
-        <button mat-flat-button color="primary"  class="app-mr-2">{{ 'Nastavit' | translate }}</button>
-        <button mat-flat-button color="primary">{{ 'Resetovat heslo' | translate }}</button>
+        <button mat-flat-button color="primary"  class="app-mr-2" (click)="setLicences()">{{'magazines.nastavit_licenci' | translate}}</button>
+        <button mat-flat-button color="primary" (click)="showResetPwd()">{{ 'Resetovat heslo' | translate }}</button>
       </div>
     </div>
     
     <mat-divider></mat-divider>
     
     <div class="app-fxLayout app-row app-center-v app-mb-4">
-      <strong>Řazení článků:</strong>
+      <strong>{{ 'admin.sort' | translate }}:</strong>
       <mat-radio-group aria-label="Select an option">
-        <mat-radio-button value="1" checked>{{ 'rubriky' | translate }}</mat-radio-button>
-        <mat-radio-button value="2">{{ 'pořadí' | translate }}</mat-radio-button>
+        <mat-radio-button name="sortBy"  ngDefaultControl id="by_genre" [(ngModel)]="sortBy" value="genre" >{{ 'admin.by_genre' | translate }}</mat-radio-button>
+        <mat-radio-button name="sortBy"ngDefaultControl  id="by_order" [(ngModel)]="sortBy" value="order">{{ 'admin.by_order' | translate }}</mat-radio-button>
       </mat-radio-group>
       <mat-checkbox class="app-mr-4">Nechat názvy článků</mat-checkbox>
-      <button mat-flat-button color="primary"  class="app-mr-2">{{ 'Uložit' | translate }}</button>
+      <button mat-flat-button color="primary"  class="app-mr-2" (click)="saveMagazine()">{{ 'Uložit' | translate }}</button>
     </div>    
   </div>
 </div>
