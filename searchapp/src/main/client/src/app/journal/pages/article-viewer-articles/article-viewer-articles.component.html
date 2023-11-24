@@ -11,6 +11,7 @@
   </ng-container>
   <ng-container *ngIf="state.currentMagazine.sortByOrder">
     <div *ngFor="let art of state.viewerJournal.articles">
+      <h1>active -> {{ art.pid === state.viewerPid }}</h1>
       <app-article-result [article]="art" [active]="art.pid === state.viewerPid" [parentJournal]="state.viewerJournal"></app-article-result>
     </div>
   </ng-container>
