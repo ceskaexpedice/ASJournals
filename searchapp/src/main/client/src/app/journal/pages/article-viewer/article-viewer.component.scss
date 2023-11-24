@@ -29,16 +29,4 @@ $gt-sm:	'only screen and (min-width: 960px)';
       padding-right: 16px;
     }
   }
-
-  .mdc-tab {
-    &.app-mobile {
-      display: flex;
-    }
-
-    @media #{$gt-sm} {
-      &.app-mobile {
-        display: none !important;
-      }
-    } 
-  }
 }
