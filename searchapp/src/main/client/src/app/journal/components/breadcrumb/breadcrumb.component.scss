@@ -2,7 +2,7 @@
 
 .app-breadcrumb {
   background-color: var(--app-gray-2);
-  height: var(--mat-breadcrumb-height);
+  height: var(--app-breadcrumb-height);
 
   .mat-icon {
     @include setIcon($size: 18, $position: sub);

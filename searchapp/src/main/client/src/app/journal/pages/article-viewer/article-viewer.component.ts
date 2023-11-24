@@ -1,4 +1,4 @@
-import {Inject, Component, OnInit, ViewChild} from '@angular/core';
+import {Inject, Component, OnInit, ViewChild, HostListener} from '@angular/core';
 import {Router, ActivatedRoute, Params, RouterModule} from '@angular/router';
 import {Observable} from 'rxjs';
 
@@ -21,13 +21,20 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./article-viewer.component.scss']
 })
 export class ArticleViewerComponent implements OnInit {
-
   // @ViewChild(PdfViewerComponent) private pdfComponent: PdfViewerComponent | null = null;
   @ViewChild('linkModal') private linkModal: any;
   @ViewChild('citaceModal') private citaceModal: any;
 
-  tabs = ['detail', 'pdf'];
+  tabs = ['articles', 'detail', 'pdf'];
   activeLink = this.tabs[0];
+  breakpoint: number;
+  
+  // ---- tohle je pokus, ktery se muze smazat, jde o to, ze bychom pri viewportu mensim nez 960px, nemeli vubec zobrazit element tab "articles" + vubec bychom nemeli zobrazit jeho obsah
+  // takze by pri resize okna nazpatek mel zmizet jak tab "articles", tak jeho obsah a zova by se mel aktivovat defaultni "detail" pokud si prave prepnuty na tab articles behem zvetsovani okna
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.breakpoint = (event.target as Window).innerWidth;
+  }
 
   pid: string | null = null;
   article: any;
@@ -77,7 +84,6 @@ magazine: any;
   }
 
   ngOnInit() {
-
     this.route.params
       .subscribe((params: Params) => {
         this.pid = params['pid'];

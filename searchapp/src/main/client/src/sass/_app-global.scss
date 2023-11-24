@@ -273,3 +273,19 @@ ul {
     }
   }
 }
+
+// app items
+.app-items-wrapper {
+  .app-item {
+    &:not(:last-child) {
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    &.app-active {
+      @extend .app-pl-4;
+      border-left: 3px solid var(--palette-primary-500);
+    }
+  }
+}
+

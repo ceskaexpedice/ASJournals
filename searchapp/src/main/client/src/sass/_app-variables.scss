@@ -37,7 +37,8 @@
 
   app-journal {
     // component
-    --mat-breadcrumb-height: 40px;
+    --app-breadcrumb-height: 40px;
+    --app-col-articles-width: 350px;
 
     // mat override
     --mat-toolbar-standard-height: 54px;
