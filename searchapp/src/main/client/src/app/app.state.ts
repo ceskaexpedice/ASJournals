@@ -69,6 +69,10 @@ export class AppState {
 
   //Controls full screen viewer
   public isFull: boolean = false;
+  fullSrc: string;  
+  isPdf = false;
+  viewerJournal: Journal = new Journal();
+  viewerPid: string;
 
   public breadcrumbs: any[] = [];
 

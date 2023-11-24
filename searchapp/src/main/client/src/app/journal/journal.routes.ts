@@ -15,6 +15,9 @@ import { SearchKeywordsComponent } from "./pages/search-keywords/search-keywords
 import { SearchComponent } from "./pages/search/search.component";
 import { AdminConfigurationComponent } from "./pages/admin-configuration/admin-configuration.component";
 import { AdminInterfaceComponent } from "./pages/admin-interface/admin-interface.component";
+import { ArticleViewerDetailsComponent } from "./pages/article-viewer-details/article-viewer-details.component";
+import { ArticleViewerPdfComponent } from "./pages/article-viewer-pdf/article-viewer-pdf.component";
+import { ArticleViewerArticlesComponent } from "./pages/article-viewer-articles/article-viewer-articles.component";
 
 const routes: Routes = [
 
@@ -33,7 +36,13 @@ const routes: Routes = [
   
       ]
     },
-    { path: 'article/:pid', component: ArticleViewerComponent },
+    { path: 'article/:pid', component: ArticleViewerComponent,
+      children: [
+        { path: '', redirectTo: 'pdf', pathMatch: 'full' },
+        { path: 'articles', component: ArticleViewerArticlesComponent },
+        { path: 'pdf', component: ArticleViewerPdfComponent },
+        { path: 'detail', component: ArticleViewerDetailsComponent }
+      ] },
     { path: 'prihlaseni', component: LoginComponent },
     { path: 'admin', component: AdminComponent,
       children: [

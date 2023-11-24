@@ -1,0 +1,17 @@
+
+<div class="app-p-4" class="app-items-wrapper">
+    <ng-container *ngIf="!state.currentMagazine.sortByOrder">
+    <ng-container *ngFor="let genre of state.viewerJournal.genres">
+      <div *ngIf="state.viewerJournal.genresObject[genre].visible">
+        <h2 class="app-headline">{{'genre.' + genre | translate}}</h2>
+        <app-article-result class="app-item" *ngFor="let art of state.viewerJournal.genresObject[genre].articles" [article]="art" [parentJournal]="state.viewerJournal"></app-article-result>
+        <mat-divider></mat-divider>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="state.currentMagazine.sortByOrder">
+    <div *ngFor="let art of state.viewerJournal.articles">
+      <app-article-result [article]="art" [active]="art.pid === state.viewerPid" [parentJournal]="state.viewerJournal"></app-article-result>
+    </div>
+  </ng-container>
+</div>

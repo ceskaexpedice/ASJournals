@@ -2,7 +2,7 @@
 
 <div class="app-fxLayout app-column app-fill">
   <div class="app-container">
-    <nav mat-tab-nav-bar mat-stretch-tabs="false" mat-align-tabs="end">
+    <nav mat-tab-nav-bar mat-stretch-tabs="false" mat-align-tabs="end" [tabPanel]="tabPanel" #tabs>
       <div class="mat-mdc-tab-links app-jc-start app-controls">
         <a mat-tab-link><mat-icon>download</mat-icon></a>
         <a mat-tab-link><mat-icon>share</mat-icon></a>
@@ -12,158 +12,26 @@
           <a mat-tab-link><mat-icon>zoom_out_map</mat-icon></a>
         </ng-container>          
       </div>
-      <a mat-tab-link *ngFor="let tab of tabs" (click)="activeLink = tab" [active]="activeLink == tab" [class.app-mobile]="tab === 'articles'">{{ tab | translate }}</a>
+      <!-- <a mat-tab-link *ngFor="let tab of tabs" (click)="activeLink = tab" [active]="activeLink == tab" [class.app-mobile]="tab === 'articles'">{{ tab | translate }}</a> -->
+      <a mat-tab-link routerLink="articles" *ngIf="windowSize < breakpoint" (click)="activeLink = 'articles'">{{ 'articles' | translate }}</a>
+      <a mat-tab-link routerLink="detail" (click)="activeLink = 'detail'">{{ 'detail' | translate }}</a>
+      <a mat-tab-link routerLink="pdf" (click)="activeLink = 'pdf'">{{ 'pdf' | translate }}</a>
     </nav>
   </div> 
   <div class="app-fxFlex app-fxLayout app-pb-8 app-pl-4 app-pr-4">
     <div class="app-container app-fxFlex app-fxLayout app-row">
       <div class="app-left app-fxLayout app-column">
         <div class="app-fxFlex app-oa-y app-items-wrapper app-p-4">
-          <!-- temp static to delete -->
-          <h2 class="app-headline">Hlavní články</h2>
-          <div class="app-item app-active">
-            <div>
-              <h3 class="app-m-0"><a href="" title="">Czech Books in the 1765 Auction of the Strängnäs Cathedral Library</a></h3>
-              <a href="" title="">Veselá, Lenka</a>
-              <span class="app-pipe"></span>
-              Pocet zobrazeni: <strong>33</strong>
-            </div>
-            <div>
-              Rok 2022, ročník 29, číslo 1-2<span class="app-pipe"></span>
-              s: <strong>3 - 4</strong>
-            </div>
-          </div>
-          <div class="app-item">
-            <div>
-              <h3 class="app-m-0"><a href="" title="">Czech Books in the 1765 Auction of the Strängnäs Cathedral Library</a></h3>
-              <a href="" title="">Veselá, Lenka</a>
-              <span class="app-pipe"></span>
-              Pocet zobrazeni: <strong>33</strong>
-            </div>
-            <div>
-              Rok 2022, ročník 29, číslo 1-2<span class="app-pipe"></span>
-              s: <strong>3 - 4</strong>
-            </div>
-          </div>
-          <div class="app-item">
-            <div>
-              <h3 class="app-m-0"><a href="" title="">Czech Books in the 1765 Auction of the Strängnäs Cathedral Library</a></h3>
-              <a href="" title="">Veselá, Lenka</a>
-              <span class="app-pipe"></span>
-              Pocet zobrazeni: <strong>33</strong>
-            </div>
-            <div>
-              Rok 2022, ročník 29, číslo 1-2<span class="app-pipe"></span>
-              s: <strong>3 - 4</strong>
-            </div>
-          </div>
-          <div class="app-item">
-            <div>
-              <h3 class="app-m-0"><a href="" title="">Czech Books in the 1765 Auction of the Strängnäs Cathedral Library</a></h3>
-              <a href="" title="">Veselá, Lenka</a>
-              <span class="app-pipe"></span>
-              Pocet zobrazeni: <strong>33</strong>
-            </div>
-            <div>
-              Rok 2022, ročník 29, číslo 1-2<span class="app-pipe"></span>
-              s: <strong>3 - 4</strong>
-            </div>
-          </div>
-          <div class="app-item">
-            <div>
-              <h3 class="app-m-0"><a href="" title="">Czech Books in the 1765 Auction of the Strängnäs Cathedral Library</a></h3>
-              <a href="" title="">Veselá, Lenka</a>
-              <span class="app-pipe"></span>
-              Pocet zobrazeni: <strong>33</strong>
-            </div>
-            <div>
-              Rok 2022, ročník 29, číslo 1-2<span class="app-pipe"></span>
-              s: <strong>3 - 4</strong>
-            </div>
-          </div>
-          <!-- temp static to delete -->
+          <app-article-viewer-articles></app-article-viewer-articles>
         </div>
       </div>
       <div class="app-right app-fxFlex app-fxLayout app-column">
-        <div class="app-fxFlex app-oa-y" [ngSwitch]="activeLink">
-          <div class="app-p-4" [ngClass]="activeLink === 'pdf' ? 'app-fxLayout app-center-v app-center-h' : null" [ngClass]="activeLink === 'articles' ? 'app-items-wrapper' : null">
-            <ng-container *ngSwitchCase="'articles'">
-               <!-- temp static to delete -->
-              <h2 class="app-headline">Hlavní články</h2>
-              <div class="app-item app-active">
-                <div>
-                  <h3 class="app-m-0"><a href="" title="">Czech Books in the 1765 Auction of the Strängnäs Cathedral Library</a></h3>
-                  <a href="" title="">Veselá, Lenka</a>
-                  <span class="app-pipe"></span>
-                  Pocet zobrazeni: <strong>33</strong>
-                </div>
-                <div>
-                  Rok 2022, ročník 29, číslo 1-2<span class="app-pipe"></span>
-                  s: <strong>3 - 4</strong>
-                </div>
-              </div>
-              <div class="app-item">
-                <div>
-                  <h3 class="app-m-0"><a href="" title="">Czech Books in the 1765 Auction of the Strängnäs Cathedral Library</a></h3>
-                  <a href="" title="">Veselá, Lenka</a>
-                  <span class="app-pipe"></span>
-                  Pocet zobrazeni: <strong>33</strong>
-                </div>
-                <div>
-                  Rok 2022, ročník 29, číslo 1-2<span class="app-pipe"></span>
-                  s: <strong>3 - 4</strong>
-                </div>
-              </div>
-              <div class="app-item">
-                <div>
-                  <h3 class="app-m-0"><a href="" title="">Czech Books in the 1765 Auction of the Strängnäs Cathedral Library</a></h3>
-                  <a href="" title="">Veselá, Lenka</a>
-                  <span class="app-pipe"></span>
-                  Pocet zobrazeni: <strong>33</strong>
-                </div>
-                <div>
-                  Rok 2022, ročník 29, číslo 1-2<span class="app-pipe"></span>
-                  s: <strong>3 - 4</strong>
-                </div>
-              </div>
-              <div class="app-item">
-                <div>
-                  <h3 class="app-m-0"><a href="" title="">Czech Books in the 1765 Auction of the Strängnäs Cathedral Library</a></h3>
-                  <a href="" title="">Veselá, Lenka</a>
-                  <span class="app-pipe"></span>
-                  Pocet zobrazeni: <strong>33</strong>
-                </div>
-                <div>
-                  Rok 2022, ročník 29, číslo 1-2<span class="app-pipe"></span>
-                  s: <strong>3 - 4</strong>
-                </div>
-              </div>
-              <div class="app-item">
-                <div>
-                  <h3 class="app-m-0"><a href="" title="">Czech Books in the 1765 Auction of the Strängnäs Cathedral Library</a></h3>
-                  <a href="" title="">Veselá, Lenka</a>
-                  <span class="app-pipe"></span>
-                  Pocet zobrazeni: <strong>33</strong>
-                </div>
-                <div>
-                  Rok 2022, ročník 29, číslo 1-2<span class="app-pipe"></span>
-                  s: <strong>3 - 4</strong>
-                </div>
-              </div>
-              <!-- temp static to delete -->
-            </ng-container>
-            <ng-container *ngSwitchCase="'pdf'">
-              <img src="../../../../assets/img/thumb-doc.jpg" />
-            </ng-container>
-            <ng-container *ngSwitchDefault="'detail'">
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed ac dolor sit amet purus malesuada congue. In sem justo, commodo ut, suscipit at, pharetra vitae, orci. Donec iaculis gravida nulla. Etiam commodo dui eget wisi. Maecenas libero. Etiam neque. In rutrum. Fusce nibh. Nullam dapibus fermentum ipsum. Phasellus faucibus molestie nisl. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              <p>Nullam sapien sem, ornare ac, nonummy non, lobortis a enim. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Pellentesque pretium lectus id turpis. Nullam at arcu a est sollicitudin euismod. Mauris elementum mauris vitae tortor. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Maecenas lorem. Maecenas aliquet accumsan leo. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Maecenas lorem. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? Integer imperdiet lectus quis justo. Nullam feugiat, turpis at pulvinar vulputate, erat libero tristique tellus, nec bibendum odio risus sit amet ante. Cras pede libero, dapibus nec, pretium sit amet, tempor quis. Sed convallis magna eu sem. Phasellus et lorem id felis nonummy placerat.</p>
-              <p>In laoreet, magna id viverra tincidunt, sem odio bibendum justo, vel imperdiet sapien wisi sed libero. In rutrum. Fusce wisi. Duis viverra diam non justo. Vivamus ac leo pretium faucibus. Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Nunc auctor. Nullam eget nisl. Integer in sapien. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat.</p>
-              <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Duis condimentum augue id magna semper rutrum. Cras pede libero, dapibus nec, pretium sit amet, tempor quis. Mauris dictum facilisis augue. Duis condimentum augue id magna semper rutrum. Aliquam erat volutpat. Nullam feugiat, turpis at pulvinar vulputate, erat libero tristique tellus, nec bibendum odio risus sit amet ante. Etiam quis quam. Nulla non arcu lacinia neque faucibus fringilla. Nam quis nulla. Curabitur ligula sapien, pulvinar a vestibulum quis, facilisis vel sapien. Phasellus rhoncus. Morbi scelerisque luctus velit. Curabitur ligula sapien, pulvinar a vestibulum quis, facilisis vel sapien.</p>
-              <p>Aliquam ante. Nulla non lectus sed nisl molestie malesuada. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Duis sapien nunc, commodo et, interdum suscipit, sollicitudin et, dolor. Duis ante orci, molestie vitae vehicula venenatis, tincidunt ac pede. Suspendisse sagittis ultrices augue. Vivamus luctus egestas leo. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris metus. Donec vitae arcu. Mauris dictum facilisis augue. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Integer imperdiet lectus quis justo. Proin mattis lacinia justo. Nulla pulvinar eleifend sem. Phasellus faucibus molestie nisl. Duis bibendum, lectus ut viverra rhoncus, dolor nunc faucibus libero, eget facilisis enim ipsum id lacus. Aenean vel massa quis mauris vehicula lacinia. Maecenas ipsum velit, consectetuer eu lobortis ut, dictum at dui.</p>
-            </ng-container>
+        
+        <mat-tab-nav-panel #tabPanel>
+          <div class="app-fxFlex app-oa-y" >
+            <router-outlet></router-outlet>
           </div>
-        </div>
+        </mat-tab-nav-panel>
       </div>
     </div>
   </div>
