@@ -1,5 +1,3 @@
-<!-- <h1>{{ breakpoint }}</h1> -->
-
 <div class="app-fxLayout app-column app-fill">
   <div class="app-container">
     <nav mat-tab-nav-bar mat-stretch-tabs="false" mat-align-tabs="end" [tabPanel]="tabPanel" #tabs>
@@ -7,15 +5,14 @@
         <a mat-tab-link><mat-icon>download</mat-icon></a>
         <a mat-tab-link><mat-icon>share</mat-icon></a>
         <ng-container *ngIf="activeLink === 'pdf'">
-          <a mat-tab-link><mat-icon>zoom_in</mat-icon></a>
-          <a mat-tab-link><mat-icon>zoom_out</mat-icon></a>
+          <!-- <a mat-tab-link><mat-icon>zoom_in</mat-icon></a>
+          <a mat-tab-link><mat-icon>zoom_out</mat-icon></a> -->
           <a mat-tab-link><mat-icon>zoom_out_map</mat-icon></a>
         </ng-container>          
       </div>
-      <!-- <a mat-tab-link *ngFor="let tab of tabs" (click)="activeLink = tab" [active]="activeLink == tab" [class.app-mobile]="tab === 'articles'">{{ tab | translate }}</a> -->
-      <a mat-tab-link routerLink="articles" *ngIf="windowSize < breakpoint" (click)="activeLink = 'articles'">{{ 'articles' | translate }}</a>
-      <a mat-tab-link routerLink="detail" (click)="activeLink = 'detail'">{{ 'detail' | translate }}</a>
-      <a mat-tab-link routerLink="pdf" (click)="activeLink = 'pdf'">{{ 'pdf' | translate }}</a>
+      <a mat-tab-link routerLink="articles" *ngIf="windowSize < breakpoint" (click)="activeLink = 'articles'" [active]="activeLink == 'articles'">{{ 'articles' | translate }}</a>
+      <a mat-tab-link routerLink="detail" (click)="activeLink = 'detail'" [active]="activeLink == 'detail'">{{ 'detail' | translate }}</a>
+      <a mat-tab-link routerLink="pdf" (click)="activeLink = 'pdf'" [active]="activeLink == 'pdf'">{{ 'pdf' | translate }}</a>
     </nav>
   </div> 
   <div class="app-fxFlex app-fxLayout app-pb-8 app-pl-4 app-pr-4">
@@ -26,10 +23,8 @@
         </div>
       </div>
       <div class="app-right app-fxFlex app-fxLayout app-column">  
-        <mat-tab-nav-panel #tabPanel>
-          <div class="app-fxFlex app-oa-y" >
-            <router-outlet></router-outlet>
-          </div>
+        <mat-tab-nav-panel #tabPanel class="app-fxFlex app-oa-y">
+          <router-outlet></router-outlet>
         </mat-tab-nav-panel>
       </div>
     </div>
