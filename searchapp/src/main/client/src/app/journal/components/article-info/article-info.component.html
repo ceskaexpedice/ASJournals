@@ -1,1 +1,62 @@
-Article info
+<h3>
+    {{nonSort}} {{title}}
+    <div>{{subTitle}}</div>
+</h3>
+<p *ngIf="journal">
+    <app-journal-details [journal]="journal"></app-journal-details>
+</p>
+
+<div *ngIf="article">
+
+<div *ngIf="article.dateIssued">
+    <span class="app-label">{{'Datum publikování' | translate}}:</span>
+    {{article.dateIssued}}
+</div>
+
+<div *ngFor="let author of authors; let last = last">
+    <span class="app-label">{{'Autor' | translate}}:</span> {{author}}<br />
+</div>
+
+
+<div *ngIf="article.keywords && article.keywords.length > 0">
+    <span class="app-label">{{'Klíčová slova' | translate}}:</span>
+    <span *ngFor="let keyword of article.keywords; let last = last">
+        {{keyword}}<span *ngIf="!last">, </span>
+    </span>
+</div>
+
+<div *ngIf="article.abstract">
+    <span class="app-label">{{'Abstrakt' | translate}}:</span>
+    {{article.abstract}}<br />
+</div>
+<div *ngIf="article.zdroj">
+    <span class="app-label">{{'Zdroj' | translate}}:</span>
+    {{article.zdroj}}<br />
+</div>
+<div *ngIf="article.genre">
+    <span class="app-label">{{'Rubrika' | translate}}:</span>
+    <ng-container *ngFor="let g of article.genre">
+        <div *ngIf="g !== 'peer-reviewed'">{{'genre.' +g | translate}}</div>
+    </ng-container>
+    <br />
+</div>
+
+<div *ngIf="rozsah">
+    <span class="app-label">{{'Rozsah stran' | translate}}:</span>
+    {{'rozsah_zkratka' | translate}} {{rozsah}}
+</div>
+
+<div *ngIf="doi">
+    <span class="app-label">{{'DOI' | translate}}:</span>
+    {{doi}}
+</div>
+
+<span class="app-label">{{'Status recenzování' | translate}}:</span>
+<div *ngIf="isPeerReviewed">{{ 'recenzovaný článek' | translate}}</div>
+<div *ngIf="!isPeerReviewed">{{'nerecenzovaný článek' | translate}}</div>
+
+<div>
+    <span class="app-label">{{'Licence' | translate}}:</span> {{ licence }}<br />
+</div>
+
+</div>

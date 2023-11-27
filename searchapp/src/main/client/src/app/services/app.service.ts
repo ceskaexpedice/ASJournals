@@ -306,6 +306,9 @@ export class AppService {
         const childs = response['response']['docs'];
         if (childs.length > 0 && !childs[0]['datanode']) {
           childs.sort((a: any, b: any) => {
+            if (!a.dateIssued || !b.dateIssued) {
+              return 0;
+            }
             let dateIssued1 = a.dateIssued.padStart(7, '0');
             let dateIssued2 = b.dateIssued.padStart(7, '0');
             

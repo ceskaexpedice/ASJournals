@@ -138,6 +138,51 @@ export default class Utils {
     return ret;
 }
 
+public static setLabel(item: any) {
+  let label = '';
+  const mods = JSON.parse(item['mods']);
+  if (item['model'] === 'periodicalvolume') {
+    label += item.year;
+    if (mods['mods:originInfo']) {
+      //this.year = mods['mods:originInfo']['mods:dateIssued'];
+      if (mods['mods:titleInfo']) {
+        label += ', ročník: ' + mods['mods:titleInfo']['mods:partNumber'];
+      }
+    } else {
+      //podpora pro starsi mods. ne podle zadani
+      if (mods['part'] && mods['part']['date']) {
+        //this.year = mods['part']['date'];
+      } else if (mods['mods:part'] && mods['mods:part']['mods:date']) {
+        //this.year = mods['mods:part']['mods:date'];
+      }
+
+      if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+        label += ' ' + mods['part']['detail']['number'];
+      } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+        label += ' ' + mods['mods:part']['mods:detail']['mods:number'];
+      }
+    }
+  } else if (item['model'] === 'periodicalitem') {
+    if (mods['mods:originInfo']) {
+      //this.year = mods['mods:originInfo']['mods:dateIssued'];
+      if (mods['mods:titleInfo']['mods:partNumber']) {
+        label += ' Číslo: ' + mods['mods:titleInfo']['mods:partNumber'];
+      }
+      if (mods['mods:titleInfo']['mods:partName']) {
+        label += ' Part: ' + mods['mods:titleInfo']['mods:partName'];
+      }
+    } else {
+      //podpora pro starsi mods. ne podle zadani
+      if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+        label += ' Číslo: ' + mods['part']['detail']['number'];
+      } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+        label += ' Číslo: ' + mods['mods:part']['mods:detail']['mods:number'];
+      }
+    }
+  }
+  return label;
+}
+
   /**
    * Utility for get json value from path
    * Test if json object has that value first

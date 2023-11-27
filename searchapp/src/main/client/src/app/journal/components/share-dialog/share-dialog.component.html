@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>{{'Trvalý odkaz' | translate}}</h1>
+<div mat-dialog-content>
+    <p>
+        <span style="width: 8%;">URL: </span>
+        <input [value]="data.url" type="text" [size]="data.url.length" style="width: 90%;" />
+    </p>
+    <p *ngIf="data.doi">
+        <span style="width: 8%;">DOI: </span>
+        <input [value]="'dx.doi.org/' + data.doi" type="text" [size]="data.doi.length + 10" style="width: 90%;" />
+    </p>
+</div>
+<div mat-dialog-actions cdkFocusRegionstart>
+    <button mat-stroked-button mat-dialog-close="close">{{ 'magazines.zavrit' | translate }}</button>
+</div>

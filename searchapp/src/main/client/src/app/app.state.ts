@@ -73,6 +73,8 @@ export class AppState {
   isPdf = false;
   viewerJournal: Journal = new Journal();
   viewerPid: string;
+  viewerArticle: any;
+
 
   public breadcrumbs: any[] = [];
 

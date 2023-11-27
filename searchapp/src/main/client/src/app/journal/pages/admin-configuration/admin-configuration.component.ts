@@ -14,13 +14,16 @@ import { AppState } from 'src/app/app.state';
 import { Configuration } from 'src/app/models/configuration';
 import { AppService } from 'src/app/services/app.service';
 import { FormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import Utils from 'src/app/services/utils';
+import { LicencesDialogComponent } from '../../components/licences-dialog/licences-dialog.component';
 
 @Component({
   selector: 'app-admin-configuration',
   standalone: true,
   imports: [CommonModule, FileUploadModule, TranslateModule, FormsModule,
     MatFormFieldModule, MatInputModule, MatCheckboxModule, MatButtonModule,
-    MatDividerModule, MatRadioModule, MatProgressBarModule],
+    MatDividerModule, MatRadioModule, MatProgressBarModule, MatDialogModule],
   templateUrl: './admin-configuration.component.html',
   styleUrls: ['./admin-configuration.component.scss']
 })
@@ -36,7 +39,7 @@ export class AdminConfigurationComponent {
   deleted: boolean = false;
   resultMsg: string = '';
 
-  cache: any = {};
+  cache: {[pid: string]: { label: string, licence: string, children: any[], show?: boolean }} = {};
   licences: any = {};
   isK7: boolean = false;
 
@@ -50,6 +53,7 @@ export class AdminConfigurationComponent {
   keepLang: boolean = false;
 
   constructor(
+    public dialog: MatDialog,
     private config: Configuration,
     public state: AppState,
     private service: AppService,
@@ -57,7 +61,6 @@ export class AdminConfigurationComponent {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-
     if (this.state.currentMagazine.licences && this.state.currentMagazine.journal) {
       this.licences = JSON.parse(this.state.currentMagazine.licences);
     }
@@ -65,7 +68,7 @@ export class AdminConfigurationComponent {
     if (this.state.currentMagazine.isK7) {
       this.isK7 = true
     }
-    this.cache[this.state.currentMagazine!.journal!] = { label: 'root', licence: '' };
+    this.cache[this.state.currentMagazine!.journal!] = { label: 'root', licence: '', children: [] };
     this.getChildren(this.state.currentMagazine!.journal!, this.state.currentMagazine);
 
     if (this.state.currentMagazine.sortByOrder) {
@@ -80,66 +83,23 @@ export class AdminConfigurationComponent {
   getChildren(pid: string, item: any) {
 
     if (!this.cache[pid]) {
-      this.cache[pid] = { label: this.setLabel(item), licence: this.licences[pid] };
+      this.cache[pid] = { label: Utils.setLabel(item), licence: this.licences[pid], children: [] };
     }
 
-    if (!this.cache[pid].children) {
+    if (this.cache[pid].children.length === 0) {
       this.service.getChildren(pid).subscribe(res => {
         this.cache[pid].children = [];
         res.forEach((e: any) => {
-          e.label = this.setLabel(e);
+          e.label = Utils.setLabel(e);
           this.cache[pid].children.push(e);
-          this.cache[e.pid] = { label: this.setLabel(e), licence: this.licences[e.pid], show: false };
+          this.cache[e.pid] = { label: Utils.setLabel(e), licence: this.licences[e.pid], show: false, children: [] };
         });
       });
     }
     this.cache[pid].show = !this.cache[pid].show;
   }
 
-  setLabel(item: any) {
-    let label = '';
-    const mods = JSON.parse(item['mods']);
-    if (item['model'] === 'periodicalvolume') {
-      label += item.year;
-      if (mods['mods:originInfo']) {
-        //this.year = mods['mods:originInfo']['mods:dateIssued'];
-        if (mods['mods:titleInfo']) {
-          label += ', ročník: ' + mods['mods:titleInfo']['mods:partNumber'];
-        }
-      } else {
-        //podpora pro starsi mods. ne podle zadani
-        if (mods['part'] && mods['part']['date']) {
-          //this.year = mods['part']['date'];
-        } else if (mods['mods:part'] && mods['mods:part']['mods:date']) {
-          //this.year = mods['mods:part']['mods:date'];
-        }
-
-        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
-          label += ' ' + mods['part']['detail']['number'];
-        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
-          label += ' ' + mods['mods:part']['mods:detail']['mods:number'];
-        }
-      }
-    } else if (item['model'] === 'periodicalitem') {
-      if (mods['mods:originInfo']) {
-        //this.year = mods['mods:originInfo']['mods:dateIssued'];
-        if (mods['mods:titleInfo']['mods:partNumber']) {
-          label += ' Číslo: ' + mods['mods:titleInfo']['mods:partNumber'];
-        }
-        if (mods['mods:titleInfo']['mods:partName']) {
-          label += ' Part: ' + mods['mods:titleInfo']['mods:partName'];
-        }
-      } else {
-        //podpora pro starsi mods. ne podle zadani
-        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
-          label += ' Číslo: ' + mods['part']['detail']['number'];
-        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
-          label += ' Číslo: ' + mods['mods:part']['mods:detail']['mods:number'];
-        }
-      }
-    }
-    return label;
-  }
+  
 
   index() {
     this.working = true;
@@ -178,7 +138,17 @@ export class AdminConfigurationComponent {
   }
 
   setLicences() {
-    // this.licencesModal?.show();
+    console.log(this.cache)
+    const dialogRef = this.dialog.open(LicencesDialogComponent, {
+      width: '900px',
+      data: {cache: this.cache, journal: this.state.currentMagazine.journal, licences: this.licences}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.saveLicences();
+      }
+    })
   }
 
   saveLicences() {

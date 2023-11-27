@@ -17,28 +17,23 @@ import { ArticleResultComponent } from '../../components/article-result/article-
 import { MatDividerModule } from '@angular/material/divider';
 import { ArticleViewerArticlesComponent } from '../article-viewer-articles/article-viewer-articles.component';
 import { AppWindowRef } from 'src/app/app.window-ref';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ShareDialogComponent } from '../../components/share-dialog/share-dialog.component';
 
 @Component({
   standalone: true,
   imports: [CommonModule, RouterModule, TranslateModule, NgxExtendedPdfViewerModule,
-    MatIconModule, MatTabsModule, MatDividerModule, ArticleViewerArticlesComponent],
+    MatIconModule, MatTabsModule, MatDividerModule, MatDialogModule, ArticleViewerArticlesComponent],
   selector: 'app-article-viewer',
   templateUrl: './article-viewer.component.html',
   styleUrls: ['./article-viewer.component.scss']
 })
 export class ArticleViewerComponent implements OnInit {
-  // @ViewChild(PdfViewerComponent) private pdfComponent: PdfViewerComponent | null = null;
-  @ViewChild('linkModal') private linkModal: any;
-  @ViewChild('citaceModal') private citaceModal: any;
-  @ViewChild('tabss') tabss: any;
-
 
   activeLink = 'pdf';
   breakpoint: number = 960;
   windowSize: number;
 
-  // ---- tohle je pokus, ktery se muze smazat, jde o to, ze bychom pri viewportu mensim nez 960px, nemeli vubec zobrazit element tab "articles" + vubec bychom nemeli zobrazit jeho obsah
-  // takze by pri resize okna nazpatek mel zmizet jak tab "articles", tak jeho obsah a zova by se mel aktivovat defaultni "detail" pokud si prave prepnuty na tab articles behem zvetsovani okna
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     this.windowSize = (event.target as Window).innerWidth;
@@ -50,7 +45,7 @@ export class ArticleViewerComponent implements OnInit {
   }
 
   viewerPid: string | null = null;
-  article: any;
+  
 
   loading = true;
 
@@ -66,9 +61,6 @@ export class ArticleViewerComponent implements OnInit {
   settingData = false;
 
   mods: any;
-  doi: string | null = null;
-  citace: string | null = null;
-  location: string | null = null;
 
   hideList = true;
 
@@ -85,6 +77,7 @@ export class ArticleViewerComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: any,
     private windowRef: AppWindowRef,
     @Inject(DOCUMENT) private document: Document,
+    public dialog: MatDialog,
     private config: Configuration,
     private service: AppService,
     public state: AppState,
@@ -143,15 +136,14 @@ export class ArticleViewerComponent implements OnInit {
     this.service.getItem(this.state.viewerPid).subscribe(res => {
 
       if (res['datanode']) {
-        this.getCitace();
-        this.article = res;
+        this.state.viewerArticle = res;
 
         this.pagesRendered = 0;
         this.numPages = -1;
 
-        if (this.article.hasOwnProperty('url_pdf')) {
+        if (this.state.viewerArticle.hasOwnProperty('url_pdf')) {
           this.state.isPdf = true;
-          const title = this.article['title'];
+          const title = this.state.viewerArticle['title'];
           if (title) {
             this.downloadFilename = title.substring(0, 30) + '.pdf';
           } else {
@@ -166,9 +158,9 @@ export class ArticleViewerComponent implements OnInit {
           this.loading = false;
         }
 
-        this.mods = JSON.parse(this.article['mods']);
+        this.mods = JSON.parse(this.state.viewerArticle['mods']);
 
-        this.doi = Utils.getDoi(this.mods);
+        // this.doi = Utils.getDoi(this.mods);
         // let ctx = res['context'][0];
         //        let parent = ctx[ctx.length - 2]['pid'];
         const parent = res['parents'][0];
@@ -309,22 +301,19 @@ export class ArticleViewerComponent implements OnInit {
   }
 
   linkShare() {
-    this.linkModal.show();
-    this.toggleShare();
+    const dialogRef = this.dialog.open(ShareDialogComponent, {
+      width: '700px',
+      data: {url: this.url(), doi: Utils.getDoi(this.mods)},
+      panelClass: 'app-register-dialog'
+    });
   }
 
   public showCitace() {
-    // this.getCitace();
-    this.citaceModal.show();
+    
   }
 
 
-  getCitace() {
-    this.service.getCitace(this.state.viewerPid!).subscribe(resp => {
-      this.citace = resp;
-      this.location = this.document.location.href;
-    });
-  }
+  
 
 
 }

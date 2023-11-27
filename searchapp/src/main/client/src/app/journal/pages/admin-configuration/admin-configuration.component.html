@@ -40,9 +40,9 @@
     
     <div class="app-fxLayout app-row app-center-v app-mb-4">
       <strong>{{ 'admin.sort' | translate }}:</strong>
-      <mat-radio-group aria-label="Select an option">
-        <mat-radio-button name="sortBy"  ngDefaultControl id="by_genre" [(ngModel)]="sortBy" value="genre" >{{ 'admin.by_genre' | translate }}</mat-radio-button>
-        <mat-radio-button name="sortBy"ngDefaultControl  id="by_order" [(ngModel)]="sortBy" value="order">{{ 'admin.by_order' | translate }}</mat-radio-button>
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="sortBy">
+        <mat-radio-button name="sortBy" ngDefaultControl id="by_genre" value="genre" >{{ 'admin.by_genre' | translate }}</mat-radio-button>
+        <mat-radio-button name="sortBy" id="by_order" value="order">{{ 'admin.by_order' | translate }}</mat-radio-button>
       </mat-radio-group>
       <mat-checkbox class="app-mr-4">Nechat názvy článků</mat-checkbox>
       <button mat-flat-button color="primary"  class="app-mr-2" (click)="saveMagazine()">{{ 'Uložit' | translate }}</button>
