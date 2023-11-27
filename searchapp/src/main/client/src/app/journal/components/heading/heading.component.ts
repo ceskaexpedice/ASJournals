@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppState } from 'src/app/app.state';
 import { Configuration } from 'src/app/models/configuration';
-import { TranslateModule, TranslateService} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-heading',
@@ -14,9 +15,31 @@ import { RouterModule } from '@angular/router';
 })
 export class HeadingComponent {
 
+  title: string;
+  subtitle: string;
   constructor(
     public config: Configuration,
+    public service: AppService,
     public state: AppState,
     public translate: TranslateService) { }
+
+  ngOnInit() {
+    this.setTitle();
+    this.service.langSubject.subscribe(() => {
+      this.setTitle();
+    })
+  }
+
+  setTitle() {
+    if (this.state.currentLang === 'en') {
+      this.title = this.state.currentMagazine.title_en;
+      this.subtitle = this.state.currentMagazine.subtitle_en;
+    } else {
+      this.title = this.state.currentMagazine.title;
+      this.subtitle = this.state.currentMagazine.subtitle;
+    }
+
+
+  }
 
 }

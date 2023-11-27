@@ -67,6 +67,19 @@
     </mat-form-field>
   </div>
 
+  <div class="app-fxFlex-2x">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.titulek_en' | translate }}</mat-label>
+      <input matInput id="title" type="text" [(ngModel)]="mag.title_en">
+    </mat-form-field>
+  </div>
+  <div class="app-fxFlex-2x">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.podtitulek_en' | translate }}</mat-label>
+      <input matInput id="subtitle" type="text" [(ngModel)]="mag.subtitle_en">
+    </mat-form-field>
+  </div>
+
   <div class="app-fxFlex-3x">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.obrazek' | translate }}</mat-label>

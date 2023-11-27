@@ -55,6 +55,8 @@
       
     <field name="title" type="string" indexed="true" stored="true" multiValued="false" />
     <field name="subtitle" type="string" indexed="true" stored="true" multiValued="false" />
+    <field name="title_en" type="string" indexed="true" stored="true" multiValued="false" />
+    <field name="subtitle_en" type="string" indexed="true" stored="true" multiValued="false" />
     <field name="titleCS" type="collatedCS" indexed="true" stored="true" multiValued="false" docValues="true" />
     <field name="img" type="string" indexed="false" stored="true" multiValued="false" />
     <field name="k5url" type="string" indexed="false" stored="true" multiValued="false" />

@@ -15,6 +15,8 @@ export class Magazine {
   
   title: string | undefined = undefined;
   subtitle: string | undefined = undefined;
+  title_en: string | undefined = undefined;
+  subtitle_en: string | undefined = undefined;
   img: string | undefined = undefined;
   k5url: string | undefined = undefined;
   vydavatel: string | undefined = undefined;
