@@ -70,7 +70,10 @@ export class AdminMagazinesComponent implements OnInit {
     this.service.getEditors().subscribe(state => {
       this.editors = state['editorsList'];
       this.currentMag = JSON.parse(JSON.stringify(this.state.ctxs[0]));
-      this.currentEditor = JSON.parse(JSON.stringify(this.editors[0]));
+      if (this.editors.length > 0) {
+        this.currentEditor = JSON.parse(JSON.stringify(this.editors[0]));
+      }
+      
       
     });
   }
@@ -173,7 +176,7 @@ export class AdminMagazinesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== null) {
+      if (result) {
         this.service.resetPwd(this.currentUser!.username, result).subscribe(res => {
           if (res.error) {
             this.service.showSnackBar(res.error, '', true);

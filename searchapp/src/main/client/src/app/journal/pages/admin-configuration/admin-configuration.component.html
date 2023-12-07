@@ -8,9 +8,11 @@
       <div>
         <mat-checkbox class="app-mr-4" [(ngModel)]="isK7" id="isK7">Kramerius 7</mat-checkbox>
         <button mat-flat-button color="primary"  class="app-mr-2" (click)="index()">{{ 'Přidat UUID' | translate }}</button>
-        <button mat-flat-button color="primary" (click)="openConfirm()">{{ 'Smazat UUID' | translate }}</button>
+        <button mat-flat-button color="primary" (click)="onDelete()" [disabled]="!indexUUID">{{ 'Smazat UUID' | translate }}</button>
       </div>
     </div>
+      <mat-progress-bar mode="indeterminate" *ngIf="workStatus.status === 'indexing'"></mat-progress-bar>
+      <div *ngIf="workStatus.status !== 'none'">{{ workStatus['msg'] }}</div>
     
     <mat-divider></mat-divider>
     

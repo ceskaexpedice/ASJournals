@@ -17,6 +17,8 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import Utils from 'src/app/services/utils';
 import { LicencesDialogComponent } from '../../components/licences-dialog/licences-dialog.component';
+import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
+import { ResetPwdDialogComponent } from '../../components/reset-pwd-dialog/reset-pwd-dialog.component';
 
 @Component({
   selector: 'app-admin-configuration',
@@ -34,20 +36,20 @@ export class AdminConfigurationComponent {
   public uploader: FileUploader = new FileUploader({ url: 'api/lf?action=UPLOAD' });
   public coverUploader: FileUploader = new FileUploader({ url: 'api/lf?action=UPLOAD&cover=true' });
 
+  statusInterval: any;
+  workStatus: any = { status: 'none' };
   working: boolean = false;
   indexed: boolean = false;
   deleted: boolean = false;
   resultMsg: string = '';
 
-  cache: {[pid: string]: { label: string, licence: string, children: any[], show?: boolean }} = {};
+  cache: { [pid: string]: { label: string, licence: string, children: any[], show?: boolean } } = {};
   licences: any = {};
   isK7: boolean = false;
 
   selectedCover: string;
   coverMsg: string | null = null;
 
-  newPwd = '';
-  newPwdOk = false;
 
   sortBy = 'genre';
   keepLang: boolean = false;
@@ -99,19 +101,48 @@ export class AdminConfigurationComponent {
     this.cache[pid].show = !this.cache[pid].show;
   }
 
-  
+
 
   index() {
     this.working = true;
     this.resultMsg = '';
+    this.statusInterval = setInterval(() => {
+      this.checkStatus();
+    }, 1000)
     this.service.index(this.indexUUID!, this.isK7).subscribe(res => {
       this.resultMsg = res.hasOwnProperty('error') ? res.error : res.msg;
       this.working = false;
     });
   }
 
-  openConfirm() {
+  checkStatus() {
+    this.service.getIndexStatus().subscribe((res: any) => {
+      this.workStatus = res;
+      if (res.status === 'finished') {
+        clearInterval(this.statusInterval);
+      }
+    });
 
+  }
+
+  onDelete() {
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '900px',
+      data: { title: this.service.translateKey('admin.confirm'), 
+              msg: this.service.translateKey('admin.confirm_delete') + ' ' + this.indexUUID}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.working = true;
+        this.resultMsg = '';
+        this.service.delete(this.indexUUID!).subscribe(res => {
+          this.resultMsg = res.hasOwnProperty('error') ? res.error : res.msg;
+          this.working = false;
+        });
+      }
+    });
   }
 
   // uploadFile() {
@@ -136,12 +167,10 @@ export class AdminConfigurationComponent {
   coverUploaded() {
     this.coverMsg = 'ok';
   }
-
   setLicences() {
-    console.log(this.cache)
     const dialogRef = this.dialog.open(LicencesDialogComponent, {
       width: '900px',
-      data: {cache: this.cache, journal: this.state.currentMagazine.journal, licences: this.licences}
+      data: { cache: this.cache, journal: this.state.currentMagazine.journal, licences: this.licences }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -175,22 +204,19 @@ export class AdminConfigurationComponent {
 
 
   showResetPwd() {
+    const dialogRef = this.dialog.open(ResetPwdDialogComponent, {
+      width: '600px',
+      data: { username: this.state.username}
+    });
 
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     this.resetPwd();
+    //   }
+    // });
   }
 
-  resetPwd() {
-    this.newPwdOk = false;
-    if (this.newPwd !== '') {
-      this.service.resetPwd(this.state.username, this.newPwd).subscribe(res => {
-        if (res.error) {
-          alert(res.error)
-        } else {
-          this.newPwdOk = true;
-          // this.resetpwdModal?.hide();
-        }
-      });
-    }
-  }
+  
 
   saveMagazine() {
     this.state.currentMagazine!.sortByOrder = this.sortBy === 'order';

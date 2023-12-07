@@ -48,13 +48,13 @@
             </li>
           </ul>
           <mat-divider></mat-divider>
-          <button mat-flat-button color="primary">{{ 'Uložit menu' | translate }}</button>
+          <button mat-flat-button color="primary" (click)="saveMenu()">{{ 'Uložit menu' | translate }}</button>
         </div>
         
       </as-split-area>
       <as-split-area size="70" #area2="asSplitArea">
-        <div class="app-pl-4 app-pt-4" *ngIf="selected">
-          <div class="app-fxLayout app-row app-fill">
+        <div class="app-pl-4 app-pt-4" *ngIf="selected || selectedPage">
+          <div class="app-fxLayout app-row app-fill" *ngIf="selected">
             <mat-form-field appearance="outline" class="app-fxFlex app-mr-2">
               <mat-label>{{ 'menu.url' | translate }}</mat-label>
               <input matInput type="text" [(ngModel)]="selected.route" name="route">

@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>{{ 'magazines.resetovat_heslo' | translate }}</h1>
+<div mat-dialog-content>
+    <mat-form-field appearance="outline" class="app-fxFlex app-form-field-center-v-fix app-mr-2">
+        <input matInput name="newPwd" type="text" [(ngModel)]="newPwd" class="app-input app-mt-2"
+            [placeholder]="'magazines.nove_heslo'| translate">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions cdkFocusRegionstart>
+    <button mat-stroked-button (click)="resetPwd()">{{ 'magazines.ulozit' | translate }}</button>
+    <button mat-stroked-button mat-dialog-close="false">{{ 'magazines.zavrit' | translate }}</button>
+</div>

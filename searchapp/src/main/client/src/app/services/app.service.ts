@@ -741,6 +741,10 @@ export class AppService {
 
   }
 
+  getIndexStatus() {
+    return this.get('index?action=GET_STATUS');
+  }
+
   delete(uuid: string) {
     let url = 'index?action=DELETE_PID&pid=' + uuid;
 

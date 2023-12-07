@@ -252,5 +252,9 @@
 		"showExtLink": "Ukázat externí odkaz",
 		"extLinkUrl": "URL na externí odkaz",
 		"extLinkText": "Text pro externí odkaz"
+	},
+	"button": {
+		"Yes": "Ano",
+		"No": "Ne"
 	}
 }

@@ -27,10 +27,6 @@
         <servlet-name>LocalFileServlet</servlet-name>
         <servlet-class>cz.incad.k5journals.searchapp.LocalFileServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>JsassServlet</servlet-name>
-        <servlet-class>cz.incad.k5journals.searchapp.JsassServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>TextsServlet</servlet-name>
         <url-pattern>/texts</url-pattern>
@@ -121,11 +117,6 @@
         <url-pattern>/assets/*</url-pattern>
     </servlet-mapping>
     
-    
-    <servlet-mapping>
-        <servlet-name>JsassServlet</servlet-name>
-        <url-pattern>/theme</url-pattern>
-    </servlet-mapping>
     <servlet>
         <servlet-name>StaticServlet</servlet-name>
         <jsp-file>/index.jsp</jsp-file>

@@ -16,6 +16,8 @@ import { AppService } from 'src/app/services/app.service';
 import { Magazine } from 'src/app/models/magazine';
 import { FormsModule } from '@angular/forms';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { FilesDialogComponent } from '../../components/files-dialog/files-dialog.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 
 declare var tinymce: any;
@@ -34,7 +36,8 @@ interface MenuItem {
   selector: 'app-admin-interface',
   standalone: true,
   imports: [CommonModule, AngularSplitModule, FormsModule, EditorModule,
-    MatCheckboxModule, TranslateModule, MatDividerModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule],
+    MatCheckboxModule, TranslateModule, MatDividerModule, MatIconModule,
+    MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule],
   templateUrl: './admin-interface.component.html',
   styleUrls: ['./admin-interface.component.scss']
 })
@@ -45,17 +48,11 @@ export class AdminInterfaceComponent {
   selected: MenuItem | undefined;
   selectedPage: string | undefined;
   visibleChanged: boolean = false;
-  
-
-  // public uploader: FileUploader = new FileUploader({ url: 'lf?action=UPLOAD' });
 
 
   text: string | null = null;
   elementId: string = 'editEl';
   editor: any;
-
-  fileList: string[] = [];
-  selectedFile: string | null = null;
 
   description: string = '';
 
@@ -65,15 +62,18 @@ export class AdminInterfaceComponent {
   tinyConfig: any;
   tinyInited = false;
 
+  selectedFile: string | null = null;
+  fileList: string[]
 
   tab: string = 'config';
   saved: boolean = false;
 
   subscriptions: Subscription[] = [];
 
-  
+
 
   constructor(
+    public dialog: MatDialog,
     private config: Configuration,
     public state: AppState,
     private service: AppService,
@@ -94,7 +94,12 @@ export class AdminInterfaceComponent {
       setTimeout(() => {
         this.initTiny();
       }, 100);
-    })
+    });
+
+    
+    this.service.getUploadedFiles().subscribe(res => {
+      this.fileList = res['files'];
+    });
 
   }
 
@@ -132,7 +137,7 @@ export class AdminInterfaceComponent {
       plugins: ['link', 'paste', 'table', 'save', 'code', 'image'],
       toolbar: 'save | undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code mybutton',
       // skin_url: this.config['context'] + 'assets/skins/lightgray',
-      images_upload_url: 'lf?action=UPLOAD&isImage=true&ctx=' + this.state.currentMagazine?.ctx,
+      images_upload_url: 'api/lf?action=UPLOAD&isImage=true&ctx=' + this.state.currentMagazine?.ctx,
       automatic_uploads: true,
       relative_urls: false,
       setup: (editor: any) => {
@@ -143,7 +148,7 @@ export class AdminInterfaceComponent {
           icon: 'upload',
           //icon: false,
           onAction: function () {
-            // that.browseFiles();
+            that.browseFiles();
           }
         });
       },
@@ -157,12 +162,26 @@ export class AdminInterfaceComponent {
     this.tinyInited = true;
   }
 
+  public browseFiles() {
 
+    this.editor.focus();
+      const dialogRef = this.dialog.open(FilesDialogComponent, {
+        width: '600px',
+        data: {
+          ctx: this.state.currentMagazine.ctx,
+          fileList: this.fileList
+        }
+      });
 
-  uploaded() {
-    this.service.getUploadedFiles().subscribe(res => {
-      this.fileList = res['files'];
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.selectedFile = result;
+          const link = this.config['context'] + 'api/lf?action=GET_FILE&ctx=' + this.state.currentMagazine?.ctx;
+          console.log(link);
+          this.editor.insertContent('&nbsp;<a target="_blank" href="' + link + '&filename=' + this.selectedFile + '">' + this.selectedFile + '</a>&nbsp;');
+        }
+      });
+
   }
 
   ngOnDestroy() {
@@ -182,7 +201,6 @@ export class AdminInterfaceComponent {
 
   getText() {
 
-    console.log(this.selectedPage)
     let page: string = '';
     if (this.selectedPage) {
       page = this.selectedPage;
@@ -254,7 +272,6 @@ export class AdminInterfaceComponent {
 
   changeVisible() {
     this.visibleChanged = true;
-    //console.log(this.menu);
   }
 
   addChild(m: MenuItem) {
@@ -312,7 +329,7 @@ export class AdminInterfaceComponent {
   }
 
   isRouteActive(currentRoute: string): boolean {
-    return this.router.isActive(this.router.createUrlTree([currentRoute], {relativeTo: this.route}).toString(), true);
+    return this.router.isActive(this.router.createUrlTree([currentRoute], { relativeTo: this.route }).toString(), true);
   }
 
 }

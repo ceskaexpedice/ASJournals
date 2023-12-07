@@ -252,5 +252,9 @@
 		"showExtLink": "Show external link",
 		"extLinkUrl": "External link URL",
 		"extLinkText": "External link text"
+	},
+	"button": {
+		"Yes": "Yes",
+		"No": "No"
 	}
 }

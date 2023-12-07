@@ -47,6 +47,8 @@ public class IndexerK7 {
   static final Logger LOGGER = Logger.getLogger(IndexerK7.class.getName());
   final String apiPointKey = "api.point.k7";
   Options opts;
+  File statusFile;
+  JSONObject currentStatus = new JSONObject();
   JSONObject langsMap;
 
   SolrClient client;
@@ -59,6 +61,7 @@ public class IndexerK7 {
   public IndexerK7() {
     try {
       opts = Options.getInstance();
+      statusFile = new File(InitServlet.CONFIG_DIR + File.separator + "index.json");
       langsMap = opts.getJSONObject("langsMap");
     } catch (IOException ex) {
       LOGGER.log(Level.SEVERE, null, ex);
@@ -91,6 +94,29 @@ public class IndexerK7 {
     }
 
   }
+  
+  private void writeStatus() {
+      try {
+          FileUtils.writeStringToFile(statusFile, currentStatus.toString(), "UTF-8");
+      } catch (IOException ex) {
+          LOGGER.log(Level.SEVERE, null, ex);
+      }
+  }
+  
+  public JSONObject getStatus() {
+      try {
+          File f = new File(InitServlet.CONFIG_DIR + File.separator + "index.json");
+          if (f.exists()) {
+              return new JSONObject(FileUtils.readFileToString(f, "UTF-8"));
+          } else {
+              return new JSONObject();
+          }
+          
+      } catch (IOException ex) {
+          LOGGER.log(Level.SEVERE, null, ex);
+          return new JSONObject().put("error", ex);
+      }
+  }
 
   /**
    * Index doc only
@@ -100,12 +126,16 @@ public class IndexerK7 {
    */
   public void indexPid(String pid) {
     try {
+      currentStatus.put("currentUuid", pid);
+      currentStatus.put("status", "indexing");
       client = getClient("journal");
       SolrInputDocument idoc = createSolrDoc(pid);
       if (idoc != null) {
         try {
-          LOGGER.log(Level.INFO, "indexed: {0}", new Object[]{total++});
           client.add(idoc);
+          LOGGER.log(Level.INFO, "indexed: {0}", new Object[]{total++});
+            currentStatus.put("msg", "Indexing. Actually indexing " + pid + ". Indexed docs: " + total);
+            writeStatus();
           client.commit();
         } catch (SolrServerException | IOException ex) {
           LOGGER.log(Level.FINE, "idoc: {0}", idoc);
@@ -200,22 +230,28 @@ public class IndexerK7 {
    */
   public JSONObject indexDeep(String pid) {
 
+    currentStatus.put("pid", pid);
+    currentStatus.put("status", "indexing");
     response = new JSONObject();
     try {
       client = getClient("journal");
       Date tstart = new Date();
-//      int idx = getIdx(pid, true);
-//      LOGGER.log(Level.INFO, "idx: {0}", idx);
       indexPidAndChildren(pid);
       LOGGER.log(Level.INFO, "index finished. Indexed: {0}", total);
 
       response.put("msg", "total indexed " + total);
       Date tend = new Date();
       response.put("ellapsed time", FormatUtils.formatInterval(tend.getTime() - tstart.getTime()));
+      currentStatus.put("status", "finished");
+      currentStatus.put("msg", "total indexed " + total + " in "+ FormatUtils.formatInterval(tend.getTime() - tstart.getTime()));
+      writeStatus();
       client.close();
     } catch (IOException ex) {
       Logger.getLogger(IndexerK7.class.getName()).log(Level.SEVERE, null, ex);
       response.put("error", ex);
+      currentStatus.put("status", "finished");
+      currentStatus.put("msg", "error: " + ex);
+      writeStatus(); 
     }
     return response;
 
