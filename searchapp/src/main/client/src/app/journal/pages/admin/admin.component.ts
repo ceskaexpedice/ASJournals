@@ -1,13 +1,8 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, ɵɵclassMapInterpolate1 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
 
 
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { AppState } from 'src/app/app.state';
-import { Magazine } from 'src/app/models/magazine';
-import { AppService } from 'src/app/services/app.service';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Configuration } from 'src/app/models/configuration';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
 

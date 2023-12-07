@@ -1,4 +1,4 @@
-<div class="app-page-wrapper">
+<div class="app-page-wrapper" *ngIf="isRoot()">
   <div class="app-container">
     <div class="app-fxLayout app-row app-fill">
       <h1 class="app-fxFlex app-m-0">Ročníky</h1>
@@ -13,9 +13,14 @@
       </div>
     </div>
     <div>
-      <app-archiv-item></app-archiv-item>
-      <app-archiv-item></app-archiv-item>
-      <app-archiv-item></app-archiv-item>
+      <ng-container *ngIf="!isDataNode">
+          <app-archiv-item *ngFor="let item of items" [item]="item" (drillDown)="drillDown($event)"></app-archiv-item>
+      </ng-container>
+      <ng-container *ngIf="isDataNode">
+        <ng-container *ngFor="let art of items">
+          <app-article-result *ngIf="!isHiddenByGenre(art['genre'])" [article]="art"></app-article-result>
+        </ng-container>
+      </ng-container><!--/.media -->
     </div>
     <p>
       {{'Starší ročníky najdete v' | translate}} <a [href]="" [title]="'k5_title' | translate" target="_blank">{{'Digitální knihovně AV ČR' | translate}}</a>
@@ -26,29 +31,35 @@
 
 <!-- 
 html pripraveno pro nahled rocniku po kliknuti na titulek
-<div class="app-page-wrapper">
+-->
+<div class="app-page-wrapper" *ngIf="!isRoot()">
   <div class="app-container">
-    <div class="app-fxLayout app-row app-fill">
+    <div class="app-fxLayout app-row app-fill" *ngIf="currentItem">
       <div class="app-mr-8">
-        <button mat-stroked-button color="primary" class="app-mb-4">
+        <button mat-stroked-button color="primary" class="app-mb-4" (click)="goToRoot()">
           <mat-icon>arrow_back</mat-icon>{{ 'Zpět na ročníky' | translate }}
         </button>
         <div class="app-results-wrapper">
-          <div class="app-item app-fxLayout app-row app-p-4 app-active">
-            <img src="assets/img/thumb.png" onerror="this.src='assets/img/thumb-no-image.png'" [title]=""  />
-            <h3>Rok 2022, rocnik 29</h3>
-          </div>
-          <div class="app-item app-fxLayout app-row app-p-4">
-            <img src="assets/img/thumb.png" onerror="this.src='assets/img/thumb-no-image.png'" [title]=""  />
-            <h3>Rok 2022, rocnik 29</h3>
+          <div class="app-item app-fxLayout app-row app-p-4 app-active" *ngFor="let item of visibleParentItems">
+            <app-archiv-item-left [item]="item" (drillDown)="drillDown($event)" ></app-archiv-item-left>
           </div>
         </div>
       </div>
-      <div class="app-fxFlex">
-        <h1>2022, ročník 29</h1>
-        <app-archiv-item></app-archiv-item>
+      <div class="app-fxFlex" [ngSwitch]="currentItem['model']">
+
+        <h1 *ngSwitchCase="'periodical'">
+          {{'Ročníky' | translate}}
+        </h1>
+        <h1 *ngSwitchCase="'periodicalvolume'">
+          {{currentItem['year']}}<span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span>
+        </h1>
+        <h1 *ngSwitchCase="'periodicalitem'">
+          {{currentItem['year']}}<span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span><span
+           *ngIf="issueNumber">, {{'číslo' | translate}} {{issueNumber}}</span><span
+           *ngIf="partName">, {{partName}}</span>
+        </h1>
+        <app-archiv-item *ngFor="let item of items" [item]="item" (drillDown)="drillDown($event)"></app-archiv-item>
       </div>
     </div>
   </div>
 </div> 
--->

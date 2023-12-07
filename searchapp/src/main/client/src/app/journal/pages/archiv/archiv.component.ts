@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params, RouterModule } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { AppState } from 'src/app/app.state';
 import { Configuration } from 'src/app/models/configuration';
 import { AppService } from 'src/app/services/app.service';
@@ -13,11 +11,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { ArticleResultComponent } from '../../components/article-result/article-result.component';
+import { ArchivItemLeftComponent } from '../../components/archiv-item-left/archiv-item-left.component';
 
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, ArchivItemComponent, MatSelectModule, MatInputModule, MatFormFieldModule, TranslateModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, RouterModule, ArchivItemComponent, ArticleResultComponent, ArchivItemLeftComponent,
+    MatSelectModule, MatInputModule, MatFormFieldModule, TranslateModule, MatIconModule, MatButtonModule],
   selector: 'app-archiv',
   templateUrl: './archiv.component.html',
   styleUrls: ['./archiv.component.scss']
@@ -68,13 +69,6 @@ export class ArchivComponent implements OnInit {
           this.initData();
         }
       });
-
-
-    // this.configSubject.subscribe(
-    //   () => {
-    //     this.initData();
-    //   }
-    // );
   }
 
   setMainClass() {
@@ -85,7 +79,7 @@ export class ArchivComponent implements OnInit {
   }
 
   isRoot() {
-    return this.config && this.currentPid === this.state.currentMagazine['journal'];
+    return this.currentPid === this.state.currentMagazine['journal'];
   }
 
   goToRoot() {

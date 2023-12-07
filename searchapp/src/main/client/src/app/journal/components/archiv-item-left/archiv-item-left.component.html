@@ -1,6 +1,6 @@
 <div class="app-fxLayout app-row app-fill app-mb-4" *ngIf="item">
   <div class="app-left app-mr-8">
-    <img [src]="img()" onerror="this.src='assets/img/thumb-no-image.png'" [title]="" class="app-mb-2" />
+    <img [src]="img()" onerror="this.src='assets/img/thumb-no-image.png'" [title]="" class="app-mb-2" (click)="onDrillDown()" />
   </div>
   <div class="app-fxFlex app-right">
     <h2><a (click)="onDrillDown()">
@@ -9,6 +9,5 @@
     <span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span>
     <span *ngIf="issueNumber"> {{'číslo' | translate}} {{issueNumber}}</span>
     <span *ngIf="partName">, {{partName}}</span></a></h2>
-    <button mat-flat-button color="primary" class="app-mb-6" (click)="gotoArticle()"><mat-icon>menu_book</mat-icon>Prohlizet</button>
   </div>
 </div>
