@@ -175,8 +175,10 @@
 	"zpet_na_seznam": "Back to the list",
 	"nastavit_licenci_detailne": "Set the license in detail",
 	"magazines": {
-		"digitalni_knihovna_av_cr": "Digital Library of the CAS",
+		"title": "AS Journals",
 		"online_casopisy": "online magazines",
+		"title_mobil": "AS Journals",
+		"online_casopisy_mobil": "online magazines",
 		"navigace": "Navigation",
 		"seznam_casopisu": "List of magazines",
 		"o_projektu": "About project",
