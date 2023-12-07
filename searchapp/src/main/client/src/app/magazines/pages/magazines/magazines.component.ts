@@ -72,7 +72,9 @@ export class MagazinesComponent implements OnInit {
         });
 
         this.processUrl();
-        this.materialCssVarsService.setPrimaryColor(this.config.color);
+        if (isPlatformBrowser(this.platformId)) {
+          this.materialCssVarsService.setPrimaryColor(this.config.color);
+        }
         
 
         // this.setStyles();

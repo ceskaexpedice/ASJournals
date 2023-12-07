@@ -17,11 +17,11 @@ import { HeadingComponent } from "./components/heading/heading.component";
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 @Component({
-    standalone: true,
-    selector: 'app-journal',
-    templateUrl: './journal.component.html',
-    styleUrls: ['./journal.component.scss'],
-    imports: [CommonModule, RouterModule, MaterialCssVarsModule, MatButtonModule, FooterComponent, NavbarComponent, MatSidenavModule, MatListModule, SidenavListComponent, HeadingComponent, BreadcrumbComponent]
+  standalone: true,
+  selector: 'app-journal',
+  templateUrl: './journal.component.html',
+  styleUrls: ['./journal.component.scss'],
+  imports: [CommonModule, RouterModule, MaterialCssVarsModule, MatButtonModule, FooterComponent, NavbarComponent, MatSidenavModule, MatListModule, SidenavListComponent, HeadingComponent, BreadcrumbComponent]
 })
 export class JournalComponent {
 
@@ -58,25 +58,15 @@ export class JournalComponent {
   ngOnInit() {
 
     if (this.state.currentMagazine) {
-        this.materialCssVarsService.setPrimaryColor('#'+this.state.currentMagazine.color);
-        this.initApp();
+
+      if (isPlatformBrowser(this.platformId)) {
+        this.materialCssVarsService.setPrimaryColor('#' + this.state.currentMagazine.color);
+      }
+      this.initApp();
     } else {
       // navigate to magazines home
       this.router.navigate(['/']);
     }
-
-    // this.route.params
-    //   .subscribe((params: Params) => {
-    //       if (this.state.ctxs && this.state.ctxs.length > 0) {
-    //         this.state.currentMagazine = this.service.getCtx(params['ctx']);
-    //         this.materialCssVarsService.setPrimaryColor('#'+this.state.currentMagazine.color);
-    //         this.getConfig();
-    //       } 
-    //   });
-  }
-
-  setColor() {
-    this.materialCssVarsService.setPrimaryColor('#'+this.state.currentMagazine.color);
   }
 
   initApp() {
@@ -96,9 +86,9 @@ export class JournalComponent {
     //this.setCtx(false);
 
     this.service.findActual();
-        this.service.getKeywords();
-        this.service.getGenres();
-        
+    this.service.getKeywords();
+    this.service.getGenres();
+
     this.processUrl();
     this.hasContext = true;
     this.state.stateChanged();

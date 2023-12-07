@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MaterialCssVarsModule, MaterialCssVarsService } from 'angular-material-css-vars';
@@ -27,7 +27,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     if (this.state.currentMagazine) {
-      this.materialCssVarsService.setPrimaryColor('#' + this.state.currentMagazine.color);
+      if (isPlatformBrowser(this.platformId)) {
+        this.materialCssVarsService.setPrimaryColor('#' + this.state.currentMagazine.color);
+      }
       this.titleService.setTitle(this.state.currentMagazine.title);
       this.meta.removeTag('name=description');
       this.meta.removeTag('name=author');

@@ -139,11 +139,11 @@ export function app(): express.Express {
   });
 
   server.post('/lf', upload.single('file'), function(req: any, res: any) {
-    console.log(req.body); // form fields
+    // console.log(req.body); // form fields
     /* example output:
     { title: 'abc' }
      */
-    console.log(req.file); 
+    // console.log(req.file); 
     const resp: any = {};
     if (req.query['cover']) {
       resp.msg = 'ok'
@@ -205,7 +205,8 @@ export function app(): express.Express {
 }
 
 function run(): void {
-  const host = process.env['HOST'] || '127.0.0.1';
+  const host = process.env['HOST'] || 'localhost';
+  // const host = 'localhost';
   const port = parseInt(process.env['PORT']) || 4000;
 
   // Start up the Node server
