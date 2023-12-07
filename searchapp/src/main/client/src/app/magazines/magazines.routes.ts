@@ -17,7 +17,7 @@ export const Magazines_Routes: Routes = [
             { path: 'seznam-casopisu', component: SeznamCasopisuComponent },
             { path: 'casopisy', component: SeznamCasopisuComponent },
 
-            {path: 'admin', component: AdminMagazinesComponent},//, canActivate: [MagazinesAuthGuard]},
+            {path: 'admin', component: AdminMagazinesComponent, canActivate: [MagazinesAuthGuard]},
               {path: 'prihlaseni', component: LoginComponent},
               {path: 'o-projektu', component: OProjektuComponent},
               {path: 'vydavatele', component: VydavateleComponent},
