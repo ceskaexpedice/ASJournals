@@ -128,12 +128,12 @@ export class AppState {
 
   setConfig(cfg: any) {
 
+console.log(cfg, this.currentMagazine)
     this.rows = cfg['searchParams']['rows'];
     this.sorts = cfg['sorts'];
     this.currentSort = cfg[0];
     this.krameriusUrl = cfg['k5'] + cfg['journal'];
-
-    this.imgSrc = cfg['context'] + 'api/img?obalka=true&ctx=' + this.currentMagazine?.ctx + '&uuid=' + cfg['journal'] + '&kramerius_version=' + (this.currentMagazine?.isK7 ? 'k7' : 'k5') + '&thumb=true';
+    this.imgSrc = cfg['context'] + 'api/img?obalka=true&ctx=' + this.currentMagazine.ctx + '&uuid=' + this.currentMagazine.journal + '&kramerius_version=' + (this.currentMagazine?.isK7 ? 'k7' : 'k5') + '&thumb=true';
 
     this._configSubject.next(cfg);
   }

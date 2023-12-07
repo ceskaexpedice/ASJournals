@@ -93,7 +93,7 @@ public class TextsServlet extends HttpServlet {
             if (f.exists()) {
               FileUtils.copyFile(f, response.getOutputStream());
             } else {
-              response.getWriter().println("Text not found in <h1>" + filename + ".html</h1>");
+              response.getWriter().println("Page not found (error 404)");
             }
           }
         } else {

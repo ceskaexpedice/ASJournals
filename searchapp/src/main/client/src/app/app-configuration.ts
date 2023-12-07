@@ -46,7 +46,6 @@ import { Magazine } from './models/magazine';
             .toPromise()
             .then(cfg => {
                 this.config.fromJSON(cfg);
-                this.state.setConfig(cfg);
                 console.log('config loaded');
             }).then(() => {
                 return this.getMagazines();
@@ -98,6 +97,7 @@ import { Magazine } from './models/magazine';
         .toPromise()
         .then((res: any) => {
             this.state.currentMagazine = ctx;
+            this.state.setConfig(this.config);
             if (!this.state.currentMagazine.keywords) {
                 this.state.currentMagazine.keywords = [];
             }

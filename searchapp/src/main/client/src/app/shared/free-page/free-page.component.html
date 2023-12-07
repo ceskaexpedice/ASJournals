@@ -6,7 +6,7 @@
     <div class="app-fxLayout app-row app-fill">
       <div class="app-left app-mr-8">
         <a [routerLink]="['/', state.currentMagazine!.ctx, 'home']" queryParamsHandling="preserve" [title]="'Seznam článků z nejnovějšího čísla' | translate">
-          <img [src]="img" onerror="this.src='assets/img/thumb-no-image.png'" [alt]="" />
+          <img [src]="img" [alt]="" onerror="this.src='assets/img/thumb-no-image.png'" />
         </a>
       </div>
       <div class="app-right app-fxFlex" [innerHTML]="text | safeHtml"></div>
