@@ -27,6 +27,7 @@ export class ArticleInfoComponent implements OnInit {
 
     rozsah: string | null = null;
     authors: string[] = [];
+    authors_full: {name: string, role: string}[] = [];
 
     titleInfo: any;
     title: string | null = null;
@@ -78,6 +79,7 @@ export class ArticleInfoComponent implements OnInit {
         }
 
         this.authors = [];
+        this.authors_full = [];
         this.rozsah = "";
 
 
@@ -93,13 +95,16 @@ export class ArticleInfoComponent implements OnInit {
 
         let mods = JSON.parse(this.article['mods']);
         
-        
         this.rozsah = Utils.getRozsah(mods);
 
         this.titleInfo = mods["mods:titleInfo"];
         this.setTitleInfo();
-        //this.setNames(mods);
+        // this.setNames(mods);
         this.authors = this.article['autor'];
+        if (this.article['autor_full']) {
+            this.authors_full = this.article['autor_full'];
+        }
+        
 
         if (mods.hasOwnProperty("mods:identifier")) {
             let ids = mods["mods:identifier"];
@@ -172,6 +177,7 @@ export class ArticleInfoComponent implements OnInit {
             if (name.hasOwnProperty('length')) {
                 for (let i in name) {
                     let namePart = name[i]["mods:namePart"];
+                    let role = name[i]["mods:role"];
                     if (name[i]["type"] === 'personal' && namePart) {
                         //Chceme nejdriv prijmeni a potom jmeno
                         if (namePart[0]['type'] === 'family') {

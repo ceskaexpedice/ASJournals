@@ -127,8 +127,6 @@ export class AppState {
   
 
   setConfig(cfg: any) {
-
-console.log(cfg, this.currentMagazine)
     this.rows = cfg['searchParams']['rows'];
     this.sorts = cfg['sorts'];
     this.currentSort = cfg[0];

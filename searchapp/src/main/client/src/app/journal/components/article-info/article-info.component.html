@@ -13,8 +13,11 @@
     {{article.dateIssued}}
 </div>
 
-<div *ngFor="let author of authors; let last = last">
+<!-- <div *ngFor="let author of authors; let last = last">
     <span class="app-label">{{'Autor' | translate}}:</span> {{author}}<br />
+</div> -->
+<div *ngFor="let author of authors_full; let last = last">
+    <span class="app-label">{{'Autor' | translate}}:</span> {{ author.name }} <ng-container *ngIf="author.role">({{ author.role }})</ng-container><br />
 </div>
 
 

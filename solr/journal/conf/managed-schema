@@ -86,6 +86,7 @@
     <field name="non_sort_title" type="text_cz" indexed="true" stored="true" multiValued="false"/>
     <field name="non_sort_title_cze" type="text_cz" indexed="true" stored="true" multiValued="false"/>
     <field name="autor" type="text_lowercase" indexed="true" stored="true" multiValued="true"/>
+    <field name="autor_full" type="string" indexed="false" stored="true" multiValued="true"/>
     <field name="autor_facet" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="keywords" type="lowercase" indexed="true" stored="true" multiValued="true"/>
     <field name="keywords_facet" type="string" indexed="true" stored="true" multiValued="true"/>

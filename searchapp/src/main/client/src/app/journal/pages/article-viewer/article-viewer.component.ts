@@ -30,7 +30,7 @@ import { ShareDialogComponent } from '../../components/share-dialog/share-dialog
 })
 export class ArticleViewerComponent implements OnInit {
 
-  activeLink = 'pdf';
+  activeLink = 'detail';
   breakpoint: number = 960;
   windowSize: number;
 
@@ -39,7 +39,7 @@ export class ArticleViewerComponent implements OnInit {
     this.windowSize = (event.target as Window).innerWidth;
     if (this.windowSize > this.breakpoint && this.activeLink === 'articles') {
       //this.router.navigate(['.', 'detail']);
-      this.activeLink = 'pdf';
+      this.activeLink = 'detail';
       this.router.navigate(['/' + this.state.currentMagazine?.ctx + '/article', this.state.viewerPid, 'pdf'], { queryParamsHandling: 'preserve' });
     }
   }

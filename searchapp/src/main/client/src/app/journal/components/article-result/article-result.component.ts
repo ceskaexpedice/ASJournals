@@ -26,6 +26,7 @@ export class ArticleResultComponent implements OnInit {
     langObserver: Subscription= new Subscription();
     rozsah: string | null = null;
     authors: string[] = [];
+    authors_full: {name: string, role: string}[] = [];
     titleInfo: any;
     title: string | null = null;
     subTitle: string | null = null;
@@ -73,6 +74,10 @@ export class ArticleResultComponent implements OnInit {
         //this.authors = Utils.getAutors(mods);
         this.isPeerReviewed = this.article['genre'].indexOf('peer-reviewed') > -1;
         this.authors = this.article['autor'];
+        if (this.article['autor_full']) {
+            this.authors_full = this.article['autor_full'];
+            this.authors = this.authors_full.filter(a => a.role !== 'trl').map(a => a.name);
+        }
         if (this.active) {
             setTimeout(() => {
                 this.elementRef.nativeElement.scrollIntoView();

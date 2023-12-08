@@ -38,7 +38,7 @@ const routes: Routes = [
     },
     { path: 'article/:pid', component: ArticleViewerComponent,
       children: [
-        { path: '', redirectTo: 'pdf', pathMatch: 'full' },
+        { path: '', component: ArticleViewerDetailsComponent },
         { path: 'articles', component: ArticleViewerArticlesComponent },
         { path: 'pdf', component: ArticleViewerPdfComponent },
         { path: 'detail', component: ArticleViewerDetailsComponent }
