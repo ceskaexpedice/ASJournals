@@ -8,9 +8,9 @@
             {{ m[state.currentLang] }}<mat-icon>expand_more</mat-icon>
           </a>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item [routerLink]="m.route"  queryParamsHandling="preserve" [title]="m[state.currentLang]">{{ m[state.currentLang] }}</button>
+            <a mat-menu-item [routerLink]="m.route"  queryParamsHandling="preserve" [title]="m[state.currentLang]">{{ m[state.currentLang] }}</a>
             <ng-container *ngFor="let m1 of m.children">
-              <button mat-menu-item *ngIf="m1.visible" [routerLink]="[m.route, m1.route]" queryParamsHandling="preserve">{{ m1[state.currentLang ]}}</button>
+              <a mat-menu-item *ngIf="m1.visible" [routerLink]="[m.route, m1.route]" queryParamsHandling="preserve">{{ m1[state.currentLang ]}}</a>
             </ng-container>
           </mat-menu>
           <a mat-flat-button color="primary" *ngIf="m.visible && m.children.length === 0" routerLinkActive="app-active" [routerLink]="m.route" queryParamsHandling="preserve" [title]="m[state.currentLang]">{{ m[state.currentLang] }}</a>

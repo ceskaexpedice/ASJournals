@@ -5,9 +5,8 @@
       <div>
         <mat-form-field>
           <mat-label>{{ 'Výsledky řadit' | translate }}</mat-label>
-          <mat-select matNativeControl required>
-            <mat-option value="">{{ 'od nejnovějšího' | translate }} </mat-option>
-            <mat-option value="">{{ 'od nejstaršího' | translate }}</mat-option>
+          <mat-select  required (valueChange)="setSort($event)" [(ngModel)]="currentSort">
+            <mat-option *ngFor="let sort of sorts" [value]="sort">{{ sort.label | translate }} </mat-option>
           </mat-select>
         </mat-form-field>     
       </div>

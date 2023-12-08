@@ -3,7 +3,7 @@
     <img [src]="img()" onerror="this.src='assets/img/thumb-no-image.png'" [title]="" class="app-mb-2" (click)="onDrillDown()" />
   </div>
   <div class="app-fxFlex app-right">
-    <h2><a (click)="onDrillDown()">
+    <h2><a [routerLink]="['.', {pid:item['pid']}]" queryParamsHandling="preserve"> 
     <span *ngIf="supplement">{{supplement}}</span>
     <span *ngIf="year">{{'Rok' | translate}} {{year}}</span>
     <span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span>

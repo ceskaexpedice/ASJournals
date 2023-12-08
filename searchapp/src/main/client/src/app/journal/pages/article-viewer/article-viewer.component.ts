@@ -19,6 +19,7 @@ import { ArticleViewerArticlesComponent } from '../article-viewer-articles/artic
 import { AppWindowRef } from 'src/app/app.window-ref';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ShareDialogComponent } from '../../components/share-dialog/share-dialog.component';
+import { Meta } from '@angular/platform-browser';
 
 @Component({
   standalone: true,
@@ -77,6 +78,7 @@ export class ArticleViewerComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: any,
     private windowRef: AppWindowRef,
     @Inject(DOCUMENT) private document: Document,
+    private meta: Meta,
     public dialog: MatDialog,
     private config: Configuration,
     private service: AppService,
@@ -137,6 +139,10 @@ export class ArticleViewerComponent implements OnInit {
 
       if (res['datanode']) {
         this.state.viewerArticle = res;
+        console.log(this.state.viewerArticle)
+        this.meta.addTags([
+          { name: 'abstract', content: this.state.viewerArticle.abstract },
+        ]);
 
         this.pagesRendered = 0;
         this.numPages = -1;

@@ -13,11 +13,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ArticleResultComponent } from '../../components/article-result/article-result.component';
 import { ArchivItemLeftComponent } from '../../components/archiv-item-left/archiv-item-left.component';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, ArchivItemComponent, ArticleResultComponent, ArchivItemLeftComponent,
+  imports: [CommonModule, RouterModule, FormsModule, ArchivItemComponent, ArticleResultComponent, ArchivItemLeftComponent,
     MatSelectModule, MatInputModule, MatFormFieldModule, TranslateModule, MatIconModule, MatButtonModule],
   selector: 'app-archiv',
   templateUrl: './archiv.component.html',
@@ -109,9 +110,7 @@ export class ArchivComponent implements OnInit {
 
     let p: any = {};
     p['pid'] = pid;
-    //this.router.navigate(['/archiv', p]);
     this.router.navigate(['.', p], { queryParamsHandling: "preserve", relativeTo: this.route });
-    //    this.setItems(pid);
   }
 
   setFocus() {
