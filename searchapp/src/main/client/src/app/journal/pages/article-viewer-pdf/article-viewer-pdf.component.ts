@@ -39,6 +39,7 @@ export class ArticleViewerPdfComponent {
         this.lang = lang;
       }
     );
+    this.state.viewerActiveLink = 'pdf';
 
   }
 

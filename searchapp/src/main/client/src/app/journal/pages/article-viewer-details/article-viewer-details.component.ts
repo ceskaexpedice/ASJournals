@@ -32,6 +32,7 @@ export class ArticleViewerDetailsComponent {
       this.citace = resp;
       this.location = this.document.location.href;
     });
+    this.state.viewerActiveLink = 'detail';
   }
 
 }

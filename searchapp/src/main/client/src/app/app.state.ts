@@ -74,6 +74,7 @@ export class AppState {
   viewerJournal: Journal = new Journal();
   viewerPid: string;
   viewerArticle: any;
+  viewerActiveLink = 'detail';
 
 
   public breadcrumbs: any[] = [];

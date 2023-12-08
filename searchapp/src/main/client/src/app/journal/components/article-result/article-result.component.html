@@ -1,6 +1,6 @@
 <div class="app-item" [class.app-active]="active">
   <div>
-    <h3 class="app-m-0"><a [routerLink]="['/'+ state.currentMagazine.ctx, 'article', article.pid]" queryParamsHandling="preserve">{{nonSort}} {{title}}</a></h3>
+    <h3 class="app-m-0"><a [routerLink]="['/'+ state.currentMagazine.ctx, 'article', article.pid, state.viewerActiveLink]" queryParamsHandling="preserve">{{nonSort}} {{title}}</a></h3>
     <span *ngFor="let author of authors; let last = last"><a (click)="onAuthorClicked(author)">{{author}}</a><span *ngIf="!last"> - </span></span>
     <span class="app-pipe"></span>
     Pocet zobrazeni: <strong>{{viewed}}</strong>

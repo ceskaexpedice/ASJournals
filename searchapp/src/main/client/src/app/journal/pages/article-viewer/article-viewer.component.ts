@@ -31,16 +31,16 @@ import { Meta } from '@angular/platform-browser';
 })
 export class ArticleViewerComponent implements OnInit {
 
-  activeLink = 'detail';
+  
   breakpoint: number = 960;
   windowSize: number;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     this.windowSize = (event.target as Window).innerWidth;
-    if (this.windowSize > this.breakpoint && this.activeLink === 'articles') {
+    if (this.windowSize > this.breakpoint && this.state.viewerActiveLink === 'articles') {
       //this.router.navigate(['.', 'detail']);
-      this.activeLink = 'detail';
+      this.state.viewerActiveLink = 'detail';
       this.router.navigate(['/' + this.state.currentMagazine?.ctx + '/article', this.state.viewerPid, 'pdf'], { queryParamsHandling: 'preserve' });
     }
   }
@@ -96,8 +96,12 @@ export class ArticleViewerComponent implements OnInit {
       this.windowSize = 2000;
     }
 
-    const parts = this.document.location.href.split('/');
-    this.activeLink = parts[parts.length - 1];
+    // const parts = this.document.location.href.split('/');
+    // this.state.viewerActiveLink = parts[parts.length - 1];
+    // console.log(this.state.viewerActiveLink)
+    // if (!this.state.viewerActiveLink) {
+    //   this.state.viewerActiveLink = 'detail';
+    // }
 
     this.route.params
       .subscribe((params: Params) => {
@@ -139,7 +143,6 @@ export class ArticleViewerComponent implements OnInit {
 
       if (res['datanode']) {
         this.state.viewerArticle = res;
-        console.log(this.state.viewerArticle)
         this.meta.addTags([
           { name: 'abstract', content: this.state.viewerArticle.abstract },
         ]);
@@ -205,9 +208,9 @@ export class ArticleViewerComponent implements OnInit {
       this.settingData = false;
 
 
-      if (this.windowSize > this.breakpoint && this.activeLink === 'articles') {
+      if (this.windowSize > this.breakpoint && this.state.viewerActiveLink === 'articles') {
         //this.router.navigate(['.', 'detail']);
-        this.activeLink = 'pdf';
+        this.state.viewerActiveLink = 'detail';
         this.router.navigate(['/' + this.state.currentMagazine?.ctx + '/article', this.state.viewerPid, 'pdf'], { queryParamsHandling: 'preserve' });
       }
 

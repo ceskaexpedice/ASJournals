@@ -4,15 +4,15 @@
       <div class="mat-mdc-tab-links app-jc-start app-controls">
         <a mat-tab-link [href]="state.fullSrc" [download]="downloadFilename"><mat-icon>download</mat-icon></a>
         <a mat-tab-link (click)="linkShare()"><mat-icon>share</mat-icon></a>
-        <ng-container *ngIf="activeLink === 'pdf'">
+        <ng-container *ngIf="state.viewerActiveLink === 'pdf'">
           <!-- <a mat-tab-link><mat-icon>zoom_in</mat-icon></a>
           <a mat-tab-link><mat-icon>zoom_out</mat-icon></a> -->
           <a mat-tab-link><mat-icon>zoom_out_map</mat-icon></a>
         </ng-container>          
       </div>
-      <a mat-tab-link routerLink="articles" *ngIf="windowSize < breakpoint" (click)="activeLink = 'articles'" [active]="activeLink == 'articles'">{{ 'articles' | translate }}</a>
-      <a mat-tab-link routerLink="detail" (click)="activeLink = 'detail'" [active]="activeLink == 'detail'">{{ 'detail' | translate }}</a>
-      <a mat-tab-link routerLink="pdf" (click)="activeLink = 'pdf'" [active]="activeLink == 'pdf'">{{ 'pdf' | translate }}</a>
+      <a mat-tab-link routerLink="articles" *ngIf="windowSize < breakpoint" (click)="state.viewerActiveLink = 'articles'" [active]="state.viewerActiveLink == 'articles'">{{ 'articles' | translate }}</a>
+      <a mat-tab-link routerLink="detail" (click)="state.viewerActiveLink = 'detail'" [active]="state.viewerActiveLink === 'detail'">{{ 'detail' | translate }}</a>
+      <a mat-tab-link routerLink="pdf" (click)="state.viewerActiveLink = 'pdf'" [active]="state.viewerActiveLink === 'pdf'">{{ 'pdf' | translate }}</a>
     </nav>
   </div> 
   <div class="app-fxFlex app-fxLayout app-pb-8 app-pl-4 app-pr-4">
