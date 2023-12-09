@@ -1,11 +1,11 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, PLATFORM_ID, Renderer2, RendererStyleFlags2 } from '@angular/core';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Params, Router, RouterModule } from '@angular/router';
 import { AppState } from '../app.state';
 import { AppWindowRef } from '../app.window-ref';
 import { AppService } from '../services/app.service';
 import { Subscription } from 'rxjs';
-import { MaterialCssVarsModule, MaterialCssVarsService } from 'angular-material-css-vars';
+import { MatCssPalettePrefix, MaterialCssVarsModule, MaterialCssVarsService } from 'angular-material-css-vars';
 import { MatButtonModule } from '@angular/material/button';
 import { Configuration } from '../models/configuration';
 import { FooterComponent } from "./components/footer/footer.component";
@@ -15,6 +15,11 @@ import { MatListModule } from '@angular/material/list';
 import { SidenavListComponent } from './components/sidenav-list/sidenav-list.component';
 import { HeadingComponent } from "./components/heading/heading.component";
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+
+interface CssVariable {
+  name: string;
+  val: string;
+}
 
 @Component({
   standalone: true,
@@ -48,6 +53,8 @@ export class JournalComponent {
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private windowRef: AppWindowRef,
+    @Inject(DOCUMENT) private document: Document,
+    private renderer: Renderer2,
     public materialCssVarsService: MaterialCssVarsService,
     private config: Configuration,
     public state: AppState,
@@ -55,12 +62,74 @@ export class JournalComponent {
     private router: Router,
     private route: ActivatedRoute) { }
 
+    getColor(){
+      console.log(document.getElementsByTagName('html')[0].getAttribute('style'));
+
+      const a = this._computePaletteColors('--palette-primary-', '#cccc00');// + this.state.currentMagazine.color);
+     this._setStyle(a);
+      console.log(a)
+      
+    }
+
+    private _computePaletteColors(
+      prefix: string,
+      hex: string,
+    ): CssVariable[] {
+      return this.materialCssVarsService.getPaletteForColor(hex).map((item) => {
+        const c = item.color;
+        return {
+          name: `${prefix}${item.hue}`,
+          val: `rgb(${c.r}, ${c.g}, ${c.b})`,
+        };
+      });
+    }
+
+    private _setStyle(vars: CssVariable[]) {
+      vars.forEach((s) => {
+        this.renderer.setStyle(
+          this.document.documentElement,
+          s.name,
+          s.val,
+          RendererStyleFlags2.DashCase,
+        );
+        this.renderer.setStyle(
+          this.document.documentElement,
+          s.name + "-no-rgb",
+          this._replaceNoRgbValue(s.name, s.val),
+          RendererStyleFlags2.DashCase,
+        );
+      });
+    }
+
+    private _replaceNoRgbValue(name: string, value: string) {
+      const isContrast: boolean = name.includes(
+        'contrast-',
+      );
+      let noRgb = "";
+      if (isContrast) {
+        noRgb = value.replace(")", "-no-rgb)");
+      } else {
+        noRgb = value.replace("rgba(", "").replace("rgb(", "").replace(")", "");
+        if (noRgb.startsWith("var(")) {
+          noRgb = noRgb.concat(")");
+        }
+      }
+      return noRgb;
+    }
+    
   ngOnInit() {
 
     if (this.state.currentMagazine) {
 
       if (isPlatformBrowser(this.platformId)) {
         this.materialCssVarsService.setPrimaryColor('#' + this.state.currentMagazine.color);
+      } else {
+        // const s = '--palette-primary-50: rgb(239, 228, 231); --palette-primary-50-no-rgb: 239, 228, 231; --palette-primary-100: rgb(216, 187, 194); --palette-primary-100-no-rgb: 216, 187, 194; --palette-primary-200: rgb(190, 141, 154); --palette-primary-200-no-rgb: 190, 141, 154; --palette-primary-300: rgb(164, 95, 114); --palette-primary-300-no-rgb: 164, 95, 114; --palette-primary-400: rgb(145, 61, 83); --palette-primary-400-no-rgb: 145, 61, 83; --palette-primary-500: rgb(125, 27, 53); --palette-primary-500-no-rgb: 125, 27, 53; --palette-primary-600: rgb(117, 24, 48); --palette-primary-600-no-rgb: 117, 24, 48; --palette-primary-700: rgb(106, 20, 40); --palette-primary-700-no-rgb: 106, 20, 40; --palette-primary-800: rgb(96, 16, 34); --palette-primary-800-no-rgb: 96, 16, 34; --palette-primary-900: rgb(77, 8, 22); --palette-primary-900-no-rgb: 77, 8, 22; --palette-primary-A100: rgb(255, 130, 149); --palette-primary-A100-no-rgb: 255, 130, 149; --palette-primary-A200: rgb(255, 79, 106); --palette-primary-A200-no-rgb: 255, 79, 106; --palette-primary-A400: rgb(255, 28, 63); --palette-primary-A400-no-rgb: 255, 28, 63; --palette-primary-A700: rgb(255, 3, 41); --palette-primary-A700-no-rgb: 255, 3, 41; --palette-primary-contrast-50: var(--dark-primary-text); --palette-primary-contrast-50-no-rgb: var(--dark-primary-text-no-rgb); --palette-primary-contrast-100: var(--dark-primary-text); --palette-primary-contrast-100-no-rgb: var(--dark-primary-text-no-rgb); --palette-primary-contrast-200: var(--dark-primary-text); --palette-primary-contrast-200-no-rgb: var(--dark-primary-text-no-rgb); --palette-primary-contrast-300: var(--light-primary-text); --palette-primary-contrast-300-no-rgb: var(--light-primary-text-no-rgb); --palette-primary-contrast-400: var(--light-primary-text); --palette-primary-contrast-400-no-rgb: var(--light-primary-text-no-rgb); --palette-primary-contrast-500: var(--light-primary-text); --palette-primary-contrast-500-no-rgb: var(--light-primary-text-no-rgb); --palette-primary-contrast-600: var(--light-primary-text); --palette-primary-contrast-600-no-rgb: var(--light-primary-text-no-rgb); --palette-primary-contrast-700: var(--light-primary-text); --palette-primary-contrast-700-no-rgb: var(--light-primary-text-no-rgb); --palette-primary-contrast-800: var(--light-primary-text); --palette-primary-contrast-800-no-rgb: var(--light-primary-text-no-rgb); --palette-primary-contrast-900: var(--light-primary-text); --palette-primary-contrast-900-no-rgb: var(--light-primary-text-no-rgb);';
+        // this.document.getElementsByTagName('html')[0].setAttribute('style', s);
+
+        const a = this._computePaletteColors('--palette-primary-', '#' + this.state.currentMagazine.color);
+        this._setStyle(a);
+
       }
       this.initApp();
     } else {

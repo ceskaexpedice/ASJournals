@@ -18,13 +18,16 @@ import { MagazinesAuthGuard } from './magazines/magazines-auth-guard';
 import { AppService } from './services/app.service';
 import { SearchService } from './services/search.service';
 import { Configuration } from './models/configuration';
+import { provideClientHydration } from '@angular/platform-browser';
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, 'api/assets/i18n/', '.json');
 }
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideAnimations(),
+  providers: [
+    provideClientHydration(),
+    provideRouter(routes), provideAnimations(),
     Configuration,
     AppState, SearchService, AppService, AppWindowRef, MagazineState,  MagazinesService, AuthGuard, MagazinesAuthGuard,
     { provide: APP_INITIALIZER, useFactory: (config: AppConfiguration) => () => config.load(), deps: [AppConfiguration], multi: true },
