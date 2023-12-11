@@ -64,6 +64,11 @@
 		"kontakt_": "Kontakt",
 		"e-shop_": "E-shop",
 		"admin_": "Administrace",
+		"admin": {
+			"index_": "Přidat číslo",
+			"interface_": "Stránky",
+			"configuration_": "Konfigurace"
+		},
 		"prihlaseni_": "Přihlášení",
 		"url": "Cesta v URL",
 		"cs": "Český název v menu",

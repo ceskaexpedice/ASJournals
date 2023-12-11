@@ -68,8 +68,8 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
     this.isSiteCountActive[10] = true;
     this.criteria.push(new Criterium());
     this.route.params.subscribe((params: Params) => {
-        if (params['criteria']) {
           this.criteria = [];
+        if (params['criteria']) {
           let j = JSON.parse(params['criteria']);
           for (let i in j) {
             let c: Criterium = new Criterium();
@@ -82,9 +82,8 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
               this.genretr = this.translate.instant('genre.'+this.genre);
             }
           }
-          this.service.searchFired(this.criteria);
-          
         }
+          this.service.searchFired(this.criteria);
       });
 
     this.subscriptions.push(this.service.langSubject.subscribe(val => {

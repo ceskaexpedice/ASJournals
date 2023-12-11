@@ -64,6 +64,11 @@
 		"kontakt_": "Contact",
 		"e-shop_": "E-shop",
 		"admin_": "Administration",
+		"admin": {
+			"index_": "Add uuid",
+			"interface_": "Pages",
+			"configuration_": "Configuration"
+		},
 		"prihlaseni_": "Login",
 		"url": "Path in URL",
 		"cs": "Czech label in menu",
