@@ -99,7 +99,7 @@ export class ArticleResultComponent implements OnInit {
 
         let modsLang = this.langsMap[this.lang];
 
-        if (this.titleInfo.hasOwnProperty('length')) {
+        if (this.titleInfo?.hasOwnProperty('length')) {
             this.title = this.titleInfo[0]["mods:title"];
             for (let i in this.titleInfo) {
                 if (this.titleInfo[i]["lang"] === modsLang && !this.state.currentMagazine?.keepLang) {

@@ -88,19 +88,9 @@ export class MagazinesService {
 
   //Magazines
   getMagazines(): Observable<any> {
-    var url = 'search/magazines/select';
+    var url = 'search/get_magazines';
     let params = new HttpParams()
-      .set('q', '*')
-      .set('wt', 'json')
-      .set('rows', '50')
-      .set('sort', 'titleCS ' + this.state.currentSortDir)
-      .set('json.nl', 'arrarr')
-      .set('facet', 'true')
-      .set('facet.mincount', '1')
-      .append('facet.field', 'pristup')
-      .append('facet.field', 'oblast')
-      .append('facet.field', 'vydavatel')
-      .append('facet.field', 'keywords');
+      .set('sortDir', this.state.currentSortDir);
 
     for (let i in this.state.filters) {
       let f: { field: string, value: string } = this.state.filters[i];
@@ -113,19 +103,10 @@ export class MagazinesService {
   }
 
   getEditorMagazines(id: string): Observable<any> {
-    var url = 'search/magazines/select';
+    var url = 'search/get_magazines';
     let params = new HttpParams()
-      .set('q', 'vydavatel_id:"' + id + '"')
-      .set('wt', 'json')
-      .set('indent', 'true')
-      .set('rows', '50')
-      .set('sort', 'titleCS ' + this.state.currentSortDir)
-      .set('json.nl', 'arrarr')
-      .set('facet', 'true')
-      .set('facet.mincount', '1')
-      .append('facet.field', 'pristup')
-      .append('facet.field', 'oblast')
-      .append('facet.field', 'keywords');
+      .set('fq', 'vydavatel_id:"' + id + '"')
+      .set('sortDir', this.state.currentSortDir);
 
     for (let i in this.state.filters) {
       let f: { field: string, value: string } = this.state.filters[i];
@@ -145,19 +126,11 @@ export class MagazinesService {
 
 
   getEditors(): Observable<any> {
-    var url = 'search/editors/select';
-    let params = new HttpParams().set('q', '*')
-      .set('wt', 'json')
-      .set('rows', '50')
-      .set('json.nl', 'arrntv')
-      .set('sort', 'id asc')
-      .set('facet', 'true')
-      .set('facet.mincount', '1')
-      .append('facet.field', 'typ');
+    var url = 'search/get_editors';
 
     this.state.clear();
 
-    return this.get(url, params).pipe(
+    return this.get(url).pipe(
       map((response) => {
         this.state.setEditors(response);
         return this.state;

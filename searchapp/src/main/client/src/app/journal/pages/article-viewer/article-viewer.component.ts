@@ -96,13 +96,6 @@ export class ArticleViewerComponent implements OnInit {
       this.windowSize = 2000;
     }
 
-    // const parts = this.document.location.href.split('/');
-    // this.state.viewerActiveLink = parts[parts.length - 1];
-    // console.log(this.state.viewerActiveLink)
-    // if (!this.state.viewerActiveLink) {
-    //   this.state.viewerActiveLink = 'detail';
-    // }
-
     this.route.params
       .subscribe((params: Params) => {
         this.state.viewerPid = params['pid'];
@@ -143,9 +136,6 @@ export class ArticleViewerComponent implements OnInit {
 
       if (res['datanode']) {
         this.state.viewerArticle = res;
-        this.meta.addTags([
-          { name: 'abstract', content: this.state.viewerArticle.abstract },
-        ]);
 
         this.pagesRendered = 0;
         this.numPages = -1;
@@ -202,6 +192,29 @@ export class ArticleViewerComponent implements OnInit {
 
           });
         }
+
+        const tags: {name: string, content: string}[] = [];
+        if (this.state.viewerArticle.abstract) {
+          this.meta.removeTag('name=abstract');
+          tags.push({ name: 'abstract', content: this.state.viewerArticle.abstract });
+        }
+        // Pro Google Scholar
+        
+    this.meta.removeTag('name=citation_title');
+    this.meta.removeTag('name=citation_author');
+    this.meta.removeTag('name=citation_pdf_url');
+        tags.push(  { name: 'citation_title', content: this.state.viewerArticle.title },
+          { name: 'citation_author', content: this.state.viewerArticle['autor_full'].filter((a: any) => a.role !== 'trl').map((a: any) => a.name) },
+          { name: 'citation_pdf_url', content: this.state.fullSrc },
+          // { name: 'citation_publication_date', content: this.state.viewerArticle.title },
+          // { name: 'citation_journal_title', content: this.state.viewerArticle.title },
+          // { name: 'citation_issn', content: this.state.viewerArticle.title },
+          // { name: 'citation_volume', content: this.state.viewerArticle.title },
+          // { name: 'citation_issue', content: this.state.viewerArticle.title },
+          // { name: 'citation_firstpage', content: this.state.viewerArticle.title },
+          // { name: 'citation_lastpage', content: this.state.viewerArticle.title }
+          )
+        this.meta.addTags(tags);
       } else {
         this.findFirstdatanode(this.state.viewerPid!);
       }

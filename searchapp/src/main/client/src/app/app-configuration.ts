@@ -63,7 +63,6 @@ import { MagazineState } from './magazines/magazine.state';
         return this.http.get(url)
             .toPromise()
             .then((res: any) => {
-                console.log(res);
 
                 if (res.hasOwnProperty('error')) {
                     this.state.loginError = true;
@@ -95,21 +94,10 @@ import { MagazineState } from './magazines/magazine.state';
     }
 
     getMagazines() {
-        let url = this.server + '/api/search/magazines/select';
-        const params = new HttpParams()
-            .set('q', '*')
-            .set('wt', 'json')
-            .set('rows', '50')
-            .set('sort', 'titleCS asc')
-            .set('json.nl', 'arrarr')
-            .set('facet', 'true')
-            .set('facet.mincount', '1')
-            .append('facet.field', 'pristup')
-            .append('facet.field', 'oblast')
-            .append('facet.field', 'keywords');
+        let url = this.server + '/api/search/get_magazines';
 
         console.log('loading magazines...');
-        return this.http.get(url, { params })
+        return this.http.get(url)
             .toPromise()
             .then((res: any) => {
                 this.state.setJournals(res);

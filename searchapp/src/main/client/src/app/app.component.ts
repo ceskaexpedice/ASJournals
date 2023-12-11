@@ -21,7 +21,6 @@ export class AppComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: any,
     private windowRef: AppWindowRef,
     private titleService: Title,
-    private meta: Meta,
     public materialCssVarsService: MaterialCssVarsService,
     public state: AppState) { }
 
@@ -31,16 +30,6 @@ export class AppComponent implements OnInit {
         this.materialCssVarsService.setPrimaryColor('#' + this.state.currentMagazine.color);
       }
       this.titleService.setTitle(this.state.currentMagazine.title);
-      this.meta.removeTag('name=description');
-      this.meta.removeTag('name=author');
-      this.meta.removeTag('name=keywords');
-      this.meta.addTags([
-        { name: 'description', content: this.state.currentMagazine.desc },
-        { name: 'author', content: this.state.currentMagazine.vydavatel },
-        { name: 'keywords', content: this.state.currentMagazine.keywords.join(',') },
-        { property: 'og:title', content: this.state.currentMagazine.title }, // <meta property="og:title" content="Your appealing title here" />
-        { property: 'og:description', content: this.state.currentMagazine.desc },
-      ]);
     }
     
   }

@@ -221,20 +221,8 @@ export class AppService {
   }
 
   getMagazines(): Observable<any> {
-    let url = 'search/magazines/select';
-    const params = new HttpParams()
-      .set('q', '*')
-      .set('wt', 'json')
-      .set('rows', '50')
-      .set('sort', 'titleCS asc')
-      .set('json.nl', 'arrarr')
-      .set('facet', 'true')
-      .set('facet.mincount', '1')
-      .append('facet.field', 'pristup')
-      .append('facet.field', 'oblast')
-      .append('facet.field', 'keywords');
-
-    return this.get(url, params);
+    let url = 'search/get_magazines';
+    return this.get(url);
   }
 
   getJournals() {

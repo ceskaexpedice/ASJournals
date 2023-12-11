@@ -5,15 +5,15 @@
       <div>
         <mat-form-field>
           <mat-label>{{ 'Výsledky řadit' | translate }}</mat-label>
-          <mat-select  required (valueChange)="setSort($event)" [(ngModel)]="currentSort">
+          <mat-select required (valueChange)="setSort($event)" [(ngModel)]="currentSort">
             <mat-option *ngFor="let sort of sorts" [value]="sort">{{ sort.label | translate }} </mat-option>
           </mat-select>
-        </mat-form-field>     
+        </mat-form-field>
       </div>
     </div>
     <div>
       <ng-container *ngIf="!isDataNode">
-          <app-archiv-item *ngFor="let item of items" [item]="item" (drillDown)="drillDown($event)"></app-archiv-item>
+        <app-archiv-item *ngFor="let item of items" [item]="item" (drillDown)="drillDown($event)"></app-archiv-item>
       </ng-container>
       <ng-container *ngIf="isDataNode">
         <ng-container *ngFor="let art of items">
@@ -22,9 +22,11 @@
       </ng-container><!--/.media -->
     </div>
     <p>
-      {{'Starší ročníky najdete v' | translate}} <a [href]="" [title]="'k5_title' | translate" target="_blank">{{'Digitální knihovně AV ČR' | translate}}</a>
+      {{'Starší ročníky najdete v' | translate}} <a [href]="" [title]="'k5_title' | translate"
+        target="_blank">{{'Digitální knihovně AV ČR' | translate}}</a>
     </p>
-    <a mat-stroked-button color="primary" [href]=""><mat-icon>open_in_new</mat-icon>{{ 'Externi odkaz na stare cisla' | translate }}</a>
+    <a mat-stroked-button color="primary" [href]=""><mat-icon>open_in_new</mat-icon>{{ 'Externi odkaz na stare cisla' |
+      translate }}</a>
   </div>
 </div>
 
@@ -40,12 +42,11 @@ html pripraveno pro nahled rocniku po kliknuti na titulek
         </button>
         <div class="app-results-wrapper">
           <div class="app-item app-fxLayout app-row app-p-4 app-active" *ngFor="let item of visibleParentItems">
-            <app-archiv-item-left [item]="item" (drillDown)="drillDown($event)" ></app-archiv-item-left>
+            <app-archiv-item-left [item]="item" (drillDown)="drillDown($event)"></app-archiv-item-left>
           </div>
         </div>
       </div>
       <div class="app-fxFlex" [ngSwitch]="currentItem['model']">
-
         <h1 *ngSwitchCase="'periodical'">
           {{'Ročníky' | translate}}
         </h1>
@@ -54,11 +55,19 @@ html pripraveno pro nahled rocniku po kliknuti na titulek
         </h1>
         <h1 *ngSwitchCase="'periodicalitem'">
           {{currentItem['year']}}<span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span><span
-           *ngIf="issueNumber">, {{'číslo' | translate}} {{issueNumber}}</span><span
-           *ngIf="partName">, {{partName}}</span>
+            *ngIf="issueNumber">, {{'číslo' | translate}} {{issueNumber}}</span><span *ngIf="partName">,
+            {{partName}}</span>
         </h1>
-        <app-archiv-item *ngFor="let item of items" [item]="item" (drillDown)="drillDown($event)"></app-archiv-item>
+        <ng-container *ngIf="!isDataNode">
+          <app-archiv-item *ngFor="let item of items" [item]="item"
+            (drillDown)="drillDown($event)"></app-archiv-item></ng-container>
+        <ng-container *ngIf="isDataNode">
+          <div *ngFor="let art of items">
+            <app-article-result *ngIf="!isHiddenByGenre(art['genre'])" [article]="art"></app-article-result>
+          </div>
+        </ng-container>
+
       </div>
     </div>
   </div>
-</div> 
+</div>

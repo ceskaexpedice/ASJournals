@@ -15,6 +15,7 @@ import { MatListModule } from '@angular/material/list';
 import { SidenavListComponent } from './components/sidenav-list/sidenav-list.component';
 import { HeadingComponent } from "./components/heading/heading.component";
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { Meta } from '@angular/platform-browser';
 
 interface CssVariable {
   name: string;
@@ -53,6 +54,7 @@ export class JournalComponent {
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private windowRef: AppWindowRef,
+    private meta: Meta,
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
     public materialCssVarsService: MaterialCssVarsService,
@@ -161,6 +163,18 @@ export class JournalComponent {
     this.processUrl();
     this.hasContext = true;
     this.state.stateChanged();
+
+    
+    this.meta.removeTag('name=description');
+    this.meta.removeTag('name=author');
+    this.meta.removeTag('name=keywords');
+    this.meta.addTags([
+      { name: 'description', content: this.state.currentMagazine.desc },
+      { name: 'author', content: this.state.currentMagazine.vydavatel },
+      { name: 'keywords', content: this.state.currentMagazine.keywords.join(',') },
+      { property: 'og:title', content: this.state.currentMagazine.title }, // <meta property="og:title" content="Your appealing title here" />
+      { property: 'og:description', content: this.state.currentMagazine.desc },
+    ]);
 
   }
 
