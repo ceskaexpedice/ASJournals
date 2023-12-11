@@ -1,5 +1,6 @@
 <div class="app-container">
   <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+    <a mat-tab-link routerLink="index" routerLinkActive #rla1="routerLinkActive" [active]="rla1.isActive">{{ 'Přidat uuid' | translate }}</a>
     <a mat-tab-link routerLink="interface" routerLinkActive #rla1="routerLinkActive" [active]="rla1.isActive">{{ 'Rozhrani' | translate }}</a>
     <a mat-tab-link routerLink="configuration" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">{{ 'Konfigurace' | translate }}</a>
   </nav>

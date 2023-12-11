@@ -21,7 +21,7 @@ import { Configuration } from './models/configuration';
 import { provideClientHydration } from '@angular/platform-browser';
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, 'api/assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 export const appConfig: ApplicationConfig = {

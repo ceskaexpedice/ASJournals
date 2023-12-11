@@ -167,8 +167,13 @@
 		"sort": "Řazení článků",
 		"by_genre": "rubriky",
 		"by_order": "pořadí",
-		"keepLang": "Nechat názvy článků",
-		"insertLink": "Vložit odkaz na soubor"
+		"insertLink": "Vložit odkaz na soubor",
+		"index_add_uuid": "Přidání nebo odebrání čísla nebo ročníku",
+		"index_cover": "Přidání obálky",
+		"configuration": "Konfigurace",
+		"configuration_archive": "Archiv",
+		"keepLang": "Nepřekládat původní názvy článků",
+		"keepLang_legend": "Názvy článků"
 	},
 	"a zároveň": "a zároveň",
 	"nebo": "nebo",

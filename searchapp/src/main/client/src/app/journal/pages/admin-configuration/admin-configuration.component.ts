@@ -31,25 +31,8 @@ import { ResetPwdDialogComponent } from '../../components/reset-pwd-dialog/reset
 })
 export class AdminConfigurationComponent {
 
-  indexUUID: string | null = null;
-
-  public uploader: FileUploader = new FileUploader({ url: 'api/lf?action=UPLOAD' });
-  public coverUploader: FileUploader = new FileUploader({ url: 'api/lf?action=UPLOAD&cover=true' });
-
-  statusInterval: any;
-  workStatus: any = { status: 'none' };
-  working: boolean = false;
-  indexed: boolean = false;
-  deleted: boolean = false;
-  resultMsg: string = '';
-
   cache: { [pid: string]: { label: string, licence: string, children: any[], show?: boolean } } = {};
   licences: any = {};
-  isK7: boolean = false;
-
-  selectedCover: string;
-  coverMsg: string | null = null;
-
 
   sortBy = 'genre';
   keepLang: boolean = false;
@@ -65,10 +48,6 @@ export class AdminConfigurationComponent {
   ngOnInit() {
     if (this.state.currentMagazine.licences && this.state.currentMagazine.journal) {
       this.licences = JSON.parse(this.state.currentMagazine.licences);
-    }
-
-    if (this.state.currentMagazine.isK7) {
-      this.isK7 = true
     }
     this.cache[this.state.currentMagazine!.journal!] = { label: 'root', licence: '', children: [] };
     this.getChildren(this.state.currentMagazine!.journal!, this.state.currentMagazine);
@@ -102,71 +81,6 @@ export class AdminConfigurationComponent {
   }
 
 
-
-  index() {
-    this.working = true;
-    this.resultMsg = '';
-    this.statusInterval = setInterval(() => {
-      this.checkStatus();
-    }, 1000)
-    this.service.index(this.indexUUID!, this.isK7).subscribe(res => {
-      this.resultMsg = res.hasOwnProperty('error') ? res.error : res.msg;
-      this.working = false;
-    });
-  }
-
-  checkStatus() {
-    this.service.getIndexStatus().subscribe((res: any) => {
-      this.workStatus = res;
-      if (res.status === 'finished') {
-        clearInterval(this.statusInterval);
-      }
-    });
-
-  }
-
-  onDelete() {
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '900px',
-      data: { title: this.service.translateKey('admin.confirm'), 
-              msg: this.service.translateKey('admin.confirm_delete') + ' ' + this.indexUUID}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.working = true;
-        this.resultMsg = '';
-        this.service.delete(this.indexUUID!).subscribe(res => {
-          this.resultMsg = res.hasOwnProperty('error') ? res.error : res.msg;
-          this.working = false;
-        });
-      }
-    });
-  }
-
-  // uploadFile() {
-  //   this.uploader.setOptions({ url: 'lf?action=UPLOAD&ctx=' + this.state.currentMagazine?.ctx });
-  //   this.uploader.onSuccessItem = (item: any, response: any, status: any, headers: any) => this.uploaded();
-  //   this.uploader.uploadAll();
-  // }
-
-  onFileSelected(e: any) {
-    const file: File = e.target.files[0];
-    if (file) {
-      this.selectedCover = file.name;
-    }
-  }
-
-  uploadCover() {
-    this.coverUploader.setOptions({ url: 'api/lf?action=UPLOAD&cover=true&ctx=' + this.state.currentMagazine.ctx });
-    this.coverUploader.onSuccessItem = (item: any, response: any, status: any, headers: any) => this.coverUploaded();
-    this.coverUploader.uploadAll();
-  }
-
-  coverUploaded() {
-    this.coverMsg = 'ok';
-  }
   setLicences() {
     const dialogRef = this.dialog.open(LicencesDialogComponent, {
       width: '900px',

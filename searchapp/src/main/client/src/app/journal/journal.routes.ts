@@ -18,6 +18,7 @@ import { AdminInterfaceComponent } from "./pages/admin-interface/admin-interface
 import { ArticleViewerDetailsComponent } from "./pages/article-viewer-details/article-viewer-details.component";
 import { ArticleViewerPdfComponent } from "./pages/article-viewer-pdf/article-viewer-pdf.component";
 import { ArticleViewerArticlesComponent } from "./pages/article-viewer-articles/article-viewer-articles.component";
+import { AdminIndexComponent } from "./pages/admin-index/admin-index.component";
 
 const routes: Routes = [
 
@@ -47,8 +48,9 @@ const routes: Routes = [
     { path: 'admin', component: AdminComponent,
       children: [
         { path: '', redirectTo: 'configuration', pathMatch: 'full' },
-        { path: 'configuration', component: AdminConfigurationComponent, canActivate: [AuthGuard] },
-        { path: 'interface', component: AdminInterfaceComponent, canActivate: [AuthGuard] }
+        { path: 'index', component: AdminIndexComponent},//, canActivate: [AuthGuard] },
+        { path: 'configuration', component: AdminConfigurationComponent},//, canActivate: [AuthGuard] },
+        { path: 'interface', component: AdminInterfaceComponent},//, canActivate: [AuthGuard] },
       ]
      /*  path: 'admin',
       canActivate: [AuthGuard], component: AdminComponent */

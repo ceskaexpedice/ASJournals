@@ -12,7 +12,6 @@ export function createTranslateLoaderServer(http: HttpClient) {
       server = args[2];
     }
   return new TranslateHttpLoader(http, server + 'api/assets/i18n/', '.json');
-  // return new TranslateHttpLoader(http, 'api/assets/i18n/', '.json');
 }
 
 const serverConfig: ApplicationConfig = {

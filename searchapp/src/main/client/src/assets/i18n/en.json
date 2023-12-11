@@ -167,8 +167,13 @@
 		"sort": "Articles sorting",
 		"by_genre": "genre",
 		"by_order": "order",
-		"keepLang": "Keep articles titles",
-		"insertLink": "Insert link to file"
+		"insertLink": "Insert link to file",
+		"index_add_uuid": "Přidání nebo odebrání čísla nebo ročníku",
+		"index_cover": "Přidání obálky",
+		"configuration": "Konfigurace",
+		"configuration_archive": "Archiv",
+		"keepLang": "Don't translate articles titles",
+		"keepLang_legend": "Názvy článků"
 	},
 	"a zároveň": "AND",
 	"nebo": "OR",
