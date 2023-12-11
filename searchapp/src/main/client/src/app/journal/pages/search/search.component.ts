@@ -272,7 +272,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
       this.searchService.search(params).subscribe((res: any) => {
         if (res.hasOwnProperty('stats') && res['stats']['stats_fields'].hasOwnProperty('year')) {
-          console.log(res['stats']['stats_fields']['year']);
           this.state.dateMin = res['stats']['stats_fields']['year']['min'];
           this.state.dateMax = res['stats']['stats_fields']['year']['max'];
           if (!this.hasDateFilter) {
