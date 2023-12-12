@@ -31,7 +31,7 @@ import { Meta } from '@angular/platform-browser';
 })
 export class ArticleViewerComponent implements OnInit {
 
-  
+
   breakpoint: number = 960;
   windowSize: number;
 
@@ -46,7 +46,7 @@ export class ArticleViewerComponent implements OnInit {
   }
 
   viewerPid: string | null = null;
-  
+
 
   loading = true;
 
@@ -132,10 +132,10 @@ export class ArticleViewerComponent implements OnInit {
       //console.log('viewed!');
     });
 
-    this.service.getItem(this.state.viewerPid).subscribe(res => {
+    this.service.getItem(this.state.viewerPid, true).subscribe(res => {
 
-      if (res['datanode']) {
-        this.state.viewerArticle = res;
+      if (res['doc']['datanode']) {
+        this.state.viewerArticle = res['doc'];
 
         this.pagesRendered = 0;
         this.numPages = -1;
@@ -148,78 +148,57 @@ export class ArticleViewerComponent implements OnInit {
           } else {
             this.downloadFilename = this.state.viewerPid + '.pdf';
           }
-
-          this.state.fullSrc = this.config['context'] + 'api/img?uuid=' + this.state.viewerPid + '&kramerius_version=' + res['kramerius_version'];
         } else {
           this.state.isPdf = false;
           this.downloadFilename = this.state.viewerPid;
-          this.state.fullSrc = this.config['context'] + 'api/img?uuid=' + this.state.viewerPid + '&kramerius_version=' + res['kramerius_version'];
           this.loading = false;
         }
-
-        this.mods = JSON.parse(this.state.viewerArticle['mods']);
+        this.state.fullSrc = this.config['context'] + 'api/img?uuid=' + this.state.viewerPid;
+        if (res['kramerius_version']) {
+          this.state.fullSrc += '&kramerius_version=' + res['kramerius_version'];
+        } 
+        this.mods = this.state.viewerArticle['mods'];
 
         // this.doi = Utils.getDoi(this.mods);
         // let ctx = res['context'][0];
         //        let parent = ctx[ctx.length - 2]['pid'];
-        const parent = res['parents'][0];
-        if (!this.state.viewerJournal || this.state.viewerJournal.pid !== parent) {
-          this.service.getJournal(parent).subscribe((a: any) => {
 
-            if (a.pid) {
-              this.state.viewerJournal = a;
-              this.service.getMods(a['pid']).subscribe(mods => {
-                this.state.viewerJournal.mods = mods;
 
-                this.service.getArticles(a['pid']).subscribe((res: any) => {
-                  // this.articles = res['response']['docs'];
-                  this.state.viewerJournal.setArticles(res, this.config['mergeGenres']);
-                });
+        const parentPid = res['parent']['doc'].pid;
+        if (!this.state.viewerJournal || this.state.viewerJournal.pid !== parentPid) {
+          this.state.viewerJournal = Utils.journalFromResp(res['parent']['doc']);
+          //this.service.getJournal(parent).subscribe((a: any) => {
 
-              });
-              //this.service.getSiblings(a['pid']).subscribe(siblings => {
-              this.service.getChildren(a['parent'], 'asc').subscribe(siblings => {
-                this.state.viewerJournal.siblings = siblings;
-                //console.log(siblings);
-                for (let i = 0; i < this.state.viewerJournal.siblings.length; i++) {
-                  if (this.state.viewerJournal.siblings[i]['pid'] === this.state.viewerJournal.pid) {
-                    this.siblingIndex = i;
-                    break;
-                  }
-                }
-              });
-            }
+          //if (a.pid) {
+          //this.state.viewerJournal = a;
+          //this.service.getMods(a['pid']).subscribe(mods => {
+          //this.state.viewerJournal.mods = mods;
 
+          this.service.getArticles(parentPid).subscribe((res: any) => {
+            this.state.viewerJournal.setArticles(res, this.config['mergeGenres']);
           });
-        }
 
-        const tags: {name: string, content: string}[] = [];
-        if (this.state.viewerArticle.abstract) {
-          this.meta.removeTag('name=abstract');
-          tags.push({ name: 'abstract', content: this.state.viewerArticle.abstract });
+          //});
+          //this.service.getSiblings(a['pid']).subscribe(siblings => {
+          this.service.getChildren(parentPid, 'asc').subscribe(siblings => {
+            this.state.viewerJournal.siblings = siblings;
+            //console.log(siblings);
+            for (let i = 0; i < this.state.viewerJournal.siblings.length; i++) {
+              if (this.state.viewerJournal.siblings[i]['pid'] === this.state.viewerJournal.pid) {
+                this.siblingIndex = i;
+                break;
+              }
+            }
+          });
+          //}
+
+          //});
         }
-        // Pro Google Scholar
-        
-    this.meta.removeTag('name=citation_title');
-    this.meta.removeTag('name=citation_author');
-    this.meta.removeTag('name=citation_pdf_url');
-        tags.push(  { name: 'citation_title', content: this.state.viewerArticle.title },
-          { name: 'citation_author', content: this.state.viewerArticle['autor_full'].filter((a: any) => a.role !== 'trl').map((a: any) => a.name) },
-          { name: 'citation_pdf_url', content: this.state.fullSrc },
-          // { name: 'citation_publication_date', content: this.state.viewerArticle.title },
-          // { name: 'citation_journal_title', content: this.state.viewerArticle.title },
-          // { name: 'citation_issn', content: this.state.viewerArticle.title },
-          // { name: 'citation_volume', content: this.state.viewerArticle.title },
-          // { name: 'citation_issue', content: this.state.viewerArticle.title },
-          // { name: 'citation_firstpage', content: this.state.viewerArticle.title },
-          // { name: 'citation_lastpage', content: this.state.viewerArticle.title }
-          )
-        this.meta.addTags(tags);
       } else {
         this.findFirstdatanode(this.state.viewerPid!);
       }
+      this.setMetaTags(res);
       this.settingData = false;
-
 
       if (this.windowSize > this.breakpoint && this.state.viewerActiveLink === 'articles') {
         //this.router.navigate(['.', 'detail']);
@@ -228,6 +207,58 @@ export class ArticleViewerComponent implements OnInit {
       }
 
     });
+  }
+
+  setMetaTags(res: any) {
+
+    const tags: { name: string, content: string }[] = [];
+    if (this.state.viewerArticle.abstract) {
+      this.meta.removeTag('name=abstract');
+      tags.push({ name: 'abstract', content: this.state.viewerArticle.abstract });
+    }
+    // Pro Google Scholar
+
+    this.meta.removeTag('name=citation_title');
+    this.meta.removeTag('name=citation_author');
+    this.meta.removeTag('name=citation_pdf_url');
+    this.meta.removeTag('name=citation_publication_date');
+    this.meta.removeTag('name=citation_journal_title');
+    this.meta.removeTag('name=citation_issn');
+    this.meta.removeTag('name=citation_volume');
+    this.meta.removeTag('name=citation_issue');
+    this.meta.removeTag('name=citation_firstpage');
+    this.meta.removeTag('name=citation_lastpage');
+
+
+    if (this.state.viewerArticle['autor_full']) {
+      tags.push({ name: 'citation_author', content: this.state.viewerArticle['autor_full'].filter((a: any) => a.role !== 'trl').map((a: any) => a.name) });
+    }
+
+    const pv = Utils.findByModel(res, 'periodicalvolume');
+    if (pv !== null) {
+      tags.push({ name: 'citation_volume', content: this.state.viewerArticle.year }); // model:periodicalvolume	titleInfo/partNumber
+    }
+
+    const pi = Utils.findByModel(res, 'periodicalitem');
+    if (pv !== null) {
+      tags.push({ name: 'citation_issue', content: this.state.viewerArticle.title }); // model:periodicalitem	titleInfo/partNumber
+    }
+
+    const rozsah = Utils.getRozsah(this.state.viewerArticle.mods);
+    if (rozsah !== null) {
+      tags.push({ name: 'citation_firstpage', content: rozsah.split('-')[0].trim() });
+      tags.push({ name: 'citation_lastpage', content: rozsah.split('-')[1].trim() });
+    }
+
+    tags.push(
+      { name: 'citation_title', content: this.state.viewerArticle.title },
+      { name: 'citation_pdf_url', content: this.document.location.origin + this.state.fullSrc },
+      { name: 'citation_publication_date', content: this.state.viewerArticle.dateIssued },
+      { name: 'citation_journal_title', content: this.state.viewerArticle.root_title },
+      { name: 'citation_issn', content: this.state.currentMagazine.issn }
+    )
+    this.meta.addTags(tags);
+
   }
 
   findFirstdatanode(pid: string) {
@@ -325,17 +356,17 @@ export class ArticleViewerComponent implements OnInit {
   linkShare() {
     const dialogRef = this.dialog.open(ShareDialogComponent, {
       width: '700px',
-      data: {url: this.url(), doi: Utils.getDoi(this.mods)},
+      data: { url: this.url(), doi: Utils.getDoi(this.mods) },
       panelClass: 'app-register-dialog'
     });
   }
 
   public showCitace() {
-    
+
   }
 
 
-  
+
 
 
 }

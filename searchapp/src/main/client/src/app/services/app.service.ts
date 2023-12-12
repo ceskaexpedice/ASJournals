@@ -258,18 +258,18 @@ export class AppService {
     return this.translate.instant(key);
   }
 
-  getItem(pid: string): Observable<any> {
-    let url = this.config['context'] + 'search/journal/select';
+  getItem(pid: string, withParent: boolean): Observable<any> {
+    let url = this.config['context'] + 'search/get_pid';
     const params = new HttpParams()
-      .set('q', 'pid:"' + pid + '"')
-      .set('wt', 'json');
-
-    return this.get(url, params)
-      .pipe(
-        map((response: any) => {
-          return response['response']['docs'][0];
-        })
-      )
+      .set('pid', pid)
+      .set('withParent', withParent);
+      return this.get(url, params)
+    // return this.get(url, params)
+    //   .pipe(
+    //     map((response: any) => {
+    //       return response['response']['docs'][0];
+    //     })
+    //   )
   }
 
   getItemK5(pid: string): Observable<any> {

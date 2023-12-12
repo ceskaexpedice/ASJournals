@@ -81,6 +81,12 @@ public class SearchServlet extends HttpServlet {
                 return Searcher.getEditors(request); 
             }
         },
+        GET_PID { 
+            @Override
+            JSONObject doPerform(HttpServletRequest request, HttpServletResponse response) throws Exception {
+                return Searcher.getByPid(request); 
+            }
+        },
         JOURNAL {
             @Override
             JSONObject doPerform(HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -126,7 +126,7 @@ export class ArchivComponent implements OnInit {
 
     this.setMainClass();
 
-    this.service.getItem(this.currentPid).subscribe(res => {
+    this.service.getItem(this.currentPid, false).subscribe(res => {
       if (this.currentPid === this.state.currentMagazine['journal']) {
         this.currentItem = { pid: this.currentPid, parents: null, model: 'periodical' };
       } else {

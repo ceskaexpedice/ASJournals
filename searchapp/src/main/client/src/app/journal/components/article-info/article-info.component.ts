@@ -93,7 +93,7 @@ export class ArticleInfoComponent implements OnInit {
         this.doi = "";
         this.isPeerReviewed = false;
 
-        let mods = JSON.parse(this.article['mods']);
+        let mods = this.article['mods'];
         
         this.rozsah = Utils.getRozsah(mods);
 

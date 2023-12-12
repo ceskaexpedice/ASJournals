@@ -133,4 +133,55 @@ public class Searcher {
         }
         return json;
     }
+
+    public static JSONObject getByPid(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        try  {
+            JSONObject doc = getByPid(request.getParameter("pid"));
+            if (doc != null) {
+                json.put("doc", doc);
+                if (Boolean.parseBoolean(request.getParameter("withParent"))) {
+                    json.put("parent", new JSONObject());
+                    String parentPid = doc.getJSONArray("parents").getString(0);
+                    JSONObject parentDoc = json.getJSONObject("parent");
+                    while (parentPid != null && !parentPid.isBlank()) {
+                        JSONObject pdoc = getByPid(parentPid);
+                        parentDoc.put("doc", pdoc);
+                        parentPid = null;
+                        if (pdoc.has("parents")) {
+                            parentPid = pdoc.getJSONArray("parents").getString(0);
+                            parentDoc.put("parent", new JSONObject());
+                        }
+                        parentDoc = parentDoc.getJSONObject("parent");
+                    }
+                }
+            } 
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            json.put("error", ex);
+        }
+        return json;
+    }
+    
+    public static JSONObject getByPid(String pid) {
+        JSONObject json = new JSONObject();
+        try (HttpSolrClient client = new HttpSolrClient.Builder(Options.getInstance().getString("solr.host")).build()) {
+            SolrQuery query = new SolrQuery("pid:\""+pid+"\"")
+                    .setFields("*,mods:[json],autor_full:[json]")
+                    .setRows(1);
+
+            JSONObject doc = json(query, client, "journal");
+            if (doc.getJSONObject("response").getInt("numFound") > 0) {
+                json = doc.getJSONObject("response").getJSONArray("docs").getJSONObject(0);
+            } else {
+                return null;
+            }
+
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return json;
+    }
+    
 }
