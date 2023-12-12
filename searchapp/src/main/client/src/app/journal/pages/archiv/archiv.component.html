@@ -21,12 +21,14 @@
         </ng-container>
       </ng-container><!--/.media -->
     </div>
-    <p>
-      {{'Starší ročníky najdete v' | translate}} <a [href]="" [title]="'k5_title' | translate"
-        target="_blank">{{'Digitální knihovně AV ČR' | translate}}</a>
+    <p *ngIf="state.currentMagazine.showOldYears && isRoot()">
+      {{'Starší ročníky najdete v' | translate}} <a [href]="state.currentMagazine.k5url + state.currentMagazine.journal" [title]="'k5_title' | translate" 
+        target="_blank">{{'k5_title' | translate}}</a>
     </p>
-    <a mat-stroked-button color="primary" [href]=""><mat-icon>open_in_new</mat-icon>{{ 'Externi odkaz na stare cisla' |
-      translate }}</a>
+    
+    <ng-container  *ngIf="state.currentMagazine.showExtLink && isRoot()"></ng-container>
+    <a mat-stroked-button color="primary" [href]="state.currentMagazine.extLinkUrl" [title]="state.currentMagazine.extLinkText" target="_blank">
+      <mat-icon>open_in_new</mat-icon>{{ state.currentMagazine.extLinkText }}</a>
   </div>
 </div>
 
