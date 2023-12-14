@@ -130,10 +130,10 @@ export class ArchivComponent implements OnInit {
       if (this.currentPid === this.state.currentMagazine['journal']) {
         this.currentItem = { pid: this.currentPid, parents: null, model: 'periodical' };
       } else {
-        this.currentItem = res;
+        this.currentItem = res['doc'];
 
-        if (res['parents'].length > 0) {
-          this.currentParent = res['parents'][0];
+        if (res['doc']['parents'].length > 0) {
+          this.currentParent = res['doc']['parents'][0];
         } else {
           this.currentParent = '';
         }
@@ -275,7 +275,7 @@ export class ArchivComponent implements OnInit {
   }
 
   setDetails() {
-    let mods = JSON.parse(this.currentItem['mods']);
+    const mods = this.currentItem['mods'];
     if (this.currentItem['model'] === 'periodicalvolume') {
 
       if (mods['mods:originInfo']) {
