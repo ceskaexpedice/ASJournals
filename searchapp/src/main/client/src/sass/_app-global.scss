@@ -282,9 +282,24 @@ ul {
       display: block;
     }
 
+    h3 {
+      @extend .app-mb-1;
+      font-weight: 500;
+      line-height: normal;
+    }
+
     &.app-active {
       @extend .app-pl-4;
       border-left: 3px solid var(--palette-primary-500);
+    }
+  }
+}
+
+// global behavior for text content
+.app-text-content {
+  a {
+    &:hover {
+      text-decoration: underline;
     }
   }
 }

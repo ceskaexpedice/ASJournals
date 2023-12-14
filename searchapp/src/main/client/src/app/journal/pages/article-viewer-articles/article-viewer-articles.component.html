@@ -1,11 +1,11 @@
 
-<div class="app-p-4" class="app-items-wrapper">
-    <ng-container *ngIf="!state.currentMagazine.sortByOrder">
-    <ng-container *ngFor="let genre of state.viewerJournal.genres">
+<div class="app-p-4" class="app-items-wrapper app-text-content">
+  <ng-container *ngIf="!state.currentMagazine.sortByOrder">
+    <ng-container *ngFor="let genre of state.viewerJournal.genres; let lastItem = last">
       <div *ngIf="state.viewerJournal.genresObject[genre].visible">
         <h2 class="app-headline">{{'genre.' + genre | translate}}</h2>
         <app-article-result class="app-item" *ngFor="let art of state.viewerJournal.genresObject[genre].articles" [article]="art" [active]="art.pid === state.viewerPid" [parentJournal]="state.viewerJournal"></app-article-result>
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="!lastItem"></mat-divider>
       </div>
     </ng-container>
   </ng-container>
