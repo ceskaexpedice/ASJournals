@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{ 'magazines.licence_pro' | translate }}: <span>{{ data.title }}</span></h1>
 <div mat-dialog-content>
-  <table [cellPadding]="0" [cellSpacing]="0" class="app-table app-w-100">
+  <table [cellPadding]="0" [cellSpacing]="0" class="app-table app-w-100 app-mb-2">
     <tbody>
       <tr *ngFor="let item of cache[data.journal].children">
         <td>{{ item.label }}</td>

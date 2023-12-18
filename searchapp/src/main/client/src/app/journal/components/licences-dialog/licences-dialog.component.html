@@ -1,38 +1,30 @@
 <h1 mat-dialog-title>{{'nastavit_licenci_detailne' | translate}}</h1>
-<div mat-dialog-content>
-    
-
-    <div class="modal-body" *ngIf="data.cache[data.journal]">
-        <table [cellPadding]="0" [cellSpacing]="0" class="app-table app-w-100 app-mb-4">
-          <tbody>
-            <tr *ngFor="let item of data.cache[data.journal!].children">
-              <td>{{ item.label }}</td>
-              <td>
-                <input id="licence" name="licence" type="text" [(ngModel)]="data.cache[item.pid].licence" class="app-input"
-                  [placeholder]="'licence' + '...' | translate">
-                <div *ngIf="data.cache[item.pid]?.children && data.cache[item.pid]?.show">
-                  <div *ngFor="let sitem of data.cache[item.pid].children">
-                    <label class="app-label app-mr-2">{{ sitem.label }}:</label>
-                    <input name="slicence" type="text" [(ngModel)]="data.cache[sitem.pid].licence" class="app-input app-mt-2"
-                      [placeholder]="'licence' + '...' | translate">
-                  </div>
-                </div>
-              </td>
-              <td>
-                <button type="button" mat-button (click)="getChildren(item.pid, item)"
-                  [class]="data.cache[item.pid]?.show ? 'app-rotate-up' : 'app-rotate-down'">
-                  <span class="glyphicon glyphicon-chevron-down app-mr-1"></span> {{ data.cache[item.pid]?.show ?
-                  ('magazines.skryt_cisla' | translate ) : ('magazines.zobrazit_cisla' | translate) }}
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-
+<div mat-dialog-content>   
+  <ng-container *ngIf="data.cache[data.journal]">
+    <table [cellPadding]="0" [cellSpacing]="0" class="app-table app-w-100 app-mb-2">
+      <tbody>
+        <tr *ngFor="let item of data.cache[data.journal!].children">
+          <td>{{ item.label }}</td>
+          <td>
+            <input id="licence" name="licence" type="text" [(ngModel)]="data.cache[item.pid].licence" class="app-input" [placeholder]="'licence' + '...' | translate">
+            <div *ngIf="data.cache[item.pid]?.children && data.cache[item.pid]?.show">
+              <div *ngFor="let sitem of data.cache[item.pid].children">
+                <label class="app-label app-mr-2">{{ sitem.label }}:</label>
+                <input name="slicence" type="text" [(ngModel)]="data.cache[sitem.pid].licence" class="app-input app-mt-2" [placeholder]="'licence' + '...' | translate">
+              </div>
+            </div>
+          </td>
+          <td>
+            <button mat-button color="primary" (click)="getChildren(item.pid, item)" [class]="data.cache[item.pid]?.show ? 'app-rotate-up' : 'app-rotate-down'">
+              <mat-icon>expand_less</mat-icon> {{ data.cache[item.pid]?.show ? ('magazines.skryt_cisla' | translate ) : ('magazines.zobrazit_cisla' | translate) }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
 </div>
 <div mat-dialog-actions cdkFocusRegionstart>
-    <button mat-stroked-button mat-dialog-close="false">{{ 'magazines.zavrit' | translate }}</button>
-    <button mat-stroked-button mat-dialog-close="true">{{ 'magazines.ulozit' | translate }}</button>
+  <button mat-flat-button mat-dialog-close="true" color="primary">{{ 'magazines.ulozit' | translate }}</button>
+  <button mat-stroked-button mat-dialog-close="false">{{ 'magazines.zavrit' | translate }}</button>
 </div>
