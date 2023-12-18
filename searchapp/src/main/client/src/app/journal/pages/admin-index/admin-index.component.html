@@ -12,12 +12,12 @@
 					<input matInput type="text" [(ngModel)]="indexUUID" name="indexUUID">
 				</mat-form-field>
 			</div>
-			<mat-progress-bar mode="indeterminate" *ngIf="workStatus.status === 'indexing'"></mat-progress-bar>
+			<mat-progress-bar mode="indeterminate" *ngIf="workStatus.status === 'indexing'" class="app-mb-2"></mat-progress-bar>
+			<div *ngIf="workStatus.status !== 'none'" class="app-color-primary">{{ workStatus['msg'] }}</div>
 			<div class="app-mt-4">
 				<button mat-flat-button color="primary" class="app-mr-2" (click)="index()">{{ 'Přidat UUID' | translate }}</button>
 				<button mat-flat-button color="primary" (click)="onDelete()" [disabled]="!indexUUID">{{ 'Smazat UUID' | translate }}</button>
 			</div>
-			<div *ngIf="workStatus.status !== 'none'">{{ workStatus['msg'] }}</div>
 		</fieldset>
 
 		<fieldset class="app-p-4 app-mb-4">
@@ -29,9 +29,8 @@
 					<button matPrefix mat-stroked-button color="primary" class="app-mr-2 app-ml-2" (click)="fileUpload.click()">{{ 'admin.cover' | translate }}: {{ 'Vybrat soubor' | translate }}</button>
 				</mat-form-field>
 			</div>
-			<mat-progress-bar mode="determinate" [value]="coverUploader.progress" *ngIf="coverUploader.progress !== 0 && coverUploader.progress !== 100"></mat-progress-bar>
+			<mat-progress-bar mode="determinate" [value]="coverUploader.progress" *ngIf="coverUploader.isUploading"></mat-progress-bar>
 			<button mat-flat-button color="primary" (click)="uploadCover()" class="app-mt-4">{{ 'Nahrat' | translate }}</button>
 		</fieldset>
 	</div>
-	<h3>Debug =></h3> {{ coverUploader.progress }}
 </div>

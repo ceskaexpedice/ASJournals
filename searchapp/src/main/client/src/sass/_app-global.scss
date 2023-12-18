@@ -65,6 +65,10 @@ hr {
 }
 
 // colors
+.app-color-primary {
+  color: var(--palette-primary-500);
+}
+
 .app-color-warning {
   color: var(--app-color-warning) !important;
 }
