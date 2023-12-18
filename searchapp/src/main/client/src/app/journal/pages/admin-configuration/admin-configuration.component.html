@@ -1,40 +1,30 @@
 <div class="app-page-wrapper">
   <div class="app-container">
-
-
     <fieldset class="app-p-4 app-mb-4">
       <legend>{{ 'admin.configuration_archive' | translate }}</legend>
-      
-    <div class="app-fxLayout app-row app-center-v app-mb-4">
-      <label id="radio-group-sort">{{ 'admin.sort' | translate }}:</label>
-      <mat-radio-group aria-label="Select an option" [(ngModel)]="sortBy" aria-labelledby="radio-group-sort">
-        <mat-radio-button name="sortBy" ngDefaultControl id="by_genre" value="genre">{{ 'admin.by_genre' | translate
-          }}</mat-radio-button>
-        <mat-radio-button name="sortBy" id="by_order" value="order">{{ 'admin.by_order' | translate
-          }}</mat-radio-button>
-      </mat-radio-group>
-      <button mat-flat-button color="primary" class="app-mr-2" (click)="saveMagazine()">{{ 'Uložit' | translate
-        }}</button>
-    </div>
+      <div class="app-fxLayout app-row app-center-v app-mb-4">
+        <label id="radio-group-sort">{{ 'admin.sort' | translate }}:</label>
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="sortBy" aria-labelledby="radio-group-sort">
+          <mat-radio-button name="sortBy" ngDefaultControl id="by_genre" value="genre">{{ 'admin.by_genre' | translate }}</mat-radio-button>
+          <mat-radio-button name="sortBy" id="by_order" value="order">{{ 'admin.by_order' | translate }}</mat-radio-button>
+        </mat-radio-group>
+        <button mat-flat-button color="primary" class="app-ml-4" (click)="saveMagazine()">{{ 'Uložit' | translate }}</button>
+      </div>
 
-    <div class="app-fxLayout app-row app-center-v app-mb-4">
-      <label for="keepLang">{{ 'admin.keepLang_legend' | translate }}:</label>
-      <mat-checkbox id="keepLang" [(ngModel)]="keepLang" class="app-mr-4">Nepřekládat původní názvy článků</mat-checkbox>
-      <button mat-flat-button color="primary" class="app-mr-2" (click)="saveMagazine()">{{ 'Uložit' | translate
-        }}</button>
-    </div>
-
+      <div class="app-fxLayout app-row app-center-v app-mb-4">
+        <label for="keepLang">{{ 'admin.keepLang_legend' | translate }}:</label>
+        <mat-checkbox id="keepLang" [(ngModel)]="keepLang" class="app-mr-4">Nepřekládat původní názvy článků</mat-checkbox>
+        <button mat-flat-button color="primary" class="app-mr-2" (click)="saveMagazine()">{{ 'Uložit' | translate }}</button>
+      </div>
       <div class="app-fxLayout app-row app-center-v app-mb-4">
         <mat-form-field appearance="outline" class="app-fxFlex app-mr-4 app-form-field-center-v-fix">
           <input matInput type="text" #input>
         </mat-form-field>
-        <div>
-          <button mat-flat-button color="primary" class="app-mr-2"
-            (click)="setLicences()">{{'magazines.nastavit_licenci' | translate}}</button>
-          <button mat-flat-button color="primary" (click)="showResetPwd()">{{ 'Resetovat heslo' | translate }}</button>
-        </div>
       </div>
-
+      <div>
+        <button mat-flat-button color="primary" class="app-mr-2" (click)="setLicences()">{{ 'magazines.nastavit_licenci' | translate }}</button>
+        <button mat-flat-button color="primary" (click)="showResetPwd()">{{ 'Resetovat heslo' | translate }}</button>
+      </div>
     </fieldset>
   </div>
 </div>

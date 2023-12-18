@@ -304,3 +304,15 @@ ul {
   }
 }
 
+// fieldset
+fieldset {
+  border-width: 1px;
+  border-color: var(--app-fieldset-border-color);
+  border-style: solid;
+
+  legend {
+    @extend .app-pl-2, .app-pr-2;
+    color: var(--palette-primary-500);
+  }
+}
+

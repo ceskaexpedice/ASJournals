@@ -109,9 +109,11 @@
 
 // card
 .mat-mdc-card  {
-  @extend .app-clean-shadow;
-  border-width: 1px !important;
-  border-color: var(--app-card-border-color) !important;
+  app-journal & {
+    @extend .app-clean-shadow;
+    border-width: 1px !important;
+    border-color: var(--app-card-border-color) !important; 
+  }
 
   &.app-alert {
     @include setAlertCard();

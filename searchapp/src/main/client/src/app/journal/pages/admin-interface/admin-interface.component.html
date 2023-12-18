@@ -49,8 +49,7 @@
           </ul>
           <mat-divider></mat-divider>
           <button mat-flat-button color="primary" (click)="saveMenu()">{{ 'Uložit menu' | translate }}</button>
-        </div>
-        
+        </div> 
       </as-split-area>
       <as-split-area size="70" #area2="asSplitArea">
         <div class="app-pl-4 app-pt-4" *ngIf="selected || selectedPage">
@@ -68,7 +67,7 @@
               <input matInput type="text" [(ngModel)]="selected.en" name="en">
             </mat-form-field>
           </div>
-          <div style="border: 1px solid silver; height: 400px">
+          <div class="app-editor-wrapper">
             <editor *ngIf="tinyInited" name="editor" [(ngModel)]="text" [init]="tinyConfig"></editor>
           </div>
         </div>
