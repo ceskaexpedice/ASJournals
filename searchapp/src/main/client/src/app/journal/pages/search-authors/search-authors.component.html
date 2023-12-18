@@ -17,7 +17,7 @@
 <div class="app-letters-wrapper app-mb-4">
   <button *ngFor="let l of state.letters" mat-button color="primary" 
     [disabled]="isEmpty(l)" class="app-mr-2" (click)="setLetter(l)" 
-    [class.mdc-button--unelevated]="l === letter" [class.mdc-unelevated-button]="l === letter"
+    [class.mdc-button--unelevated]="l === letter" [class.mat-mdc-unelevated-button]="l === letter"
     [class.mdc-button--outlined]="l !== letter" [class.mat-mdc-outlined-button]="l !== letter">{{l}}</button>
 </div>
 
@@ -30,5 +30,4 @@
   </div>
 </div>
 
-<mat-paginator [length]="authors.length" (page)="pageChanged($event)"
-[pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>
+<mat-paginator [length]="authors.length" (page)="pageChanged($event)" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" class="app-mb-2"></mat-paginator>
