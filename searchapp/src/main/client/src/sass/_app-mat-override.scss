@@ -235,3 +235,18 @@
     //justify-content: center;
   }
 }
+
+// dialog
+.mdc-dialog {
+  .mdc-dialog__title {
+    @extend .app-pl-4, .app-pr-4, .app-pb-0;
+  }
+
+  .mdc-dialog__content {
+    padding: 0 16px !important;
+  }
+
+  .mdc-dialog__actions {
+    @extend .app-pl-4, .app-pr-4, .app-pb-4;
+  }
+}
