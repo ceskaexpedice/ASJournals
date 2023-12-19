@@ -31,7 +31,6 @@ interface CssVariable {
 })
 export class JournalComponent {
 
-  mainClass = 'app-main';
   subscriptions: Subscription[] = [];
 
 
@@ -40,16 +39,6 @@ export class JournalComponent {
   paramsObserver: Subscription = new Subscription();
 
   hasContext: boolean = false;
-
-  classes: any = {
-    'home': 'app-page-home',
-    'actual': 'app-page-actual',
-    'o-casopisu': 'app-page-ocasopisu',
-    'pro-autory': 'app-page-pokyny-pro-autory',
-    'archiv': 'app-page-archiv-level-1',
-    'article': 'app-page-archiv-reader',
-    'hledat': 'app-page-search'
-  };
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
@@ -64,62 +53,63 @@ export class JournalComponent {
     private router: Router,
     private route: ActivatedRoute) { }
 
-    getColor(){
-      console.log(document.getElementsByTagName('html')[0].getAttribute('style'));
+  getColor() {
+    console.log(document.getElementsByTagName('html')[0].getAttribute('style'));
 
-      const a = this._computePaletteColors('--palette-primary-', '#cccc00');// + this.state.currentMagazine.color);
-     this._setStyle(a);
-      console.log(a)
-      
-    }
+    const a = this._computePaletteColors('--palette-primary-', '#cccc00');// + this.state.currentMagazine.color);
+    this._setStyle(a);
+    console.log(a)
 
-    private _computePaletteColors(
-      prefix: string,
-      hex: string,
-    ): CssVariable[] {
-      return this.materialCssVarsService.getPaletteForColor(hex).map((item) => {
-        const c = item.color;
-        return {
-          name: `${prefix}${item.hue}`,
-          val: `rgb(${c.r}, ${c.g}, ${c.b})`,
-        };
-      });
-    }
+  }
 
-    private _setStyle(vars: CssVariable[]) {
-      vars.forEach((s) => {
-        this.renderer.setStyle(
-          this.document.documentElement,
-          s.name,
-          s.val,
-          RendererStyleFlags2.DashCase,
-        );
-        this.renderer.setStyle(
-          this.document.documentElement,
-          s.name + "-no-rgb",
-          this._replaceNoRgbValue(s.name, s.val),
-          RendererStyleFlags2.DashCase,
-        );
-      });
-    }
+  private _computePaletteColors(
+    prefix: string,
+    hex: string,
+  ): CssVariable[] {
+    return this.materialCssVarsService.getPaletteForColor(hex).map((item) => {
+      const c = item.color;
+      return {
+        name: `${prefix}${item.hue}`,
+        val: `rgb(${c.r}, ${c.g}, ${c.b})`,
+      };
+    });
+  }
 
-    private _replaceNoRgbValue(name: string, value: string) {
-      const isContrast: boolean = name.includes(
-        'contrast-',
+  private _setStyle(vars: CssVariable[]) {
+    vars.forEach((s) => {
+      this.renderer.setStyle(
+        this.document.documentElement,
+        s.name,
+        s.val,
+        RendererStyleFlags2.DashCase,
       );
-      let noRgb = "";
-      if (isContrast) {
-        noRgb = value.replace(")", "-no-rgb)");
-      } else {
-        noRgb = value.replace("rgba(", "").replace("rgb(", "").replace(")", "");
-        if (noRgb.startsWith("var(")) {
-          noRgb = noRgb.concat(")");
-        }
+      this.renderer.setStyle(
+        this.document.documentElement,
+        s.name + "-no-rgb",
+        this._replaceNoRgbValue(s.name, s.val),
+        RendererStyleFlags2.DashCase,
+      );
+    });
+  }
+
+  private _replaceNoRgbValue(name: string, value: string) {
+    const isContrast: boolean = name.includes(
+      'contrast-',
+    );
+    let noRgb = "";
+    if (isContrast) {
+      noRgb = value.replace(")", "-no-rgb)");
+    } else {
+      noRgb = value.replace("rgba(", "").replace("rgb(", "").replace(")", "");
+      if (noRgb.startsWith("var(")) {
+        noRgb = noRgb.concat(")");
       }
-      return noRgb;
     }
-    
+    return noRgb;
+  }
+
   ngOnInit() {
+
 
     if (this.state.currentMagazine) {
 
@@ -164,10 +154,11 @@ export class JournalComponent {
     this.hasContext = true;
     this.state.stateChanged();
 
-    
-    this.meta.removeTag('name=description');
-    this.meta.removeTag('name=author');
-    this.meta.removeTag('name=keywords');
+    this.updateMetaTags();
+
+  }
+
+  addMetaTags() {
     this.meta.addTags([
       { name: 'description', content: this.state.currentMagazine.desc },
       { name: 'author', content: this.state.currentMagazine.vydavatel },
@@ -175,52 +166,43 @@ export class JournalComponent {
       { property: 'og:title', content: this.state.currentMagazine.title }, // <meta property="og:title" content="Your appealing title here" />
       { property: 'og:description', content: this.state.currentMagazine.desc },
     ]);
-
   }
 
-  getConfig(): any {
-    if (this.state.currentMagazine) {
-      return this.service.getJournalConfig(this.state.currentMagazine).subscribe(res => {
-        //return this.http.get("assets/config.json").map(res => {
-        let cfg = res;
-        if (!this.config) {
-          this.state.setConfig(cfg);
-        }
-        this.initApp();
-        return this.config;
-      });
-    } else {
-      // navigate to magazines home
-      this.router.navigate(['/']);
-    }
+  updateMetaTags() {
 
+    this.meta.removeTag('name=description');
+    this.meta.removeTag('name=author');
+    this.meta.removeTag('name=keywords');
+    this.meta.removeTag('name=abstract');
+    // Pro Google Scholar
+    this.meta.removeTag('name=citation_title');
+    this.meta.removeTag('name=citation_author');
+    this.meta.removeTag('name=citation_pdf_url');
+    this.meta.removeTag('name=citation_publication_date');
+    this.meta.removeTag('name=citation_journal_title');
+    this.meta.removeTag('name=citation_issn');
+    this.meta.removeTag('name=citation_volume');
+    this.meta.removeTag('name=citation_issue');
+    this.meta.removeTag('name=citation_firstpage');
+    this.meta.removeTag('name=citation_lastpage');
+
+    this.addMetaTags();
   }
 
   processUrl() {
-    this.setMainClass(this.router.url);
+    // this.setMainClass(this.router.url);
     this.pathObserver = this.router.events.subscribe(val => {
       //console.log('pathObserver', val);
       if (val instanceof NavigationEnd) {
         this.state.paramsChanged();
-        this.setMainClass(val.url);
+        // this.setMainClass(val.url);
+        this.updateMetaTags();
       } else if (val instanceof NavigationStart) {
         this.state.clear();
       }
     });
 
     this.state.paramsChanged();
-  }
-
-  setMainClass(url: string) {
-    let p = url.split('?')[0].split('/');
-    if (p.length > 2) {
-      this.state.route = p[2].split(';')[0];
-      this.mainClass = this.classes[this.state.route];
-
-    } else if (p.length === 2 && p[1] === 'hledat') {
-      this.state.route = p[1];
-      this.mainClass = this.classes[this.state.route];
-    }
   }
 
 }
