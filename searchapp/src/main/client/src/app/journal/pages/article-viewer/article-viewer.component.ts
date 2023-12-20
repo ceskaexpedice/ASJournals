@@ -213,21 +213,9 @@ export class ArticleViewerComponent implements OnInit {
 
     const tags: { name: string, content: string }[] = [];
     if (this.state.viewerArticle.abstract) {
-      this.meta.removeTag('name=abstract');
       tags.push({ name: 'abstract', content: this.state.viewerArticle.abstract });
     }
-    // Pro Google Scholar
 
-    this.meta.removeTag('name=citation_title');
-    this.meta.removeTag('name=citation_author');
-    this.meta.removeTag('name=citation_pdf_url');
-    this.meta.removeTag('name=citation_publication_date');
-    this.meta.removeTag('name=citation_journal_title');
-    this.meta.removeTag('name=citation_issn');
-    this.meta.removeTag('name=citation_volume');
-    this.meta.removeTag('name=citation_issue');
-    this.meta.removeTag('name=citation_firstpage');
-    this.meta.removeTag('name=citation_lastpage');
 
 
     if (this.state.viewerArticle['autor_full']) {
