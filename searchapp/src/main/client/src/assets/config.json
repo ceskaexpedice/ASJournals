@@ -8,6 +8,7 @@
     "searchParams": {
         "rows": 20
     },
+    "languages": ["cs", "en"],
 
     "sorts": [
         {
@@ -204,9 +205,10 @@
         "index",
         "advertisement",
         "unspecified"],
-    "mergeGenres": {
+        "mergeGenres": {
             "titulní list": "title page",
             "věnování": "dedication",
             "adresář": "directory"
         }
+
 }

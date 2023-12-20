@@ -30,8 +30,15 @@
       <a *ngIf="state.logged && isMobile !== true" mat-flat-button color="primary" routerLink="admin" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'Admin' | translate">{{ 'Admin' | translate }}<mat-icon>settings</mat-icon></a>
       <a *ngIf="!state.logged && isMobile !== true" mat-flat-button color="primary" routerLink="prihlaseni" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'Přihlásit' | translate" (click)="isMobile ? onSidenavClose() : null">{{ 'Přihlásit' | translate }}</a>
       <a *ngIf="state.logged && isMobile !== true" mat-flat-button color="primary" (click)="appservice.logout()" [title]="'Odhlásit' | translate">{{ 'Odhlásit' | translate }}</a>
-      <a mat-flat-button *ngIf="translate.currentLang === 'cs' && isMobile !== true" color="primary" (click)="changeLang('en')" [title]="'desc.en' | translate">{{ 'EN' | translate }}</a>
-      <a mat-flat-button *ngIf="translate.currentLang === 'en' && isMobile !== true" color="primary" (click)="changeLang('cs')" [title]="'desc.cs' | translate">{{ 'CS' | translate }}</a>
+
+      <a mat-flat-button *ngIf="isMobile !== true" color="primary" [matMenuTriggerFor]="langMenu" [title]="translate.currentLang">{{ translate.currentLang | translate }}</a>
+      <mat-menu #langMenu="matMenu">
+        <a mat-menu-item *ngFor="let lang of config.languages" (click)="changeLang(lang)">{{ lang | translate }}</a>
+       <!--  <a mat-menu-item (click)="changeLang('en')">en</a> -->
+      </mat-menu>
+      <!-- <a mat-flat-button *ngIf="translate.currentLang === 'cs' && isMobile !== true" color="primary" (click)="changeLang('en')" [title]="'desc.en' | translate">{{ 'EN' | translate }}</a>
+      <a mat-flat-button *ngIf="translate.currentLang === 'en' && isMobile !== true" color="primary" (click)="changeLang('cs')" [title]="'desc.cs' | translate">{{ 'CS' | translate }}</a> -->
     </div>
   </div>
 </mat-toolbar>
+<h1>{{ config.languages }}</h1>

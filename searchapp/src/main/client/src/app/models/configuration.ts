@@ -18,6 +18,7 @@ export class Configuration {
   }[];
   mergeGenres: {[key: string]: string};
   hiddenGenres: string[];
+  languages: string[];
   layout: any;
   home_en: string;
   home_cs: string;

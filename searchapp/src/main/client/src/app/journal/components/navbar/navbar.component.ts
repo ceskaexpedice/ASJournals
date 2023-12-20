@@ -48,6 +48,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.currentLang = val;
     }));
 
+    console.log("test ->" + this.config.hiddenGenres)
+
     // this.subscriptions.push(this.state.titleChangedSubject.subscribe(val => {
     //   if (this.state.actualNumber) {
     //     this.titleService.setTitle( this.state.actualNumber['root_title']!);
