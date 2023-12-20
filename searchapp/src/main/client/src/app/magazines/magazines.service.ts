@@ -92,10 +92,15 @@ export class MagazinesService {
     let params = new HttpParams()
       .set('sortDir', this.state.currentSortDir);
 
-    for (let i in this.state.filters) {
-      let f: { field: string, value: string } = this.state.filters[i];
-      params = params.append('fq', f.field + ':"' + f.value + '"');
-    }
+      // for (let i in this.state.filters) {
+      //   let f: { field: string, value: string } = this.state.filters[i];
+      //   params = params.append('fq', f.field + ':"' + f.value + '"');
+      // }
+      
+      for (let i in this.state.filters) {
+        let f: { field: string, value: string } = this.state.filters[i];
+        params = params.append(f.field, f.value);
+      }
 
     this.state.clear();
 
@@ -275,13 +280,29 @@ export class MagazinesService {
 
   public addFilter(field: string, value: string) {
     const p: any = {};
-    p[field] = value;
+    p[field] = [value];
+    for (let i in this.state.filters){
+      if (this.state.filters[i].field === field && this.state.filters[i].value !== value){
+        p[field].push(this.state.filters[i].value);
+      }
+    }
+    console.log()
     this.router.navigate([], { queryParams: p, queryParamsHandling: 'merge' });
   }
 
   removeFilter(field: string, idx: number) {
+    this.state.filters.splice(idx, 1);
+    const fs = this.state.filters.filter(f => f.field === field)
     const p: any = {};
-    p[field] = null;
+    if (fs.length === 0) {
+      p[field] = null;
+    } else {
+      p[field] = [];
+      for (let i in fs){
+          p[field].push(fs[i].value);
+      }
+    }
+    
     this.router.navigate([], { queryParams: p, queryParamsHandling: 'merge' });
   }
 

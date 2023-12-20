@@ -4,7 +4,7 @@
       <strong>{{ 'magazines.' + facet.field | translate }}</strong>
     </mat-expansion-panel-header>
     <div *ngFor="let facetItem of facet.values">
-      <a (click)="addFilter(facet.field, facetItem[0])">{{ facetItem[0] }}</a>
+      <a (click)="addFilter(facet.field, facetItem[0])">{{ facetItem[0] }}</a><mat-icon *ngIf="state.isFacetUsed(facet.field, facetItem[0])" matSufix>done</mat-icon>
     </div>
   </mat-expansion-panel>
 </mat-accordion>

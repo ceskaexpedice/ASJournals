@@ -39,47 +39,27 @@ export class MagazinesComponent implements OnInit {
 
   }
 
-  // setStyles() {
-  //   var links = this.document.getElementsByTagName('link');
-  //   for (var i = 0; i < links.length; i++) {
-  //     var link = links[i];
-  //     if (link.rel.indexOf('stylesheet') != -1 && link.title) {
-  //       link.disabled = true;
-  //     } else if (link.rel.indexOf('stylesheet') != -1 && link.href.indexOf('magazines') != -1) {
-  //       link.disabled = false;
-  //     } else if (link.rel.indexOf('stylesheet') != -1 && link.href.indexOf('styles') != -1) {
-  //       link.disabled = true;
-  //     }
-  //   }
-  // }
-
   ngOnInit() {
-    // this.getConfig().subscribe(
-    //   (cfg: any) => {
-      
-      this.state.setConfig(this.config);
-      // this.state.ctxs
-      var userLang = 'cs';
-      if (isPlatformBrowser(this.platformId)) {
-        userLang = this.windowRef.nativeWindow.navigator.language.split('-')[0]; // use navigator lang if available
-      }
-      userLang = /(cs|en)/gi.test(userLang) ? userLang : 'cs';
-      userLang = this.config.defaultLang;
-      this.service.changeLang(userLang);
 
-        this.state.stateChangedSubject.subscribe(route => {
-          this.stateChanged(route);
-        });
+    this.state.setConfig(this.config);
+    var userLang = 'cs';
+    if (isPlatformBrowser(this.platformId)) {
+      userLang = this.windowRef.nativeWindow.navigator.language.split('-')[0]; // use navigator lang if available
+    }
+    userLang = /(cs|en)/gi.test(userLang) ? userLang : 'cs';
+    userLang = this.config.defaultLang;
+    this.service.changeLang(userLang);
 
-        this.processUrl();
-        if (isPlatformBrowser(this.platformId)) {
-          this.materialCssVarsService.setPrimaryColor(this.config.color);
-        }
-        
+    this.state.stateChangedSubject.subscribe(route => {
+      this.stateChanged(route);
+    });
 
-        // this.setStyles();
-      // }
-    // );
+    this.processUrl();
+    if (isPlatformBrowser(this.platformId)) {
+      this.materialCssVarsService.setPrimaryColor(this.config.color);
+    }
+
+
   }
 
 
@@ -102,17 +82,12 @@ export class MagazinesComponent implements OnInit {
 
   processUrl() {
     this.router.events.subscribe(val => {
-      //console.log('pathObserver', val);
       if (val instanceof NavigationEnd) {
         this.state.paramsChanged();
       } else if (val instanceof NavigationStart) {
         this.state.clear();
       }
     });
-
-    //    this.route..subscribe(data => {
-    //      console.log(this.route.outlet);
-    //    });
 
     this.state.paramsChanged();
   }

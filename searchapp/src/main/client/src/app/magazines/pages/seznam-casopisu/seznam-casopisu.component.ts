@@ -15,7 +15,7 @@ import { SortBarComponent } from '../../components/sort-bar/sort-bar.component';
 @Component({
   standalone: true,
   imports: [RouterModule, CommonModule, TranslateModule, SeznamItemComponent, FacetsComponent, FacetsUsedComponent, SortBarComponent],
-  selector: 'app-seznam-casopisu', 
+  selector: 'app-seznam-casopisu',
   templateUrl: './seznam-casopisu.component.html',
   styleUrls: ['./seznam-casopisu.component.scss']
 })
@@ -25,10 +25,10 @@ export class SeznamCasopisuComponent implements OnInit {
   subscriptions: Subscription[] = [];
 
   constructor(
-    public state: MagazineState, 
+    public state: MagazineState,
     private service: MagazinesService,
     private route: ActivatedRoute
-    ) {
+  ) {
   }
 
   ngOnInit() {
@@ -38,18 +38,26 @@ export class SeznamCasopisuComponent implements OnInit {
     this.subscriptions.push(this.route.queryParams.subscribe((p: Params) => {
       this.processParams(p);
     }));
-    
-      this.getData();
-      
+
+    this.getData();
+
   }
 
   processParams(p: Params) {
     this.state.filters = [];
-    const fields = ['pristup','oblast','vydavatel','keywords'];
+    const fields = ['pristup', 'oblast', 'vydavatel', 'keywords'];
 
     fields.forEach(f => {
-      if (p[f]) {
-        this.state.filters.push({field: f, value: p[f]});
+      const val = p[f];
+      if (val) {
+        if (Array.isArray(val)) {
+          val.forEach(v => {
+            this.state.filters.push({ field: f, value: v});
+          })
+        } else {
+          this.state.filters.push({ field: f, value: val});
+        }
+          
       }
     });
   }

@@ -83,16 +83,22 @@ public class Searcher {
                     .setSort("titleCS", SolrQuery.ORDER.asc)
                     .setFacet(true)
                     .setFacetMinCount(1)
-                    .addFacetField("pristup", "oblast", "keywords", "vydavatel")
+                    .addFacetField("pristup", "oblast", "{!ex=keywords}keywords", "vydavatel")
                     .setParam("json.nl", "arrarr");
 
             if (request.getParameter("sortDir") != null) {
                 query.setSort("titleCS", SolrQuery.ORDER.valueOf(request.getParameter("sortDir")));
             }
 
-            if (request.getParameter("fq") != null) {
-                for (String fq : request.getParameterValues("fq")) {
-                    query.addFilterQuery(fq);
+//            if (request.getParameter("fq") != null) {
+//                for (String fq : request.getParameterValues("fq")) {
+//                    query.addFilterQuery(fq);
+//                }
+//            }
+            
+            if (request.getParameter("keywords") != null) {
+                for (String fq : request.getParameterValues("keywords")) {
+                    query.addFilterQuery("{!tag=keywords}keywords:\"" + fq + "\"");
                 }
             }
 
