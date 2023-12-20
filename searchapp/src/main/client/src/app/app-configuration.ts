@@ -60,6 +60,7 @@ import { MagazineState } from './magazines/magazine.state';
 
     checkLogin() {
         let url = this.server + '/api/login?action=TESTLOGIN';
+        console.log('checking login... ');
         return this.http.get(url)
             .toPromise()
             .then((res: any) => {

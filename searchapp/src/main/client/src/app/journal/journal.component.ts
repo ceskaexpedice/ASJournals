@@ -165,6 +165,7 @@ export class JournalComponent {
       { name: 'keywords', content: this.state.currentMagazine.keywords.join(',') },
       { property: 'og:title', content: this.state.currentMagazine.title }, // <meta property="og:title" content="Your appealing title here" />
       { property: 'og:description', content: this.state.currentMagazine.desc },
+      { property: 'og:image', content: this.state.imgSrc },
     ]);
   }
 

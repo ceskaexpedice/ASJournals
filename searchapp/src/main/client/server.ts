@@ -108,12 +108,11 @@ export function app(): express.Express {
 
 
   server.get('/api/**', (req, res) => {
-    request(apiServer + req.url, function (error: any, response: any, body: any) {
+    request({url: apiServer + req.url, headers: req.headers} , function (error: any, response: any, body: any) {
       if (error) {
         console.log('error:', error); // Print the error if one occurred and handle it
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
       }
-      //console.log('set-cookie', response['headers']['set-cookie']);
       if (body) {
 
         if (req.url.indexOf('assets/config.json') > 0) {

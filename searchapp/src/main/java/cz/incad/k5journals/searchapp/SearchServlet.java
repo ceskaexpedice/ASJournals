@@ -1,10 +1,7 @@
 package cz.incad.k5journals.searchapp;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -12,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -88,6 +84,12 @@ public class SearchServlet extends HttpServlet {
             }
         },
         JOURNAL {
+            @Override
+            JSONObject doPerform(HttpServletRequest request, HttpServletResponse response) throws Exception {
+                return Searcher.fromQuery(request);
+            }
+        },
+        USERS {
             @Override
             JSONObject doPerform(HttpServletRequest request, HttpServletResponse response) throws Exception {
                 return Searcher.fromQuery(request);
