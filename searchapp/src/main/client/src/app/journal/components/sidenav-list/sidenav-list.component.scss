@@ -1,10 +1,4 @@
 ::ng-deep .mat-sidenav {
-  .app-p-4 {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    padding-top: 0 !important;
-  }
-
   .mat-toolbar {
     background-color: transparent;
     padding: 0;
@@ -15,10 +9,6 @@
     }
 
     .app-left {
-      &.app-mobile {
-        display: none !important;
-      }
-
       &.app-desktop {
         display: block !important;
       }
@@ -29,7 +19,7 @@
     }
 
     .mat-mdc-unelevated-button {
-      background-color: transparent;
+      background-color: transparent !important;
       border-radius: 0;
       height: 42px;
       display: flex;
@@ -37,6 +27,14 @@
       align-items: center;
       color: var( --app-color-darknes);
       border-bottom: 1px solid var(--app-gray-3);
+
+      &.mat-primary {
+        --mat-mdc-button-persistent-ripple-color: transparent;
+      }
+    }
+
+    .app-active {
+      background-color: var(--app-gray-2) !important;
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
@@ -23,6 +23,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   // sidenav
   @Output() public sidenavToggle = new EventEmitter();
+  @Output() public sidenavClose = new EventEmitter();
+  @Input() public isMobile: boolean = false;
 
   subscriptions: Subscription[] = [];
 
@@ -105,5 +107,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   // sidenav fuction
   public onToggleSidenav = () => {
     this.sidenavToggle.emit();
+  }
+
+  public onSidenavClose = () => {
+    this.sidenavClose.emit();
   }
 }

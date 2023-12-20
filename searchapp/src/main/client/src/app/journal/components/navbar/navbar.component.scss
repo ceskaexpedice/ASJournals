@@ -20,6 +20,6 @@
   }
 
   .app-active {
-    background-color: rgba(white, .2);
+    background-color: rgba(var(--app-color-lightnes-rgb), .15);
   }
 }

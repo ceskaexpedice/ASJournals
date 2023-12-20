@@ -14,11 +14,13 @@ import { NavbarComponent } from '../navbar/navbar.component';
   styleUrls: ['./sidenav-list.component.scss']
 })
 export class SidenavListComponent implements OnInit {
-  @Output() sidenavClose = new EventEmitter();
+  public isMobile = true;
+
+  /* @Output() sidenavClose = new EventEmitter();
 
   public onSidenavClose = () => {
     this.sidenavClose.emit();
-  }
+  } */
 
   // sidenav
   @Output() public sidenavToggle = new EventEmitter();
