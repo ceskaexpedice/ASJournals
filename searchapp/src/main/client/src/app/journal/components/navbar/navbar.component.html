@@ -2,18 +2,18 @@
   <div class="app-container-fluid app-fxLayout app-row app-fill app-center-v">
     <div class="app-left app-fxFlex app-desktop">
       <ng-container *ngIf="menu">
-        <a mat-flat-button color="primary" routerLink="actual" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'menu.actual_' | translate" (click)="isMobile ? onSidenavClose() : onSidenavClose()">{{ 'menu.actual_' | translate }}</a>
+        <a mat-flat-button color="primary" routerLink="actual" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'menu.actual_' | translate" (click)="isMobile ? onSidenavClose() : null">{{ 'menu.actual_' | translate }}</a>
         <ng-container *ngFor="let m of menu">
           <a mat-flat-button color="primary" [matMenuTriggerFor]="menu"  routerLinkActive="app-active" [title]="m[state.currentLang]" *ngIf="m.visible && m.children.length > 0" queryParamsHandling="preserve" [title]="m[state.currentLang]">
             {{ m[state.currentLang] }}<mat-icon>expand_more</mat-icon>
             <mat-menu #menu="matMenu">
-              <a mat-menu-item [routerLink]="m.route"  queryParamsHandling="preserve" [title]="m[state.currentLang]">{{ m[state.currentLang] }}</a>
+              <a mat-menu-item [routerLink]="m.route"  queryParamsHandling="preserve" [title]="m[state.currentLang]" (click)="isMobile ? onSidenavClose() : null">{{ m[state.currentLang] }}</a>
               <ng-container *ngFor="let m1 of m.children">
-                <a mat-menu-item *ngIf="m1.visible" [routerLink]="[m.route, m1.route]" routerLinkActive="app-active" queryParamsHandling="preserve">{{ m1[state.currentLang ]}}</a>
+                <a mat-menu-item *ngIf="m1.visible" [routerLink]="[m.route, m1.route]" routerLinkActive="app-active" queryParamsHandling="preserve" (click)="isMobile ? onSidenavClose() : null">{{ m1[state.currentLang ]}}</a>
               </ng-container>
             </mat-menu>
           </a>
-          <a mat-flat-button color="primary" *ngIf="m.visible && m.children.length === 0" routerLinkActive="app-active" [routerLink]="m.route" queryParamsHandling="preserve" [title]="m[state.currentLang]">{{ m[state.currentLang] }}</a>
+          <a mat-flat-button color="primary" *ngIf="m.visible && m.children.length === 0" routerLinkActive="app-active" [routerLink]="m.route" queryParamsHandling="preserve" [title]="m[state.currentLang]" (click)="isMobile ? onSidenavClose() : null">{{ m[state.currentLang] }}</a>
         </ng-container>
         <a mat-flat-button color="primary" routerLink="archiv" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'menu.archiv_' | translate" (click)="isMobile ? onSidenavClose() : null">
           {{ 'menu.archiv_' | translate }}
@@ -27,11 +27,11 @@
       <a mat-flat-button color="primary" (click)="onToggleSidenav()" [title]="'magazines.navigace' | translate"><mat-icon>menu</mat-icon></a> 
     </div>
     <div class="app-right">
-      <a *ngIf="state.logged" mat-flat-button color="primary" routerLink="admin" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'Admin' | translate">{{ 'Admin' | translate }}<mat-icon>settings</mat-icon></a>
-      <a *ngIf="!state.logged" mat-flat-button color="primary" routerLink="prihlaseni" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'Přihlásit' | translate">{{ 'Přihlásit' | translate }}</a>
-      <a *ngIf="state.logged" mat-flat-button color="primary" (click)="appservice.logout()" [title]="'Odhlásit' | translate">{{ 'Odhlásit' | translate }}</a>
-      <a mat-flat-button *ngIf="translate.currentLang === 'cs'" color="primary" (click)="changeLang('en')" [title]="'desc.en' | translate">{{ 'EN' | translate }}</a>
-      <a mat-flat-button *ngIf="translate.currentLang === 'en'" color="primary" (click)="changeLang('cs')" [title]="'desc.cs' | translate">{{ 'CS' | translate }}</a>
+      <a *ngIf="state.logged && isMobile !== true" mat-flat-button color="primary" routerLink="admin" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'Admin' | translate">{{ 'Admin' | translate }}<mat-icon>settings</mat-icon></a>
+      <a *ngIf="!state.logged && isMobile !== true" mat-flat-button color="primary" routerLink="prihlaseni" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'Přihlásit' | translate" (click)="isMobile ? onSidenavClose() : null">{{ 'Přihlásit' | translate }}</a>
+      <a *ngIf="state.logged && isMobile !== true" mat-flat-button color="primary" (click)="appservice.logout()" [title]="'Odhlásit' | translate">{{ 'Odhlásit' | translate }}</a>
+      <a mat-flat-button *ngIf="translate.currentLang === 'cs' && isMobile !== true" color="primary" (click)="changeLang('en')" [title]="'desc.en' | translate">{{ 'EN' | translate }}</a>
+      <a mat-flat-button *ngIf="translate.currentLang === 'en' && isMobile !== true" color="primary" (click)="changeLang('cs')" [title]="'desc.cs' | translate">{{ 'CS' | translate }}</a>
     </div>
   </div>
 </mat-toolbar>
