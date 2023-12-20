@@ -14,12 +14,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { ArticleResultComponent } from '../../components/article-result/article-result.component';
 import { ArchivItemLeftComponent } from '../../components/archiv-item-left/archiv-item-left.component';
 import { FormsModule } from '@angular/forms';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @Component({
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule, ArchivItemComponent, ArticleResultComponent, ArchivItemLeftComponent,
-    MatSelectModule, MatInputModule, MatFormFieldModule, TranslateModule, MatIconModule, MatButtonModule],
+    MatSelectModule, MatInputModule, MatFormFieldModule, TranslateModule, MatIconModule, MatButtonModule, MatMenuModule],
   selector: 'app-archiv',
   templateUrl: './archiv.component.html',
   styleUrls: ['./archiv.component.scss']
