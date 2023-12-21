@@ -58,23 +58,15 @@
     </mat-tab>
     <mat-tab  [label]="'magazines.stranky' | translate ">
       <div class="app-fxLayout app-row app-mt-8">
-          <as-split unit="percent" [direction]="'horizontal'" #split="asSplit" gutterAriaLabel="adjustable divider between two views">
-            <as-split-area size="30" #area1="asSplitArea">
-              <div class="app-nav">
-                <div>
-                  <a (click)="selectPage('o-projektu')" [title]="'magazines.o_projektu' | translate" [class.app-active]="selectedPage === 'o-projektu'">{{ 'magazines.o_projektu' | translate }}</a>
-                </div>
-                <div>
-                  <a (click)="selectPage('kontakt')" [title]="'magazines.kontakt' | translate" [class.app-active]="selectedPage === 'kontakt'">{{ 'magazines.kontakt' | translate }}</a>
-                </div>
-              </div>
-            </as-split-area>
-            <as-split-area size="70" #area2="asSplitArea">
-              <div class="app-editor-wrapper">
-                <editor *ngIf="tinyInited" name="editor" [(ngModel)]="text" [init]="tinyConfig"></editor>
-              </div>
-            </as-split-area>
-          </as-split>
+        <div class="app-left">
+          <mat-list role="list" class="app-view-admin">
+            <mat-list-item (click)="selectPage('o-projektu')" [title]="'magazines.o_projektu' | translate" [class.app-active]="selectedPage === 'o-projektu'" class="app-cursor-pointer">{{ 'magazines.o_projektu' | translate }}</mat-list-item>
+            <mat-list-item (click)="selectPage('kontakt')" [title]="'magazines.kontakt' | translate" [class.app-active]="selectedPage === 'kontakt'" class="app-cursor-pointer">{{ 'magazines.kontakt' | translate }}</mat-list-item>
+          </mat-list>
+        </div>
+        <div class="app-fxFlex app-right">
+          <editor *ngIf="tinyInited" name="editor" [(ngModel)]="text" [init]="tinyConfig"></editor>
+        </div>      
       </div>
     </mat-tab>
   </mat-tab-group>
