@@ -54,6 +54,21 @@
     </mat-form-field>
   </div>
 
+  <div class="app-fxFlex-25">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.languages' | translate }}</mat-label>
+      <input matInput type="text" name="newLanguage" id="newLanguage" [(ngModel)]="newLanguage" />
+      <button matSuffix mat-icon-button (click)="addLanguage()" [matTooltip]="'magazines.pridat_jazyk' | translate">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="app-fxFlex app-fxFlex-75 app-center-v">
+    <span *ngFor="let k of mag.languages; let idx = index; let last = last;" class="app-keyword">
+      <label class="app-label">{{ k }}</label><a (click)="removeLanguage(idx)" [matTooltip]="'magazines.smazat_jazyk' | translate"><mat-icon>clear</mat-icon></a><span class="app-pipe app-in-element" *ngIf="!last"></span>
+    </span>
+  </div>
+
   <div class="app-fxFlex-2x">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.titulek' | translate }}</mat-label>

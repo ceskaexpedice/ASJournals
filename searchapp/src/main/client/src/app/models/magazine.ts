@@ -34,4 +34,5 @@ export class Magazine {
   sortByOrder: boolean = false;
   keepLang: boolean = false;
   checkUpdates: boolean = false;
+  languages: string[] = [];
 }

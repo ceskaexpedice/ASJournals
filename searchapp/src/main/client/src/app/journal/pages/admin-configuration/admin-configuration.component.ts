@@ -111,8 +111,6 @@ export class AdminConfigurationComponent {
       //   this.state.ctxs = res2['response']['docs'];
       // });
     });
-
-    // this.licencesModal?.hide();
   }
 
 

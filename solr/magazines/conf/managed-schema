@@ -67,6 +67,7 @@
     <field name="desc" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="desc_en" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="web" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="languages" type="string" indexed="true" stored="true" multiValued="true" />
 	
     <!-- k5, k7 -->
     <field name="kramerius_version" type="string" indexed="true" stored="true" multiValued="false" />
