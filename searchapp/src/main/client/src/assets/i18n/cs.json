@@ -265,7 +265,10 @@
 		"save": "Uložit",
 		"showExtLink": "Ukázat externí odkaz",
 		"extLinkUrl": "URL na externí odkaz",
-		"extLinkText": "Text pro externí odkaz"
+		"extLinkText": "Text pro externí odkaz",
+		"languages": "Jazyky",
+		"pridat_language": "Přidat jazyk",
+		"smazat_language": "Smazat jazyk"
 	},
 	"button": {
 		"Yes": "Ano",

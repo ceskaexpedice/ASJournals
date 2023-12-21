@@ -265,7 +265,10 @@
 		"save": "Save",
 		"showExtLink": "Show external link",
 		"extLinkUrl": "External link URL",
-		"extLinkText": "External link text"
+		"extLinkText": "External link text",
+		"languages": "Languages",
+		"pridat_language": "Add language",
+		"smazat_language": "Remove language"
 	},
 	"button": {
 		"Yes": "Yes",
