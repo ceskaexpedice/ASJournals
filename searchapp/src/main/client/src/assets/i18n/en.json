@@ -268,7 +268,8 @@
 		"extLinkText": "External link text",
 		"jazyky": "Languages",
 		"pridat_jazyk": "Add language",
-		"smazat_jazyk": "Remove language"
+		"smazat_jazyk": "Remove language",
+		"stranky": "Pages"
 	},
 	"button": {
 		"Yes": "Yes",

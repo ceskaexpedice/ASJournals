@@ -268,7 +268,8 @@
 		"extLinkText": "Text pro externí odkaz",
 		"jazyky": "Jazyky",
 		"pridat_jazyk": "Přidat jazyk",
-		"smazat_jazyk": "Smazat jazyk"
+		"smazat_jazyk": "Smazat jazyk",
+		"stranky": "Stránky"
 	},
 	"button": {
 		"Yes": "Ano",
