@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="app-fxLayout app-row app-fill">
       <div class="app-left app-mr-8">
-        <img src="assets/img/thumb.png" onerror="this.src='assets/img/thumb-no-image.png'" [title]="" class="app-mb-2"
+        <img [src]="state.imgSrc" onerror="this.src='assets/img/thumb-no-image.png'" [title]="" class="app-mb-2"
           routerLink="../home" queryParamsHandling="preserve" />
         <button mat-stroked-button color="primary" class="app-db app-w-100 app-mb-2"
         routerLink="../actual" queryParamsHandling="preserve"><mat-icon>menu_book</mat-icon>{{'AKTUÁLNÍ ČÍSLO' | translate}} </button>

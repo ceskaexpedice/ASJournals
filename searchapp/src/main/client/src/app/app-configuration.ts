@@ -66,13 +66,11 @@ import { MagazineState } from './magazines/magazine.state';
             .then((res: any) => {
 
                 if (res.hasOwnProperty('error')) {
-                    this.state.loginError = true;
                     this.state.logged = false;
                     this.state.username = '';
                 } else {
                     if (this.state.currentMagazine?.ctx) {
                         if (res.isAdmin || res.ctxs.includes(this.state.currentMagazine.ctx)) {
-                            this.state.loginError = false;
                             this.state.username = res.username;
                             this.state.logged = true;
                         }
