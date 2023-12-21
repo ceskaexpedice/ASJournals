@@ -56,17 +56,34 @@
          </div>
       </div>
     </mat-tab>
-    <!-- <mat-tab  [label]="'magazines.aplikace' | translate ">
+    <mat-tab  [label]="'magazines.stranky' | translate ">
       <div class="app-fxLayout app-row app-mt-8">
         <div class="app-left">
-          Editace stranek
+          
+          <as-split unit="percent" [direction]="'horizontal'" #split="asSplit" gutterAriaLabel="adjustable divider between two views">
+            <as-split-area size="30" #area1="asSplitArea">
+              <div class="app-nav">
+                <div>
+                  <a (click)="selectPage('o-projektu')" [title]="'magazines.o_projektu' | translate" [class.app-active]="selectedPage === 'o-projektu'">{{ 'magazines.o_projektu' | translate }}</a>
+                </div>
+                <div>
+                  <a (click)="selectPage('kontakt')" [title]="'magazines.kontakt' | translate" [class.app-active]="selectedPage === 'kontakt'">{{ 'magazines.kontakt' | translate }}</a>
+                </div>
+              </div>
+            </as-split-area>
+            <as-split-area size="70" #area2="asSplitArea">
+              <div class="app-editor-wrapper">
+                <editor *ngIf="tinyInited" name="editor" [(ngModel)]="text" [init]="tinyConfig"></editor>
+              </div>
+            </as-split-area>
+          </as-split>
         </div>
-        <div *ngIf="currentUser" class="app-fxFlex app-right">
+        <!-- <div class="app-fxFlex app-right">
           <app-user-edit [user]="currentUser"></app-user-edit>
           <button mat-flat-button (click)="saveUser()" color="primary" class="app-mr-2">{{ 'magazines.ulozit_uzivatele' | translate }}</button>
           <button mat-flat-button (click)="cancel()">{{ 'magazines.zrusit' | translate }}</button>
-         </div>
+         </div> -->
       </div>
-    </mat-tab> -->
+    </mat-tab>
   </mat-tab-group>
 </div>

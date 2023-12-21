@@ -15,23 +15,37 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MagazineEditComponent } from './magazine-edit/magazine-edit.component';
 import { EditorEditComponent } from './editor-edit/editor-edit.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { MatButtonModule } from '@angular/material/button';
+import { AngularSplitModule } from 'angular-split';
+import { EditorModule } from '@tinymce/tinymce-angular';
+import { Subscription } from 'rxjs';
+
+declare var tinymce: any;
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, TranslateModule, MagazineEditComponent, EditorEditComponent, UserEditComponent,
+  imports: [CommonModule, FormsModule, RouterModule, TranslateModule, AngularSplitModule, EditorModule,
+    MagazineEditComponent, EditorEditComponent, UserEditComponent,
     MatButtonModule, MatFormFieldModule, MatListModule, MatSelectModule, MatIconModule, MatTabsModule, MatDialogModule],
   selector: 'app-admin-magazines',
   templateUrl: './admin-magazines.component.html',
   styleUrls: ['./admin-magazines.component.scss']
 })
 export class AdminMagazinesComponent implements OnInit {
+
   currentMag: Magazine | null = null;
+  tinyConfig: any;
+  tinyInited = false;
+  text: string | null = null;
+  elementId: string = 'editEl';
+  editor: any;
+
+  selectedPage: string;
 
   currentEditor: {
     id: string,
@@ -54,16 +68,40 @@ export class AdminMagazinesComponent implements OnInit {
   users: User[] = [];
 
   editing: string = 'journals';
+
+  
+  subscriptions: Subscription[] = [];
+  
   constructor(
+    private translate: TranslateService,
     public dialog: MatDialog,
     public state: AppState,
     public magState: MagazineState,
     private service: MagazinesService,
     private router: Router) {}
 
+    
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s: Subscription) => {
+      s.unsubscribe();
+    });
+    this.subscriptions = [];
+    tinymce.remove(this.editor);
+  }
+
   ngOnInit() {
     this.getEditors();
     this.getUses();
+    
+    this.initTiny();
+
+    this.service.langSubject.subscribe(() => {
+      this.tinyInited = false;
+      setTimeout(() => {
+        this.initTiny();
+      }, 100);
+    });
   }
   
   getEditors(){
@@ -260,6 +298,85 @@ export class AdminMagazinesComponent implements OnInit {
       }
 
     });
+  }
+
+  getText() {
+    let page: string = '';
+    if (this.selectedPage) {
+      page = this.selectedPage;
+    }
+    if (page === '') {
+      return;
+    }
+    this.service.getText(page).subscribe(t => {
+      this.text = t;
+    });
+  }
+
+  initData() {
+
+    this.subscriptions.push(this.translate.onLangChange.subscribe(val => {
+      this.getText();
+    }));
+
+
+  }
+
+  initTiny() {
+
+    var that = this;
+    this.tinyConfig = {
+
+      base_url: '/tinymce',
+      suffix: '.min',
+
+      language: this.state.currentLang,
+
+      // selector: '#' + this.elementId,
+      menubar: false,
+      plugins: ['link', 'paste', 'table', 'save', 'code', 'image'],
+      toolbar: 'save | undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code mybutton',
+      // skin_url: this.config['context'] + 'assets/skins/lightgray',
+      images_upload_url: 'api/lf?action=UPLOAD&isImage=true&ctx=magazines',
+      automatic_uploads: true,
+      relative_urls: false,
+      setup: (editor: any) => {
+        this.editor = editor;
+        this.initData();
+        // editor.ui.registry.addButton('mybutton', {
+        //   tooltip: this.service.translateKey('admin.insertLink'),
+        //   icon: 'upload',
+        //   //icon: false,
+        //   onAction: function () {
+        //     that.browseFiles();
+        //   }
+        // });
+      },
+
+      save_oncancelcallback: function () { console.log('Save canceled'); },
+      save_onsavecallback: () => this.savePage()
+    };
+
+    // tinymce.init(this.tinyConfig);
+
+    this.tinyInited = true;
+  }
+
+  savePage() {
+    if (!this.selectedPage) {
+      return;
+    }
+
+    const content = this.editor.getContent();
+
+    this.service.saveText(this.selectedPage, content).subscribe(res => {
+      // this.saved = !res.hasOwnProperty('error');
+    });
+  }
+
+  selectPage(p: string) {
+    this.selectedPage = p;
+    this.getText();
   }
 
 }

@@ -75,13 +75,30 @@ export class MagazinesService {
     });
   }
 
+  saveText(id: string, text: string): Observable<string> {
+
+    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
+    let url = 'texts';
+
+    let params = new HttpParams()
+      .set('id', id)
+      .set('action', 'SAVE')
+      .set('lang', this.translate.currentLang)
+      .set('ctx', 'magazines');
+
+    const body: any = { text: text }
+
+    return this.post(url, body, params);
+
+  }
+
   getText(id: string): Observable<string> {
     const url = 'texts';
     let params = new HttpParams()
       .set('action', 'LOAD')
       .set('ctx', 'magazines')
       .set('id', id)
-      .set('lang', this.state.currentLang);
+      .set('lang', this.translate.currentLang);
 
     return this.get(url, params, 'text/plain');
   }
