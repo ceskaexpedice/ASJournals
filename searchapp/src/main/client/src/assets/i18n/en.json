@@ -266,9 +266,9 @@
 		"showExtLink": "Show external link",
 		"extLinkUrl": "External link URL",
 		"extLinkText": "External link text",
-		"languages": "Languages",
-		"pridat_language": "Add language",
-		"smazat_language": "Remove language"
+		"jazyky": "Languages",
+		"pridat_jazyk": "Add language",
+		"smazat_jazyk": "Remove language"
 	},
 	"button": {
 		"Yes": "Yes",

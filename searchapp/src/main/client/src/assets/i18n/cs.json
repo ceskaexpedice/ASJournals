@@ -266,9 +266,9 @@
 		"showExtLink": "Ukázat externí odkaz",
 		"extLinkUrl": "URL na externí odkaz",
 		"extLinkText": "Text pro externí odkaz",
-		"languages": "Jazyky",
-		"pridat_language": "Přidat jazyk",
-		"smazat_language": "Smazat jazyk"
+		"jazyky": "Jazyky",
+		"pridat_jazyk": "Přidat jazyk",
+		"smazat_jazyk": "Smazat jazyk"
 	},
 	"button": {
 		"Yes": "Ano",
