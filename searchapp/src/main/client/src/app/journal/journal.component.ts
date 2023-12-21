@@ -1,5 +1,5 @@
-import { Component, Inject, PLATFORM_ID, Renderer2, RendererStyleFlags2 } from '@angular/core';
-import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, Injector, Optional, PLATFORM_ID, Renderer2, RendererStyleFlags2 } from '@angular/core';
+import { CommonModule, DOCUMENT, isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Params, Router, RouterModule } from '@angular/router';
 import { AppState } from '../app.state';
 import { AppWindowRef } from '../app.window-ref';
@@ -15,6 +15,7 @@ import { MatListModule } from '@angular/material/list';
 import { HeadingComponent } from "./components/heading/heading.component";
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { Meta } from '@angular/platform-browser';
+import { REQUEST } from '@nguniversal/express-engine/tokens';
 
 interface CssVariable {
   name: string;
@@ -41,6 +42,8 @@ export class JournalComponent {
   hasContext: boolean = false;
 
   constructor(
+    @Optional() @Inject(REQUEST) private request: any,
+    private injector: Injector,
     @Inject(PLATFORM_ID) private platformId: any,
     private windowRef: AppWindowRef,
     private meta: Meta,
@@ -159,13 +162,24 @@ export class JournalComponent {
   }
 
   addMetaTags() {
+    let url = '';
+    if (isPlatformServer(this.platformId)) {
+      let req = this.injector.get(REQUEST);
+      console.log("locales from crawlers: " + req.headers["accept-language"]);
+      console.log("host: " + req.get('host'));
+      console.log("headers: ", req.headers);
+      url = 'http://' + req.headers['x-forwarded-host'];
+      console.log(url);
+  } else {
+      url = this.document.location.origin;
+  }
     this.meta.addTags([
       { name: 'description', content: this.state.currentMagazine.desc },
       { name: 'author', content: this.state.currentMagazine.vydavatel },
       { name: 'keywords', content: this.state.currentMagazine.keywords.join(',') },
       { property: 'og:title', content: this.state.currentMagazine.title }, // <meta property="og:title" content="Your appealing title here" />
       { property: 'og:description', content: this.state.currentMagazine.desc },
-      { property: 'og:image', content: this.document.location.origin + this.state.imgSrc },
+      { property: 'og:image', content: url + this.state.imgSrc },
     ]);
   }
 

@@ -1,6 +1,7 @@
 {
     "context": "/",
     "defaultLang": "cs",
+    "server_url": "",
     "api_point": "k5api",
     "sort_field": "datum_end",
     "color": "#0097a7",
