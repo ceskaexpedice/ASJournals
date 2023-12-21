@@ -221,6 +221,8 @@
 		"obrazek": "Image",
 		"vydavatel": "Publisher",
 		"oblast": "Region",
+		"pridat_oblast": "Add region",
+		"smazat_oblast": "Remove region",
 		"pristup": "Access",
 		"klicove_slovo": "Key word",
 		"pridat_klicove_slovo": "Add a keyword",

@@ -44,6 +44,7 @@ export class MagazineEditComponent implements OnInit {
   };
   newKeyword: string = '';
   newLanguage: string = '';
+  newOblast: string = '';
 
   showTitleLabel = true;
   
@@ -86,6 +87,20 @@ export class MagazineEditComponent implements OnInit {
       }
         this.mag.languages.push(this.newLanguage);
       this.newLanguage = '';
+    }
+  }
+  
+  removeOblast(idx: number){
+    this.mag.oblast.splice(idx, 1);
+  }
+  
+  addOblast(){
+    if(this.newOblast !== ''){
+      if(!this.mag.oblast){
+        this.mag.oblast = [];
+      }
+        this.mag.oblast.push(this.newOblast);
+      this.newOblast = '';
     }
   }
 

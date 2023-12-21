@@ -117,24 +117,33 @@
       </mat-select>
     </mat-form-field>
   </div>
-
-  <div class="app-fxFlex-3x">
-    <mat-form-field class="app-w-100" appearance="outline">
-      <mat-label>{{ 'magazines.oblast' | translate }}</mat-label>
-      <input matInput type="text" [(ngModel)]="mag.oblast" id="oblast"  name="oblast"  />
-    </mat-form-field>
-  </div>
-  <div class="app-fxFlex-3x">
+  <div class="app-fxFlex-2x">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.pristup' | translate }}</mat-label>
       <input matInput type="text" [(ngModel)]="mag.pristup" id="pristup"  name="pristup"  />
     </mat-form-field>
   </div>
-  <div class="app-fxFlex-3x">
+  <div class="app-fxFlex-2x">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.kontakt' | translate }}</mat-label>
       <input matInput type="text" [(ngModel)]="mag.kontakt" id="kontakt"  name="kontakt"  />
     </mat-form-field>
+  </div>
+  
+  
+  <div class="app-fxFlex-25">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.oblast' | translate }}</mat-label>
+      <input matInput type="text" name="newOblast" id="newOblast" [(ngModel)]="newOblast" />
+      <button matSuffix mat-icon-button (click)="addOblast()" [matTooltip]="'magazines.pridat_oblast' | translate">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="app-fxFlex app-fxFlex-75 app-center-v">
+    <span *ngFor="let k of mag.oblast; let idx = index; let last = last;" class="app-keyword">
+      <label class="app-label">{{ k }}</label><a (click)="removeOblast(idx)" [matTooltip]="'magazines.smazat_oblast' | translate"><mat-icon>clear</mat-icon></a><span class="app-pipe app-in-element" *ngIf="!last"></span>
+    </span>
   </div>
 
   <div class="app-fxFlex-25">

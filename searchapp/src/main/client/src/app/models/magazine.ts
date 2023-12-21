@@ -21,7 +21,7 @@ export class Magazine {
   k5url: string | undefined = undefined;
   vydavatel: string | undefined = undefined;
   vydavatel_id: string | undefined = undefined;
-  oblast: string | undefined = undefined;
+  oblast: string[] = [];
   issn: string | undefined = undefined;
   pristup: string | undefined = undefined;
   kontakt: string | undefined = undefined;

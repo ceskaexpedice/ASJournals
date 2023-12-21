@@ -83,7 +83,7 @@
     
     <!-- pro facety -->
     <field name="pristup" type="string" indexed="true" stored="true" multiValued="false" docValues="true"/>
-    <field name="oblast" type="string" indexed="true" stored="true" multiValued="false" docValues="true"/>
+    <field name="oblast" type="string" indexed="true" stored="true" multiValued="true" docValues="true"/>
     <field name="keywords" type="string" indexed="true" stored="true" multiValued="true" docValues="true"/>
     
     <!-- pro UI -->
