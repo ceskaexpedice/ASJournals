@@ -34,10 +34,7 @@
       <a mat-flat-button *ngIf="isMobile !== true" color="primary" [matMenuTriggerFor]="langMenu" [title]="translate.currentLang">{{ translate.currentLang | translate }}</a>
       <mat-menu #langMenu="matMenu">
         <a mat-menu-item *ngFor="let lang of state.currentMagazine.languages" (click)="changeLang(lang)">{{ lang | translate }}</a>
-       <!--  <a mat-menu-item (click)="changeLang('en')">en</a> -->
       </mat-menu>
-      <!-- <a mat-flat-button *ngIf="translate.currentLang === 'cs' && isMobile !== true" color="primary" (click)="changeLang('en')" [title]="'desc.en' | translate">{{ 'EN' | translate }}</a>
-      <a mat-flat-button *ngIf="translate.currentLang === 'en' && isMobile !== true" color="primary" (click)="changeLang('cs')" [title]="'desc.cs' | translate">{{ 'CS' | translate }}</a> -->
     </div>
   </div>
 </mat-toolbar>
