@@ -13,7 +13,9 @@
       </div>
       <div>
         <label class="app-label">{{ 'magazines.oblast' | translate }}: </label>
-        <a (click)="addFilter('oblast', resultItem.oblast)" [title]="resultItem.oblast">{{ resultItem.oblast }}</a>
+        <span *ngFor="let oblast of resultItem.oblast; let last=last">
+          <a (click)="addFilter('oblast', oblast)" [title]="oblast">{{ oblast }}</a><span *ngIf="!last">, </span> 
+        </span>
       </div>
       <div>
         <label class="app-label">ISSN: </label>
@@ -21,8 +23,8 @@
       </div>
       <div>
         <label class="app-label">{{ 'magazines.keywords' | translate }}: </label>
-        <span *ngFor="let keyword of resultItem.keywords">
-          <a (click)="addFilter('keywords', keyword)" [title]="keyword">{{ keyword }}</a>, 
+        <span *ngFor="let keyword of resultItem.keywords; let last=last">
+          <a (click)="addFilter('keywords', keyword)" [title]="keyword">{{ keyword }}</a><span *ngIf="!last">, </span> 
         </span>
       </div>
       <div>

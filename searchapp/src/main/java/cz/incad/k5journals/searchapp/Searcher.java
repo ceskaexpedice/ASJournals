@@ -101,6 +101,12 @@ public class Searcher {
                     query.addFilterQuery("{!tag=keywords}keywords:\"" + fq + "\"");
                 }
             }
+            
+            if (request.getParameter("oblast") != null) {
+                for (String fq : request.getParameterValues("oblast")) {
+                    query.addFilterQuery("{!tag=oblast}oblast:\"" + fq + "\"");
+                }
+            }
 
             json = json(query, client, "magazines");
 
