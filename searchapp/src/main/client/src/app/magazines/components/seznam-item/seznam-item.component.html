@@ -37,7 +37,7 @@
       </div>
     </div>
   </div>
-  <mat-card-content class="app-collapse" [class.app-in]="showingDetail"><!--*ngIf="showingDetail"-->
+  <mat-card-content class="app-collapse" [class.app-in]="showingDetail" *ngIf="showingDetail"><!--*ngIf="showingDetail"-->
     <mat-divider></mat-divider>
     {{ translate.currentLang === 'en' ? resultItem.desc_en :  resultItem.desc }}
   </mat-card-content>
