@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AngularSplitModule } from 'angular-split';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -73,6 +73,7 @@ export class AdminInterfaceComponent {
 
 
   constructor(
+    private ngZone: NgZone,
     public dialog: MatDialog,
     private config: Configuration,
     public state: AppState,
@@ -96,7 +97,7 @@ export class AdminInterfaceComponent {
       }, 100);
     });
 
-    
+
     this.service.getUploadedFiles().subscribe(res => {
       this.fileList = res['files'];
     });
@@ -134,7 +135,7 @@ export class AdminInterfaceComponent {
 
       // selector: '#' + this.elementId,
       menubar: false,
-      plugins: ['link', 'paste', 'table', 'save', 'code', 'image'],
+      plugins: ['link', 'table', 'save', 'code', 'image'],
       toolbar: 'save | undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code mybutton',
       // skin_url: this.config['context'] + 'assets/skins/lightgray',
       images_upload_url: 'api/lf?action=UPLOAD&isImage=true&ctx=' + this.state.currentMagazine?.ctx,
@@ -148,7 +149,12 @@ export class AdminInterfaceComponent {
           icon: 'upload',
           //icon: false,
           onAction: function () {
-            that.browseFiles();
+            
+            that.ngZone.run(() => {
+              // we're back in the zone here
+              that.browseFiles();
+            });
+            
           }
         });
       },
@@ -165,22 +171,22 @@ export class AdminInterfaceComponent {
   public browseFiles() {
 
     this.editor.focus();
-      const dialogRef = this.dialog.open(FilesDialogComponent, {
-        width: '600px',
-        data: {
-          ctx: this.state.currentMagazine.ctx,
-          fileList: this.fileList
-        }
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.selectedFile = result;
-          const link = this.config['context'] + 'api/lf?action=GET_FILE&ctx=' + this.state.currentMagazine?.ctx;
-          console.log(link);
-          this.editor.insertContent('&nbsp;<a target="_blank" href="' + link + '&filename=' + this.selectedFile + '">' + this.selectedFile + '</a>&nbsp;');
-        }
-      });
+      
+    const dialogRef = this.dialog.open(FilesDialogComponent, {
+      width: '800px',
+      data: {
+        ctx: this.state.currentMagazine.ctx,
+        fileList: this.fileList
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectedFile = result;
+        const link = this.config['context'] + 'api/lf?action=GET_FILE&ctx=' + this.state.currentMagazine?.ctx;
+        console.log(link);
+        this.editor.insertContent('&nbsp;<a target="_blank" href="' + link + '&filename=' + this.selectedFile + '">' + this.selectedFile + '</a>&nbsp;');
+      }
+    });
 
   }
 

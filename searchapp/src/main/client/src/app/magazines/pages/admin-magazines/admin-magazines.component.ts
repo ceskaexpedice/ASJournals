@@ -334,7 +334,7 @@ export class AdminMagazinesComponent implements OnInit {
 
       // selector: '#' + this.elementId,
       menubar: false,
-      plugins: ['link', 'paste', 'table', 'save', 'code', 'image'],
+      plugins: ['link', 'table', 'save', 'code', 'image'],
       toolbar: 'save | undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code mybutton',
       // skin_url: this.config['context'] + 'assets/skins/lightgray',
       images_upload_url: 'api/lf?action=UPLOAD&isImage=true&ctx=magazines',
