@@ -266,6 +266,8 @@ public class IndexServlet extends HttpServlet {
                     Indexer indexer = new Indexer();
                     JSONObject jo = new JSONObject(IOUtils.toString(req.getInputStream(), "UTF-8"));
                     json.put("saved", indexer.indexMagazine(jo));
+                    
+                    // create layout if not exists
 
                 } catch (Exception ex) {
                     json.put("error", ex.toString());

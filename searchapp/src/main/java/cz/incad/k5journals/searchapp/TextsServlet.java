@@ -283,6 +283,9 @@ public class TextsServlet extends HttpServlet {
         File fmenu = new File(fnmenu);
         if (fmenu.exists()) {
           js = new JSONObject(FileUtils.readFileToString(fmenu, "UTF-8"));
+        } else {
+            // default menu. 
+            js = Options.getInstance().getClientConf().getJSONObject("layout"); 
         }
 
         String home_cs = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "texts"
