@@ -58,6 +58,7 @@ public class Indexer {
     public Indexer() {
         try {
             opts = Options.getInstance();
+            statusFile = new File(InitServlet.CONFIG_DIR + File.separator + "index.json");
             langsMap = opts.getJSONObject("langsMap");
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
@@ -154,6 +155,8 @@ public class Indexer {
                 }
                 idoc.addField("model_paths", model_path);
                 idoc.addField("pid_paths", pid_path);
+                
+                idoc.setField("indexed_k", item.opt("indexed"));
             }
 
             if (item.has("pdf")) {
@@ -647,8 +650,20 @@ public class Indexer {
         if (o instanceof JSONObject) {
             JSONObject jo = (JSONObject) o;
             if (jo.has("type") && "personal".equals(jo.getString("type")) && jo.has(prefix + "namePart")) {
+//                Object np = jo.get(prefix + "namePart");
+//                idoc.addField("autor", namePart(np));
+                
                 Object np = jo.get(prefix + "namePart");
-                idoc.addField("autor", namePart(np));
+                String autorName = namePart(np);
+                idoc.addField("autor", autorName);
+                JSONObject af = new JSONObject()
+                        .put("name", autorName);
+                if (jo.has(prefix + "role")) {
+                    String role = jo.getJSONObject(prefix + "role").getJSONObject(prefix + "roleTerm").getString("content");
+                    af.put("role", role);
+                }
+                idoc.addField("autor_full", af.toString());
+                
             }
         } else if (o instanceof JSONArray) {
             JSONArray ja = (JSONArray) o;
@@ -657,7 +672,15 @@ public class Indexer {
                 if (jo.has("type") && "personal".equals(jo.getString("type")) && jo.has(prefix + "namePart")) {
 
                     Object np = jo.get(prefix + "namePart");
-                    idoc.addField("autor", namePart(np));
+                    String autorName = namePart(np);
+                    idoc.addField("autor", autorName);
+                    JSONObject af = new JSONObject()
+                            .put("name", autorName);
+                    if (jo.has(prefix + "role")) {
+                        String role = jo.getJSONObject(prefix + "role").getJSONObject(prefix + "roleTerm").getString("content");
+                        af.put("role", role);
+                    }
+                    idoc.addField("autor_full", af.toString());
                 }
             }
         }
@@ -1047,6 +1070,9 @@ public class Indexer {
                     return new JSONObject().put("error", "Not in index");
                 } else {
                     Date d = (Date) docs.get(0).getFirstValue("indexed_k");
+                    if (d == null) {
+                        d = new Date();
+                    }
                     index_time = d.toInstant().toString();
                 }
             } catch (Exception ex) {

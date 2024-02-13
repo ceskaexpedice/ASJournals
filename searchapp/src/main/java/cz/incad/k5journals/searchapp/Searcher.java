@@ -164,7 +164,10 @@ public class Searcher {
                             parentPid = pdoc.getJSONArray("parents").getString(0);
                             parentDoc.put("parent", new JSONObject());
                         }
-                        parentDoc = parentDoc.getJSONObject("parent");
+                        parentDoc = parentDoc.optJSONObject("parent");
+                        if (parentDoc == null) {
+                            parentDoc = new JSONObject();
+                        }
                     }
                 }
             } 
