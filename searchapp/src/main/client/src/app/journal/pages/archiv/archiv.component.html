@@ -12,7 +12,7 @@
         </mat-form-field> -->
         {{ 'Výsledky řadit' | translate }}:
         <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
-          {{ currentSort.label }}<mat-icon>expand_more</mat-icon>
+          {{ currentSort.label }}<mat-icon iconPositionEnd>expand_more</mat-icon>
         </button>
         <mat-menu #menuSort="matMenu">
           <button mat-menu-item *ngFor="let sort of sorts" (click)="setSort(sort)" [(ngModel)]="currentSort">{{ sort.label | translate }}</button>

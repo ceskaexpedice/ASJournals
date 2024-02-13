@@ -148,7 +148,6 @@ export class JournalComponent {
     }
     this.service.changeLang(userLang);
     //this.setCtx(false);
-
     this.service.findActual();
     this.service.getKeywords();
     this.service.getGenres();
