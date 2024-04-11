@@ -74,6 +74,7 @@ export class HomeComponent implements OnInit {
 
   showDb() {
     const db =  this.config.layout.pages.find((m:any) => m.route === 'db');
+    console.log(db)
     return db && db.visible
   }
 

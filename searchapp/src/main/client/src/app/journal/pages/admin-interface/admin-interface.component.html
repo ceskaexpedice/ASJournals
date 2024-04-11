@@ -12,7 +12,7 @@
               <a (click)="selectPage('footer')" [title]="'Patička' | translate" [class.app-active]="selectedPage === 'footer'">{{ 'Patička' | translate }}</a>
             </div>
             <div *ngFor="let m of pages">
-              <a (click)="selectPage(m.id)" [title]="'menu.' + m.route +'_' | translate" [class.app-active]="selectedPage === m.id">{{ 'menu.' + m.route +'_' | translate }}</a><mat-checkbox></mat-checkbox>
+              <a (click)="selectPage(m.id)" [title]="'menu.' + m.route +'_' | translate" [class.app-active]="selectedPage === m.id">{{ 'menu.' + m.route +'_' | translate }}</a><mat-checkbox [(ngModel)]="m.visible"></mat-checkbox>
             </div>
           </div>
           <mat-divider></mat-divider>

@@ -16,7 +16,10 @@ import { CommonModule } from '@angular/common';
 })
 export class FreeTextComponent implements OnInit, OnDestroy {
 
-  @Input() page: string | null = null;
+  @Input() set page(value: string) {
+    this.id = value;
+    this.getText();
+  }
 
 
   subscriptions: Subscription[] = [];
@@ -48,7 +51,7 @@ export class FreeTextComponent implements OnInit, OnDestroy {
       }));
     } else {
         this.id = this.page;
-      // this.getText();
+        this.getText();
     }
 
   }

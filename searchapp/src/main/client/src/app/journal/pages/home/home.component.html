@@ -14,7 +14,7 @@
         <p [innerHTML]="home_text"></p>
         <h2 class="app-headline">{{ 'Aktuálně' | translate }}</h2>
         <app-free-text [page]="'news'"></app-free-text>
-        <ng-container *ngIf="showDb">
+        <ng-container *ngIf="showDb()">
         <mat-divider></mat-divider>
           <strong>Časopis je zařazen v databázích:</strong>
           <app-free-text [page]="'db'"></app-free-text>
