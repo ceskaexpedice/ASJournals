@@ -30,8 +30,8 @@ export class AdminIndexComponent {
 
   indexUUID: string | null = null;
 
-  public uploader: FileUploader = new FileUploader({ url: 'api/lf?action=UPLOAD' });
-  public coverUploader: FileUploader = new FileUploader({ url: 'api/lf?action=UPLOAD&cover=true' });
+  public uploader: FileUploader = new FileUploader({ url: 'lf?action=UPLOAD' });
+  public coverUploader: FileUploader = new FileUploader({ url: 'lf?action=UPLOAD&cover=true' });
   statusInterval: any;
   workStatus: any = { status: 'none' };
   working: boolean = false;
@@ -112,7 +112,7 @@ export class AdminIndexComponent {
   uploadCover() {
     this.coverMsg = 'loading';
     setTimeout(() => {
-      this.coverUploader.setOptions({ url: 'api/lf?action=UPLOAD&cover=true&ctx=' + this.state.currentMagazine.ctx });
+      this.coverUploader.setOptions({ url: 'lf?action=UPLOAD&cover=true&ctx=' + this.state.currentMagazine.ctx });
       this.coverUploader.onSuccessItem = (item: any, response: any, status: any, headers: any) => this.coverUploaded();
       this.coverUploader.uploadAll();
     }, 100);

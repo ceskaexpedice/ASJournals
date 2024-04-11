@@ -138,7 +138,7 @@ export class AdminInterfaceComponent {
       plugins: ['link', 'table', 'save', 'code', 'image'],
       toolbar: 'save | undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code mybutton',
       // skin_url: this.config['context'] + 'assets/skins/lightgray',
-      images_upload_url: 'api/lf?action=UPLOAD&isImage=true&ctx=' + this.state.currentMagazine?.ctx,
+      images_upload_url: 'lf?action=UPLOAD&isImage=true&ctx=' + this.state.currentMagazine?.ctx,
       automatic_uploads: true,
       relative_urls: false,
       setup: (editor: any) => {
