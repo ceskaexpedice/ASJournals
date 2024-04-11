@@ -5,6 +5,6 @@
 
 </div>
 <div mat-dialog-actions cdkFocusRegionstart>
-    <button mat-stroked-button mat-dialog-close="false">{{ 'button.No' | translate }}</button>
-    <button mat-stroked-button mat-dialog-close="true">{{ 'button.Yes' | translate }}</button>
+    <button mat-stroked-button [mat-dialog-close]="false">{{ 'button.No' | translate }}</button>
+    <button mat-stroked-button [mat-dialog-close]="true">{{ 'button.Yes' | translate }}</button>
 </div>
