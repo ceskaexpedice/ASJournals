@@ -73,12 +73,12 @@ export class HomeComponent implements OnInit {
   }
 
   showDb() {
-    const db =  this.config.layout.pages.find((m:any) => m.route === 'db');
+    const db =  this.config.layout.pages.find((m:any) => m.id === 'db');
     return db && db.visible
   }
 
   showNews() {
-    const db =  this.config.layout.pages.find((m:any) => m.route === 'news');
+    const db =  this.config.layout.pages.find((m:any) => m.id === 'news');
     return db && db.visible
   }
 
