@@ -3,7 +3,7 @@
 		<fieldset class="app-p-4 app-mb-4">
 			<legend>{{ 'admin.index_add_uuid' | translate }}</legend>
 			<p>
-				Admin rozhraní umožňuje přidávat nove ročníky nebo čísla časopisu pomoci identifikátoru UUID z Digitální knihovna AV ČR.<br />
+				Admin rozhraní umožňuje přidávat nove ročníky nebo čísla časopisu pomoci identifikátoru UUID z Digitální knihovny AV ČR.<br />
 				Identifikátor se zadává vždy včetně prefixu "uuid:". Napr: {{ state.currentMagazine.journal }}
 			</p>
 			<div class="app-fxLayout app-row app-center-v">
@@ -22,6 +22,9 @@
 
 		<fieldset class="app-p-4 app-mb-4">
 			<legend>{{ 'admin.index_cover' | translate }}</legend>
+			<p>
+				Je očekáván obrázek ve formátu jpg a maximální velikosti 220x317 px.
+			</p>
 			<input type="file" #fileUpload ng2FileSelect [uploader]="coverUploader" style="display:none;" (change)="onFileSelected($event)">
 			<div class="app-fxLayout app-row app-center-v">
 				<mat-form-field appearance="outline" class="app-fxFlex app-form-field-center-v-fix">

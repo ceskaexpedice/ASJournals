@@ -16,6 +16,7 @@ import { Magazine } from '../models/magazine';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { FreePageComponent } from '../shared/free-page/free-page.component';
 import { Configuration } from '../models/configuration';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 declare var xml2json: any;
 
@@ -33,6 +34,7 @@ export class AppService {
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     @Inject(DOCUMENT) private document: Document,
+    private snackBar: MatSnackBar,
     private config: Configuration,
     private state: AppState,
     private search: SearchService,
@@ -41,6 +43,16 @@ export class AppService {
     private router: Router,
     private route: ActivatedRoute
   ) { }
+
+  showSnackBar(s: string, r: string = '', error: boolean = false) {
+    const right = r !== '' ? this.translate.instant(r) : '';
+    const clazz = error ? 'app-snack-error' : 'app-snack-success';
+    this.snackBar.open(this.translate.instant(s), right, {
+      duration: 2000,
+      verticalPosition: 'top',
+      panelClass: clazz
+    });
+  }
 
   findMenuItem(route: string) {
     for (let i = 0; i < this.config.layout.menu.length; i++) {

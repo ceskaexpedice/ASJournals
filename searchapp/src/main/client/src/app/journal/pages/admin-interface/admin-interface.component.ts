@@ -166,6 +166,7 @@ export class AdminInterfaceComponent {
     // tinymce.init(this.tinyConfig);
 
     this.tinyInited = true;
+    this.selectPage('home');
   }
 
   public browseFiles() {
@@ -247,6 +248,7 @@ export class AdminInterfaceComponent {
 
     this.service.saveMenu(m).subscribe((res: any) => {
       this.saved = !res.hasOwnProperty('error');
+      this.service.showSnackBar('Menu saved!');
     });
   }
 
@@ -262,17 +264,12 @@ export class AdminInterfaceComponent {
     this.service.saveText(this.selectedPage, content, m).subscribe(res => {
 
       this.saved = !res.hasOwnProperty('error');
-      //if (res.hasOwnProperty('error')) {
-      //  this.saved = !res.hasOwnProperty('error');
-      //} else {
-      //this.service.saveJournalConfig().subscribe(res2 => {
-      //this.saved = !res2.hasOwnProperty('error');
-      //if (!res2.hasOwnProperty('error')) {
-      //  this.service.getJournalConfig(this.state.currentMagazine).subscribe();
-      //  this.service.switchStyle();
-      //}
-      //});
-      //}
+      this.ngZone.run(() => {
+        // we're back in the zone here
+        this.service.showSnackBar('Menu saved!');
+      });
+      
+      
     });
   }
 
