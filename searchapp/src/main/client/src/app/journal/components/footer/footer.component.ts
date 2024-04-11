@@ -50,9 +50,10 @@ export class FooterComponent implements OnInit {
 
   setText() {
     this.service.getText('footer').subscribe((t: string) => {
-        // this.foot = t;
-        let s = t.replace('{{licence}}', this.state.currentMagazine?.licence!);
-        this.foot = this.sanitizer.bypassSecurityTrustHtml(s);
+        if (t !== '') {
+          let s = t.replace('{{licence}}', this.state.currentMagazine?.licence!);
+          this.foot = this.sanitizer.bypassSecurityTrustHtml(s);
+        }
       }); 
   }
 

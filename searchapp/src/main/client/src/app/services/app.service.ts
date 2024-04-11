@@ -620,7 +620,8 @@ export class AppService {
       .set('id', id)
       .set('lang', this.state.currentLang);
 
-    return this.get(url, params, 'text').pipe(
+    return this.get(url, params, 'text')
+    .pipe(
       map((response: any) => {
         return response;
       }),
