@@ -73,10 +73,10 @@ export class FilesDialogComponent {
     this.fileList = [];
     this.service.getUploadedFiles().subscribe(res => {
       this.fileList = res['files'];
-      // setTimeout(() => {
-      //   this.applicationRef.tick();
-      // }, 50);
+      setTimeout(() => {
+        this.applicationRef.tick();
+      }, 50);
     });
   }
 
-}
+} 

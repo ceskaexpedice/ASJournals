@@ -128,7 +128,6 @@ public class LocalFileServlet extends HttpServlet {
 
           //String id = request.getParameter("id");
           String ctx = request.getParameter("ctx");
-          LOGGER.log(Level.INFO, "Uploading file... ctx = {0}", ctx);
           boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
           //System.out.println(isMultipart);
@@ -158,6 +157,7 @@ public class LocalFileServlet extends HttpServlet {
             } else {
               if(request.getParameter("cover") != null){
                 String fileName = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "cover.jpeg";
+          LOGGER.log(Level.INFO, "Uploading file... {0} in ctx = {1}", new String[]{fileName, ctx});
                 File uploadedFile = new File(fileName);
                 if (uploadedFile.exists()) {
                   uploadedFile.delete();
@@ -168,6 +168,7 @@ public class LocalFileServlet extends HttpServlet {
                 String path = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "texts" + File.separator + "files";
                 new File(path).mkdirs();
                 String fileName = item.getName();
+          LOGGER.log(Level.INFO, "Uploading file... {0} in ctx = {1}", new String[]{fileName, ctx});
                 File uploadedFile = new File(path + File.separator + fileName);
                 item.write(uploadedFile);
                 String action = "GET_FILE";

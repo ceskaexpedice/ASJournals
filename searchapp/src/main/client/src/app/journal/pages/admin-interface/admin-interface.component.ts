@@ -184,7 +184,6 @@ export class AdminInterfaceComponent {
       if (result) {
         this.selectedFile = result;
         const link = this.config['context'] + 'api/lf?action=GET_FILE&ctx=' + this.state.currentMagazine?.ctx;
-        console.log(link);
         this.editor.insertContent('&nbsp;<a target="_blank" href="' + link + '&filename=' + this.selectedFile + '">' + this.selectedFile + '</a>&nbsp;');
       }
     });
