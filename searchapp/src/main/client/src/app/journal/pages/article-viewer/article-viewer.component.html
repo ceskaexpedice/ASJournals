@@ -7,7 +7,7 @@
         <ng-container *ngIf="state.viewerActiveLink === 'pdf'">
           <!-- <a mat-tab-link><mat-icon>zoom_in</mat-icon></a>
           <a mat-tab-link><mat-icon>zoom_out</mat-icon></a> -->
-          <a mat-tab-link><mat-icon>zoom_out_map</mat-icon></a>
+          <a mat-tab-link (click)="maximize()"><mat-icon>zoom_out_map</mat-icon></a>
         </ng-container>          
       </div>
       <a mat-tab-link routerLink="articles" *ngIf="windowSize < breakpoint" (click)="state.viewerActiveLink = 'articles'" [active]="state.viewerActiveLink == 'articles'">{{ 'articles' | translate }}</a>

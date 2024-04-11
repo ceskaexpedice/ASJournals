@@ -16,11 +16,11 @@
         <mat-checkbox id="keepLang" [(ngModel)]="keepLang" class="app-mr-4">Nepřekládat původní názvy článků</mat-checkbox>
         <button mat-flat-button color="primary" class="app-mr-2" (click)="saveMagazine()">{{ 'Uložit' | translate }}</button>
       </div>
-      <div class="app-fxLayout app-row app-center-v app-mb-4">
+      <!-- <div class="app-fxLayout app-row app-center-v app-mb-4">
         <mat-form-field appearance="outline" class="app-fxFlex app-mr-4 app-form-field-center-v-fix">
-          <input matInput type="text" #input>
+          <input matInput type="text" #input  [placeholder]="'licence_ph' | translate">
         </mat-form-field>
-      </div>
+      </div> -->
       <div>
         <button mat-flat-button color="primary" class="app-mr-2" (click)="setLicences()">{{ 'magazines.nastavit_licenci' | translate }}</button>
         <button mat-flat-button color="primary" (click)="showResetPwd()">{{ 'Resetovat heslo' | translate }}</button>

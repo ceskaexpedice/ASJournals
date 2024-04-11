@@ -7,11 +7,12 @@ import { FormsModule } from '@angular/forms';
 import { AppService } from 'src/app/services/app.service';
 import Utils from 'src/app/services/utils';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-licences-dialog',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule, MatDialogModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, FormsModule, TranslateModule, MatDialogModule, MatButtonModule, MatIconModule, MatInputModule],
   templateUrl: './licences-dialog.component.html',
   styleUrls: ['./licences-dialog.component.scss']
 })
