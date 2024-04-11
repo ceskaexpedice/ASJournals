@@ -22,6 +22,37 @@
 	"Color": "Barva",	
 	"home": "Hlavní stránka",
 	"home_news": "Aktuálně",
+	"paginator": {
+		"desc": {
+		  "Číslo stránky": "Číslo stránky",
+		  "Řazení": "Řadit podle",
+		  "itemsPerPageLabel" : "Počet záznamů na stránce",
+		  "nextPageLabel" : "Následující stránka",
+		  "previousPageLabel" : "Předchozí stránka",
+		  "firstPageLabel": "První stránka",
+		  "lastPageLabel": "Poslední stránka",
+		  "rangeLabel1": "0 z {{length}}",
+		  "rangeLabel2": "{{startIndex}} - {{endIndex}} z {{length}}"
+		},
+		"tooltip": {
+		  "Přejděte číslo stránky": "Přejít na stránku"
+		},
+		"sortBy": {
+		  "datestamp": "Poslední změna",
+		  "ident_cely": "Idetifikátor",
+		  "okres": "Okres, katastr",
+		  "katastr": "Katastr",
+		  "autor": "Autor",
+		  "nalezce": "Nálezce",
+		  "datum_nalezu": "Datum nálezu",
+		  "vedouci_akce": "Vedoucí akce",
+		  "datum_ukonceni": "Datum ukončení",
+		  "vedouci_projektu": "Vedoucí projektu",
+		  "rok_vzniku": "Rok vzniku",
+		  "nazev": "Název",
+		  "organizace": "Organizace"
+		}
+	  },
 	"menu": {
 		"home_": "Hlavní stránka",
 		"db_": "Zařazení v databázích",

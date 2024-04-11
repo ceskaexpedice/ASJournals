@@ -1,18 +1,18 @@
 <mat-form-field class="app-w-100" appearance="outline"  *ngFor="let criterium of criteria; let last=last; let idx = index">
   <mat-label>{{ 'q_placeholder' | translate }}</mat-label>
-  <input matInput type="text" #input [(ngModel)]="criterium.value" name="cvalue">
+  <input matInput type="text" #input [(ngModel)]="criterium.value" name="cvalue" (keyup.enter)="search()">
   <button mat-stroked-button color="primary" matPrefix [matMenuTriggerFor]="menuPrefix" class="app-ml-4 app-mr-4">
-    {{ fields[0].label }}<mat-icon iconPositionEnd>expand_more</mat-icon>
+    {{ criterium.fieldLabel | translate  }}<mat-icon iconPositionEnd>expand_more</mat-icon>
   </button>
   <mat-menu #menuPrefix="matMenu">
-    <button mat-menu-item *ngFor="let field of fields" (click)="setField(criterium, field.field)">{{ field.label | translate }}</button>
+    <button mat-menu-item *ngFor="let field of fields" (click)="setField(criterium, field)">{{ field.label | translate }}</button>
   </mat-menu>
   <div matSuffix class="app-fxLayout app-row app-center-v app-mr-4">
     <button mat-stroked-button color="primary" [matMenuTriggerFor]="menuSufix" class="app-ml-4 app-mr-4">
-      {{ operators[0].label }}<mat-icon iconPositionEnd>expand_more</mat-icon>
+      {{ criterium.operatorLabel | translate  }}<mat-icon iconPositionEnd>expand_more</mat-icon>
     </button>
     <mat-menu #menuSufix="matMenu">
-      <button mat-menu-item *ngFor="let operator of operators" (click)="setOperator(criterium, operator.val)">{{ operator.label | translate }}</button>
+      <button mat-menu-item *ngFor="let operator of operators" (click)="setOperator(criterium, operator)">{{ operator.label | translate }}</button>
     </mat-menu>
     <a [class.app-disabled-link]="input.value.length === 0" [matTooltip]="'Zrušit filter' | translate" (click)="removeCriterium(idx)">
       <mat-icon color="primary">cancel</mat-icon>

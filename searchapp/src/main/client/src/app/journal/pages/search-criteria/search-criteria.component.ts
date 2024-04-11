@@ -99,8 +99,9 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
     this.subscriptions = [];
   }
 
-  setField(criterium: Criterium, field: string) {
-    criterium.field = field;
+  setField(criterium: Criterium, field: {field: string, label: string}) {
+    criterium.field = field.field;
+    criterium.fieldLabel = field.label;
   }
 
   getLabel(criterium: Criterium): string {
@@ -113,8 +114,9 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
     return 'kdekoliv';
   }
 
-  setOperator(criterium: Criterium, val: string) {
-    criterium.operator = val;
+  setOperator(criterium: Criterium, op: {val: string, label: string}) {
+    criterium.operator = op.val;
+    criterium.operatorLabel = op.label;
   }
 
   getOperator(criterium: Criterium): string {

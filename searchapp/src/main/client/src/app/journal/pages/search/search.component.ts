@@ -12,8 +12,8 @@ import { SearchService } from 'src/app/services/search.service';
 import { CommonModule } from '@angular/common';
 import { Configuration } from 'src/app/models/configuration';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
@@ -23,8 +23,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
+import { PaginatorI18n } from '../../components/paginator/paginator-i18n';
 
-
+export function createCustomMatPaginatorIntl(
+  translateService: TranslateService
+  ) {return new PaginatorI18n(translateService);}
 
 @Component({
   standalone: true,
@@ -33,7 +36,13 @@ import { FormsModule } from '@angular/forms';
     MatTabsModule, MatPaginatorModule, MatIconModule, MatMenuModule, MatDividerModule],
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
+  providers: [
+    {
+      provide: MatPaginatorIntl, deps: [TranslateService],
+      useFactory: createCustomMatPaginatorIntl
+    }
+  ]
 })
 export class SearchComponent implements OnInit, OnDestroy {
 
@@ -222,7 +231,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     //Add date filter
-    params = params.append('fq', 'year:[' + this.state.dateOd + ' TO ' + this.state.dateDo + ']');
+    
+    params = params.append('fq', 'year:[' + (this.state.dateOd ? this.state.dateOd : '*') + ' TO ' + (this.state.dateDo ? this.state.dateDo : '*') + ']');
 
 
     //Add onlyPeerReviewed
@@ -278,6 +288,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.state.dateOd = this.state.dateMin;
             this.state.dateDo = this.state.dateMax;
             this.state.dateRange = [this.state.dateOd, this.state.dateDo];
+            // this.state.dateRange = [this.state.dateOd ? this.state.dateOd : 0, this.state.dateDo ? this.state.dateDo : 3000];
             this.sliderConfig.range = this.state.dateRange;
           }
           //this.dateForm = this.formBuilder.group({ 'range': [[this.dateMin, this.dateMax]] });

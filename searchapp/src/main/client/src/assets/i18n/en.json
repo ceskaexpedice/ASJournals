@@ -22,6 +22,37 @@
   "Color": "Colour",
 	"home": "Home",
 	"home_news": "Currently",
+	"paginator": {
+		"desc": {
+		  "Číslo stránky": "Page number",
+		  "Řazení": "Order by",
+		  "itemsPerPageLabel" : "Records per page",
+		  "nextPageLabel" : "Next page",
+		  "previousPageLabel" : "Previous page",
+		  "firstPageLabel": "First page",
+		  "lastPageLabel": "Last page",
+		  "rangeLabel1": "0 of {{length}}",
+		  "rangeLabel2": "{{startIndex}} - {{endIndex}} of {{length}}"
+		},
+		"tooltip": {
+		  "Přejděte číslo stránky": "Go to page"
+		},
+		"sortBy": {
+		  "datestamp": "Last change",
+		  "ident_cely": "Identifier",
+		  "okres": "District, cadastre",
+		  "katastr": "Cadastre",
+		  "autor": "Author",
+		  "nalezce": "Finder",
+		  "datum_nalezu": "Finding date",
+		  "vedouci_akce": "Principal researcher",
+		  "datum_ukonceni": "Ending date",
+		  "vedouci_projektu": "Project manager",
+		  "rok_vzniku": "Year of creation",
+		  "nazev": "Name",
+		  "organizace": "Organisation"
+		}
+	  },
 	"menu": {
 		"home_": "Home",
 		"db_": "Databases",

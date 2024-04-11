@@ -1,7 +1,9 @@
 export class Criterium {
-  field: string | null = null;
+  field: string = '_text_';
+  fieldLabel: string = 'kdekoliv';
   value: string | null = null;
   operator: string = 'AND';
+  operatorLabel: string = 'a zároveň';
 
   constructor() { }
 
