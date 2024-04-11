@@ -41,6 +41,7 @@ export class AdminIndexComponent {
 
   selectedCover: string;
   coverMsg: string | null = null;
+  t: number = new Date().getTime();
 
   constructor(
     public dialog: MatDialog,
@@ -109,13 +110,17 @@ export class AdminIndexComponent {
   }
 
   uploadCover() {
-    this.coverUploader.setOptions({ url: 'api/lf?action=UPLOAD&cover=true&ctx=' + this.state.currentMagazine.ctx });
-    this.coverUploader.onSuccessItem = (item: any, response: any, status: any, headers: any) => this.coverUploaded();
-    this.coverUploader.uploadAll();
+    this.coverMsg = 'loading';
+    setTimeout(() => {
+      this.coverUploader.setOptions({ url: 'api/lf?action=UPLOAD&cover=true&ctx=' + this.state.currentMagazine.ctx });
+      this.coverUploader.onSuccessItem = (item: any, response: any, status: any, headers: any) => this.coverUploaded();
+      this.coverUploader.uploadAll();
+    }, 100);
   }
 
   coverUploaded() {
     this.coverMsg = 'ok';
+    this.t = new Date().getTime();
   }
 
 }

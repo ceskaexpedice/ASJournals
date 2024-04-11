@@ -31,6 +31,9 @@
 			</div>
 			<mat-progress-bar mode="determinate" [value]="coverUploader.progress" *ngIf="coverUploader.isUploading"></mat-progress-bar>
 			<button mat-flat-button color="primary" (click)="uploadCover()" class="app-mt-4">{{ 'Nahrat' | translate }}</button>
+			<div class="app-color-primary">
+				<img [src]="state.imgSrc + '&t=' + t" onerror="this.src='assets/img/thumb-no-image.png'"  /></div>
+
 		</fieldset>
 	</div>
 </div>
