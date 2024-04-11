@@ -17,7 +17,6 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import Utils from 'src/app/services/utils';
 import { LicencesDialogComponent } from '../../components/licences-dialog/licences-dialog.component';
-import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
 import { ResetPwdDialogComponent } from '../../components/reset-pwd-dialog/reset-pwd-dialog.component';
 
 @Component({

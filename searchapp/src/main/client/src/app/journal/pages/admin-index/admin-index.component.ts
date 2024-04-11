@@ -79,7 +79,7 @@ export class AdminIndexComponent {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '900px',
-      data: { title: this.service.translateKey('admin.confirm'), 
+      data: { title: this.service.translateKey('admin.delete_uuid'), 
               msg: this.service.translateKey('admin.confirm_delete') + ' ' + this.indexUUID}
     });
 
