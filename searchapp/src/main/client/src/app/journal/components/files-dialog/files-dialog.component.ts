@@ -64,7 +64,7 @@ export class FilesDialogComponent {
   }
 
   uploadFile() {
-    this.uploader.setOptions({ url: 'api/lf?action=UPLOAD&ctx=' + this.data.ctx });
+    this.uploader.setOptions({ url: 'lf?action=UPLOAD&ctx=' + this.data.ctx });
     this.uploader.onSuccessItem = (item: any, response: any, status: any, headers: any) => this.uploaded();
     this.uploader.uploadAll();
   }
