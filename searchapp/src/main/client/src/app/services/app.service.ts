@@ -260,7 +260,7 @@ export class AppService {
 
   changeLang(lang: string) {
     this.state.currentLang = lang;
-
+    this.translate.setDefaultLang('cs');
     this.translate.use(lang).subscribe(() => {
       this._langSubject.next(lang);
     });

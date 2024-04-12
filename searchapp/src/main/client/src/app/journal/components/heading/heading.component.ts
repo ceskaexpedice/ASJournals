@@ -25,9 +25,9 @@ export class HeadingComponent {
 
   ngOnInit() {
     this.setTitle();
-    this.service.langSubject.subscribe(() => {
-      this.setTitle();
-    })
+    // this.service.langSubject.subscribe(() => {
+    //   this.setTitle();
+    // })
   }
 
   setTitle() {

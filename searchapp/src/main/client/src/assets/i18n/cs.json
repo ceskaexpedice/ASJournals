@@ -303,7 +303,12 @@
 		"jazyky": "Jazyky",
 		"pridat_jazyk": "Přidat jazyk",
 		"smazat_jazyk": "Smazat jazyk",
-		"stranky": "Stránky"
+		"stranky": "Stránky",
+		"lang": {
+			"cs": "česky",
+			"en": "anglicky",
+			"de": "nemecky"
+		}
 	},
 	"button": {
 		"Yes": "Ano",

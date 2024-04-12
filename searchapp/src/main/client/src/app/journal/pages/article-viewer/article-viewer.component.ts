@@ -1,4 +1,4 @@
-import { Inject, Component, OnInit, ViewChild, HostListener, PLATFORM_ID } from '@angular/core';
+import { Inject, Component, OnInit, ViewChild, HostListener, PLATFORM_ID, Injector, Optional } from '@angular/core';
 import { Router, ActivatedRoute, Params, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { AppState } from 'src/app/app.state';
 import { Journal } from 'src/app/models/journal.model';
 import { AppService } from 'src/app/services/app.service';
 import Utils from 'src/app/services/utils';
-import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { Configuration } from 'src/app/models/configuration';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
@@ -20,6 +20,7 @@ import { AppWindowRef } from 'src/app/app.window-ref';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ShareDialogComponent } from '../../components/share-dialog/share-dialog.component';
 import { Meta } from '@angular/platform-browser';
+import { REQUEST } from '@nguniversal/express-engine/tokens';
 
 @Component({
   standalone: true,
@@ -76,6 +77,8 @@ export class ArticleViewerComponent implements OnInit {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
+    @Optional() @Inject(REQUEST) private request: any,
+    private injector: Injector,
     private windowRef: AppWindowRef,
     @Inject(DOCUMENT) private document: Document,
     private meta: Meta,
@@ -210,6 +213,17 @@ export class ArticleViewerComponent implements OnInit {
   }
 
   setMetaTags(res: any) {
+    let url = '';
+    if (isPlatformServer(this.platformId)) {
+      let req = this.injector.get(REQUEST);
+      // console.log("locales from crawlers: " + req.headers["accept-language"]);
+      // console.log("host: " + req.get('host'));
+      // console.log("headers: ", req.headers);
+      url = 'http://' + req.headers['x-forwarded-host'];
+      console.log(url);
+    } else {
+        url = this.document.location.origin;
+    }
 
     const tags: { name: string, content: string }[] = [];
     if (this.state.viewerArticle.abstract) {
@@ -239,7 +253,7 @@ export class ArticleViewerComponent implements OnInit {
 
     tags.push(
       { name: 'citation_title', content: this.state.viewerArticle.title },
-      { name: 'citation_pdf_url', content: this.document.location.origin + this.state.fullSrc },
+      { name: 'citation_pdf_url', content: url + this.state.fullSrc },
       { name: 'citation_publication_date', content: this.state.viewerArticle.dateIssued },
       { name: 'citation_journal_title', content: this.state.viewerArticle.root_title },
       { name: 'citation_issn', content: this.state.currentMagazine.issn }

@@ -69,7 +69,7 @@
     </span>
   </div>
 
-  <div class="app-fxFlex-2x">
+  <!-- <div class="app-fxFlex-2x">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.titulek' | translate }}</mat-label>
       <input matInput id="title" type="text" [(ngModel)]="mag.title">
@@ -80,20 +80,22 @@
       <mat-label>{{ 'magazines.podtitulek' | translate }}</mat-label>
       <input matInput id="subtitle" type="text" [(ngModel)]="mag.subtitle">
     </mat-form-field>
-  </div>
+  </div> -->
 
-  <div class="app-fxFlex-2x">
-    <mat-form-field class="app-w-100" appearance="outline">
-      <mat-label>{{ 'magazines.titulek_en' | translate }}</mat-label>
-      <input matInput id="title" type="text" [(ngModel)]="mag.title_en">
-    </mat-form-field>
-  </div>
-  <div class="app-fxFlex-2x">
-    <mat-form-field class="app-w-100" appearance="outline">
-      <mat-label>{{ 'magazines.podtitulek_en' | translate }}</mat-label>
-      <input matInput id="subtitle" type="text" [(ngModel)]="mag.subtitle_en">
-    </mat-form-field>
-  </div>
+  <ng-container *ngFor="let lang of mag.languages">
+    <div class="app-fxFlex-2x">
+      <mat-form-field class="app-w-100" appearance="outline">
+        <mat-label>{{ 'magazines.titulek' | translate }} {{ 'magazines.lang.' + lang | translate }}</mat-label>
+        <input matInput [id]="'title' + lang" type="text" [(ngModel)]="mag['title_'+lang]">
+      </mat-form-field>
+    </div>
+    <div class="app-fxFlex-2x">
+      <mat-form-field class="app-w-100" appearance="outline">
+        <mat-label>{{ 'magazines.podtitulek' | translate }} {{ 'magazines.lang.' + lang | translate }}</mat-label>
+        <input matInput [id]="'subtitle' + lang" type="text" [(ngModel)]="mag['subtitle_'+lang]">
+      </mat-form-field>
+    </div>
+</ng-container>
 
   <div class="app-fxFlex-3x">
     <mat-form-field class="app-w-100" appearance="outline">
@@ -161,17 +163,19 @@
     </span>
   </div>
 
-  <div class="app-fxFlex-1x">
-    <mat-form-field class="app-w-100" appearance="outline">
-      <mat-label>{{ 'magazines.popis' | translate }}</mat-label>
-      <textarea matInput [(ngModel)]="mag.desc" id="desc" name="desc"></textarea>
-    </mat-form-field>
-  </div>
+  <ng-container *ngFor="let lang of mag.languages">
+    <div class="app-fxFlex-1x">
+      <mat-form-field class="app-w-100" appearance="outline">
+        <mat-label>{{ 'magazines.popis' | translate }} {{ 'magazines.lang.' + lang | translate }}</mat-label>
+        <textarea matInput [(ngModel)]="mag['desc_' + lang]" [id]="'desc' + lang" [name]="'desc' + lang"></textarea>
+      </mat-form-field>
+    </div>
+  </ng-container>
 
-  <div class="app-fxFlex-1x">
+  <!-- <div class="app-fxFlex-1x">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.popis_angl' | translate }}</mat-label>
       <textarea matInput [(ngModel)]="mag.desc_en" id="desc_en" name="desc_en"></textarea>
     </mat-form-field>
-  </div>
+  </div> -->
 </div>

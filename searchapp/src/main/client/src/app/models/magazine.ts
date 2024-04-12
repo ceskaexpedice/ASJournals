@@ -35,4 +35,5 @@ export class Magazine {
   keepLang: boolean = false;
   checkUpdates: boolean = false;
   languages: string[] = [];
+  [key: string]: any;
 }

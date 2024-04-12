@@ -19,6 +19,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.impl.NoOpResponseParser;
 import org.apache.solr.client.solrj.request.QueryRequest;
 import org.apache.solr.common.util.NamedList;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -109,6 +110,20 @@ public class Searcher {
             }
 
             json = json(query, client, "magazines");
+            
+            JSONArray docs = json.getJSONObject("response").getJSONArray("docs");
+            for(int i = 0; i < docs.length(); i++) {
+                JSONObject doc = docs.getJSONObject(i);
+                if (!doc.has("title_cs")) {
+                    doc.put("title_cs", doc.getString("title"));
+                }
+                if (!doc.has("subtitle_cs")) {
+                    doc.put("subtitle_cs", doc.optString("subtitle", ""));
+                }
+                if (!doc.has("desc_cs")) {
+                    doc.put("desc_cs", doc.optString("desc", ""));
+                }
+            }
 
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, null, ex);
