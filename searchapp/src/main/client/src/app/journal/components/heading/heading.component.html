@@ -1,7 +1,7 @@
 <div class="app-p-4 app-heading">
   <h1 class="app-m-0">
     <a routerLink="home" queryParamsHandling="preserve" title="Home" > 
-      <span *ngIf="config['showTitleLabel']">{{ 'ČASOPIS' | translate }} </span>
+      <span *ngIf="state.currentMagazine.showTitleLabel">{{ 'ČASOPIS' | translate }} </span>
       <span class="app-title">{{ title }}</span>
       <span *ngIf="subtitle" class="app-pipe"></span>
       <span *ngIf="subtitle" class="app-subtitle">{{ subtitle }}</span>

@@ -31,6 +31,7 @@ export class HeadingComponent {
   }
 
   setTitle() {
+    console.log(this.state.currentMagazine)
     if (this.state.currentLang === 'en') {
       this.title = this.state.currentMagazine.title_en;
       this.subtitle = this.state.currentMagazine.subtitle_en;
