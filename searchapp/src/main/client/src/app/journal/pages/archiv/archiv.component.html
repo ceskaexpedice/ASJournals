@@ -46,7 +46,7 @@
           <mat-icon>arrow_back</mat-icon>{{ 'Zpět na ročníky' | translate }}
         </button>
         <div class="app-results-wrapper app-mr-8">
-          <div class="app-item app-fxLayout app-row app-p-4" *ngFor="let item of visibleParentItems; let index = index" [class.app-active]="index === 1">
+          <div class="app-item app-fxLayout app-row app-p-4" *ngFor="let item of visibleParentItems; let index = index" [class.app-active]="item.pid === currentPid">
             <app-archiv-item-left [item]="item" (drillDown)="drillDown($event)"></app-archiv-item-left>
           </div>
         </div>
