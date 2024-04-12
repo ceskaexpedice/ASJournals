@@ -25,10 +25,9 @@ declare var tinymce: any;
 interface MenuItem {
   id: string,
   route: string,
-  cs: string,
-  en: string,
   visible: boolean,
-  children: MenuItem[]
+  children: MenuItem[],
+  [lang: string]: any
 }
 
 
@@ -277,14 +276,17 @@ export class AdminInterfaceComponent {
   }
 
   addChild(m: MenuItem) {
-    m.children.push({
+    const item: MenuItem = {
       id: m.route + '_' + m.children.length,
       route: m.route + '_' + m.children.length + '_new',
-      cs: m.cs,
-      en: m.en,
       visible: true,
       children: []
-    })
+    };
+    this.state.currentMagazine.languages.forEach(lang => {
+      item[lang] = m[lang];
+    });
+    item['children'] = [];
+    m.children.push(item)
   }
 
   findNewMenuId() {
@@ -298,15 +300,17 @@ export class AdminInterfaceComponent {
 
   addMenu() {
     let id = this.findNewMenuId();
-    this.menu.push({
+    const item: any = {
       id: id,
       route: id + '_new',
-      cs: 'Nazev CS',
-      en: 'Name EN',
       visible: true,
       added: true,
       children: []
-    })
+    }
+    this.state.currentMagazine.languages.forEach(lang => {
+      item[lang] = lang;
+    });
+    this.menu.push(item)
   }
 
   removeMenu(idx: number) {

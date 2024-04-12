@@ -102,8 +102,7 @@
 		},
 		"prihlaseni_": "Přihlášení",
 		"url": "Cesta v URL",
-		"cs": "Český název v menu",
-		"en": "Anglický název v menu"
+		"name": "Název v menu"
 	},
 	"ARCHIV STARŠÍCH ROČNÍKŮ": "ARCHIV STARŠÍCH ROČNÍKŮ",
 	"PROHLÍŽET CELÉ ČÍSLO": "PROHLÍŽET",
@@ -307,7 +306,7 @@
 		"lang": {
 			"cs": "česky",
 			"en": "anglicky",
-			"de": "nemecky"
+			"de": "německy"
 		}
 	},
 	"button": {

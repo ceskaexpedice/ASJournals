@@ -102,8 +102,7 @@
 		},
 		"prihlaseni_": "Login",
 		"url": "Path in URL",
-		"cs": "Czech label in menu",
-		"en": "English label in menu"
+		"name": "Label in menu"
 	},
 	"ARCHIV STARŠÍCH ROČNÍKŮ": "ARCHIVE",
 	"PROHLÍŽET CELÉ ČÍSLO": "VIEW", 
@@ -302,7 +301,12 @@
 		"jazyky": "Languages",
 		"pridat_jazyk": "Add language",
 		"smazat_jazyk": "Remove language",
-		"stranky": "Pages"
+		"stranky": "Pages",
+		"lang": {
+			"cs": "czech",
+			"en": "english",
+			"de": "german"
+		}
 	},
 	"button": {
 		"Yes": "Yes",

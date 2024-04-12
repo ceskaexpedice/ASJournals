@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
-  currentLang: string = 'cs';
+  // currentLang: string = 'cs';
   menu: any[] = [];
 
   public isCollapsed: boolean = false;
@@ -45,38 +45,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscriptions.push(this.appservice.langSubject.subscribe(val => {
-      this.currentLang = val;
+      // this.currentLang = val;
     }));
 
-    // this.subscriptions.push(this.state.titleChangedSubject.subscribe(val => {
-    //   if (this.state.actualNumber) {
-    //     this.titleService.setTitle( this.state.actualNumber['root_title']!);
-    //     this.meta.removeTag('name=description');
-    //     this.meta.removeTag('name=author');
-    //     this.meta.removeTag('name=keywords');
-        
-    //     this.meta.addTags( [
-    //       { name: 'description', content: this.state.currentMagazine.desc! },
-    //       { name: 'author', content: this.state.currentMagazine.vydavatel! },
-    //       { name: 'keywords', content: this.state.currentMagazine.keywords.join(',') }
-    //     ]);
-    //   }
-    // }));
-
       this.menu = this.config.layout.menu;
-
-    //    this.state.fullScreenSubject.subscribe(val=> {
-    //      if(!val){
-    //        setTimeout(()=>{
-    //          this.menu = this.config['menu'];
-    //        }, 100);
-    //        
-    //      } else {
-    //        this.menu = {};
-    //      }
-    //    });
   }
-
   ngOnDestroy() {
     this.subscriptions.forEach((s: Subscription) => {
       s.unsubscribe();

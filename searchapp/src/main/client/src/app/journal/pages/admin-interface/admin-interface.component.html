@@ -58,13 +58,19 @@
               <mat-label>{{ 'menu.url' | translate }}</mat-label>
               <input matInput type="text" [(ngModel)]="selected.route" name="route">
             </mat-form-field>
-            <mat-form-field appearance="outline" class="app-fxFlex  app-mr-2">
+            <!-- <mat-form-field appearance="outline" class="app-fxFlex  app-mr-2">
               <mat-label>{{ 'menu.cs' | translate }}</mat-label>
               <input matInput type="text" [(ngModel)]="selected.cs" name="cs">
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="app-fxFlex">
+            </mat-form-field> -->
+            <!-- <mat-form-field appearance="outline" class="app-fxFlex">
               <mat-label>{{ 'menu.en' | translate }}</mat-label>
               <input matInput type="text" [(ngModel)]="selected.en" name="en">
+            </mat-form-field> -->
+          </div>
+          <div class="app-fxLayout app-row app-fill" *ngIf="selected">
+            <mat-form-field *ngFor="let lang of state.currentMagazine.languages" appearance="outline" class="app-fxFlex  app-mr-2">
+              <mat-label>{{ 'menu.name' | translate }}  {{ 'magazines.lang.' + lang | translate }}</mat-label>
+              <input matInput type="text" [(ngModel)]="selected[lang]" [name]="'menu'+lang">
             </mat-form-field>
           </div>
           <div class="app-editor-wrapper">
