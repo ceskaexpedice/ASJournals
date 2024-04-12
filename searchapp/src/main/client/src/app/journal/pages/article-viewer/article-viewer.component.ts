@@ -216,8 +216,6 @@ export class ArticleViewerComponent implements OnInit {
       tags.push({ name: 'abstract', content: this.state.viewerArticle.abstract });
     }
 
-
-
     if (this.state.viewerArticle['autor_full']) {
       tags.push({ name: 'citation_author', content: this.state.viewerArticle['autor_full'].filter((a: any) => a.role !== 'trl').map((a: any) => a.name) });
     }
@@ -228,8 +226,9 @@ export class ArticleViewerComponent implements OnInit {
     }
 
     const pi = Utils.findByModel(res, 'periodicalitem');
-    if (pv !== null) {
-      tags.push({ name: 'citation_issue', content: this.state.viewerArticle.title }); // model:periodicalitem	titleInfo/partNumber
+    if (pi !== null) {
+      const issueNumber = pi.mods['mods:titleInfo']['mods:partNumber'];
+      tags.push({ name: 'citation_issue', content: issueNumber }); // model:periodicalitem	titleInfo/partNumber  
     }
 
     const rozsah = Utils.getRozsah(this.state.viewerArticle.mods);
