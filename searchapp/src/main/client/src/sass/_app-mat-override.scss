@@ -19,6 +19,10 @@
 // button
 .mat-mdc-button-base {
   //height: var(--app-button-height) !important;
+  height: auto !important;
+  min-height: var(--app-button-height) !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
 
   .mat-icon {
     @extend .app-mr-2;
