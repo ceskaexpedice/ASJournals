@@ -1,13 +1,10 @@
 <div class="app-page-wrapper">
   <div class="app-container">
-    <div class="app-fxLayout app-row app-fill">
+    <div class="app-fxLayout app-row app-fill app-mobile">
       <div class="app-left app-mr-8">
-        <img [src]="state.imgSrc" [title]="" class="app-mb-2"
-          routerLink="../home" queryParamsHandling="preserve" />
-        <button mat-stroked-button color="primary" class="app-db app-w-100 app-mb-2"
-        routerLink="../actual" queryParamsHandling="preserve"><mat-icon>menu_book</mat-icon>{{'AKTUÁLNÍ ČÍSLO' | translate}} </button>
-        <button mat-stroked-button color="primary" class="app-db app-w-100"
-        routerLink="../archiv" queryParamsHandling="preserve"><mat-icon>inventory</mat-icon>{{'ARCHIV STARŠÍCH ROČNÍKŮ' | translate }}</button>      
+        <img [src]="state.imgSrc" [title]="" class="app-mb-2" routerLink="../home" queryParamsHandling="preserve" />
+        <button mat-stroked-button color="primary" class="app-db app-w-100 app-mb-2" routerLink="../actual" queryParamsHandling="preserve"><mat-icon>menu_book</mat-icon>{{'AKTUÁLNÍ ČÍSLO' | translate}}</button>
+        <button mat-stroked-button color="primary" class="app-db app-w-100"routerLink="../archiv" queryParamsHandling="preserve"><mat-icon>inventory</mat-icon>{{'ARCHIV STARŠÍCH ROČNÍKŮ' | translate }}</button>      
       </div>
       <div class="app-right app-fxFlex">
         <h1>Journal {{ state.currentMagazine.title }}</h1>

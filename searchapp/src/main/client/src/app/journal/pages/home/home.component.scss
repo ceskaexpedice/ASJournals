@@ -1,0 +1,11 @@
+@media only screen and (max-width: 599px) {
+  .app-mobile {
+    display: block;
+
+    .app-left {
+      margin-bottom: 16px;
+      margin-right: 0 !important;
+      text-align: center;
+    }
+  }
+}
