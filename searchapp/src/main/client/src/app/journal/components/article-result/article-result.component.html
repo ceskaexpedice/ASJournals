@@ -7,7 +7,7 @@
       </span>
       <span class="app-pipe" *ngIf="viewed"></span>
     </ng-container>
-    <ng-container *ngIf="viewed">{{ 'Počet zobrazení' | translate }}: <strong>{{ viewed }}</strong></ng-container>
+    <ng-container *ngIf="viewed">{{ 'Počet zobrazení' | translate }}: <span>{{ viewed }}</span></ng-container>
     <ng-container *ngIf="isPeerReviewed">
       <span class="app-pipe"></span>
       <span class="app-text-highlight">{{ 'recenzovaný článek' | translate }}</span>
@@ -15,6 +15,6 @@
   </div>
   <div>
     <app-journal-details *ngIf="parentJournal" [journal]="parentJournal"></app-journal-details>
-    <span class="app-pipe"></span>{{ 'rozsah_zkratka' | translate }}: <strong>{{ rozsah }}</strong>
+    <span class="app-pipe"></span>{{ 'rozsah_zkratka' | translate }}: <span>{{ rozsah }}</span>
   </div>
 </div>
