@@ -11,8 +11,8 @@
         </ng-container>          
       </div>
       <a mat-tab-link routerLink="articles" *ngIf="windowSize < breakpoint" (click)="state.viewerActiveLink = 'articles'" [active]="state.viewerActiveLink == 'articles'">{{ 'articles' | translate }}</a>
-      <a mat-tab-link routerLink="detail" (click)="state.viewerActiveLink = 'detail'" [active]="state.viewerActiveLink === 'detail'">{{ 'detail' | translate }}</a>
-      <a mat-tab-link routerLink="pdf" (click)="state.viewerActiveLink = 'pdf'" [active]="state.viewerActiveLink === 'pdf'">{{ 'pdf' | translate }}</a>
+      <a mat-tab-link routerLink="detail" (click)="state.viewerActiveLink = 'detail'" [active]="state.viewerActiveLink === 'detail'">{{ 'detail' | translate | uppercase }}</a>
+      <a mat-tab-link routerLink="pdf" (click)="state.viewerActiveLink = 'pdf'" [active]="state.viewerActiveLink === 'pdf'">{{ 'pdf' | translate  | uppercase }}</a>
     </nav>
   </div> 
   <div class="app-fxFlex app-fxLayout app-pb-8 app-pl-4 app-pr-4">
