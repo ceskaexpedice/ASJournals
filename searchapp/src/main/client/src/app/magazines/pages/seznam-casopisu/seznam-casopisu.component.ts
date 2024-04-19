@@ -10,18 +10,22 @@ import { SeznamItemComponent } from '../../components/seznam-item/seznam-item.co
 import { FacetsComponent } from '../../components/facets/facets.component';
 import { FacetsUsedComponent } from '../../components/facets-used/facets-used.component';
 import { SortBarComponent } from '../../components/sort-bar/sort-bar.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @Component({
   standalone: true,
-  imports: [RouterModule, CommonModule, TranslateModule, SeznamItemComponent, FacetsComponent, FacetsUsedComponent, SortBarComponent],
+  imports: [RouterModule, CommonModule, TranslateModule, SeznamItemComponent, FacetsComponent, FacetsUsedComponent, SortBarComponent, MatButtonModule, MatIconModule, MatTooltipModule, TranslateModule],
   selector: 'app-seznam-casopisu',
   templateUrl: './seznam-casopisu.component.html',
   styleUrls: ['./seznam-casopisu.component.scss']
 })
 export class SeznamCasopisuComponent implements OnInit {
 
-
+  isFacetActive: boolean = false;
+  isFacetActivee = '';
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -75,6 +79,10 @@ export class SeznamCasopisuComponent implements OnInit {
       this.state.magazines.forEach((m: Magazine) => m.isK7 = m.kramerius_version === 'k7');
       this.state.setFacets(response['facet_counts']['facet_fields']);
     });
+  }
+
+  setFacetView() {
+    this.isFacetActive =! this.isFacetActive;
   }
 
 }

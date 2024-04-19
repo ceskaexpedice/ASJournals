@@ -311,7 +311,9 @@
 	},
 	"button": {
 		"Yes": "Ano",
-		"No": "Ne"
+		"No": "Ne",
+		"showFilters": "Zobrazit filtry",
+		"showResults": "Zobrazit výsledky"
 	},
 	"role": {
 		"abr": "Zkracovač",

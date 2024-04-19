@@ -56,6 +56,11 @@
     --app-gap-card: 16px;
     --app-border-radius: 4px;
 
+    // toolbar
+    --app-toolbar-height: 44px;
+    --app-toolbar-bg: var(--app-gray-2);
+    --app-toolbar-border-color: var(--app-gray-3);
+
     // footer
     --app-footer-bg: var(--app-gray-9);
     --app-footer-color: rgba(var(--app-color-lightnes-rgb), .6);

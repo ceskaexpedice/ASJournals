@@ -1,23 +1,55 @@
-@import "../../../../sass/app-theme-default";
-@import "../../../../sass/app-variables";
+.app-toolbar {
+  display: none;
+  height: var(--app-toolbar-height);
+  background-color: var( --app-toolbar-bg);
+  border-bottom: 1px solid var( --app-toolbar-border-color);
+}
 
-.app-fxLayout {
-  flex-flow: wrap;
-
+.app-page-wrapper {
   .app-left {
-    flex: 1 1 100%;
+    margin-right: 16px;
+    flex: 1 1 350px;
     box-sizing: border-box;
-    max-width: 100%;
+    max-width: 350px;
+    min-width: 350px;
   }
-  
-  @media #{$gt-sm} {
+}
+
+@media only screen and (max-width: 959px) {
+  .app-toolbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 16px;
+  }
+
+  .app-page-wrapper {
     .app-left {
-      margin-right: 16px;
-      flex-flow: nowrap;
-      flex: 1 1 350px;
+      display: none;
+      flex: 1 1 100%;
       box-sizing: border-box;
-      max-width: 350px;
-      min-width: 350px;
+      max-width: 100%;
+      min-width: 100%;
+    }
+
+    &.app-mobile-facet-active {
+      .app-left {
+        display: block;
+      }
+
+      .app-right {
+        display: none;
+      }
+    }
+
+    &.app-mobile-result-active {
+      .app-left {
+        display: none;
+      }
+
+      .app-right {
+        display: block;
+      }
     }
   }
 }
