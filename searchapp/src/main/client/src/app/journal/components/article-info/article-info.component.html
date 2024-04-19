@@ -9,57 +9,57 @@
 
 <ng-container *ngIf="article">
 	<div *ngIf="article.dateIssued">
-		<span class="app-label">{{ 'Datum publikování' | translate }}:</span>
+		<strong>{{ 'Datum publikování' | translate }}:</strong>
 		{{ article.dateIssued }}
 	</div>
 
 	<div *ngFor="let author of authors_full; let last = last">
-		<span class="app-label">{{ (author.role ? 'role.' +  author.role : 'Autor') | translate }}:</span>
+		<strong>{{ (author.role ? 'role.' +  author.role : 'Autor') | translate }}:</strong>
 		{{ author.name }} 
 	</div>
 
 	<div *ngIf="article.keywords && article.keywords.length > 0">
-		<span class="app-label">{{ 'Klíčová slova' | translate }}:</span>
+		<strong>{{ 'Klíčová slova' | translate }}:</strong>
 		<span *ngFor="let keyword of article.keywords; let last = last">
 			{{ keyword }}<ng-container *ngIf="!last">, </ng-container>
 		</span>
 	</div>
 
 	<div *ngIf="article.abstract">
-		<span class="app-label">{{ 'Abstrakt' | translate }}:</span>
+		<strong>{{ 'Abstrakt' | translate }}:</strong>
 		{{ article.abstract }}
 	</div>
 
 	<div *ngIf="article.zdroj">
-		<span class="app-label">{{ 'Zdroj' | translate }}:</span>
+		<strong>{{ 'Zdroj' | translate }}:</strong>
 		{{ article.zdroj }}
 	</div>
 
 	<div *ngIf="article.genre">
-		<span class="app-label">{{ 'Rubrika' | translate }}: </span>
+		<strong>{{ 'Rubrika' | translate }}: </strong>
 		<span *ngFor="let g of article.genre; let last = last">
-			<ng-container *ngIf="g !== 'peer-reviewed'">{{ 'genre.' +g | translate }}</ng-container><ng-container *ngIf="!last">, </ng-container>
+			<ng-container *ngIf="g !== 'peer-reviewed'">{{ 'genre.' +g | translate }}</ng-container><ng-container *ngIf="!last && g !== 'peer-reviewed'">, </ng-container>
 		</span>
 	</div>
 
 	<div *ngIf="rozsah">
-		<span class="app-label">{{ 'Rozsah stran' | translate }}:</span>
+		<strong>{{ 'Rozsah stran' | translate }}:</strong>
 		{{ 'rozsah_zkratka' | translate }} {{ rozsah }}
 	</div>
 
 	<div *ngIf="doi">
-		<span class="app-label">{{'DOI' | translate}}:</span>
+		<strong>{{'DOI' | translate}}:</strong>
 		{{ doi }}
 	</div>
 
 	<div>
-		<span class="app-label">{{ 'Status recenzování' | translate }}: </span>
+		<strong>{{ 'Status recenzování' | translate }}: </strong>
 		<ng-container *ngIf="isPeerReviewed">{{ 'recenzovaný článek' | translate }}</ng-container>
 		<ng-container *ngIf="!isPeerReviewed">{{ 'nerecenzovaný článek' | translate }}</ng-container>
 	</div>
 
 	<div>
-		<span class="app-label">{{'Licence' | translate}}:</span> 
+		<strong>{{'Licence' | translate}}:</strong>
 		{{ licence }}
 	</div>
 </ng-container>
