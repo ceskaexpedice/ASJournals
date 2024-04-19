@@ -314,7 +314,9 @@
 		"showFilters": "Show filters",
 		"showResults": "Show results",
 		"zoomIn": "Zoom in",
-		"zoomOut": "Zoom out"
+		"zoomOut": "Zoom out",
+		"share": "Share",
+		"download": "Download"
 	},
 	"role": {
 		"abr": "Abridger",

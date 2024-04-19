@@ -315,7 +315,9 @@
 		"showFilters": "Zobrazit filtry",
 		"showResults": "Zobrazit výsledky",
 		"zoomIn": "Minimalizovat",
-		"zoomOut": "Maximalizovat"
+		"zoomOut": "Maximalizovat",
+		"share": "Sdílet",
+		"download": "Stáhnout"
 	},
 	"role": {
 		"abr": "Zkracovač",
