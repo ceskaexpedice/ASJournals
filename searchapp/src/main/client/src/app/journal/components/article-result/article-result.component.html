@@ -10,7 +10,7 @@
     <ng-container *ngIf="viewed">{{ 'Počet zobrazení' | translate }}: <strong>{{ viewed }}</strong></ng-container>
     <ng-container *ngIf="isPeerReviewed">
       <span class="app-pipe"></span>
-      <strong>{{ 'recenzovaný článek' | translate }}</strong>
+      <span class="app-text-highlight">{{ 'recenzovaný článek' | translate }}</span>
     </ng-container>
   </div>
   <div>

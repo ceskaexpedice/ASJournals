@@ -159,6 +159,11 @@ hr {
   }
 }
 
+.app-text-highlight {
+  background-color: var(--app-gray-2);
+  padding: 2px 8px;
+}
+
 .app-layout-wrap-16 {
   margin-left: calc(var(--app-gap-card) * -1);
 
