@@ -6,7 +6,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="app-fxLayout app-column app-fill">
-      <header>
+      <header *ngIf="!state.isFull">
         <app-heading></app-heading>
         <app-navbar (sidenavToggle)="sidenav.toggle()"></app-navbar>
         <app-breadcrumb></app-breadcrumb>

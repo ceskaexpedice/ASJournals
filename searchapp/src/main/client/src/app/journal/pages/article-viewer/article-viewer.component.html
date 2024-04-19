@@ -1,23 +1,25 @@
 <div class="app-fxLayout app-column app-fill">
-  <div class="app-container">
+  <div [ngClass]="state.isFull ? 'app-container-fluid ' : 'app-container'">
     <nav mat-tab-nav-bar mat-stretch-tabs="false" mat-align-tabs="end" [tabPanel]="tabPanel" #tabs>
-      <div class="mat-mdc-tab-links app-jc-start app-controls">
-        <a mat-tab-link [href]="state.fullSrc" [download]="downloadFilename"><mat-icon>download</mat-icon></a>
-        <a mat-tab-link (click)="linkShare()"><mat-icon>share</mat-icon></a>
+      <div class="mat-mdc-tab-links app-jc-start app-controls" [class.app-ml-0]="state.isFull">
+        <a mat-tab-link [href]="state.fullSrc" [download]="downloadFilename" [matTooltip]="'button.download' | translate"><mat-icon>download</mat-icon></a>
+        <a mat-tab-link (click)="linkShare()" [matTooltip]="'button.share' | translate"><mat-icon>share</mat-icon></a>
         <ng-container *ngIf="state.viewerActiveLink === 'pdf'">
-          <!-- <a mat-tab-link><mat-icon>zoom_in</mat-icon></a>
-          <a mat-tab-link><mat-icon>zoom_out</mat-icon></a> -->
-          <a mat-tab-link (click)="maximize()"><mat-icon>zoom_out_map</mat-icon></a>
+          <a mat-tab-link (click)="state.isFull ? minimize() : maximize()" [matTooltip]="state.isFull ? ('button.zoomIn' | translate) : ('button.zoomOut' | translate)">
+            <mat-icon>{{ state.isFull ? 'zoom_in_map' : 'zoom_out_map' }}</mat-icon>
+          </a>
         </ng-container>          
       </div>
-      <a mat-tab-link routerLink="articles" *ngIf="windowSize < breakpoint" (click)="state.viewerActiveLink = 'articles'" [active]="state.viewerActiveLink == 'articles'">{{ 'articles' | translate }}</a>
-      <a mat-tab-link routerLink="detail" (click)="state.viewerActiveLink = 'detail'" [active]="state.viewerActiveLink === 'detail'">{{ 'detail' | translate | uppercase }}</a>
-      <a mat-tab-link routerLink="pdf" (click)="state.viewerActiveLink = 'pdf'" [active]="state.viewerActiveLink === 'pdf'">{{ 'pdf' | translate  | uppercase }}</a>
+      <ng-container *ngIf="!state.isFull">
+        <a mat-tab-link routerLink="articles" *ngIf="windowSize < breakpoint" (click)="state.viewerActiveLink = 'articles'" [active]="state.viewerActiveLink == 'articles'">{{ 'articles' | translate | uppercase }}</a>
+        <a mat-tab-link routerLink="detail" (click)="state.viewerActiveLink = 'detail'" [active]="state.viewerActiveLink === 'detail'">{{ 'detail' | translate | uppercase }}</a>
+        <a mat-tab-link routerLink="pdf" (click)="state.viewerActiveLink = 'pdf'" [active]="state.viewerActiveLink === 'pdf'">{{ 'pdf' | translate  | uppercase }}</a>
+      </ng-container>
     </nav>
   </div> 
-  <div class="app-fxFlex app-fxLayout app-pb-8 app-pl-4 app-pr-4">
-    <div class="app-container app-fxFlex app-fxLayout app-row">
-      <div class="app-left app-fxLayout app-column">
+  <div class="app-fxFlex app-fxLayout" [ngClass]="state.isFull ? null : 'app-pb-4 app-pl-4 app-pr-4'">
+    <div class="app-fxFlex app-fxLayout app-row" [ngClass]="state.isFull ? 'app-container-fluid ' : 'app-container'">
+      <div class="app-left app-fxLayout app-column" *ngIf="!state.isFull">
         <div class="app-fxFlex app-oa-y app-items-wrapper app-p-4">
           <app-article-viewer-articles></app-article-viewer-articles>
         </div>

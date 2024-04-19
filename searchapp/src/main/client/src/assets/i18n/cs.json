@@ -313,7 +313,9 @@
 		"Yes": "Ano",
 		"No": "Ne",
 		"showFilters": "Zobrazit filtry",
-		"showResults": "Zobrazit výsledky"
+		"showResults": "Zobrazit výsledky",
+		"zoomIn": "Minimalizovat",
+		"zoomOut": "Maximalizovat"
 	},
 	"role": {
 		"abr": "Zkracovač",

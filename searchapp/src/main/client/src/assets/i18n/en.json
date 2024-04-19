@@ -312,7 +312,9 @@
 		"Yes": "Yes",
 		"No": "No",
 		"showFilters": "Show filters",
-		"showResults": "Show results"
+		"showResults": "Show results",
+		"zoomIn": "Zoom in",
+		"zoomOut": "Zoom out"
 	},
 	"role": {
 		"abr": "Abridger",

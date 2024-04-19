@@ -21,11 +21,12 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ShareDialogComponent } from '../../components/share-dialog/share-dialog.component';
 import { Meta } from '@angular/platform-browser';
 import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   standalone: true,
   imports: [CommonModule, RouterModule, TranslateModule, NgxExtendedPdfViewerModule,
-    MatIconModule, MatTabsModule, MatDividerModule, MatDialogModule, ArticleViewerArticlesComponent],
+    MatIconModule, MatTabsModule, MatDividerModule, MatDialogModule, ArticleViewerArticlesComponent, MatTooltipModule],
   selector: 'app-article-viewer',
   templateUrl: './article-viewer.component.html',
   styleUrls: ['./article-viewer.component.scss']
