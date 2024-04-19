@@ -8,6 +8,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  //font-family: "Roboto Condensed", sans-serif !important;;
 }
 
 app-root {
@@ -40,6 +41,10 @@ app-root {
       max-width: var(--app-container);
       width: 100%;
       min-width: auto !important;
+
+      &.app-small {
+        max-width: var(--app-container-small);
+      }
     }
 
     .app-container-fluid {
