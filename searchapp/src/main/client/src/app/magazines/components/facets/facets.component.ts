@@ -59,6 +59,8 @@ export class FacetsComponent implements OnInit {
     console.log(this.state.isFacetUsed(field, value), field, value)
     if (!this.state.isFacetUsed(field, value)){
       this.service.addFilter(field, value);
+    } else if (this.state.isFacetUsed(field, value)){
+      // please Alberto do remove filter here
     }
   }
 
