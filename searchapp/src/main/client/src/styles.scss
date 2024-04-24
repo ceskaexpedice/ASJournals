@@ -14,24 +14,21 @@
 @import "sass/app-layout";
 @import "sass/app-flex-layout";
 
-.app-theme {
-  // Typography config based on the default, but using "Comic Sans" as the
-  // default font family for all levels.
-  $kids-typography: mat.define-typography-config(
-    $font-family: 'Roboto Condensed',
-  );
-
-  $kids-theme: mat.define-light-theme((
-    typography: $kids-typography,
-  ));
-
-  @include mat.all-component-themes($kids-theme);
-}
-
 @include mat-css-vars.init-material-css-vars();
 
 @include mat-css-vars.mat-css-set-palette-defaults(
   mat.$light-blue-palette,
   "primary"
 );
+
+$custom-typography-config: mat.define-legacy-typography-config(
+  $font-family: 'Montserrat',
+  $body-1: mat.define-typography-level(
+    $font-family: 'Garamond',
+    $font-size: inherit, 
+  ),
+);
+
+@include mat.all-component-typographies($custom-typography-config);
+//@include mat.legacy-core();
 
