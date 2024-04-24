@@ -44,7 +44,7 @@ export class MagazineEditComponent implements OnInit {
   };
   newKeyword: string = '';
   newLanguage: string = '';
-  newOblast: string = '';
+  newOblast: {[lang: string]: string} = {};
 
   showTitleLabel = true;
   
@@ -58,7 +58,12 @@ export class MagazineEditComponent implements OnInit {
 
   ngOnChanges(change: SimpleChanges) {
     if (change['mag']) {
-      this.vydavatel = this.editors.find(e => e.id === this.mag.vydavatel_id)
+      this.vydavatel = this.editors.find(e => e.id === this.mag.vydavatel_id);
+      this.newOblast = {};
+      this.mag.languages.forEach(lang => {
+        this.newOblast[lang] = '';
+      });
+      
     }
   }
   
@@ -94,13 +99,13 @@ export class MagazineEditComponent implements OnInit {
     this.mag.oblast.splice(idx, 1);
   }
   
-  addOblast(){
-    if(this.newOblast !== ''){
-      if(!this.mag.oblast){
-        this.mag.oblast = [];
+  addOblast(lang: string){
+    if(this.newOblast[lang] !== ''){
+      if(!this.mag['oblast_'+lang]){
+        this.mag['oblast_'+lang] = [];
       }
-        this.mag.oblast.push(this.newOblast);
-      this.newOblast = '';
+      this.mag['oblast_'+lang].push(this.newOblast[lang]);
+      this.newOblast[lang] = '';
     }
   }
 
