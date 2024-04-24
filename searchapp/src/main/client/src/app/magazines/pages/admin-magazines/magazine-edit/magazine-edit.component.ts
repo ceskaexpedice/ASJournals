@@ -60,6 +60,9 @@ export class MagazineEditComponent implements OnInit {
     if (change['mag']) {
       this.vydavatel = this.editors.find(e => e.id === this.mag.vydavatel_id);
       this.newOblast = {};
+      if (!this.mag.languages) {
+        this.mag.languages = ['cs'];
+      }
       this.mag.languages.forEach(lang => {
         this.newOblast[lang] = '';
       });
@@ -95,8 +98,8 @@ export class MagazineEditComponent implements OnInit {
     }
   }
   
-  removeOblast(idx: number){
-    this.mag.oblast.splice(idx, 1);
+  removeOblast(idx: number, lang: string){
+    this.mag['oblast_'+lang].splice(idx, 1);
   }
   
   addOblast(lang: string){

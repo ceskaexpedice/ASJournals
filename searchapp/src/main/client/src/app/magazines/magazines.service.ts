@@ -107,7 +107,8 @@ export class MagazinesService {
   getMagazines(): Observable<any> {
     var url = 'search/get_magazines';
     let params = new HttpParams()
-      .set('sortDir', this.state.currentSortDir);
+    .set('lang', this.state.currentLang)
+    .set('sortDir', this.state.currentSortDir);
 
       // for (let i in this.state.filters) {
       //   let f: { field: string, value: string } = this.state.filters[i];

@@ -145,7 +145,7 @@
     </div>
     <div class="app-fxFlex app-fxFlex-75 app-center-v">
       <span *ngFor="let k of mag['oblast_'+lang]; let idx = index; let last = last;" class="app-keyword">
-        <label class="app-label">{{ k }}</label><a (click)="removeOblast(idx)" [matTooltip]="'magazines.smazat_oblast' | translate"><mat-icon>clear</mat-icon></a><span class="app-pipe app-in-element" *ngIf="!last"></span>
+        <label class="app-label">{{ k }}</label><a (click)="removeOblast(idx, lang)" [matTooltip]="'magazines.smazat_oblast' | translate"><mat-icon>clear</mat-icon></a><span class="app-pipe app-in-element" *ngIf="!last"></span>
       </span>
     </div>
 </ng-container>

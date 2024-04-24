@@ -74,13 +74,17 @@ public class Searcher {
 
     public static JSONObject getMagazines(HttpServletRequest request) {
         JSONObject json = new JSONObject();
+        String lang = request.getParameter("lang");
+        if (lang == null) {
+            lang = "cs";
+        }
         try (HttpSolrClient client = new HttpSolrClient.Builder(Options.getInstance().getString("solr.host")).build()) {
             SolrQuery query = new SolrQuery("*")
                     .setRows(50)
                     .setSort("titleCS", SolrQuery.ORDER.asc)
                     .setFacet(true)
                     .setFacetMinCount(1)
-                    .addFacetField("pristup", "oblast", "{!ex=keywords}keywords", "vydavatel")
+                    .addFacetField("pristup", "{!key=oblast}oblast_" + lang, "{!ex=keywords}keywords", "vydavatel")
                     .setParam("json.nl", "arrarr");
 
             if (request.getParameter("sortDir") != null) {

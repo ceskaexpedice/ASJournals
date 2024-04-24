@@ -45,4 +45,16 @@ export class NavbarComponent implements OnInit {
     this.sidenavToggle.emit();
   }
 
+  
+
+  changeLang(lang: string) {
+    // this.translate.use(lang);
+
+    this.service.changeLang(lang);
+
+    let p: any = {};
+    p['lang'] = lang;
+    this.router.navigate([], { relativeTo: this.route, queryParams: p, queryParamsHandling: "merge" });
+  }
+
 }
