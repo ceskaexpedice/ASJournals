@@ -4,8 +4,6 @@
  */
 package cz.incad.k5journals.searchapp;
 
-import static cz.incad.k5journals.searchapp.SearchServlet.LOGGER;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.Http2SolrClient;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.impl.NoOpResponseParser;
 import org.apache.solr.client.solrj.request.QueryRequest;
@@ -105,7 +101,9 @@ public class Searcher {
             
             if (request.getParameter("oblast") != null) {
                 for (String fq : request.getParameterValues("oblast")) {
-                    query.addFilterQuery("{!tag=oblast}oblast:\"" + fq + "\"");
+                    String lang = fq.split("_")[0];
+                    String o = fq.split("_", 2)[1];
+                    query.addFilterQuery("{!tag=oblast}oblast_" + lang + ":\"" + o + "\"");
                 }
             }
 
@@ -115,7 +113,7 @@ public class Searcher {
             for(int i = 0; i < docs.length(); i++) {
                 JSONObject doc = docs.getJSONObject(i);
                 if (!doc.has("title_cs")) {
-                    doc.put("title_cs", doc.getString("title"));
+                    doc.put("title_cs", doc.optString("title"));
                 }
                 if (!doc.has("subtitle_cs")) {
                     doc.put("subtitle_cs", doc.optString("subtitle", ""));
@@ -123,6 +121,14 @@ public class Searcher {
                 if (!doc.has("desc_cs")) {
                     doc.put("desc_cs", doc.optString("desc", ""));
                 }
+                if (!doc.has("oblast_cs")) {
+                    if (doc.has("oblast")) {
+                        doc.put("oblast_cs", doc.optJSONArray("oblast"));
+                    } else {
+                        doc.put("oblast_cs", new JSONArray());
+                    }
+                    
+                } 
             }
 
         } catch (Exception ex) {
