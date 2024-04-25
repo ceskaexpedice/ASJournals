@@ -592,5 +592,8 @@
 		"wit": "Witness",
 		"wpr": "Writer of preface",
 		"wst": "Writer of supplementary textual content"
-	  }
+	},
+	"desc": {
+		"articles": "Articles"
+	}
 }

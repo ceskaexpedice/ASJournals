@@ -592,5 +592,8 @@
 		"wit": "Svědek",
 		"wpr": "Autor předmluvy",
 		"wst": "Autor dodatečného textu"
-	  }
+	},
+	"desc": {
+		"articles": "Články"
+	}
 }

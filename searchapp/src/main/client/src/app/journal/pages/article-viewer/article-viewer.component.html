@@ -11,7 +11,7 @@
         </ng-container>          
       </div>
       <ng-container *ngIf="!state.isFull">
-        <a mat-tab-link routerLink="articles" *ngIf="windowSize < breakpoint" (click)="state.viewerActiveLink = 'articles'" [active]="state.viewerActiveLink == 'articles'">{{ 'articles' | translate | uppercase }}</a>
+        <a mat-tab-link routerLink="articles" *ngIf="windowSize < breakpoint" (click)="state.viewerActiveLink = 'articles'" [active]="state.viewerActiveLink == 'articles'">{{ 'desc.articles' | translate | uppercase }}</a>
         <a mat-tab-link routerLink="detail" (click)="state.viewerActiveLink = 'detail'" [active]="state.viewerActiveLink === 'detail'">{{ 'detail' | translate | uppercase }}</a>
         <a mat-tab-link routerLink="pdf" (click)="state.viewerActiveLink = 'pdf'" [active]="state.viewerActiveLink === 'pdf'">{{ 'pdf' | translate  | uppercase }}</a>
       </ng-container>
