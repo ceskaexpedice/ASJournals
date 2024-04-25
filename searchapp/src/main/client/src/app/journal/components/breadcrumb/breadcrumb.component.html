@@ -1,8 +1,12 @@
-<div class="app-breadcrumb app-fxLayout app-row app-center-v app-pl-4 app-pr-4">
-  <a [routerLink]="'home'" queryParamsHandling="preserve"><mat-icon class="app-pr-1">home</mat-icon></a>
-  <ng-container *ngFor="let c of crumbs; last as isLast;">
-    <a *ngIf="!isLast" [routerLink]="c.link" queryParamsHandling="preserve">{{c.label}}</a>
-    <span *ngIf="!isLast" class="app-separator">/</span>
-    <span *ngIf="isLast" class="app-last">{{c.label}}</span>
-  </ng-container>
+<div class="app-breadcrumb app-fxLayout app-row app-center-v">
+  <div class="app-container">
+    <div class="app-pl-4 app-pr-4">
+      <a [routerLink]="'home'" queryParamsHandling="preserve"><mat-icon class="app-pr-1">home</mat-icon></a>
+      <ng-container *ngFor="let c of crumbs; last as isLast;">
+        <a *ngIf="!isLast" [routerLink]="c.link" queryParamsHandling="preserve">{{c.label}}</a>
+        <span *ngIf="!isLast" class="app-separator">/</span>
+        <span *ngIf="isLast" class="app-last">{{c.label}}</span>
+      </ng-container>
+    </div>
+  </div>
 </div>

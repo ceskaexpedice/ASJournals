@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <div class="app-container-fluid app-fxLayout app-row app-fill app-center-v">
+  <div class="app-container app-fxLayout app-row app-fill app-center-v">
     <div class="app-left app-fxFlex app-desktop">
       <ng-container *ngIf="menu">
         <a mat-flat-button color="primary" routerLink="actual" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'menu.actual_' | translate" (click)="isMobile ? onSidenavClose() : null">{{ 'menu.actual_' | translate }}</a>
