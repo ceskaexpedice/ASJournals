@@ -22,13 +22,13 @@
 );
 
 $custom-typography-config: mat.define-legacy-typography-config(
-  $font-family: 'Montserrat',
-  $body-1: mat.define-typography-level(
+  $font-family: 'Roboto Condensed',
+  /* $body-1: mat.define-typography-level(
     $font-family: 'Garamond',
     $font-size: inherit, 
-  ),
+  ), */
 );
 
 @include mat.all-component-typographies($custom-typography-config);
-//@include mat.legacy-core();
+@include mat.legacy-core();
 
