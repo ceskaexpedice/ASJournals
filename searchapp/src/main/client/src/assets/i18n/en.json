@@ -122,6 +122,7 @@
 	"Rozsah stran": "Range of pages",
 	"rozsah_zkratka": "p.",
 	"Licence": "License",
+	"licence_ph": "license name",
 	"Status recenzování": "Peer reviewed state",
 	"recenzovaný článek": "peer reviewed",
 	"pouze v recenzovaných článcích": "only in peer reviewed articles",
@@ -316,7 +317,8 @@
 		"zoomIn": "Zoom in",
 		"zoomOut": "Zoom out",
 		"share": "Share",
-		"download": "Download"
+		"download": "Download",
+		"upload": "Upload"
 	},
 	"role": {
 		"abr": "Abridger",

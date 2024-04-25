@@ -317,7 +317,8 @@
 		"zoomIn": "Minimalizovat",
 		"zoomOut": "Maximalizovat",
 		"share": "Sdílet",
-		"download": "Stáhnout"
+		"download": "Stáhnout",
+		"upload": "Nahrát"
 	},
 	"role": {
 		"abr": "Zkracovač",
