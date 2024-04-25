@@ -49,7 +49,7 @@ export class SeznamCasopisuComponent implements OnInit {
 
   processParams(p: Params) {
     this.state.filters = [];
-    const fields = ['pristup', 'oblast', 'vydavatel', 'keywords'];
+    const fields: string[] = this.state.config.facetFields;
 
     fields.forEach(f => {
       const val = p[f];

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package cz.incad.k5journals.searchapp;
 
 import java.io.InputStream;
@@ -90,12 +86,6 @@ public class Searcher {
             if (request.getParameter("sortDir") != null) {
                 query.setSort("titleCS", SolrQuery.ORDER.valueOf(request.getParameter("sortDir")));
             }
-
-//            if (request.getParameter("fq") != null) {
-//                for (String fq : request.getParameterValues("fq")) {
-//                    query.addFilterQuery(fq);
-//                }
-//            }
             
             if (request.getParameter("keywords") != null) {
                 for (String fq : request.getParameterValues("keywords")) {
@@ -105,9 +95,10 @@ public class Searcher {
             
             if (request.getParameter("oblast") != null) {
                 for (String fq : request.getParameterValues("oblast")) {
-                    String lang = fq.split("_")[0];
-                    String o = fq.split("_", 2)[1];
-                    query.addFilterQuery("{!tag=oblast}oblast_" + lang + ":\"" + o + "\"");
+//                    String fqlang = fq.split("_")[0];
+//                    String o = fq.split("_", 2)[1];
+//                    query.addFilterQuery("{!tag=oblast}oblast_" + fqlang + ":\"" + o + "\"");
+                    query.addFilterQuery("{!tag=oblast}oblast_" + lang + ":\"" + fq + "\"");
                 }
             }
 

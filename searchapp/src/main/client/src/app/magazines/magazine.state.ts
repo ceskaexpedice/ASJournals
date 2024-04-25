@@ -63,7 +63,7 @@ import { Magazine } from '../models/magazine';
   
   setFacets(facets: any){
     this.facets = [];
-    let fields = Object.keys(facets);
+    let fields = this.config.facetFields;
     for (let i = 0; i < fields.length; i++){
       //this.facets.push({field: fields[i], values: facets[fields[i]].filter(f => !this.facetUsed(fields[i], f))});
       this.facets.push({field: fields[i], values: facets[fields[i]]});

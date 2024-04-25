@@ -9,7 +9,7 @@
         <a [matTooltip]="'Odstranit tento filtr'" matTooltipPosition="above" (click)="removeFilter(facetUsed.field, idx)" class="app-mr-1"><mat-icon>clear</mat-icon></a>
         <div>
           <span>{{ facetUsed.field | translate }}: </span>
-          {{ facetUsed.field === 'oblast' ? facetUsed.value.split('_',2)[1] : facetUsed.value }}
+          {{ facetUsed.value }}
         </div>
       </mat-list-item>
     </div>

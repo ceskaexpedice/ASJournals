@@ -37,7 +37,7 @@ export class FacetsComponent implements OnInit {
       }, 1000);
       
     }));
-    
+    console.log(this.state.facets)
   }
   
   openCollapsible(){

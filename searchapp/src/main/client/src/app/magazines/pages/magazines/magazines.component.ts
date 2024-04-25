@@ -47,7 +47,12 @@ export class MagazinesComponent implements OnInit {
       userLang = this.windowRef.nativeWindow.navigator.language.split('-')[0]; // use navigator lang if available
     }
     userLang = /(cs|en)/gi.test(userLang) ? userLang : 'cs';
-    userLang = this.config.defaultLang;
+
+    if (this.route.snapshot.queryParams['lang']) {
+      userLang = this.route.snapshot.queryParams['lang'];
+    } else {
+      userLang = this.config.defaultLang;
+    }
     this.service.changeLang(userLang);
 
     this.state.stateChangedSubject.subscribe(route => {
@@ -63,22 +68,22 @@ export class MagazinesComponent implements OnInit {
   }
 
 
-  getConfig() {
-    return this.http.get("assets/config.json").pipe(
-      map((res: any) => {
-        let cfg = res;
+  // getConfig() {
+  //   return this.http.get("assets/config.json").pipe(
+  //     map((res: any) => {
+  //       let cfg = res;
 
-        this.state.setConfig(cfg);
-        var userLang = navigator.language.split('-')[0]; // use navigator lang if available
-        userLang = /(cs|en)/gi.test(userLang) ? userLang : 'cs';
-        if (cfg.hasOwnProperty('defaultLang')) {
-          userLang = cfg['defaultLang'];
-        }
-        this.service.changeLang(userLang);
-        return this.config;
-      })
-    )
-  }
+  //       this.state.setConfig(cfg);
+  //       var userLang = navigator.language.split('-')[0]; // use navigator lang if available
+  //       userLang = /(cs|en)/gi.test(userLang) ? userLang : 'cs';
+  //       if (cfg.hasOwnProperty('defaultLang')) {
+  //         userLang = cfg['defaultLang'];
+  //       }
+  //       this.service.changeLang(userLang);
+  //       return this.config;
+  //     })
+  //   )
+  // }
 
   processUrl() {
     this.router.events.subscribe(val => {
