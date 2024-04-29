@@ -6,7 +6,7 @@
       </a>
     </div>
     <div class="app-right">
-      <mat-card-title>{{ (translate.currentLang === 'en' && resultItem.title_en) ? resultItem.title_en : resultItem.title }}</mat-card-title>
+      <mat-card-title>{{ resultItem['title_'+translate.currentLang] }}</mat-card-title>
       <div>
         <label class="app-label">{{ 'magazines.vydavatel' | translate }}: </label>
         <a [routerLink]="['/magazines/vydavatel', resultItem.vydavatel_id]" queryParamsHandling="preserve" [title]="resultItem.vydavatel">{{ resultItem.vydavatel }}</a>
