@@ -7,7 +7,7 @@
         <button mat-stroked-button color="primary" class="app-db app-w-100"routerLink="../archiv" queryParamsHandling="preserve"><mat-icon>inventory</mat-icon>{{'ARCHIV STARŠÍCH ROČNÍKŮ' | translate }}</button>      
       </div>
       <div class="app-right app-fxFlex">
-        <h1>Journal {{ state.currentMagazine.title }}</h1>
+        <h1>{{ state.currentMagazine.title }}</h1>
         <p [innerHTML]="home_text"></p>
         <ng-container *ngIf="showNews()">
           <h2 class="app-headline">{{ 'Aktuálně' | translate }}</h2>
