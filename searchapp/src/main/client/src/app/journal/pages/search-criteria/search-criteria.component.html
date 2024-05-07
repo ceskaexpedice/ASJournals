@@ -14,7 +14,7 @@
     <mat-menu #menuSufix="matMenu">
       <button mat-menu-item *ngFor="let operator of operators" (click)="setOperator(criterium, operator)">{{ operator.label | translate }}</button>
     </mat-menu>
-    <a [class.app-disabled-link]="input.value.length === 0" [matTooltip]="'Zrušit filter' | translate" (click)="removeCriterium(idx)">
+    <a [matTooltip]="'Zrušit filter' | translate" (click)="removeCriterium(idx)">
       <mat-icon color="primary">cancel</mat-icon>
     </a>
   </div>
