@@ -254,3 +254,19 @@
     @extend .app-pl-4, .app-pr-4, .app-pb-4;
   }
 }
+
+// snackbar
+.mat-mdc-snack-bar-container {
+  &.app-snackbar-error {
+    .mdc-snackbar__surface {
+      background-color: var(--app-color-warning);
+    }
+
+    .mat-mdc-button {
+      &.mat-mdc-snack-bar-action:not(:disabled) {
+        color: rgba(var(--app-color-lightnes-rgb), .7);
+        text-transform: uppercase;
+      }
+    }
+  }
+}

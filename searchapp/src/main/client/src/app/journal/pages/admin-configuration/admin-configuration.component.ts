@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, UpperCasePipe } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -18,6 +18,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import Utils from 'src/app/services/utils';
 import { LicencesDialogComponent } from '../../components/licences-dialog/licences-dialog.component';
 import { ResetPwdDialogComponent } from '../../components/reset-pwd-dialog/reset-pwd-dialog.component';
+import { error } from 'console';
+
 
 @Component({
   selector: 'app-admin-configuration',
@@ -42,7 +44,8 @@ export class AdminConfigurationComponent {
     public state: AppState,
     private service: AppService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute
+    ) { }
 
   ngOnInit() {
     if (this.state.currentMagazine.licences && this.state.currentMagazine.journal) {
@@ -133,6 +136,11 @@ export class AdminConfigurationComponent {
     this.state.currentMagazine!.sortByOrder = this.sortBy === 'order';
     this.state.currentMagazine!.keepLang = this.keepLang;
     this.service.saveMagazine(this.state.currentMagazine!).subscribe(res => {
+      if (res.error) {
+        this.service.showSnackBar('snackbar.error.changeSaved', 'desc.error', true);
+      } else {
+        this.service.showSnackBar('snackbar.success.changeSaved');
+      }
     });
   }
 

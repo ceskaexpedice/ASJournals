@@ -45,4 +45,8 @@ export class LicencesDialogComponent {
     }
     this.data.cache[pid].show = !this.data.cache[pid].show;
   }
+
+  saveLicenses() {
+    this.service.showSnackBar('snackbar.success.changeSaved');
+  }
 }

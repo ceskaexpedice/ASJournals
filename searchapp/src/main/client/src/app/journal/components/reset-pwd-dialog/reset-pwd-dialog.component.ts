@@ -32,8 +32,10 @@ export class ResetPwdDialogComponent {
       this.service.resetPwd(this.data.username, this.newPwd).subscribe(res => {
         if (res.error) {
           alert(res.error)
+          this.service.showSnackBar('snackbar.error.changeSaved', 'desc.error', true);
         } else {
           this.newPwdOk = true;
+          this.service.showSnackBar('snackbar.success.changeSaved');
           // this.resetpwdModal?.hide();
         }
       });
