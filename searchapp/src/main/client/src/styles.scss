@@ -21,14 +21,26 @@
   "primary"
 );
 
+
 $custom-typography-config: mat.define-legacy-typography-config(
   $font-family: 'Roboto Condensed',
-  /* $body-1: mat.define-typography-level(
-    $font-family: 'Garamond',
-    $font-size: inherit, 
-  ), */
+  $body-1: mat-typography-level(
+    $font-family: 'Roboto Condensed',
+    $font-size: 16px,
+    $font-weight: 400,
+    $line-height: 20px,
+    $letter-spacing: normal
+  ),
+  $button: mat-typography-level(
+    $font-family: 'Roboto Condensed',
+    $font-size: 14px,
+    $font-weight: 500,
+    $line-height: inherit,
+    $letter-spacing: normal
+  ),
 );
 
+//@include mat.typography-hierarchy($custom-typography-config);
 @include mat.all-component-typographies($custom-typography-config);
 @include mat.legacy-core();
 
