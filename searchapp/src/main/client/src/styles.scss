@@ -21,7 +21,26 @@
   "primary"
 );
 
+$app-typography: mat-typography-config(
+  $font-family: 'Roboto Condensed',
+  /* $display-4: mat-typography-level(112px, 112px, 300),
+  $display-3: mat-typography-level(100px, 56px, 400),
+  $display-2: mat-typography-level(100px, 48px, 400),
+  $display-1: mat-typography-level(100px, 34px, 400), */
+  $headline: mat-typography-level(26px, 32px, inherit),
+  $title: mat-typography-level(22px, inherit, 400),
+  $subheading-2: mat-typography-level(16px, inherit, inherit),
+  $subheading-1: mat-typography-level(15px, inherit, inherit),
+  $body-2: mat-typography-level(16px, 20px, 400),
+  $body-1: mat-typography-level(16px, 24px, 400),
+  /* $caption: mat-typography-level(100px, 22px, 400), */
+  $button: mat-typography-level(14px, inherit, 500),
+);
 
+@include angular-material-typography($app-typography);
+
+
+/* puvodni pro testovani - to delete after while
 $custom-typography-config: mat.define-legacy-typography-config(
   $font-family: 'Roboto Condensed',
   $body-1: mat-typography-level(
@@ -40,7 +59,7 @@ $custom-typography-config: mat.define-legacy-typography-config(
   ),
 );
 
-//@include mat.typography-hierarchy($custom-typography-config);
 @include mat.all-component-typographies($custom-typography-config);
-@include mat.legacy-core();
+@include mat.legacy-core(); 
+*/
 
