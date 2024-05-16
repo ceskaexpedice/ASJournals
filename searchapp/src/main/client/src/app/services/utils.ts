@@ -125,12 +125,12 @@ export default class Utils {
         if (part[i].hasOwnProperty('mods:extent')) {
 
           ret = part[i]['mods:extent']['mods:start'] +
-            ' - ' + part[i]['mods:extent']['mods:end'];
+            '-' + part[i]['mods:extent']['mods:end'];
         }
       }
     } else if (part['mods:extent']) {
       ret = part['mods:extent']['mods:start'] +
-        ' - ' + part['mods:extent']['mods:end'];
+        '-' + part['mods:extent']['mods:end'];
     }
     return ret;
   }

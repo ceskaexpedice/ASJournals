@@ -26,6 +26,9 @@
   // global
   --app-sidenav-width: 350px;
 
+  // typography
+  --app-footer-font-size: 14px;
+
   // layout
   --app-container: 1280px;
   --app-container-small: 960px;
@@ -39,6 +42,7 @@
   app-journal {
     // component
     --app-breadcrumb-height: 40px;
+    --app-breadcrumb-font-size: 14px;
     --app-col-articles-width: 350px;
     --app-card-border-color: var(--app-gray-3);
     --app-fieldset-border-color: var(--app-gray-4);
@@ -61,6 +65,7 @@
     --app-toolbar-height: 44px;
     --app-toolbar-bg: var(--app-gray-2);
     --app-toolbar-border-color: var(--app-gray-3);
+    --app-toolbar-font-size: 14px;
 
     // footer
     --app-footer-bg: var(--app-gray-9);

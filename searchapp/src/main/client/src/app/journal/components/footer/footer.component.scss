@@ -3,6 +3,7 @@ footer {
   display: block;
   color: var(--palette-primary-100);
   background-color: var(--palette-primary-500);
+  font-size: var( --app-footer-font-size);
 
   .app-left {
     a {

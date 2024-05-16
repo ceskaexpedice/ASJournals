@@ -13,7 +13,7 @@ import Utils from './utils';
 import { Subject, Observable, of, throwError } from 'rxjs';
 import { catchError, expand, map } from 'rxjs/operators';
 import { Magazine } from '../models/magazine';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, UpperCasePipe, isPlatformBrowser } from '@angular/common';
 import { FreePageComponent } from '../shared/free-page/free-page.component';
 import { Configuration } from '../models/configuration';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -46,7 +46,7 @@ export class AppService {
 
   showSnackBar(s: string, r: string = '', error: boolean = false) {
     const right = r !== '' ? this.translate.instant(r) : '';
-    const clazz = error ? 'app-snack-error' : 'app-snack-success';
+    const clazz = error ? 'app-snackbar-error' : 'app-snackbar-success';
     this.snackBar.open(this.translate.instant(s), right, {
       duration: 2000,
       verticalPosition: 'top',

@@ -318,7 +318,9 @@
 		"zoomOut": "Maximalizovat",
 		"share": "Sdílet",
 		"download": "Stáhnout",
-		"upload": "Nahrát"
+		"upload": "Nahrát",
+		"save": "Uložit",
+		"close": "Zavřít"
 	},
 	"role": {
 		"abr": "Zkracovač",
@@ -593,7 +595,16 @@
 		"wpr": "Autor předmluvy",
 		"wst": "Autor dodatečného textu"
 	},
+	"snackbar": {
+		"success": {
+			"changeSaved": "Změna byla úspěšně uložena"
+		},
+		"error": {
+			"changeSaved": "Při ukládání změny došlo k chybě"
+		}
+	},
 	"desc": {
-		"articles": "Články"
+		"articles": "Články",
+		"error": "Chyba"
 	}
 }

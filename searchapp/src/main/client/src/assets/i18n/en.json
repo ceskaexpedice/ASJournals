@@ -318,7 +318,9 @@
 		"zoomOut": "Zoom out",
 		"share": "Share",
 		"download": "Download",
-		"upload": "Upload"
+		"upload": "Upload",
+		"save": "Uložit",
+		"close": "Zavřít"
 	},
 	"role": {
 		"abr": "Abridger",
@@ -593,7 +595,16 @@
 		"wpr": "Writer of preface",
 		"wst": "Writer of supplementary textual content"
 	},
+	"snackbar": {
+		"success": {
+			"changeSaved": "The change was saved successfully"
+		},
+		"error": {
+			"changeSaved": "An error occurred while saving the change"
+		}
+	},
 	"desc": {
-		"articles": "Articles"
+		"articles": "Articles",
+		"error": "Error"
 	}
 }
