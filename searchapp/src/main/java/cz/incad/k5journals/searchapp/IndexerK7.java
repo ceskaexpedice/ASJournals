@@ -169,7 +169,15 @@ public class IndexerK7 {
             String parent = item.optString("own_parent.pid");
             idoc.addField("parents", parent);
             idoc.addField("model_paths", item.optString("own_model_path"));
-            idoc.addField("pid_paths", item.optString("own_pid_path"));
+            
+            String own_pid_path = item.optString("own_pid_path");
+            if (own_pid_path != null) {
+                idoc.addField("pid_paths", own_pid_path);
+                String[] parents = own_pid_path.split("/");
+                    for (String p : parents) {
+                        idoc.addField("parents", p);
+                    }
+            }
 
             idoc.setField("indexed_k", item.opt("indexed"));
 
