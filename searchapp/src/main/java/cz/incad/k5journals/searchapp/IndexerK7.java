@@ -312,7 +312,7 @@ public class IndexerK7 {
 
         JSONObject ret = new JSONObject();
         try (SolrClient solr = getClient("journal")) {
-            String q = "pid_paths:*" + ClientUtils.escapeQueryChars(pid) + "*";
+            String q = "pid_paths:*" + URLEncoder.encode(ClientUtils.escapeQueryChars(pid), "UTF-8") + "*";
             long num = solr.query(new SolrQuery(q)).getResults().getNumFound();
             ret = new JSONObject(solr.deleteByQuery(q).jsonStr());
             solr.commit();
@@ -405,7 +405,7 @@ public class IndexerK7 {
         try {
 
             String k5host = opts.getString(apiPointKey)
-                    + "/search?q=pid:" + ClientUtils.escapeQueryChars(pid);
+                    + "/search?q=pid:" + URLEncoder.encode(ClientUtils.escapeQueryChars(pid), "UTF-8");
             Map<String, String> reqProps = new HashMap<>();
             reqProps.put("Content-Type", "application/json");
             // reqProps.put("Accept", "application/json");
@@ -421,8 +421,10 @@ public class IndexerK7 {
     private JSONArray getChildren(String pid) {
         try {
 
+//            String k5host = opts.getString(apiPointKey)
+//                    + "/search?rows=1000&q=own_parent.pid:" + ClientUtils.escapeQueryChars(pid);
             String k5host = opts.getString(apiPointKey)
-                    + "/search?rows=1000&q=own_parent.pid:" + ClientUtils.escapeQueryChars(pid);
+                    + "/search?rows=1000&q=own_parent.pid:" + URLEncoder.encode( ClientUtils.escapeQueryChars(pid), "UTF-8");
             Map<String, String> reqProps = new HashMap<>();
             reqProps.put("Content-Type", "application/json");
             reqProps.put("Accept", "application/json");
@@ -1090,7 +1092,7 @@ public class IndexerK7 {
             }
 
             String k5host = opts.getString(apiPointKey)
-                    + "/search?fq=model:periodicalvolume%20OR%20model:periodicalitem&fq=indexed:" + URLEncoder.encode("[" + index_time + " TO NOW]", "UTF-8") + "&q=root.pid:" + ClientUtils.escapeQueryChars(pid);
+                    + "/search?fq=model:periodicalvolume%20OR%20model:periodicalitem&fq=indexed:" + URLEncoder.encode("[" + index_time + " TO NOW]", "UTF-8") + "&q=root.pid:" + URLEncoder.encode(ClientUtils.escapeQueryChars(pid), "UTF-8");
             Map<String, String> reqProps = new HashMap<>();
             reqProps.put("Content-Type", "application/json");
             // reqProps.put("Accept", "application/json");
