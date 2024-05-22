@@ -141,11 +141,16 @@ public class IndexServlet extends HttpServlet {
                 PrintWriter out = resp.getWriter();
                 JSONObject json = new JSONObject();
                 try {
-
-                    Indexer indexer = new Indexer();
-                    String pid = req.getParameter("pid");
-                    indexer.indexPid(pid, indexer.getIdx(pid, false));
-                    //out.println(indexer.getModsToJson(request.getParameter("pid")).toString(2));
+                    String kramerius_version = req.getParameter("kramerius_version");
+                        String pid = req.getParameter("pid");
+                    if ("k7".equals(kramerius_version)) {
+                        IndexerK7 indexer = new IndexerK7();
+                        indexer.indexPid(pid);
+                    } else {
+                        Indexer indexer = new Indexer();
+                        indexer.indexPid(pid, indexer.getIdx(pid, false));
+                        //out.println(indexer.getModsToJson(request.getParameter("pid")).toString(2));
+                    }
 
                 } catch (Exception ex) {
                     json.put("error", ex.toString());
@@ -266,9 +271,8 @@ public class IndexServlet extends HttpServlet {
                     Indexer indexer = new Indexer();
                     JSONObject jo = new JSONObject(IOUtils.toString(req.getInputStream(), "UTF-8"));
                     json.put("saved", indexer.indexMagazine(jo));
-                    
-                    // create layout if not exists
 
+                    // create layout if not exists
                 } catch (Exception ex) {
                     json.put("error", ex.toString());
                 }

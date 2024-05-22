@@ -133,7 +133,7 @@ public class IndexerK7 {
             if (idoc != null) {
                 try {
                     client.add(idoc);
-                    LOGGER.log(Level.INFO, "indexed: {0}", new Object[]{total++});
+                    LOGGER.log(Level.INFO, "indexed: {0}", new Object[]{++total});
                     currentStatus.put("msg", "Indexing. Actually indexing " + pid + ". Indexed docs: " + total);
                     writeStatus();
                     client.commit();
@@ -797,7 +797,7 @@ public class IndexerK7 {
         String val = null;
         JSONObject o = mods.optJSONObject("mods:originInfo");
         if (o != null) {
-            if (!idoc.containsKey("dateIssued")) {
+            if (o.has("mods:dateIssued")) {
                 Object di = o.get("mods:dateIssued");
                 if (di instanceof JSONObject ) {
                     val = ((JSONObject) di).optString("content");
@@ -812,7 +812,7 @@ public class IndexerK7 {
             //Pokus starych zaznamu
             o = mods.optJSONObject("mods:part");
             if (o != null) {
-                if (!idoc.containsKey("mods:date")) {
+                if (o.has("mods:date")) {
                     val = o.optString("mods:date");
                 }
             }
@@ -833,7 +833,7 @@ public class IndexerK7 {
         int year = 0;
         JSONObject o = mods.optJSONObject("mods:originInfo");
         if (o != null) {
-            int date = o.optInt("mods:dateIssued");
+            int date = o.optInt("mods:dateIssued", 0);
             if (date > 0) {
                 dates.put(pid, date);
                 idoc.setField("year", date);
