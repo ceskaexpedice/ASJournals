@@ -32,7 +32,7 @@ export class ArchivComponent implements OnInit {
   items: any[] = [];
   parentItems: any[] = [];
 
-  visibleItems: number = 3;
+  visibleItems: number = 500;
   visibleParentItems: any[] = [];
   currentParent: string = '';
   cache: any = {};
