@@ -9,7 +9,7 @@
       <div class="app-right app-fxFlex" *ngIf="actual">
         <div *ngIf="actual">
           <h1><app-journal-details [journal]="actual"></app-journal-details></h1>
-          <button mat-flat-button color="primary" class="app-mb-6" (click)="gotoArticle()"><mat-icon>menu_book</mat-icon>Prohlizet</button>
+          <!-- <button mat-flat-button color="primary" class="app-mb-6" (click)="gotoArticle()"><mat-icon>menu_book</mat-icon>Prohlizet</button> -->
         </div>
         <ng-container *ngIf="!state.currentMagazine.sortByOrder">
           <ng-container *ngFor="let genre of actual.genres">
