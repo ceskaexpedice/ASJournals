@@ -108,11 +108,11 @@ export class AdminConfigurationComponent {
     });
     this.state.currentMagazine!.licences = JSON.stringify(this.licences);
 
-    this.service.saveMagazine(this.state.currentMagazine!).subscribe(res => {
+    //this.service.saveMagazine(this.state.currentMagazine!).subscribe(res => {
       // this.service.getMagazines().subscribe(res2 => {
       //   this.state.ctxs = res2['response']['docs'];
-      // });
-    });
+      // });   
+    //});
   }
 
 

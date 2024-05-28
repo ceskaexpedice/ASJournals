@@ -8,6 +8,7 @@ import { AppService } from 'src/app/services/app.service';
 import Utils from 'src/app/services/utils';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { AppState } from 'src/app/app.state';
 
 @Component({
   selector: 'app-licences-dialog',
@@ -21,6 +22,7 @@ export class LicencesDialogComponent {
 
   constructor(
     private service: AppService,
+    private state: AppState,
     public dialogRef: MatDialogRef<LicencesDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
       cache: { [pid: string]: { label: string, licence: string, children: any[], show?: boolean } }, 
@@ -47,6 +49,28 @@ export class LicencesDialogComponent {
   }
 
   saveLicenses() {
-    this.service.showSnackBar('snackbar.success.changeSaved');
+
+    const pids = Object.keys(this.data.cache);
+    // const licences: any = {};
+    pids.forEach(pid => {
+      if (this.data.cache[pid]?.licence !== '') {
+        this.data.licences[pid] = this.data.cache[pid].licence;
+      } else if (this.data.cache[pid]?.licence === '') {
+        delete (this.data.licences[pid]);
+      }
+    });
+    this.state.currentMagazine!.licences = JSON.stringify(this.data.licences);
+
+    this.service.saveMagazine(this.state.currentMagazine!).subscribe(res => {
+      if (res.error) {
+        this.service.showSnackBar('snackbar.error.changeSaved', 'desc.error', true);
+      } else {
+        this.service.showSnackBar('snackbar.success.changeSaved');
+        this.dialogRef.close(true);
+      }
+    });
+
+
+    
   }
 }
