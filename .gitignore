@@ -8,6 +8,11 @@
 /solr/filestore/
 /solr/userfiles/
 
+/solr9/**/data
+**/solr9/**/data
+/solr9/filestore/
+/solr9/userfiles/
+
 .DS_Store
 searchapp/src/main/webapp/tinymce/bower.json
 searchapp/src/main/webapp/tinymce/CHANGELOG.md

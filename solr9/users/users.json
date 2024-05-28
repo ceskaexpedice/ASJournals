@@ -1,0 +1,5 @@
+{
+    "test": {"pwd": "test", "ctx": "kad"},
+    "a": {"pwd": "a", "ctx": "vav,kad"},
+    "b": {"pwd": "b", "ctx": "admin"}
+}
