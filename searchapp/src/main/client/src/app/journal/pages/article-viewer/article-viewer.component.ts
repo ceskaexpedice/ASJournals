@@ -22,10 +22,11 @@ import { ShareDialogComponent } from '../../components/share-dialog/share-dialog
 import { Meta } from '@angular/platform-browser';
 import { REQUEST } from '@nguniversal/express-engine/tokens';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { JournalDetailsComponent } from '../../components/journal-details/journal-details.component';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule, NgxExtendedPdfViewerModule,
+  imports: [CommonModule, RouterModule, TranslateModule, NgxExtendedPdfViewerModule, JournalDetailsComponent,
     MatIconModule, MatTabsModule, MatDividerModule, MatDialogModule, ArticleViewerArticlesComponent, MatTooltipModule],
   selector: 'app-article-viewer',
   templateUrl: './article-viewer.component.html',
@@ -74,7 +75,7 @@ export class ArticleViewerComponent implements OnInit {
     'en': 'eng'
   };
 
-  magazine: any;
+  journal: Journal;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
