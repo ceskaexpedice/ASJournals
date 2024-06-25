@@ -645,7 +645,8 @@ export class AppService {
     let url = 'index';
     let params = new HttpParams()
       .set('action', 'CITATION')
-      .set('uuid', uuid);
+      .set('uuid', uuid)
+      .set('k7', this.state.currentMagazine?.isK7 + '');
     return this.get(url, params, 'text').pipe(
       map((response: any) => {
         return response;
@@ -837,6 +838,7 @@ export class AppService {
   }
 
   findActualByPid(pid: string) {
+    console.log(pid)
     this.getChildren(pid).subscribe((res: any) => {
       if (res.length === 0) {
         this.state.setActual(null);

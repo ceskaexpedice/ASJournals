@@ -242,6 +242,7 @@ public class IndexerK7 {
         try {
             client = getClient("journal");
             Date tstart = new Date();
+            int idx = getIdx(pid, true);
             indexPidAndChildren(pid);
             LOGGER.log(Level.INFO, "index finished. Indexed: {0}", total);
 

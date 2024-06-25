@@ -204,9 +204,7 @@ public class Searcher {
             JSONObject doc = json(query, client, "journal");
             if (doc.getJSONObject("response").getInt("numFound") > 0) {
                 json = doc.getJSONObject("response").getJSONArray("docs").getJSONObject(0);
-            } else {
-                return null;
-            }
+            } 
 
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, null, ex);
