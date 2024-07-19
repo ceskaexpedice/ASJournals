@@ -28,7 +28,7 @@ export class ArticleViewerDetailsComponent {
   }
 
   ngOnInit() {
-    this.service.getCitace(this.state.viewerPid!).subscribe(resp => {
+    this.service.getCitace(this.state.viewerPid!, this.state.currentMagazine.k5url).subscribe(resp => {
       this.citace = resp;
       this.location = this.document.location.href;
     });

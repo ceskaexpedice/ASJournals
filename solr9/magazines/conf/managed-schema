@@ -103,7 +103,8 @@
     <!-- Only enabled in the "schemaless" data-driven example (assuming the client
          does not know what fields may be searched) because it's very expensive to index everything twice. -->
     <!-- <copyField source="*" dest="_text_"/> -->
-    <copyField source="title" dest="titleCS"/>
+    <!-- <copyField source="title" dest="titleCS"/> -->
+    <copyField source="title_cs" dest="titleCS"/>
 
 
     <!-- uncomment the following to ignore any fields that don't already match an existing 

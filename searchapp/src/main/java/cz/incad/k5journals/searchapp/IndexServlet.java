@@ -8,6 +8,7 @@ package cz.incad.k5journals.searchapp;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -376,9 +377,11 @@ public class IndexServlet extends HttpServlet {
                 resp.setContentType("text/plain;charset=UTF-8");
                 Options opts = Options.getInstance();
                 String url = opts.getString("citation_server", 
-                        "http://citace.rychtar.cloud/v1/kramerius?format=html&url=https://kramerius.lib.cas.cz&uuid=")
-                        + req.getParameter("uuid") + "&k7=" + Boolean.valueOf(req.getParameter("k7"));
-
+                        "http://citace.rychtar.cloud/v1/kramerius?format=html&url=")
+                        + req.getParameter("server")
+                        + "&uuid=" + req.getParameter("uuid") 
+                        + "&k7=" + Boolean.valueOf(req.getParameter("k7"));
+                System.out.println(url);
                 InputStream inputStream = RESTHelper.inputStream(url);
                 org.apache.commons.io.IOUtils.copy(inputStream, resp.getOutputStream());
             }

@@ -286,8 +286,8 @@ public class IndexerK7 {
 
     public int getIdx(String pid, boolean up) {
         JSONObject item = getItem(pid);
-        JSONArray ctx = item.getJSONArray("context");
-        if (ctx.length() > 0) {
+        JSONArray ctx = item.optJSONArray("context");
+        if (ctx != null && ctx.length() > 0) {
             JSONArray ja = ctx.getJSONArray(ctx.length() - 1);
             if (ja.length() > 1) {
                 if (up) {

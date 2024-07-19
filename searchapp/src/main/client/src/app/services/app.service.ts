@@ -641,11 +641,12 @@ export class AppService {
     )
   }
 
-  getCitace(uuid: string): Observable<string> {
+  getCitace(uuid: string, server: string): Observable<string> {
     let url = 'index';
     let params = new HttpParams()
       .set('action', 'CITATION')
       .set('uuid', uuid)
+      .set('server', server)
       .set('k7', this.state.currentMagazine?.isK7 + '');
     return this.get(url, params, 'text').pipe(
       map((response: any) => {
