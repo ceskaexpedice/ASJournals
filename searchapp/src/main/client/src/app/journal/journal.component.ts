@@ -175,7 +175,7 @@ export class JournalComponent {
     this.meta.addTags([
       { name: 'description', content: this.state.currentMagazine.desc },
       { name: 'author', content: this.state.currentMagazine.vydavatel },
-      { name: 'keywords', content: this.state.currentMagazine.keywords.join(',') },
+      { name: 'keywords', content: this.state.currentMagazine.keyword.join(',') },
       { property: 'og:title', content: this.state.currentMagazine.title }, // <meta property="og:title" content="Your appealing title here" />
       { property: 'og:description', content: this.state.currentMagazine.desc },
       { property: 'og:image', content: url + this.state.imgSrc },

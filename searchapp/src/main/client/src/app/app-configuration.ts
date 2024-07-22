@@ -126,8 +126,8 @@ import { MagazineState } from './magazines/magazine.state';
             .then((res: any) => {
                 this.state.currentMagazine = ctx;
                 this.state.setConfig(this.config);
-                if (!this.state.currentMagazine.keywords) {
-                    this.state.currentMagazine.keywords = [];
+                if (!this.state.currentMagazine.keyword) {
+                    this.state.currentMagazine.keyword = [];
                 }
                 this.config.setLayout(res);
                 // this.state.stateChanged();

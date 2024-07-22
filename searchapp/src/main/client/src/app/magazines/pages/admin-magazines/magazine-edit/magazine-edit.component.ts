@@ -42,9 +42,10 @@ export class MagazineEditComponent implements OnInit {
     adresa: string,
     web: string
   };
-  newKeyword: string = '';
+  // newKeyword: string = '';
   newLanguage: string = '';
   newOblast: {[lang: string]: string} = {};
+  newKeyword: {[lang: string]: string} = {};
 
   showTitleLabel = true;
   
@@ -70,18 +71,20 @@ export class MagazineEditComponent implements OnInit {
     }
   }
   
-  removeKeyword(idx: number){
-    this.mag.keywords.splice(idx, 1);
+  removeKeyword(idx: number, lang: string){
+    this.mag['keyword_'+lang].splice(idx, 1);
   }
   
-  addKeyword(){
-    if(this.newKeyword !== ''){
-      if(!this.mag.keywords){
-        this.mag.keywords = [];
+  addKeyword(lang: string){
+
+    if(this.newKeyword[lang] !== ''){
+      if(!this.mag['keyword_'+lang]){
+        this.mag['keyword_'+lang] = [];
       }
-        this.mag.keywords.push(this.newKeyword);
-      this.newKeyword = '';
+      this.mag['keyword_'+lang].push(this.newKeyword[lang]);
+      this.newKeyword[lang] = '';
     }
+
   }
   
   removeLanguage(idx: number){

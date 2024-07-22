@@ -150,18 +150,38 @@
     </div>
 </ng-container>
 
+
+<ng-container *ngFor="let lang of mag.languages">
   <div class="app-fxFlex-25">
     <mat-form-field class="app-w-100" appearance="outline">
-      <mat-label>{{ 'magazines.klicove_slovo' | translate }}</mat-label>
-      <input matInput type="text" name="newKeyword" id="newKeyword" [(ngModel)]="newKeyword" />
-      <button matSuffix mat-icon-button (click)="addKeyword()" [matTooltip]="'magazines.pridat_klicove_slovo' | translate">
+      <mat-label>{{ 'magazines.klicove_slovo' | translate }}  {{ 'magazines.lang.' + lang | translate }}</mat-label>
+      <input matInput type="text" [name]="'newKeyword' + lang" [id]="'newKeyword' + lang" [(ngModel)]="newKeyword[lang]" />
+      <button matSuffix mat-icon-button (click)="addKeyword(lang)" [matTooltip]="'magazines.pridat_klicove_slovo' | translate">
         <mat-icon>add</mat-icon>
       </button>
     </mat-form-field>
   </div>
   <div class="app-fxFlex app-fxFlex-75 app-center-v">
-    <span *ngFor="let k of mag.keywords; let idx = index; let last = last;" class="app-keyword">
-      <label class="app-label">{{ k }}</label><a (click)="removeKeyword(idx)" [matTooltip]="'magazines.smazat_klicove_slovo' | translate"><mat-icon>clear</mat-icon></a><span class="app-pipe app-in-element" *ngIf="!last"></span>
+    <span *ngFor="let k of mag['keyword_'+lang]; let idx = index; let last = last;" class="app-keyword">
+      <label class="app-label">{{ k }}</label><a (click)="removeKeyword(idx, lang)" [matTooltip]="'magazines.smazat_klicove_slovo' | translate"><mat-icon>clear</mat-icon></a><span class="app-pipe app-in-element" *ngIf="!last"></span>
+    </span>
+  </div>
+</ng-container>
+
+
+  <!-- <div class="app-fxFlex-25">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.klicove_slovo' | translate }}</mat-label>
+      <input matInput type="text" name="newKeyword" id="newKeyword" [(ngModel)]="newKeyword" />
+      <button matSuffix mat-icon-button [matTooltip]="'magazines.pridat_klicove_slovo' | translate">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-form-field>
+  </div> -->
+
+  <div class="app-fxFlex app-fxFlex-75 app-center-v">
+    <span *ngFor="let k of mag.keyword; let idx = index; let last = last;" class="app-keyword">
+      <label class="app-label">{{ k }}</label><a  [matTooltip]="'magazines.smazat_klicove_slovo' | translate"><mat-icon>clear</mat-icon></a><span class="app-pipe app-in-element" *ngIf="!last"></span>
     </span>
   </div>
 

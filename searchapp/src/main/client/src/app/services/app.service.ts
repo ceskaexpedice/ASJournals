@@ -101,12 +101,11 @@ export class AppService {
   }
 
   getJournalConfig(ctx: Magazine) {
-    console.log('KK')
     return this.get('texts?action=GET_CONFIG&ctx=' + ctx.ctx).pipe(
       map(res => {
         this.state.currentMagazine = ctx;
-        if (!this.state.currentMagazine.keywords) {
-          this.state.currentMagazine.keywords = [];
+        if (!this.state.currentMagazine.keyword) {
+          this.state.currentMagazine.keyword = [];
         }
         this.state.setConfig(res);
         this.config['color'] = ctx.color;
@@ -839,7 +838,7 @@ export class AppService {
   }
 
   findActualByPid(pid: string) {
-    console.log(pid)
+    //console.log(pid)
     this.getChildren(pid).subscribe((res: any) => {
       if (res.length === 0) {
         this.state.setActual(null);

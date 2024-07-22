@@ -25,7 +25,7 @@ export class Magazine {
   issn: string | undefined = undefined;
   pristup: string | undefined = undefined;
   kontakt: string | undefined = undefined;
-  keywords: string[] = [];
+  keyword: string[] = [];
   desc: string | undefined = undefined;
   desc_en: string | undefined = undefined;
   web: string | undefined = undefined;

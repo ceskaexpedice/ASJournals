@@ -80,7 +80,7 @@ public class Searcher {
                     .setSort("titleCS", SolrQuery.ORDER.asc)
                     .setFacet(true)
                     .setFacetMinCount(1)
-                    .addFacetField("pristup", "{!key=oblast}oblast_" + lang, "{!ex=keywords}keywords", "vydavatel")
+                    .addFacetField("pristup", "{!key=oblast}oblast_" + lang, "{!key=keyword}keyword_" + lang, "vydavatel")
                     .setParam("json.nl", "arrarr");
 
             if (request.getParameter("sortDir") != null) {
@@ -92,6 +92,12 @@ public class Searcher {
                     query.addFilterQuery("{!tag=keywords}keywords:\"" + fq + "\"");
                 }
             }
+            
+            if (request.getParameter("keyword") != null) {
+                for (String fq : request.getParameterValues("keyword")) {
+                    query.addFilterQuery("{!tag=keyword}keyword_" + lang + ":\"" + fq + "\"");
+                }
+            } 
             
             if (request.getParameter("oblast") != null) {
                 for (String fq : request.getParameterValues("oblast")) {
@@ -124,6 +130,14 @@ public class Searcher {
                     }
                     
                 } 
+//                if (!doc.has("keyword_cs")) {
+//                    if (doc.has("keywords")) {
+//                        doc.put("keyword_cs", doc.optJSONArray("keywords"));
+//                    } else {
+//                        doc.put("keyword_cs", new JSONArray());
+//                    }
+//                    
+//                } 
             }
 
         } catch (Exception ex) {

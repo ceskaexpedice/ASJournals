@@ -99,6 +99,7 @@
     <dynamicField name="subtitle_*" type="string" indexed="true" stored="true" multiValued="false"/>
     <dynamicField name="desc_*" type="string" indexed="true" stored="true" multiValued="false"/>
     <dynamicField name="oblast_*" type="string" indexed="true" stored="true" multiValued="true"/>
+    <dynamicField name="keyword_*" type="string" indexed="true" stored="true" multiValued="true"/>
     
     <!-- Only enabled in the "schemaless" data-driven example (assuming the client
          does not know what fields may be searched) because it's very expensive to index everything twice. -->

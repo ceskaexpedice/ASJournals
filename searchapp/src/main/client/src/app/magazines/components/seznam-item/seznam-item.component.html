@@ -22,9 +22,9 @@
         {{ resultItem.issn }}
       </div>
       <div>
-        <label class="app-label">{{ 'magazines.keywords' | translate }}: </label>
-        <span *ngFor="let keyword of resultItem.keywords; let last=last">
-          <a (click)="addFilter('keywords', keyword)" [title]="keyword">{{ keyword }}</a><span *ngIf="!last">, </span> 
+        <label class="app-label">{{ 'magazines.keyword' | translate }}: </label>
+        <span *ngFor="let keyword of resultItem['keyword_' + translate.currentLang]; let last=last">
+          <a (click)="addFilter('keyword', keyword)" [title]="keyword">{{ keyword }}</a><span *ngIf="!last">, </span> 
         </span>
       </div>
       <div>
