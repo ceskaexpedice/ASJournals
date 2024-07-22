@@ -5,6 +5,7 @@ import { AppState } from 'src/app/app.state';
 import { Configuration } from 'src/app/models/configuration';
 import { AppService } from 'src/app/services/app.service';
 import { ArticleInfoComponent } from '../../components/article-info/article-info.component';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-article-viewer-details',
@@ -20,6 +21,8 @@ export class ArticleViewerDetailsComponent {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
+    private route: ActivatedRoute,
+    private router: Router,
     private config: Configuration,
     private service: AppService,
     public state: AppState,) {
@@ -28,11 +31,19 @@ export class ArticleViewerDetailsComponent {
   }
 
   ngOnInit() {
+    this.state.viewerActiveLink = 'detail';
+    this.route.parent.params.subscribe((params: Params) => {
+        this.getCitace();
+      });
+  }
+
+  getCitace() {
+    this.citace = '';
     this.service.getCitace(this.state.viewerPid!, this.state.currentMagazine.k5url).subscribe(resp => {
       this.citace = resp;
       this.location = this.document.location.href;
     });
-    this.state.viewerActiveLink = 'detail';
+
   }
 
 }
