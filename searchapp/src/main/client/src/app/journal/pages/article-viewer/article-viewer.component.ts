@@ -124,12 +124,19 @@ export class ArticleViewerComponent implements OnInit {
 
   setReferences() {
     this.state.viewerArticle.references = [];
-    console.log(this.mods['relatedItem'])
     if (this.mods['relatedItem']) {
       const refs: any[] = this.mods['relatedItem'].filter((r: any) => r.type === 'references');
       this.state.viewerArticle.hasReferences = refs.length > 0;
       if (this.state.viewerArticle.hasReferences) {
         refs.forEach(ref => {
+          let doi = '';
+          if (ref.identifier && ref.identifier.type === 'doi') {
+            doi = 'DOI: ' +  ref.identifier.content + '.';
+          }
+          let isbn = '';
+          if (ref.identifier && ref.identifier.type === 'isbn') {
+            isbn = 'ISBN: ' +  ref.identifier.content + '.';
+          }
           if (ref['note']) {
             this.state.viewerArticle.references.push(ref['note']['content']);
           } else if (ref.relatedItem?.type === 'host') {
@@ -148,12 +155,17 @@ export class ArticleViewerComponent implements OnInit {
 
                         ${ref.relatedItem.originInfo?.dateIssued ? ref.relatedItem.originInfo?.dateIssued + '.' : ''} 
                         ${ref.relatedItem.originInfo?.place?.placeTerm?.content ? ref.relatedItem.originInfo?.place?.placeTerm?.content : ''}
-                        ${ref.relatedItem.originInfo?.publisher ? ': ' + ref.relatedItem.originInfo?.publisher : ''}`;
+                        ${ref.relatedItem.originInfo?.publisher ? ': ' + ref.relatedItem.originInfo?.publisher : ''}
+                        ${doi}${isbn}`;
             this.state.viewerArticle.references.push(note);
           } else {
             const given = ref['name']['namePart'].find((n: any) => n.type==='given')['content'];
             const family = ref['name']['namePart'].find((n: any) => n.type==='family')['content'];
-            let note = `${family}, ${given}. ${ref.originInfo?.dateIssued}. ${ref.originInfo?.place.placeTerm.content}: ${ref.originInfo?.publisher}`;
+            let note = `${family}, ${given}. 
+            ${ref.originInfo?.dateIssued}. 
+            ${ref.originInfo?.place.placeTerm.content ? ref.originInfo?.place.placeTerm.content + ':' : ''}: 
+            ${ref.originInfo?.publisher ? ref.originInfo?.publisher + '.' : ''}
+            ${doi}${isbn}`;
             this.state.viewerArticle.references.push(note);
           }
           
