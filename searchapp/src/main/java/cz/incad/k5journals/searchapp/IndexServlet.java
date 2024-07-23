@@ -381,7 +381,7 @@ public class IndexServlet extends HttpServlet {
                         + req.getParameter("server")
                         + "&uuid=" + req.getParameter("uuid") 
                         + "&k7=" + Boolean.valueOf(req.getParameter("k7"));
-                System.out.println(url);
+                // System.out.println(url);
                 InputStream inputStream = RESTHelper.inputStream(url);
                 org.apache.commons.io.IOUtils.copy(inputStream, resp.getOutputStream());
             }

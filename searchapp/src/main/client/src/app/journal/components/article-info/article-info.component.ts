@@ -49,6 +49,7 @@ export class ArticleInfoComponent implements OnInit {
     isPeerReviewed: boolean = false;
 
     licence: string | null | undefined;
+    accessCondition: any;
 
     constructor(
         private config: Configuration,
@@ -145,6 +146,8 @@ export class ArticleInfoComponent implements OnInit {
                 }
             });
         }
+
+        this.accessCondition = mods['mods:accessCondition'];
 
     }
 

@@ -62,4 +62,11 @@
 		<strong>{{'Licence' | translate}}:</strong>
 		{{ licence }}
 	</div>
+
+	<div *ngIf="accessCondition">
+		<strong>{{'accessCondition' | translate}}: </strong>
+		<a *ngIf="accessCondition['xlink:href']" [href]="accessCondition['xlink:href']" target="_blank">{{ accessCondition.content }}</a>
+		<span *ngIf="!accessCondition['xlink:href']">{{ accessCondition.content }}</span>
+		
+	</div>
 </ng-container>
