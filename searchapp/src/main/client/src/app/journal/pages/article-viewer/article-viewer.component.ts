@@ -122,6 +122,38 @@ export class ArticleViewerComponent implements OnInit {
 
   }
 
+  setReferences() {
+    this.state.viewerArticle.references = [];
+    console.log(this.mods['relatedItem'])
+    if (this.mods['relatedItem']) {
+      const refs: any[] = this.mods['relatedItem'].filter((r: any) => r.type === 'references');
+      this.state.viewerArticle.hasReferences = refs.length > 0;
+      if (this.state.viewerArticle.hasReferences) {
+        refs.forEach(ref => {
+          if (ref['note']) {
+            this.state.viewerArticle.references.push(ref['note']['content']);
+          } else if (ref.relatedItem?.type === 'host') {
+            const given = ref['name']['namePart'].find((n: any) => n.type==='given')['content'];
+            const family = ref['name']['namePart'].find((n: any) => n.type==='family')['content'];
+            let note = `${family}, ${given}. 
+                        ${ref.relatedItem.originInfo?.dateIssued ? ref.relatedItem.originInfo?.dateIssued + '.' : ''} 
+                        ${ref.relatedItem.originInfo?.place?.placeTerm?.content ? ref.relatedItem.originInfo?.place?.placeTerm?.content : ''}
+                        ${ref.relatedItem.originInfo?.publisher ? ': ' + ref.relatedItem.originInfo?.publisher : ''}`;
+            this.state.viewerArticle.references.push(note);
+          } else {
+            const given = ref['name']['namePart'].find((n: any) => n.type==='given')['content'];
+            const family = ref['name']['namePart'].find((n: any) => n.type==='family')['content'];
+            let note = `${family}, ${given}. ${ref.originInfo?.dateIssued}. ${ref.originInfo?.place.placeTerm.content}: ${ref.originInfo?.publisher}`;
+            this.state.viewerArticle.references.push(note);
+          }
+          
+        })
+      }
+    } else {
+      this.state.viewerArticle.hasReferences = false
+    }
+  }
+
   setData() {
     if (this.settingData) {
       return;
@@ -160,6 +192,7 @@ export class ArticleViewerComponent implements OnInit {
         }
         this.state.fullSrc = this.config['context'] + 'api/img?uuid=' + this.state.viewerPid + '&kramerius_version=' + res['doc']['kramerius_version'];
         this.mods = this.state.viewerArticle['mods'];
+        this.setReferences();
 
         // this.doi = Utils.getDoi(this.mods);
         // let ctx = res['context'][0];
