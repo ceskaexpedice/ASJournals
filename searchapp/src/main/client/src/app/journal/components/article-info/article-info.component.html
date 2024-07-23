@@ -58,15 +58,15 @@
 		<ng-container *ngIf="!isPeerReviewed">{{ 'nerecenzovaný článek' | translate }}</ng-container>
 	</div>
 
-	<div>
-		<strong>{{'Licence' | translate}}:</strong>
-		{{ licence }}
-	</div>
 
 	<div *ngIf="accessCondition">
-		<strong>{{'accessCondition' | translate}}: </strong>
+		<strong>{{'Licence' | translate}}: </strong>
 		<a *ngIf="accessCondition['xlink:href']" [href]="accessCondition['xlink:href']" target="_blank">{{ accessCondition.content }}</a>
 		<span *ngIf="!accessCondition['xlink:href']">{{ accessCondition.content }}</span>
 		
+	</div>
+	<div *ngIf="!accessCondition">
+		<strong>{{'Licence' | translate}}:</strong>
+		{{ licence }}
 	</div>
 </ng-container>

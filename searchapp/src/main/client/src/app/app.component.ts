@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
       if (isPlatformBrowser(this.platformId)) {
         this.materialCssVarsService.setPrimaryColor('#' + this.state.currentMagazine.color);
       }
-      this.titleService.setTitle(this.state.currentMagazine.title);
+      this.titleService.setTitle(this.state.currentMagazine['title_' + this.state.currentLang]);
     }
     
   }
