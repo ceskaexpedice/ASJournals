@@ -133,9 +133,19 @@ export class ArticleViewerComponent implements OnInit {
           if (ref['note']) {
             this.state.viewerArticle.references.push(ref['note']['content']);
           } else if (ref.relatedItem?.type === 'host') {
-            const given = ref['name']['namePart'].find((n: any) => n.type==='given')['content'];
-            const family = ref['name']['namePart'].find((n: any) => n.type==='family')['content'];
+            const given = ref.relatedItem.name ?
+                          ref.relatedItem['name']['namePart'].find((n: any) => n.type==='given')['content'] :
+                          ref['name']['namePart'].find((n: any) => n.type==='given')['content'];
+            const family = ref.relatedItem.name ?
+                          ref.relatedItem['name']['namePart'].find((n: any) => n.type==='family')['content'] :
+                          ref['name']['namePart'].find((n: any) => n.type==='family')['content'];
             let note = `${family}, ${given}. 
+                        ${ref.relatedItem.titleInfo?.title ? ref.relatedItem.titleInfo.title : ''}
+                        ${ref.relatedItem.part ? 
+                          ', roč.' + ref.relatedItem.part.detail.find((d:any) => d.type === 'volume').number +
+                          ', č. ' + ref.relatedItem.part.detail.find((d:any) => d.type === 'issue').number : 
+                          '.'}
+
                         ${ref.relatedItem.originInfo?.dateIssued ? ref.relatedItem.originInfo?.dateIssued + '.' : ''} 
                         ${ref.relatedItem.originInfo?.place?.placeTerm?.content ? ref.relatedItem.originInfo?.place?.placeTerm?.content : ''}
                         ${ref.relatedItem.originInfo?.publisher ? ': ' + ref.relatedItem.originInfo?.publisher : ''}`;
