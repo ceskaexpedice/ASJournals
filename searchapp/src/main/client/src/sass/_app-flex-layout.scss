@@ -1,7 +1,7 @@
 // --- FLEX LAYOUT ---
 
 .app-fxLayout {
-  display: flex;
+  display: flex !important;
   box-sizing: border-box;
 
   &.app-row {

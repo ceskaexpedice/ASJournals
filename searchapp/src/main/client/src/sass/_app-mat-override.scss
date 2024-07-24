@@ -130,6 +130,14 @@
     }
   }
 
+  &.app-hover {
+    cursor: pointer;
+    
+    &:hover {
+      background-color: var(--app-gray-1);
+    }
+  }
+
   .mat-divider {
     &.mat-divider-horizontal {
       position: relative;

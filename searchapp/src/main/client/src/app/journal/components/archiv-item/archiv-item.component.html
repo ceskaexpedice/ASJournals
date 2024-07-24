@@ -1,3 +1,4 @@
+<!-- to delete after testing #175
 <div class="app-fxLayout app-row app-mb-4" *ngIf="item">
   <div class="app-left app-mr-8">
     <img [src]="img()" onerror="this.src='assets/img/thumb-no-image.png'" [title]="" class="app-mb-2" />
@@ -9,6 +10,24 @@
     <span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span>
     <span *ngIf="issueNumber"> {{'Číslo' | translate}} {{issueNumber}}</span>
     <span *ngIf="partName">, {{partName}}</span></a></h2>
-    <!-- <button mat-flat-button color="primary" class="app-mb-6" (click)="gotoArticle()"><mat-icon>menu_book</mat-icon>Prohlizet</button> -->
   </div>
-</div>
+</div> -->
+
+
+<mat-card *ngIf="item" class="app-mb-4 app-hover" [routerLink]="['.', {pid:item['pid']}]" queryParamsHandling="preserve">
+  <mat-card-content class="app-fxLayout app-row">
+    <div class="app-left app-mr-8">
+      <img [src]="img()" onerror="this.src='assets/img/thumb-no-image.png'" [title]="" />
+    </div>
+    <div class="app-fxFlex app-right">
+      <h2>
+        <span *ngIf="supplement">{{supplement}}</span>
+        <span *ngIf="year">{{'Rok' | translate}} {{year}}</span>
+        <span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span>
+        <span *ngIf="issueNumber"> {{'Číslo' | translate}} {{issueNumber}}</span>
+        <span *ngIf="partName">, {{partName}}</span>
+      </h2>
+      <!-- <button mat-flat-button color="primary" class="app-mb-6" (click)="gotoArticle()"><mat-icon>menu_book</mat-icon>Prohlizet</button> -->
+    </div>
+  </mat-card-content>
+</mat-card>
