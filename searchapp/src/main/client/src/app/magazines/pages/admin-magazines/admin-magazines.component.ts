@@ -200,6 +200,7 @@ export class AdminMagazinesComponent implements OnInit {
       this.service.deleteUser(this.currentUser!.username).subscribe(res => {
         this.service.getUsers().subscribe(res2 => {
           this.users = res2['response']['docs'];
+          this.service.showSnackBar('snackbar.success.changeSaved');
         });
       });
     }
@@ -224,6 +225,7 @@ export class AdminMagazinesComponent implements OnInit {
           } else {
             this.service.getUsers().subscribe(res2 => {
               this.users = res2['response']['docs'];
+              this.service.showSnackBar('snackbar.success.changeSaved');
             });
           }
         });
@@ -240,7 +242,7 @@ export class AdminMagazinesComponent implements OnInit {
     this.service.saveUser(this.currentUser).subscribe(res => {
       this.service.getUsers().subscribe(res2 => {
         this.users = res2['response']['docs'];
-        this.service.showSnackBar('Saved success!');
+        this.service.showSnackBar('snackbar.success.changeSaved');
       });
     });
   }
