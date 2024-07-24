@@ -3,13 +3,6 @@
     <div class="app-fxLayout app-row app-fill app-mb-4">
       <h1 class="app-fxFlex">{{ 'Ročníky' | translate }}</h1>
       <div>
-        <!-- to delete - mat form field replaced with mat menu bellow
-        <mat-form-field>
-          <mat-label>{{ 'Výsledky řadit' | translate }}</mat-label>
-          <mat-select required (valueChange)="setSort($event)" [(ngModel)]="currentSort">
-            <mat-option *ngFor="let sort of sorts" [value]="sort">{{ sort.label | translate }} </mat-option>
-          </mat-select>
-        </mat-form-field> -->
         {{ 'Výsledky řadit' | translate }}:
         <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
           {{ currentSort.label }}<mat-icon iconPositionEnd>expand_more</mat-icon>
@@ -51,23 +44,34 @@
           </div>
         </div>
       </div>
-      <div class="app-fxFlex" [ngSwitch]="currentItem['model']">
-        <h1 *ngSwitchCase="'periodical'">
-          {{ 'Ročníky' | translate }}
-        </h1>
-        <h1 *ngSwitchCase="'periodicalvolume'">
-          {{ currentItem['year'] }}<span *ngIf="volumeNumber">, {{ 'ročník' | translate }} {{ volumeNumber }}</span>
-        </h1>
-        <h1 *ngSwitchCase="'periodicalitem'">
-          {{currentItem['year']}}<span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span><span *ngIf="issueNumber">, {{'číslo' | translate}} {{issueNumber}}</span><span *ngIf="partName">, {{partName}}</span>
-        </h1>
-        <ng-container *ngIf="!isDataNode">
-          <app-archiv-item *ngFor="let item of items" [item]="item" (drillDown)="drillDown($event)"></app-archiv-item>
-        </ng-container>
-        <div class="app-items-wrapper app-text-content" *ngIf="isDataNode">
-          <div *ngFor="let art of items" class="app-item">
-            <app-article-result *ngIf="!isHiddenByGenre(art['genre'])" [article]="art"></app-article-result>
+      <div class="app-fxFlex app-fxLayout app-row" [ngSwitch]="currentItem['model']">
+        <div class="app-fxFlex">
+          <h1 *ngSwitchCase="'periodical'">
+            {{ 'Ročníky' | translate }}
+          </h1>
+          <h1 *ngSwitchCase="'periodicalvolume'">
+            {{ currentItem['year'] }}<span *ngIf="volumeNumber">, {{ 'ročník' | translate }} {{ volumeNumber }}</span>
+          </h1>
+          <h1 *ngSwitchCase="'periodicalitem'">
+            {{currentItem['year']}}<span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span><span *ngIf="issueNumber">, {{'číslo' | translate}} {{issueNumber}}</span><span *ngIf="partName">, {{partName}}</span>
+          </h1>
+          <ng-container *ngIf="!isDataNode">
+            <app-archiv-item *ngFor="let item of items" [item]="item" (drillDown)="drillDown($event)"></app-archiv-item>
+          </ng-container>
+          <div class="app-items-wrapper app-text-content" *ngIf="isDataNode">
+            <div *ngFor="let art of items" class="app-item">
+              <app-article-result *ngIf="!isHiddenByGenre(art['genre'])" [article]="art"></app-article-result>
+            </div>
           </div>
+        </div>
+        <div class="app-pl-4">
+          {{ 'Výsledky řadit' | translate }}:
+          <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
+            {{ currentSort.label }}<mat-icon iconPositionEnd>expand_more</mat-icon>
+          </button>
+          <mat-menu #menuSort="matMenu">
+            <button mat-menu-item *ngFor="let sort of sorts" (click)="setSort(sort)" [(ngModel)]="currentSort">{{ sort.label | translate }}</button>
+          </mat-menu>
         </div>
       </div>
     </div>
