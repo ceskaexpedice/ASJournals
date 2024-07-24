@@ -4,6 +4,16 @@ $gt-sm:	'only screen and (min-width: 960px)';
   .app-left {
     display: none;
   }
+
+  .app-header-wrapper {
+    .app-title {
+      margin-top: 8px;
+
+      h3 {
+        font-weight: 500;
+      }
+    }
+  }
   
   @media #{$gt-sm} {
     .app-left {
@@ -11,6 +21,18 @@ $gt-sm:	'only screen and (min-width: 960px)';
       flex: 1 1 var(--app-col-articles-width);
       max-width: var(--app-col-articles-width);
       min-width: var(--app-col-articles-width);
+    }
+
+    .app-header-wrapper {
+      position: relative;
+    
+      .app-title {
+        position: absolute;
+        display: flex;
+        height: 100%;
+        align-items: center;
+        margin-top: 0;
+      }
     }
   } 
 }

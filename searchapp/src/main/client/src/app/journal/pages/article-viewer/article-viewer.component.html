@@ -1,9 +1,9 @@
 <div class="app-fxLayout app-column app-fill">
-  <div [ngClass]="state.isFull ? 'app-container-fluid ' : 'app-container'">
-    <div>
-      <h2>
+  <div [ngClass]="state.isFull ? 'app-container-fluid ' : 'app-container'" class="app-header-wrapper">
+    <div class="app-title app-pl-4">
+      <h3 class="app-m-0">
         <app-journal-details *ngIf="state.viewerJournal" [journal]="state.viewerJournal"></app-journal-details>
-      </h2>
+      </h3>
     </div>
     <nav mat-tab-nav-bar mat-stretch-tabs="false" mat-align-tabs="end" [tabPanel]="tabPanel" #tabs>
       <div class="mat-mdc-tab-links app-jc-start app-controls" [class.app-ml-0]="state.isFull">
