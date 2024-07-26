@@ -112,6 +112,7 @@ export class LicencesDialogComponent implements OnInit {
     });
       
       this.dialogRef.close(this.licences);
+      this.service.showSnackBar('snackbar.success.changeSaved');
   }
 
 }

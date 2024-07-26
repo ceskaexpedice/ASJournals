@@ -140,6 +140,7 @@ export class AdminMagazinesComponent implements OnInit {
       this.service.deleteEditor(this.currentEditor!.id).subscribe(res => {
         this.service.getEditors().subscribe(state => {
           this.editors = state['editorsList'];
+          this.service.showSnackBar('snackbar.success.changeSaved');
         });
       });
     }
@@ -154,7 +155,7 @@ export class AdminMagazinesComponent implements OnInit {
     this.service.saveEditor(this.currentEditor).subscribe(res => {
       this.service.getEditors().subscribe(state => {
         this.editors = state['editorsList'];
-        this.service.showSnackBar('Saved success!');
+        this.service.showSnackBar('snackbar.success.changeSaved');
       });
     });
   }
@@ -260,7 +261,7 @@ export class AdminMagazinesComponent implements OnInit {
       this.service.getMagazines().subscribe(res2 => {
         this.state.ctxs = res2['response']['docs'];
         this.state.ctxs.forEach((m: Magazine) => m.isK7 = m.kramerius_version === 'k7');
-        this.service.showSnackBar('Saved success!');
+        this.service.showSnackBar('snackbar.success.changeSaved');
       });
     });
   }
@@ -273,6 +274,7 @@ export class AdminMagazinesComponent implements OnInit {
           // this.state.setJournals(res);
           
           this.state.ctxs = res2['response']['docs'];
+          this.service.showSnackBar('snackbar.success.changeSaved');
         });
       });
     }
@@ -372,6 +374,7 @@ export class AdminMagazinesComponent implements OnInit {
     const content = this.editor.getContent();
 
     this.service.saveText(this.selectedPage, content).subscribe(res => {
+      this.service.showSnackBar('snackbar.success.changeSaved');
       // this.saved = !res.hasOwnProperty('error');
     });
   }
