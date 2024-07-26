@@ -56,7 +56,7 @@
               {{currentItem['year']}}<span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span><span *ngIf="issueNumber">, {{'číslo' | translate}} {{issueNumber}}</span><span *ngIf="partName">, {{partName}}</span>
             </h1>
           </div>
-          <div class="app-pl-4">
+          <div class="app-pl-4" *ngIf="!isDataNode">
             {{ 'Výsledky řadit' | translate }}:
             <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
               {{ currentSort.label }}<mat-icon iconPositionEnd>expand_more</mat-icon>
