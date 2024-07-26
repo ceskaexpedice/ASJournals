@@ -22,8 +22,8 @@
 );
 
 $app-typography: mat-typography-config(
-  $font-family: 'Roboto Condensed',
-  /* $font-family: 'Inter', */
+  /* $font-family: 'Roboto Condensed', */
+  $font-family: 'Inter',
   /* $display-4: mat-typography-level(112px, 112px, 300),
   $display-3: mat-typography-level(100px, 56px, 400),
   $display-2: mat-typography-level(100px, 48px, 400),
