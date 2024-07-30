@@ -242,8 +242,8 @@ public class IndexerK7 {
         try {
             client = getClient("journal");
             Date tstart = new Date();
-            int idx = getIdx(pid, true);
-            indexPidAndChildren(pid);
+            indexPathUp(pid);
+            indexPidAndChildren(pid, false);
             LOGGER.log(Level.INFO, "index finished. Indexed: {0}", total);
 
             response.put("msg", "total indexed " + total);
@@ -264,53 +264,46 @@ public class IndexerK7 {
 
     }
 
-    private void indexPathUp(JSONArray ctx) {
-        /*
-    [
-      [
-        {"model":"periodical","pid":"uuid:440337bd-5625-11e1-9505-005056a60003"},
-        {"model":"periodicalvolume","pid":"uuid:714c1b42-7b59-4697-9cf0-8fa8c9cc4eae"},
-        {"model":"periodicalitem","pid":"uuid:47476091-fa64-4f0d-b6d8-c3cdb72a75da"}
-      ]
-    ]
-         */
-        for (int i = 0; i < ctx.length(); i++) {
-            JSONArray ja = ctx.getJSONArray(i);
-            for (int j = 0; j < ja.length() - 1; j++) {
-                String pid = ja.getJSONObject(j).getString("pid");
-                int idx = getIdx(pid, false);
-                indexPid(pid);
-            }
-        }
-    }
-
-    public int getIdx(String pid, boolean up) {
+    private void indexPathUp(String pid) {
         JSONObject item = getItem(pid);
-        JSONArray ctx = item.optJSONArray("context");
-        if (ctx != null && ctx.length() > 0) {
-            JSONArray ja = ctx.getJSONArray(ctx.length() - 1);
-            if (ja.length() > 1) {
-                if (up) {
-                    indexPathUp(ctx);
-                }
-
-                String ppid = ja.getJSONObject(ja.length() - 2).getString("pid");
-                JSONObject pitem = getItem(ppid);
-                JSONArray children = pitem.getJSONObject("structure").getJSONObject("children").getJSONArray("own");
-                for (int i = 0; i < children.length(); i++) {
-                    if (pid.equals(children.getJSONObject(i).getString("pid"))) {
-                        return i;
-                    }
-                }
-                return 0;
-            } else {
-                return 0;
-            }
-
-        } else {
-            return 0;
+        String[] path = item.optString("own_pid_path", "").split("/");
+        /*
+    "own_pid_path":"uuid:6e59d9eb-dbc9-4413-ac35-aa10045dfc92/uuid:fef571fb-acf1-4aae-9e23-51500bc83804/uuid:b7059989-2179-4645-886e-5684fb9681d7",
+         */
+        for (String p: path) {
+            indexPid(p);
         }
     }
+
+//    public int getIdx(String pid, boolean up) {
+//        JSONObject item = getItem(pid);
+//        System.out.println(item);
+//        String[] ctx = item.optString("own_pid_path", "").split("/");
+//        System.out.println(ctx);
+//        if (ctx != null && ctx.length() > 0) {
+//            JSONArray ja = ctx.getJSONArray(ctx.length() - 1);
+//            if (ja.length() > 1) {
+//                if (up) {
+//                    indexPathUp(ctx);
+//                }
+//
+//                String ppid = ja.getJSONObject(ja.length() - 2).getString("pid");
+//                JSONObject pitem = getItem(ppid);
+//                JSONArray children = pitem.getJSONObject("structure").getJSONObject("children").getJSONArray("own");
+//                for (int i = 0; i < children.length(); i++) {
+//                    if (pid.equals(children.getJSONObject(i).getString("pid"))) {
+//                        return i;
+//                    }
+//                }
+//                return 0;
+//            } else {
+//                return 0;
+//            }
+//
+//        } else {
+//            return 0;
+//        }
+//    }
 
     /**
      * Delete doc from index and his children
@@ -339,14 +332,15 @@ public class IndexerK7 {
      *
      * @param pid
      */
-    private void indexPidAndChildren(String pid) {
-        // JSONObject item =  getItem(pid);
-        indexPid(pid);
+    private void indexPidAndChildren(String pid, boolean self) {
+        if (self) {
+            indexPid(pid);
+        }
         JSONArray children = getChildren(pid);
         for (int i = 0; i < children.length(); i++) {
             JSONObject child = children.getJSONObject(i);
             if (!child.has("ds.img_full.mime")) {
-                indexPidAndChildren(children.getJSONObject(i).getString("pid"));
+                indexPidAndChildren(children.getJSONObject(i).getString("pid"), true);
             } else {
                 indexPid(child.getString("pid"));
             }
