@@ -669,10 +669,13 @@ public class IndexerK7 {
             prefix = "";
             o = mods.opt("name");
         }
+        System.out.println(mods);
         if (o instanceof JSONObject) {
             JSONObject jo = (JSONObject) o;
+            // if (jo.has("type") && "personal".equals(jo.getString("type")) && jo.has(prefix + "namePart")) {
             if (jo.has("type") && "personal".equals(jo.getString("type")) && jo.has(prefix + "namePart")) {
                 Object np = jo.get(prefix + "namePart");
+                System.out.println(np);
                 String autorName = namePart(np);
                 idoc.addField("autor", autorName);
                 JSONObject af = new JSONObject()

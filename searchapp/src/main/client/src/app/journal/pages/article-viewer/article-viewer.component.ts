@@ -124,8 +124,9 @@ export class ArticleViewerComponent implements OnInit {
 
   setReferences() {
     this.state.viewerArticle.references = [];
-    if (this.mods['relatedItem']) {
-      const refs: any[] = this.mods['relatedItem'].filter((r: any) => r.type === 'references');
+    const relatedItem = this.mods['relatedItem'] || this.mods['mods:relatedItem'];
+    if (relatedItem) {
+      const refs: any[] = relatedItem.filter((r: any) => r.type === 'references');
       this.state.viewerArticle.hasReferences = refs.length > 0;
       if (this.state.viewerArticle.hasReferences) {
         refs.forEach(ref => {
@@ -138,7 +139,7 @@ export class ArticleViewerComponent implements OnInit {
             isbn = 'ISBN: ' +  ref.identifier.content + '.';
           }
           if (ref['note']) {
-            this.state.viewerArticle.references.push(ref['note']['content']);
+            this.state.viewerArticle.references.push(ref['mods:note']['mods:content']);
           } else if (ref.relatedItem?.type === 'host') {
             const given = ref.relatedItem.name ?
                           ref.relatedItem['name']['namePart'].find((n: any) => n.type==='given')['content'] :
