@@ -130,43 +130,49 @@ export class ArticleViewerComponent implements OnInit {
       this.state.viewerArticle.hasReferences = refs.length > 0;
       if (this.state.viewerArticle.hasReferences) {
         refs.forEach(ref => {
+          // const ref = JSON.parse(JSON.stringify(refOrig).replaceAll('mods:', ''));
           let doi = '';
-          if (ref.identifier && ref.identifier.type === 'doi') {
-            doi = 'DOI: ' +  ref.identifier.content + '.';
+          if (ref['mods:identifier'] && ref['mods:identifier'].type === 'doi') {
+            doi = 'DOI: ' +  ref['mods:identifier'].content + '.';
           }
           let isbn = '';
-          if (ref.identifier && ref.identifier.type === 'isbn') {
-            isbn = 'ISBN: ' +  ref.identifier.content + '.';
+          if (ref['mods:identifier'] && ref['mods:identifier'].type === 'isbn') {
+            isbn = 'ISBN: ' +  ref['mods:identifier'].content + '.';
           }
           if (ref['note']) {
-            this.state.viewerArticle.references.push(ref['mods:note']['mods:content']);
-          } else if (ref.relatedItem?.type === 'host') {
-            const given = ref.relatedItem.name ?
-                          ref.relatedItem['name']['namePart'].find((n: any) => n.type==='given')['content'] :
-                          ref['name']['namePart'].find((n: any) => n.type==='given')['content'];
-            const family = ref.relatedItem.name ?
-                          ref.relatedItem['name']['namePart'].find((n: any) => n.type==='family')['content'] :
-                          ref['name']['namePart'].find((n: any) => n.type==='family')['content'];
-            let note = `${family}, ${given}. 
-                        ${ref.relatedItem.titleInfo?.title ? ref.relatedItem.titleInfo.title : ''}
-                        ${ref.relatedItem.part ? 
-                          ', roč.' + ref.relatedItem.part.detail.find((d:any) => d.type === 'volume').number +
-                          ', č. ' + ref.relatedItem.part.detail.find((d:any) => d.type === 'issue').number : 
-                          '.'}
-
-                        ${ref.relatedItem.originInfo?.dateIssued ? ref.relatedItem.originInfo?.dateIssued + '.' : ''} 
-                        ${ref.relatedItem.originInfo?.place?.placeTerm?.content ? ref.relatedItem.originInfo?.place?.placeTerm?.content : ''}
-                        ${ref.relatedItem.originInfo?.publisher ? ': ' + ref.relatedItem.originInfo?.publisher : ''}
-                        ${doi}${isbn}`;
-            this.state.viewerArticle.references.push(note);
+            this.state.viewerArticle.references.push(ref['mods:note']['content']);
           } else {
-            const given = ref['name']['namePart'].find((n: any) => n.type==='given')['content'];
-            const family = ref['name']['namePart'].find((n: any) => n.type==='family')['content'];
-            let note = `${family}, ${given}. 
-            ${ref.originInfo?.dateIssued}. 
-            ${ref.originInfo?.place.placeTerm.content ? ref.originInfo?.place.placeTerm.content + ':' : ''}: 
-            ${ref.originInfo?.publisher ? ref.originInfo?.publisher + '.' : ''}
-            ${doi}${isbn}`;
+            let name = this.makeName(ref).join('; ');
+            let note = `${name}.  
+            ${ref['mods:titleInfo']?.['mods:title'] ? ref['mods:titleInfo']['mods:title'] : ''
+
+            } ${ref['mods:originInfo']?.['mods:place']['mods:placeTerm']['content'] ? ref['mods:originInfo']['mods:place']['mods:placeTerm']['content'] + ':' : ''} 
+            ${ref['mods:originInfo']?.['mods:publisher'] ? ref['mods:originInfo']['mods:publisher']
+              : ''}${ref['mods:originInfo']?.['mods:dateIssued'] ? ', ' + ref['mods:originInfo']['mods:dateIssued'] : ''}. `
+            if (ref['mods:relatedItem']?.type === 'host') {
+              let name2 = this.makeName(ref['mods:relatedItem']).join('; ');
+              if (name2.trim() !== '') {
+                name2 = name2 + '.'
+              }
+              note += `In: ${name2}
+                          ${ref['mods:relatedItem']['mods:titleInfo']['mods:title'] ? 
+                            ref['mods:relatedItem']['mods:titleInfo']['mods:title'] + '.' : 
+                            ''}
+                            ${ref['mods:relatedItem']['mods:originInfo']?.['mods:place']?.['mods:placeTerm']['content'] ? 
+                            ref['mods:relatedItem']['mods:originInfo']['mods:place']['mods:placeTerm'].content : 
+                            ''}${ref['mods:relatedItem']['mods:originInfo']['mods:publisher'] ? ': ' + ref['mods:relatedItem']['mods:originInfo']['mods:publisher'] 
+                              : ''}${ref['mods:relatedItem']['mods:originInfo']['mods:publisher'] && ref['mods:relatedItem']['mods:originInfo']['mods:dateIssued'] ?
+                               ', ' : ''}${ref['mods:relatedItem']['mods:originInfo']['mods:dateIssued'] ? ref['mods:relatedItem']['mods:originInfo']['mods:dateIssued'] 
+                              : ''}${ref['mods:relatedItem']['mods:part'] ? 
+                                ', roč. ' + ref['mods:relatedItem']['mods:part']['mods:detail'].find((d:any) => d.type === 'volume')['mods:number'] +
+                                ', č. ' + ref['mods:relatedItem']['mods:part']['mods:detail'].find((d:any) => d.type === 'issue')['mods:number'] : 
+                                ''}${ref['mods:part']['mods:extent'] ? 
+                                  ', s. ' + ref['mods:part']['mods:extent']['mods:start'] +
+                                  '-' + ref['mods:part']['mods:extent']['mods:end'] : 
+                                  ''}.
+                            `;
+            }
+            note += `${doi}${isbn}`;
             this.state.viewerArticle.references.push(note);
           }
           
@@ -175,6 +181,49 @@ export class ArticleViewerComponent implements OnInit {
     } else {
       this.state.viewerArticle.hasReferences = false
     }
+  }
+
+  makeName(mods: any): string[] {
+    let ret = [];
+    //name/type="personal"	namepart/type="family"
+        //name/type="personal"	namePart/type"given"
+        if (mods.hasOwnProperty("mods:name")) {
+          let name = mods["mods:name"];
+          if (name.hasOwnProperty('length')) {
+              for (let i in name) {
+                  let namePart = name[i]["mods:namePart"];
+                  let role = name[i]["mods:role"];
+                  if (name[i]["type"] === 'personal' && namePart) {
+                      //Chceme nejdriv prijmeni a potom jmeno
+                      if (namePart[0]['type'] === 'family') {
+                        ret.push(namePart[0]['content'] + ' ' + namePart[1]['content']);
+                      } else {
+                        ret.push(namePart[1]['content'] + ' ' + namePart[0]['content']);
+                      }
+                  }
+              }
+          } else {
+              if (name["type"] === 'personal' && name.hasOwnProperty("mods:namePart")) {
+                  let namePart = name["mods:namePart"];
+                  if (typeof namePart === 'string') {
+                    ret.push(namePart);
+                  } else {
+                      if (typeof namePart[0] === 'string') {
+                        ret.push(namePart[0]);
+                      } else {
+                          //Chceme nejdriv prijmeni a potom jmeno
+                          if (namePart[0]['type'] === 'family') {
+                            ret.push(namePart[0]['content'] + ' ' + namePart[1]['content']);
+                          } else {
+                            ret.push(namePart[1]['content'] + ' ' + namePart[0]['content']);
+                          }
+                      }
+                  }
+              }
+          }
+
+      }
+      return ret;
   }
 
   setData() {
