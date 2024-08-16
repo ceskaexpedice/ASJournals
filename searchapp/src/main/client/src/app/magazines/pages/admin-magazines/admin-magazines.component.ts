@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, NgZone} from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import {Router, RouterModule} from '@angular/router';
@@ -46,6 +46,7 @@ export class AdminMagazinesComponent implements OnInit {
   editor: any;
 
   selectedPage: string;
+  saved: boolean = false;
 
   currentEditor: {
     id: string,
@@ -73,6 +74,7 @@ export class AdminMagazinesComponent implements OnInit {
   subscriptions: Subscription[] = [];
   
   constructor(
+    private ngZone: NgZone,
     private translate: TranslateService,
     public dialog: MatDialog,
     public state: AppState,
@@ -374,8 +376,11 @@ export class AdminMagazinesComponent implements OnInit {
     const content = this.editor.getContent();
 
     this.service.saveText(this.selectedPage, content).subscribe(res => {
-      this.service.showSnackBar('snackbar.success.changeSaved');
-      // this.saved = !res.hasOwnProperty('error');
+      this.saved = !res.hasOwnProperty('error');
+      this.ngZone.run(() => {
+        // we're back in the zone here
+        this.service.showSnackBar('snackbar.success.changeSaved');
+      });
     });
   }
 

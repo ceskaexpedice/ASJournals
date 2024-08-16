@@ -64,7 +64,7 @@
             <mat-list-item (click)="selectPage('kontakt')" [title]="'magazines.kontakt' | translate" [class.app-active]="selectedPage === 'kontakt'" class="app-cursor-pointer">{{ 'magazines.kontakt' | translate }}</mat-list-item>
           </mat-list>
         </div>
-        <div class="app-fxFlex app-right">
+        <div class="app-fxFlex app-right app-editor-wrapper">
           <editor *ngIf="tinyInited" name="editor" [(ngModel)]="text" [init]="tinyConfig"></editor>
         </div>      
       </div>

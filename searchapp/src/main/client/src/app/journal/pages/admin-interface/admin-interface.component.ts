@@ -246,7 +246,7 @@ export class AdminInterfaceComponent {
 
     this.service.saveMenu(m).subscribe((res: any) => {
       this.saved = !res.hasOwnProperty('error');
-      this.service.showSnackBar('Menu saved!');
+      this.service.showSnackBar('snackbar.success.changeSaved');
     });
   }
 
@@ -264,7 +264,7 @@ export class AdminInterfaceComponent {
       this.saved = !res.hasOwnProperty('error');
       this.ngZone.run(() => {
         // we're back in the zone here
-        this.service.showSnackBar('Menu saved!');
+        this.service.showSnackBar('snackbar.success.changeSaved');
       });
       
       
