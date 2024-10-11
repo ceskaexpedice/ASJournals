@@ -13,7 +13,15 @@
 				</mat-form-field>
 			</div>
 			<mat-progress-bar mode="indeterminate" *ngIf="workStatus.status === 'indexing'" class="app-mb-2"></mat-progress-bar>
-			<div *ngIf="workStatus.status !== 'none'" class="app-color-primary">{{ workStatus['msg'] }}</div>
+			<div *ngIf="workStatus.status !== 'none'" class="app-color-primary">
+				<ng-container *ngIf="workStatus.status === 'indexing'">
+					{{ 'admin.indexing' | translate }} {{ workStatus['currentUuid'] }}. {{ 'admin.num_docs' | translate }}: {{ workStatus['indexed'] }}
+				</ng-container>
+				<ng-container *ngIf="workStatus.status === 'finished'">
+					{{ 'admin.finished' | translate }} {{ workStatus['currentUuid'] }}. {{ 'admin.num_docs' | translate }}: {{ workStatus['indexed'] }}
+
+				</ng-container>
+			</div>
 			<div class="app-mt-4">
 				<button mat-flat-button color="primary" class="app-mr-2" (click)="index()">{{ 'Přidat UUID' | translate }}</button>
 				<button mat-flat-button color="primary" (click)="onDelete()" [disabled]="!indexUUID">{{ 'Smazat UUID' | translate }}</button>

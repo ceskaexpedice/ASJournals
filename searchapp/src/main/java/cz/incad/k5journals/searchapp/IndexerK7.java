@@ -134,6 +134,7 @@ public class IndexerK7 {
                 try {
                     client.add(idoc);
                     LOGGER.log(Level.INFO, "indexed: {0}", new Object[]{++total});
+                    currentStatus.put("indexed", total);
                     currentStatus.put("msg", "Indexing. Actually indexing " + pid + ". Indexed docs: " + total);
                     writeStatus();
                     client.commit();
@@ -254,6 +255,8 @@ public class IndexerK7 {
             Date tend = new Date();
             response.put("ellapsed time", FormatUtils.formatInterval(tend.getTime() - tstart.getTime()));
             currentStatus.put("status", "finished");
+            currentStatus.put("indexed", total);
+            currentStatus.put("ellapsed", FormatUtils.formatInterval(tend.getTime() - tstart.getTime()));
             currentStatus.put("msg", "total indexed " + total + " in " + FormatUtils.formatInterval(tend.getTime() - tstart.getTime()));
             writeStatus();
             client.close();
@@ -279,36 +282,6 @@ public class IndexerK7 {
         }
     }
 
-//    public int getIdx(String pid, boolean up) {
-//        JSONObject item = getItem(pid);
-//        System.out.println(item);
-//        String[] ctx = item.optString("own_pid_path", "").split("/");
-//        System.out.println(ctx);
-//        if (ctx != null && ctx.length() > 0) {
-//            JSONArray ja = ctx.getJSONArray(ctx.length() - 1);
-//            if (ja.length() > 1) {
-//                if (up) {
-//                    indexPathUp(ctx);
-//                }
-//
-//                String ppid = ja.getJSONObject(ja.length() - 2).getString("pid");
-//                JSONObject pitem = getItem(ppid);
-//                JSONArray children = pitem.getJSONObject("structure").getJSONObject("children").getJSONArray("own");
-//                for (int i = 0; i < children.length(); i++) {
-//                    if (pid.equals(children.getJSONObject(i).getString("pid"))) {
-//                        return i;
-//                    }
-//                }
-//                return 0;
-//            } else {
-//                return 0;
-//            }
-//
-//        } else {
-//            return 0;
-//        }
-//    }
-
     /**
      * Delete doc from index and his children
      *
@@ -322,6 +295,7 @@ public class IndexerK7 {
             long num = solr.query(new SolrQuery(q)).getResults().getNumFound();
             ret = new JSONObject(solr.deleteByQuery(q).jsonStr());
             solr.commit();
+            ret.put("total", num);
             ret.put("msg", "deleted " + num + " documents");
         } catch (SolrServerException | IOException ex) {
             ret.put("error", ex);
@@ -673,13 +647,13 @@ public class IndexerK7 {
             prefix = "";
             o = mods.opt("name");
         }
-        System.out.println(mods);
+        // System.out.println(mods);
         if (o instanceof JSONObject) {
             JSONObject jo = (JSONObject) o;
             // if (jo.has("type") && "personal".equals(jo.getString("type")) && jo.has(prefix + "namePart")) {
             if (jo.has("type") && "personal".equals(jo.getString("type")) && jo.has(prefix + "namePart")) {
                 Object np = jo.get(prefix + "namePart");
-                System.out.println(np);
+                // System.out.println(np);
                 String autorName = namePart(np);
                 idoc.addField("autor", autorName);
                 JSONObject af = new JSONObject()

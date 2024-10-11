@@ -70,6 +70,8 @@ export class AdminIndexComponent {
       this.workStatus = res;
       if (res.status === 'finished') {
         clearInterval(this.statusInterval);
+      } else {
+
       }
     });
 
