@@ -473,7 +473,8 @@ export class AppService {
     let url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams()
       .set('q', '*:*')
-      .set('fq', 'parents:"' + pid + '"')
+      .append('fq', 'parents:"' + pid + '"')
+      .append('fq', 'datanode:true')
       .set('wt', 'json')
       .set('sort', 'idx asc')
       .set('rows', '500');
@@ -893,8 +894,8 @@ export class AppService {
     //Rok jako stats
     let params = new HttpParams()
       .set('q', '*:*')
-      .set('fq', '-genre:""')
-      .set('fq', 'model:article')
+      .append('fq', '-genre:""')
+      .append('fq', 'model:article')
       .set('rows', '0')
       .set('facet', 'true')
       .set('facet.field', 'genre')
