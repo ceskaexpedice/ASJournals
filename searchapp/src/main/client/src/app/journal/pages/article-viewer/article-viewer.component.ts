@@ -133,6 +133,7 @@ export class ArticleViewerComponent implements OnInit {
       this.state.viewerArticle.hasReferences = refs.length > 0;
       if (this.state.viewerArticle.hasReferences) {
         refs.forEach(ref => {
+          // console.log(ref)
           // const ref = JSON.parse(JSON.stringify(refOrig).replaceAll('mods:', ''));
           let doi = '';
           if (ref['mods:identifier'] && ref['mods:identifier'].type === 'doi') {
@@ -142,19 +143,22 @@ export class ArticleViewerComponent implements OnInit {
           if (ref['mods:identifier'] && ref['mods:identifier'].type === 'isbn') {
             isbn = 'ISBN: ' +  ref['mods:identifier'].content + '.';
           }
-          if (ref['note']) {
+          if (ref['mods:note']) {
             this.state.viewerArticle.references.push(ref['mods:note']['content']);
+          } else if (ref['note']) {
+            this.state.viewerArticle.references.push(ref['note']['content']);
           } else {
-            let name = this.makeName(ref).join('; ');
+            let name = this.makeName(ref).join('; ').trim();
             let note = `${name}.  
             ${ref['mods:titleInfo']?.['mods:title'] ? ref['mods:titleInfo']['mods:title'] : ''
 
-            } ${ref['mods:originInfo']?.['mods:place']['mods:placeTerm']['content'] ? ref['mods:originInfo']['mods:place']['mods:placeTerm']['content'] + ':' : ''} 
-            ${ref['mods:originInfo']?.['mods:publisher'] ? ref['mods:originInfo']['mods:publisher']
+            }${ref['mods:originInfo']?.['mods:place']['mods:placeTerm']['content'] ? ' ' + ref['mods:originInfo']['mods:place']['mods:placeTerm']['content'] + ':' : ''
+
+            }${ref['mods:originInfo']?.['mods:publisher'] ? ' ' + ref['mods:originInfo']['mods:publisher']
               : ''}${ref['mods:originInfo']?.['mods:dateIssued'] ? ', ' + ref['mods:originInfo']['mods:dateIssued'] : ''}. `
             if (ref['mods:relatedItem']?.type === 'host') {
-              let name2 = this.makeName(ref['mods:relatedItem']).join('; ');
-              if (name2.trim() !== '') {
+              let name2 = this.makeName(ref['mods:relatedItem']).join('; ').trim();
+              if (name2 !== '') {
                 name2 = name2 + '.'
               }
               note += `In: ${name2}
@@ -166,10 +170,14 @@ export class ArticleViewerComponent implements OnInit {
                             ''}${ref['mods:relatedItem']['mods:originInfo']['mods:publisher'] ? ': ' + ref['mods:relatedItem']['mods:originInfo']['mods:publisher'] 
                               : ''}${ref['mods:relatedItem']['mods:originInfo']['mods:publisher'] && ref['mods:relatedItem']['mods:originInfo']['mods:dateIssued'] ?
                                ', ' : ''}${ref['mods:relatedItem']['mods:originInfo']['mods:dateIssued'] ? ref['mods:relatedItem']['mods:originInfo']['mods:dateIssued'] 
-                              : ''}${ref['mods:relatedItem']['mods:part'] ? 
+                              : ''}${ref['mods:relatedItem']['mods:part']?.['mods:detail'] && Array.isArray(ref['mods:relatedItem']['mods:part']['mods:detail']) ? 
                                 ', roč. ' + ref['mods:relatedItem']['mods:part']['mods:detail'].find((d:any) => d.type === 'volume')['mods:number'] +
                                 ', č. ' + ref['mods:relatedItem']['mods:part']['mods:detail'].find((d:any) => d.type === 'issue')['mods:number'] : 
-                                ''}${ref['mods:part']['mods:extent'] ? 
+                                ''}${ref['mods:relatedItem']['mods:part']?.['mods:detail'] && ref['mods:relatedItem']['mods:part']['mods:detail']['type'] === 'volume' ? 
+                                  ', roč. ' + ref['mods:relatedItem']['mods:part']['mods:detail']['mods:number'] : 
+                                  ''}${ref['mods:relatedItem']['mods:part']?.['mods:detail'] && ref['mods:relatedItem']['mods:part']['mods:detail']['type'] === 'issue' ? 
+                                    ', č. ' + ref['mods:relatedItem']['mods:part']['mods:detail']['mods:number'] : 
+                                    ''}${ref['mods:part']?.['mods:extent'] ? 
                                   ', s. ' + ref['mods:part']['mods:extent']['mods:start'] +
                                   '-' + ref['mods:part']['mods:extent']['mods:end'] : 
                                   ''}.
