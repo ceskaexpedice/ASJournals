@@ -48,6 +48,8 @@ export class AppState {
   fulltextQuery: string = '';
   hlTerms: string[] = [];
 
+  archivPosition: any;
+
   sorts = [
     {"label": "dle relevance", "field": "score desc"},
     {"label": "od nejnovějších", "field": "year desc"},

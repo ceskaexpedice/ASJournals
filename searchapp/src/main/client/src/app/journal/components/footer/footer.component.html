@@ -1,7 +1,7 @@
 <footer *ngIf="!state.isFull">
   <div class="app-fxLayout app-row app-container">
     <div *ngIf="foot" class="app-fxFlex app-left">
-      <span [innerHtml]="foot"></span>
+      <span [innerHtml]="foot" name="text"></span>
     </div>
     <div *ngIf="!foot" class="app-fxFlex app-left">
       © {{ currentYear }} Knihovna AV ČR, v. v. i.

@@ -85,6 +85,8 @@ export class ArchivComponent implements OnInit {
   }
 
   goToRoot() {
+    this.state.archivPosition = null;
+    //  this.state.stateChanged();
     this.parentItems = [];
     this.setItems(this.state.currentMagazine['journal']);
     let p: any = {};
@@ -99,7 +101,13 @@ export class ArchivComponent implements OnInit {
     this.items.sort((a, b) => {
       // return (a['idx'] - b['idx']) * x;
       if (a['model'] === 'periodicalvolume') {
-        return (a['year'] - b['year']) * x;
+        const y = (a['year'] - b['year']) * x;
+        if (y === 0) {
+          return (a['idx'] - b['idx']) * x;
+        } else {
+          return y;
+        }
+
       } else {
         return (a['idx'] - b['idx']) * x;
       }
@@ -150,11 +158,11 @@ export class ArchivComponent implements OnInit {
             this.items.sort((a, b) => {
               return a['idx'] - b['idx'];
             });
-          } else if (this.currentItem.model === 'periodicalvolume'){
+          } else if (this.currentItem.model === 'periodicalvolume') {
             this.items.sort((a, b) => {
               const mods1 = JSON.parse(a['mods']);
               const mods2 = JSON.parse(b['mods']);
-              
+
               let dateIssued1: string = a.dateIssued.padStart(7, '0');
               let dateIssued2: string = b.dateIssued.padStart(7, '0');
 
@@ -277,7 +285,11 @@ export class ArchivComponent implements OnInit {
 
   setDetails() {
     const mods = this.currentItem['mods'];
-    if (this.currentItem['model'] === 'periodicalvolume') {
+    if (this.currentItem['model'] === 'periodical') {
+      this.state.archivPosition = null;
+      this.state.stateChanged();
+      return;
+    } else if (this.currentItem['model'] === 'periodicalvolume') {
 
       if (mods['mods:originInfo']) {
         //this.year = mods['mods:originInfo']['mods:dateIssued'];
@@ -306,7 +318,6 @@ export class ArchivComponent implements OnInit {
           this.partName = mods['mods:titleInfo']['mods:partName'];
         }
       } else {
-console.log(mods)
 
         //podpora pro starsi mods. ne podle zadani
         if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
@@ -318,6 +329,14 @@ console.log(mods)
 
       }
     }
+
+    this.state.archivPosition = this.currentItem['year'] +
+      (this.volumeNumber ? ', ' + this.service.translateKey('ročník') + ' ' + this.volumeNumber : '') +
+      (this.issueNumber ? ' / ' + this.service.translateKey('číslo') + ' ' + this.issueNumber : '') +
+      (this.partName ? this.partName : '');
+
+    this.state.stateChanged();
+
   }
 
 

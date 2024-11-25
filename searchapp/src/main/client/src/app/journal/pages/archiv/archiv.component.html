@@ -8,7 +8,7 @@
           {{ currentSort.label }}<mat-icon iconPositionEnd>expand_more</mat-icon>
         </button>
         <mat-menu #menuSort="matMenu">
-          <button mat-menu-item *ngFor="let sort of sorts" (click)="setSort(sort)" [(ngModel)]="currentSort">{{ sort.label | translate }}</button>
+          <button mat-menu-item *ngFor="let sort of sorts" (click)="setSort(sort)"  >{{ sort.label | translate }}</button>
         </mat-menu>
       </div>
     </div>
@@ -62,7 +62,7 @@
               {{ currentSort.label }}<mat-icon iconPositionEnd>expand_more</mat-icon>
             </button>
             <mat-menu #menuSort="matMenu">
-              <button mat-menu-item *ngFor="let sort of sorts" (click)="setSort(sort)" [(ngModel)]="currentSort">{{ sort.label | translate }}</button>
+              <button mat-menu-item *ngFor="let sort of sorts" (click)="setSort(sort)">{{ sort.label | translate }}</button>
             </mat-menu>
           </div>
         </div>

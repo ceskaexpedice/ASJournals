@@ -5,6 +5,7 @@ import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterModule } from 
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.state';
 import { AppService } from 'src/app/services/app.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -87,6 +88,12 @@ export class BreadcrumbComponent {
         }
         this.crumbs.push({ link: link.join('/'), label });
       }
+    }
+
+    
+    if (this.page === 'archiv' && this.state.archivPosition) {
+      // this.crumbs.push({ link: 'home', label: this.appService.translateKey('menu.home_') });
+      this.crumbs.push({ link: 'archiv', label: this.state.archivPosition });
     }
   }
 
