@@ -201,6 +201,7 @@
 		"cover": "Obálka",
 		"indexing": "Indexace probíhá. Zpracovává se ",
 		"finished": "Indexace skončila.",
+		"delete_finished": "Smazání skončilo úspěšně.",
 		"num_docs": "Zpracováno",
 		"delete_uuid": "Smazání UUID",
 		"confirm_delete": "Potvrdit smazání",

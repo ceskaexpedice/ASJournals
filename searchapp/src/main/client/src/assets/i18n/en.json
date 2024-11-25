@@ -201,6 +201,7 @@
 		"cover": "Cover",
 		"indexing": "Indexing. Current pid ",
 		"finished": "Index finished.",
+		"delete_finished": "Delete finished succesfully.",
 		"num_docs": "Total",
 		"delete_uuid": "Delete UUID",
 		"confirm_delete": "Confirm deleted",

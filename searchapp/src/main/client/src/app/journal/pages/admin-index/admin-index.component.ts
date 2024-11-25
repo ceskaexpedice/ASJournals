@@ -90,7 +90,8 @@ export class AdminIndexComponent {
         this.working = true;
         this.resultMsg = '';
         this.service.delete(this.indexUUID!).subscribe((res: any) => {
-          this.workStatus = { status :'finished', msg: res['error'] ? res.error : res.msg };
+          // this.workStatus = res;
+          this.workStatus = { status :'delete_finished', msg: res['error'] ? res.error : res.msg };
           this.resultMsg = res.hasOwnProperty('error') ? res.error : res.msg;
           this.working = false;
         });

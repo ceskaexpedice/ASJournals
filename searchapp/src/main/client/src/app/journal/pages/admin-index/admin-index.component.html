@@ -15,11 +15,15 @@
 			<mat-progress-bar mode="indeterminate" *ngIf="workStatus.status === 'indexing'" class="app-mb-2"></mat-progress-bar>
 			<div *ngIf="workStatus.status !== 'none'" class="app-color-primary">
 				<ng-container *ngIf="workStatus.status === 'indexing'">
-					{{ 'admin.indexing' | translate }} {{ workStatus['currentUuid'] }}. {{ 'admin.num_docs' | translate }}: {{ workStatus['indexed'] }}
+					{{ 'admin.indexing' | translate }} {{ workStatus['currentUuid'] }}.
+					<ng-container *ngIf="workStatus['indexed']">{{ 'admin.num_docs' | translate }}: {{ workStatus['indexed'] }}</ng-container> 
 				</ng-container>
 				<ng-container *ngIf="workStatus.status === 'finished'">
-					{{ 'admin.finished' | translate }} {{ workStatus['currentUuid'] }}. {{ 'admin.num_docs' | translate }}: {{ workStatus['indexed'] }}
-
+					{{ 'admin.finished' | translate }} {{ workStatus['currentUuid'] }}. 
+					<ng-container *ngIf="workStatus['indexed']">{{ 'admin.num_docs' | translate }}: {{ workStatus['indexed'] }}</ng-container> 
+				</ng-container>
+				<ng-container *ngIf="workStatus.status === 'delete_finished'">
+					{{ 'admin.finished' | translate }} {{ workStatus['currentUuid'] }}. 
 				</ng-container>
 			</div>
 			<div class="app-mt-4">

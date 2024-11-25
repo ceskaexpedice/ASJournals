@@ -254,6 +254,8 @@ public class IndexerK7 {
             response.put("msg", "total indexed " + total);
             Date tend = new Date();
             response.put("ellapsed time", FormatUtils.formatInterval(tend.getTime() - tstart.getTime()));
+            response.put("status", "finished");
+            response.put("indexed", total);
             currentStatus.put("status", "finished");
             currentStatus.put("indexed", total);
             currentStatus.put("ellapsed", FormatUtils.formatInterval(tend.getTime() - tstart.getTime()));

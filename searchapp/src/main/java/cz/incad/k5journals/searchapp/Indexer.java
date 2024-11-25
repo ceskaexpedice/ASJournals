@@ -108,6 +108,7 @@ public class Indexer {
                 try {
                     LOGGER.log(Level.INFO, "indexed: {0} with idx {1}", new Object[]{total++, index});
                     currentStatus.put("msg", "Indexing. Actually indexing " + pid + ". Indexed docs: " + total);
+                    currentStatus.put("indexed", total);
                     writeStatus();
                     client.add(idoc);
                     client.commit();
@@ -212,7 +213,10 @@ public class Indexer {
             Date tend = new Date();
             response.put("ellapsed time", FormatUtils.formatInterval(tend.getTime() - tstart.getTime()));
             currentStatus.put("status", "finished");
+            currentStatus.put("indexed", total);
+            currentStatus.put("ellapsed", FormatUtils.formatInterval(tend.getTime() - tstart.getTime()));
             currentStatus.put("msg", "total indexed " + total + " in " + FormatUtils.formatInterval(tend.getTime() - tstart.getTime()));
+            
             writeStatus();
             client.close();
         } catch (IOException ex) {
