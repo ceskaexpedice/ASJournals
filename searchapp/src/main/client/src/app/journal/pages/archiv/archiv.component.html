@@ -50,10 +50,10 @@
               {{ 'Ročníky' | translate }}
             </h1>
             <h1 *ngSwitchCase="'periodicalvolume'">
-              {{ currentItem['year'] }}<span *ngIf="volumeNumber">, {{ 'ročník' | translate }} {{ volumeNumber }}</span>
+              {{ currentItem['year'] }}<span *ngIf="state.archivItemDetails.volumeNumber">, {{ 'ročník' | translate }} {{ state.archivItemDetails.volumeNumber }}</span>
             </h1>
             <h1 *ngSwitchCase="'periodicalitem'">
-              {{currentItem['year']}}<span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span><span *ngIf="issueNumber">, {{'číslo' | translate}} {{issueNumber}}</span><span *ngIf="partName">, {{partName}}</span>
+              {{currentItem['year']}}<span *ngIf="state.archivItemDetails.volumeNumber">, {{'ročník' | translate}} {{state.archivItemDetails.volumeNumber}}</span><span *ngIf="state.archivItemDetails.issueNumber">, {{'číslo' | translate}} {{state.archivItemDetails.issueNumber}}</span><span *ngIf="state.archivItemDetails.partName">, {{state.archivItemDetails.partName}}</span>
             </h1>
           </div>
           <div class="app-pl-4" *ngIf="!isDataNode">

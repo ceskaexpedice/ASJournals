@@ -15,6 +15,7 @@ import { ArticleResultComponent } from '../../components/article-result/article-
 import { ArchivItemLeftComponent } from '../../components/archiv-item-left/archiv-item-left.component';
 import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
+import Utils from 'src/app/services/utils';
 
 
 @Component({
@@ -39,9 +40,9 @@ export class ArchivComponent implements OnInit {
 
   isDataNode: boolean = false;
 
-  volumeNumber: string | null = null;
-  issueNumber: string | null = null;
-  partName: string | null = null;
+  // volumeNumber: string | null = null;
+  // issueNumber: string | null = null;
+  // partName: string | null = null;
 
   sorts = [
     { label: "od nejnovějšího", dir: "desc" },
@@ -67,6 +68,9 @@ export class ArchivComponent implements OnInit {
             this.setItems(params['pid']);
           }
         } else {
+          
+    this.state.archivPosition = null;
+    this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
           this.currentPid = '';
           this.initData();
         }
@@ -86,6 +90,7 @@ export class ArchivComponent implements OnInit {
 
   goToRoot() {
     this.state.archivPosition = null;
+    this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
     //  this.state.stateChanged();
     this.parentItems = [];
     this.setItems(this.state.currentMagazine['journal']);
@@ -284,60 +289,65 @@ export class ArchivComponent implements OnInit {
   }
 
   setDetails() {
-    const mods = this.currentItem['mods'];
-    if (this.currentItem['model'] === 'periodical') {
-      this.state.archivPosition = null;
-      this.state.stateChanged();
-      return;
-    } else if (this.currentItem['model'] === 'periodicalvolume') {
-
-      if (mods['mods:originInfo']) {
-        //this.year = mods['mods:originInfo']['mods:dateIssued'];
-        if (mods['mods:titleInfo']) {
-          this.volumeNumber = mods['mods:titleInfo']['mods:partNumber'];
-        }
-      } else {
-        //podpora pro starsi mods. ne podle zadani
-        if (mods['part'] && mods['part']['date']) {
-          //this.year = mods['part']['date'];
-        } else if (mods['mods:part'] && mods['mods:part']['mods:date']) {
-          //this.year = mods['mods:part']['mods:date'];
-        }
-
-        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
-          this.issueNumber = mods['part']['detail']['number'];
-        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
-          this.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
-        }
-      }
-    } else if (this.currentItem['model'] === 'periodicalitem') {
-      if (mods['mods:originInfo']) {
-        //this.year = mods['mods:originInfo']['mods:dateIssued'];
-        if (mods['mods:titleInfo']) {
-          this.issueNumber = mods['mods:titleInfo']['mods:partNumber'];
-          this.partName = mods['mods:titleInfo']['mods:partName'];
-        }
-      } else {
-
-        //podpora pro starsi mods. ne podle zadani
-        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
-          this.issueNumber = mods['part']['detail']['number'];
-        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
-          this.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
-        }
-
-
-      }
-    }
-
-    this.state.archivPosition = this.currentItem['year'] +
-      (this.volumeNumber ? ', ' + this.service.translateKey('ročník') + ' ' + this.volumeNumber : '') +
-      (this.issueNumber ? ' / ' + this.service.translateKey('číslo') + ' ' + this.issueNumber : '') +
-      (this.partName ? this.partName : '');
-
+    this.service.details(this.currentItem['mods'], this.currentItem['model'], this.currentItem['parents'][0]);
     this.state.stateChanged();
-
   }
+
+  // setDetails2() {
+  //   const mods = this.currentItem['mods'];
+  //   if (this.currentItem['model'] === 'periodical') {
+  //     this.state.archivPosition = null;
+  //     this.state.stateChanged();
+  //     return;
+  //   } else if (this.currentItem['model'] === 'periodicalvolume') {
+
+  //     if (mods['mods:originInfo']) {
+  //       //this.year = mods['mods:originInfo']['mods:dateIssued'];
+  //       if (mods['mods:titleInfo']) {
+  //         this.volumeNumber = mods['mods:titleInfo']['mods:partNumber'];
+  //       }
+  //     } else {
+  //       //podpora pro starsi mods. ne podle zadani
+  //       if (mods['part'] && mods['part']['date']) {
+  //         //this.year = mods['part']['date'];
+  //       } else if (mods['mods:part'] && mods['mods:part']['mods:date']) {
+  //         //this.year = mods['mods:part']['mods:date'];
+  //       }
+
+  //       if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+  //         this.issueNumber = mods['part']['detail']['number'];
+  //       } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+  //         this.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
+  //       }
+  //     }
+  //   } else if (this.currentItem['model'] === 'periodicalitem') {
+  //     if (mods['mods:originInfo']) {
+  //       //this.year = mods['mods:originInfo']['mods:dateIssued'];
+  //       if (mods['mods:titleInfo']) {
+  //         this.issueNumber = mods['mods:titleInfo']['mods:partNumber'];
+  //         this.partName = mods['mods:titleInfo']['mods:partName'];
+  //       }
+  //     } else {
+
+  //       //podpora pro starsi mods. ne podle zadani
+  //       if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+  //         this.issueNumber = mods['part']['detail']['number'];
+  //       } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+  //         this.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
+  //       }
+
+
+  //     }
+  //   }
+
+  //   this.state.archivPosition = this.currentItem['year'] +
+  //     (this.volumeNumber ? ', ' + this.service.translateKey('ročník') + ' ' + this.volumeNumber : '') +
+  //     (this.issueNumber ? ' / ' + this.service.translateKey('číslo') + ' ' + this.issueNumber : '') +
+  //     (this.partName ? this.partName : '');
+
+  //   this.state.stateChanged();
+
+  // }
 
 
   img(pid: string, kramerius_version: string) {

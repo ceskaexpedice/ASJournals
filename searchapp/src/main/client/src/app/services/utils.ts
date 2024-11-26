@@ -1,8 +1,10 @@
+import { of, take } from "rxjs";
 import { Journal } from "../models/journal.model";
+import { AppService } from "./app.service";
 
 export default class Utils {
 
-  
+
 
   public static findByModel(res: any, model: string): any {
     if (res['doc'].model === model) {
@@ -238,6 +240,95 @@ export default class Utils {
     } else {
       return null;
     }
+  }
+
+  public static details(mods: any, model: string, parent: string, service: AppService): { year: number, volumeNumber: string, issueNumber: string, partName: any } {
+    const ret: { year: number, volumeNumber: string, issueNumber: string, partName: any } = { year: null, volumeNumber: null, issueNumber: null, partName: null };
+    if (model === 'periodicalvolume') {
+
+      if (mods['mods:originInfo']) {
+        ret.year = mods['mods:originInfo']['mods:dateIssued'];
+        if (mods['mods:titleInfo']) {
+          ret.volumeNumber = mods['mods:titleInfo']['mods:partNumber'];
+        }
+      } else {
+        //podpora pro starsi mods. ne podle zadani
+        if (mods['part'] && mods['part']['date']) {
+          ret.year = mods['part']['date'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:date']) {
+          ret.year = mods['mods:part']['mods:date'];
+        }
+
+        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+          ret.issueNumber = mods['part']['detail']['number'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+          ret.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
+        }
+      }
+      return ret;
+    } else if (model === 'periodicalitem') {
+      if (mods['mods:originInfo']) {
+        if (mods['mods:titleInfo']) {
+          ret.issueNumber = mods['mods:titleInfo']['mods:partNumber'];
+          ret.partName = mods['mods:titleInfo']['mods:partName'];
+        }
+      } else if (mods['mods:titleInfo']) {
+        ret.issueNumber = mods['mods:titleInfo']['mods:partNumber'];
+        ret.partName = mods['mods:titleInfo']['mods:partName'];
+
+      } else {
+        //podpora pro starsi mods. ne podle zadani
+        if (mods['part'] && mods['part']['date']) {
+          ret.year = mods['part']['date'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:date']) {
+          ret.year = mods['mods:part']['mods:date'];
+        }
+
+        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+          ret.issueNumber = mods['part']['detail']['number'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+          ret.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
+        }
+      }
+      console.log(ret);
+      const parentMods: any = Utils.getValueFromObservable(service, parent);
+      console.log(parentMods);
+      if (parentMods['mods:originInfo']) {
+        ret.year = parentMods['mods:originInfo']['mods:dateIssued'];
+        if (parentMods['mods:titleInfo']) {
+          ret.volumeNumber = parentMods['mods:titleInfo']['mods:partNumber'];
+        }
+      console.log(ret);
+      }
+      console.log(ret);
+      // return new Promise(resolve => {
+      //   service.getMods(parent).pipe(
+      //     take(1) //useful if you need the data once and don't want to manually cancel the subscription again
+      //   ).subscribe((parentMods: any) => {
+      //     if (parentMods['mods:originInfo']) {
+      //       ret.year = parentMods['mods:originInfo']['mods:dateIssued'];
+      //       if (parentMods['mods:titleInfo']) {
+      //         ret.volumeNumber = parentMods['mods:titleInfo']['mods:partNumber'];
+      //       }
+      //     }
+      //     resolve(ret);
+      //   });
+      // })
+
+    }
+      return ret;
+  }
+
+  public static getValueFromObservable(service: AppService, parent: string) {
+    return new Promise(resolve => {
+      service.getMods(parent).pipe(
+        take(1) //useful if you need the data once and don't want to manually cancel the subscription again
+      )
+        .subscribe(
+          (data: any) => {
+            resolve(data);
+          })
+    })
   }
 
   private static defaultDiacriticsRemovalMap = [

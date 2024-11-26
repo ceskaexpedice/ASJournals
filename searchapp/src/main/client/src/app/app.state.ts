@@ -78,6 +78,8 @@ export class AppState {
   viewerArticle: any;
   viewerActiveLink = 'detail';
 
+  archivItemDetails: { year: number, volumeNumber: string, issueNumber: string, partName: any } 
+
 
   public breadcrumbs: any[] = [];
 

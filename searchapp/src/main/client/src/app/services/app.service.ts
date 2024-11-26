@@ -111,9 +111,9 @@ export class AppService {
         this.config['color'] = ctx.color;
         this.config['journal'] = ctx.journal;
         this.config['showTitleLabel'] = ctx.showTitleLabel;
-        
+
         //this.switchStyle();
-        
+
         this.findActual();
         this.getKeywords();
         this.getGenres();
@@ -274,7 +274,7 @@ export class AppService {
     const params = new HttpParams()
       .set('pid', pid)
       .set('withParent', withParent);
-      return this.get(url, params)
+    return this.get(url, params)
     // return this.get(url, params)
     //   .pipe(
     //     map((response: any) => {
@@ -310,11 +310,11 @@ export class AppService {
             }
             let dateIssued1 = a.dateIssued.padStart(7, '0');
             let dateIssued2 = b.dateIssued.padStart(7, '0');
-            
+
             dateIssued1 = dateIssued1.split('.').reverse().join('');
             dateIssued2 = dateIssued2.split('.').reverse().join('');
 
-              return dateIssued2 - dateIssued1;
+            return dateIssued2 - dateIssued1;
           });
         }
         return childs;
@@ -633,12 +633,12 @@ export class AppService {
       .set('lang', this.state.currentLang);
 
     return this.get(url, params, 'text')
-    .pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((error: any) => of('error gettting content: ' + error))
-    )
+      .pipe(
+        map((response: any) => {
+          return response;
+        }),
+        catchError((error: any) => of('error gettting content: ' + error))
+      )
   }
 
   getCitace(uuid: string, server: string): Observable<string> {
@@ -918,6 +918,70 @@ export class AppService {
 
     });
 
+  }
+
+  details(mods: any, model: string, parent: string) {
+    this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
+    console.log(mods)
+
+    if (model === 'periodical') {
+      
+    } else if (model === 'periodicalvolume') {
+
+      if (mods['mods:originInfo']) {
+        this.state.archivItemDetails.year = mods['mods:originInfo']['mods:dateIssued'];
+        if (mods['mods:titleInfo']) {
+          this.state.archivItemDetails.volumeNumber = mods['mods:titleInfo']['mods:partNumber'];
+        }
+      } else {
+        //podpora pro starsi mods. ne podle zadani
+        if (mods['part'] && mods['part']['date']) {
+          this.state.archivItemDetails.year = mods['part']['date'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:date']) {
+          this.state.archivItemDetails.year = mods['mods:part']['mods:date'];
+        }
+
+        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+          this.state.archivItemDetails.issueNumber = mods['part']['detail']['number'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+          this.state.archivItemDetails.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
+        }
+      }
+    } else if (model === 'periodicalitem') {
+      if (mods['mods:originInfo']) {
+        if (mods['mods:titleInfo']) {
+          this.state.archivItemDetails.issueNumber = mods['mods:titleInfo']['mods:partNumber'];
+          this.state.archivItemDetails.partName = mods['mods:titleInfo']['mods:partName'];
+        }
+      } else if (mods['mods:titleInfo']) {
+        this.state.archivItemDetails.issueNumber = mods['mods:titleInfo']['mods:partNumber'];
+        this.state.archivItemDetails.partName = mods['mods:titleInfo']['mods:partName'];
+
+      } else {
+        //podpora pro starsi mods. ne podle zadani
+        if (mods['part'] && mods['part']['date']) {
+          this.state.archivItemDetails.year = mods['part']['date'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:date']) {
+          this.state.archivItemDetails.year = mods['mods:part']['mods:date'];
+        }
+
+        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+          this.state.archivItemDetails.issueNumber = mods['part']['detail']['number'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+          this.state.archivItemDetails.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
+        }
+      }
+      this.getMods(parent).subscribe((parentMods: any) => {
+        if (parentMods['mods:originInfo']) {
+          this.state.archivItemDetails.year = parentMods['mods:originInfo']['mods:dateIssued'];
+          if (parentMods['mods:titleInfo']) {
+            this.state.archivItemDetails.volumeNumber = parentMods['mods:titleInfo']['mods:partNumber'];
+          }
+          this.state.stateChanged();
+        }
+      });
+
+    }
   }
 
 

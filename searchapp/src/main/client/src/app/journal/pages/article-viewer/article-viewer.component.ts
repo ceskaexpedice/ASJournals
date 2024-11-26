@@ -324,6 +324,10 @@ export class ArticleViewerComponent implements OnInit {
         this.router.navigate(['/' + this.state.currentMagazine?.ctx + '/article', this.state.viewerPid, 'pdf'], { queryParamsHandling: 'preserve' });
       }
 
+      
+      this.service.details(this.state.viewerJournal['mods'], this.state.viewerJournal['model'], this.state.viewerJournal.parent);
+      this.state.stateChanged();
+
     });
   }
 
