@@ -293,7 +293,7 @@ export class ArchivComponent implements OnInit {
 
   setDetails() {
     this.service.details(this.currentItem['mods'], this.currentItem['model'], this.currentItem['parents'][0]);
-    this.state.stateChanged();
+    this.state.crumbsChanged();
   }
 
   // setDetails2() {

@@ -23,7 +23,7 @@
 					<ng-container *ngIf="workStatus['indexed']">{{ 'admin.num_docs' | translate }}: {{ workStatus['indexed'] }}</ng-container> 
 				</ng-container>
 				<ng-container *ngIf="workStatus.status === 'delete_finished'">
-					{{ 'admin.finished' | translate }} {{ workStatus['currentUuid'] }}. 
+					{{ 'admin.delete_finished' | translate }} {{ workStatus['currentUuid'] }}. 
 				</ng-container>
 			</div>
 			<div class="app-mt-4">
