@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router, ActivatedRoute, Params, RouterModule } from '@angular/router';
 import { AppState } from 'src/app/app.state';
 import { Configuration } from 'src/app/models/configuration';
@@ -16,6 +16,7 @@ import { ArchivItemLeftComponent } from '../../components/archiv-item-left/archi
 import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import Utils from 'src/app/services/utils';
+import { pid } from 'process';
 
 
 @Component({
@@ -51,6 +52,7 @@ export class ArchivComponent implements OnInit {
   currentSort = this.sorts[0];
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
     private config: Configuration,
     private service: AppService,
     public state: AppState,
@@ -68,10 +70,12 @@ export class ArchivComponent implements OnInit {
             this.setItems(params['pid']);
           }
         } else {
-          
           this.state.archivPosition = null;
           this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
-          this.state.crumbsChanged();
+          setTimeout(()=>{
+            this.state.crumbsChanged();
+          }, 100);
+          
           this.currentPid = '';
           this.initData();
         }
@@ -131,9 +135,11 @@ export class ArchivComponent implements OnInit {
   }
 
   setFocus() {
-    let el = document.getElementById('btn_' + this.currentPid);
-    if (el) {
-      el.focus();
+    if (isPlatformBrowser(this.platformId)) {
+      let el = document.getElementById('btn_' + this.currentPid);
+      if (el) {
+        el.focus();
+      }
     }
   }
 
@@ -273,18 +279,18 @@ export class ArchivComponent implements OnInit {
   }
 
   initData() {
-    if (this.state.actualNumber) {
+    //if (this.state.actualNumber) {
       if (!this.currentPid) {
         this.setItems(this.state.currentMagazine['journal']);
       } else {
         this.setItems(this.currentPid);
       }
-    } else {
+    //} else {
       //this.router.navigate(['home']);
-      setTimeout(() => {
-        this.initData();
-      }, 100);
-    }
+      // setTimeout(() => {
+      //   this.initData();
+      // }, 100);
+    //}
   }
 
   isHiddenByGenre(genres: string[]) {

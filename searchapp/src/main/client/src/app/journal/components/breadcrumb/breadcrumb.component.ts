@@ -81,13 +81,13 @@ export class BreadcrumbComponent {
 
     } else if (this.page.indexOf('article') === 0) {
       this.crumbs.push({ link: 'archiv', label: this.appService.translateKey('menu.archiv_') });
-      this.state.archivPosition = this.state.archivItemDetails.year +
-      (this.state.archivItemDetails.volumeNumber ? ', ' + 'ročník' + ' ' + this.state.archivItemDetails.volumeNumber : '') +
-      (this.state.archivItemDetails.issueNumber ? ' / ' + 'číslo' + ' ' + this.state.archivItemDetails.issueNumber : '') +
-      (this.state.archivItemDetails.partName ? this.state.archivItemDetails.partName : '');
-
-      // this.crumbs.push({ link: 'home', label: this.appService.translateKey('menu.home_') });
-      this.crumbs.push({ link: 'archiv', label: this.state.archivPosition });
+      if (this.state.archivItemDetails?.year) {
+        this.state.archivPosition = this.state.archivItemDetails.year +
+        (this.state.archivItemDetails.volumeNumber ? ', ' + 'ročník' + ' ' + this.state.archivItemDetails.volumeNumber : '') +
+        (this.state.archivItemDetails.issueNumber ? ' / ' + 'číslo' + ' ' + this.state.archivItemDetails.issueNumber : '') +
+        (this.state.archivItemDetails.partName ? this.state.archivItemDetails.partName : '');
+        this.crumbs.push({ link: 'archiv', label: this.state.archivPosition });
+      }
     } else if (this.page !== 'search') {
       let parts = this.page.split('?')[0].split('/');
       for (let s = 0; s < parts.length; s++) {
@@ -104,7 +104,7 @@ export class BreadcrumbComponent {
     }
 
     
-    if (this.page === 'archiv' && this.state.archivItemDetails.year) {
+    if (this.page === 'archiv' && this.state.archivItemDetails?.year) {
 
       this.state.archivPosition = this.state.archivItemDetails.year +
       (this.state.archivItemDetails.volumeNumber ? ', ' + 'ročník' + ' ' + this.state.archivItemDetails.volumeNumber : '') +
