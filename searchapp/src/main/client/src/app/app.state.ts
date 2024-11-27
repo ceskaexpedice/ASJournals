@@ -27,6 +27,9 @@ export class AppState {
   private _journalsSubject: ReplaySubject<any> = new ReplaySubject(2);
   public journalsInitilized: Observable<any> = this._journalsSubject.asObservable();
 
+  private _crumbsSubject = new Subject();
+  public crumbsChangedSubject: Observable<any> = this._crumbsSubject.asObservable();
+
   currentMagazine: Magazine;
 
   //ctxs: {ctx: string, color: string, journal: string, showTitleLabel: boolean, licence:string}[];
@@ -151,6 +154,11 @@ export class AppState {
   //params
   stateChanged() {
     this._stateSubject.next(this);
+  }
+
+  //params
+  crumbsChanged() {
+    this._crumbsSubject.next(this);
   }
 
   //params

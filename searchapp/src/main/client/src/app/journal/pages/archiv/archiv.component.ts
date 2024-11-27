@@ -69,12 +69,15 @@ export class ArchivComponent implements OnInit {
           }
         } else {
           
-    this.state.archivPosition = null;
-    this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
+          this.state.archivPosition = null;
+          this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
+          this.state.crumbsChanged();
           this.currentPid = '';
           this.initData();
         }
       });
+      // this.state.archivPosition = null;
+      // this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
   }
 
   setMainClass() {

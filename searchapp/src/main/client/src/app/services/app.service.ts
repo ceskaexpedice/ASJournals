@@ -922,7 +922,6 @@ export class AppService {
 
   details(mods: any, model: string, parent: string) {
     this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
-    console.log(mods)
 
     if (model === 'periodical') {
       
@@ -977,7 +976,7 @@ export class AppService {
           if (parentMods['mods:titleInfo']) {
             this.state.archivItemDetails.volumeNumber = parentMods['mods:titleInfo']['mods:partNumber'];
           }
-          this.state.stateChanged();
+          this.state.crumbsChanged();
         }
       });
 

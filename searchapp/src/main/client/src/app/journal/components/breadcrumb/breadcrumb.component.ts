@@ -45,6 +45,12 @@ export class BreadcrumbComponent {
         this.setCrumbs();
       }
     }));
+
+    this.subscriptions.push(this.state.crumbsChangedSubject.subscribe(
+      () => {
+        this.setCrumbs();
+      }
+    ));
   }
 
   ngOnDestroy() {
@@ -74,6 +80,7 @@ export class BreadcrumbComponent {
     } else if (this.page === 'home') {
 
     } else if (this.page.indexOf('article') === 0) {
+      this.crumbs.push({ link: 'archiv', label: this.appService.translateKey('menu.archiv_') });
       this.state.archivPosition = this.state.archivItemDetails.year +
       (this.state.archivItemDetails.volumeNumber ? ', ' + 'ročník' + ' ' + this.state.archivItemDetails.volumeNumber : '') +
       (this.state.archivItemDetails.issueNumber ? ' / ' + 'číslo' + ' ' + this.state.archivItemDetails.issueNumber : '') +
