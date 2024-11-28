@@ -214,7 +214,15 @@
 		"configuration": "Konfigurace",
 		"configuration_archive": "Archiv",
 		"keepLang": "Nepřekládat původní názvy článků",
-		"keepLang_legend": "Názvy článků"
+		"keepLang_legend": "Názvy článků",
+		"add_remove_issue_year": {
+			"legend": "Přidání nebo odebrání čísla nebo ročníku",
+			"info": "Admin rozhraní umožňuje přidávat nove ročníky nebo čísla časopisu pomoci identifikátoru UUID z Digitální knihovny AV ČR.<br />Identifikátor se zadává vždy včetně prefixu \"uuid:\". Napr: {{ val }}"
+		},
+		"addingAnEnvelope": {
+			"legend": "Přidání obálky",
+			"info": "Je očekáván obrázek ve formátu jpg a maximální velikosti 220x317 px."
+		}
 	},
 	"a zároveň": "a zároveň",
 	"nebo": "nebo",
@@ -325,7 +333,10 @@
 		"download": "Stáhnout",
 		"upload": "Nahrát",
 		"save": "Uložit",
-		"close": "Zavřít"
+		"close": "Zavřít",
+		"addUuid": "Přidat UUID",
+		"deleteUuid": "Smazat UUID",
+		"selectFile": "Vybrat soubor"
 	},
 	"role": {
 		"abr": "Zkracovač",
@@ -610,6 +621,7 @@
 	},
 	"desc": {
 		"articles": "Články",
-		"error": "Chyba"
+		"error": "Chyba",
+		"enterUuid": "Zadat UUID"
 	}
 }

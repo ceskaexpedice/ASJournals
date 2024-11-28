@@ -190,7 +190,7 @@
 	},
 	"Available from": "Available also from",
 	"print": "print page",
-	"admin" : {
+	"admin": {
 		"Upload": "Upload",
 		"Files": "Files",
 		"save_menu": "Save menu",
@@ -214,7 +214,15 @@
 		"configuration": "Konfigurace",
 		"configuration_archive": "Archiv",
 		"keepLang": "Don't translate articles titles",
-		"keepLang_legend": "Názvy článků"
+		"keepLang_legend": "Názvy článků",
+		"add_remove_issue_year": {
+			"legend": "Add or remove an issue or year",
+			"info": "The admin interface allows you to add new volumes or journal issues using the UUID identifier from the Digital Library of the Academy of Sciences of the Czech Republic.<br />The identifier is always entered including the prefix \"uuid:\". E.g.: {{ val }}"
+		},
+		"addingAnEnvelope": {
+			"legend": "Adding an envelope",
+			"info": "The image is expected to be in jpg format and have a maximum size of 220x317 px."
+		}
 	},
 	"a zároveň": "AND",
 	"nebo": "OR",
@@ -325,7 +333,10 @@
 		"download": "Download",
 		"upload": "Upload",
 		"save": "Uložit",
-		"close": "Zavřít"
+		"close": "Zavřít",
+		"addUuid": "Add UUID",
+		"deleteUuid": "Delete UUID",
+		"selectFile": "Select file"
 	},
 	"role": {
 		"abr": "Abridger",
@@ -610,6 +621,7 @@
 	},
 	"desc": {
 		"articles": "Articles",
-		"error": "Error"
+		"error": "Error",
+		"enterUuid": "Enter UUID"
 	}
 }
