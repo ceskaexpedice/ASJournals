@@ -212,9 +212,9 @@
 		"index_add_uuid": "Přidání nebo odebrání čísla nebo ročníku",
 		"index_cover": "Přidání obálky",
 		"configuration": "Konfigurace",
-		"configuration_archive": "Archiv",
+		"configuration_archive": "Archive",
 		"keepLang": "Don't translate articles titles",
-		"keepLang_legend": "Názvy článků",
+		"keepLang_legend": "Article titles",
 		"add_remove_issue_year": {
 			"legend": "Add or remove an issue or year",
 			"info": "The admin interface allows you to add new volumes or journal issues using the UUID identifier from the Digital Library of the Academy of Sciences of the Czech Republic.<br />The identifier is always entered including the prefix \"uuid:\". E.g.: {{ val }}"
@@ -613,15 +613,16 @@
 		"share": "Share",
 		"download": "Download",
 		"upload": "Upload",
-		"save": "Uložit",
-		"close": "Zavřít",
+		"save": "Save",
+		"close": "Close",
 		"addUuid": "Add UUID",
 		"deleteUuid": "Delete UUID",
 		"selectFile": "Select file",
 		"saveMenu": "Save menu",
 		"delete": "Delete",
 		"moveUp": "Move up",
-		"moveDown": "Move down"
+		"moveDown": "Move down",
+		"resetPassword": "Reset password"
 	},
 	"desc": {
 		"articles": "Articles",

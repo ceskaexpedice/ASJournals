@@ -621,7 +621,8 @@
 		"saveMenu": "Uložit menu",
 		"delete": "Smazat",
 		"moveUp": "Posunout nahoru",
-		"moveDown": "Posunout dolu"
+		"moveDown": "Posunout dolu",
+		"resetPassword": "Resetovat heslo"
 	},
 	"desc": {
 		"articles": "Články",
