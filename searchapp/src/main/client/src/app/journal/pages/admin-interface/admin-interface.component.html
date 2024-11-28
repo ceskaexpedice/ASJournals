@@ -6,10 +6,10 @@
         <div class="app-pl-4 app-pr-4 app-pt-4">
           <div class="app-nav">
             <div>
-              <a (click)="selectPage('home')" [title]="'Hlavní stránka' | translate" [class.app-active]="selectedPage === 'home'">{{ 'Hlavní stránka' | translate }}</a>
+              <a (click)="selectPage('home')" [title]="'Hlavní stránka' | translate" [class.app-active]="selectedPage === 'home'">{{ 'desc.homePage' | translate }}</a>
             </div>
             <div>
-              <a (click)="selectPage('footer')" [title]="'Patička' | translate" [class.app-active]="selectedPage === 'footer'">{{ 'Patička' | translate }}</a>
+              <a (click)="selectPage('footer')" [title]="'Patička' | translate" [class.app-active]="selectedPage === 'footer'">{{ 'desc.footer' | translate }}</a>
             </div>
             <div *ngFor="let m of pages">
               <a (click)="selectPage(m.id)" [title]="'menu.' + m.route +'_' | translate" [class.app-active]="selectedPage === m.id">{{ 'menu.' + m.route +'_' | translate }}</a><mat-checkbox [(ngModel)]="m.visible"></mat-checkbox>
@@ -19,36 +19,34 @@
           <ul class="app-list-unstyled app-p-0 app-nav">
             <ng-container *ngFor="let m of menu; let last = last; let first = first; let index = index">
             <li class="app-fxLayout app-row app-center-v">
-              <mat-icon *ngIf="m.added" (click)="removeMenu(index)" >delete</mat-icon>
-              <mat-icon *ngIf="!last" (click)="moveDown(menu, index)">south</mat-icon>
-              <mat-icon *ngIf="!first" (click)="moveUp(menu, index)">north</mat-icon>
+              <mat-icon *ngIf="m.added" (click)="removeMenu(index)" class="app-cursor-pointer" [matTooltip]="'button.delete' | translate">delete</mat-icon>
+              <mat-icon *ngIf="!last" (click)="moveDown(menu, index)" class="app-cursor-pointer" [matTooltip]="'button.moveDown' | translate">south</mat-icon>
+              <mat-icon *ngIf="!first" (click)="moveUp(menu, index)" class="app-cursor-pointer" [matTooltip]="'button.moveUp' | translate">north</mat-icon>
               <a (click)="select(m, null)">{{m.route}}</a>
               <mat-checkbox [(ngModel)]="m.visible" (change)="changeVisible()" [name]="m.route"></mat-checkbox>
             </li>
             <li>
               <ul class="app-list-unstyled">
                 <li class="app-fxLayout app-row app-center-v" *ngFor="let m1 of m.children; let last2 = last; let first2 = first; let index2 = index">
-                  <mat-icon (click)="remove(m.children, index2)" >delete</mat-icon>
-                  <mat-icon *ngIf="!last2" (click)="moveDown(m.children, index2)">south</mat-icon>
-                  <mat-icon *ngIf="!first2" (click)="moveUp(m.children, index2)">north</mat-icon>
+                  <mat-icon (click)="remove(m.children, index2)" class="app-cursor-pointer" [matTooltip]="'button.delete' | translate">delete</mat-icon>
+                  <mat-icon *ngIf="!last2" (click)="moveDown(m.children, index2)" class="app-cursor-pointer" [matTooltip]="'button.moveDown' | translate">south</mat-icon>
+                  <mat-icon *ngIf="!first2" (click)="moveUp(m.children, index2)" class="app-cursor-pointer" [matTooltip]="'button.moveUp' | translate">north</mat-icon>
                   <a (click)="select(m, m1)" [class.app-active]="selected === m1">{{m1.route}}</a>
                   <mat-checkbox id="m1.route" [(ngModel)]="m1.visible" [name]="m1.route"></mat-checkbox>
                 </li>
                 <li class="app-fxLayout app-row app-center-v">
-                  <mat-icon>add</mat-icon>
-                  <strong><a (click)="addChild(m)">{{ 'admin.add_child' | translate }}</a></strong>
+                  <a (click)="addChild(m)" class="app-fxLayout app-row app-center-v app-pl-0 app-pr-0"><mat-icon class="app-mr-1">add</mat-icon><strong>{{ 'admin.add_child' | translate }}</strong></a>
                 </li>
               </ul>
             </li>
             </ng-container>
             
             <li class="app-fxLayout app-row app-center-v">
-              <mat-icon>add</mat-icon>
-              <strong><a (click)="addMenu()">{{ 'admin.add_menu' | translate }}</a></strong>
+              <a (click)="addMenu()" class="app-fxLayout app-row app-center-v app-pl-0 app-pr-0"><mat-icon class="app-mr-1">add</mat-icon><strong>{{ 'admin.add_menu' | translate }}</strong></a>
             </li>
           </ul>
           <mat-divider></mat-divider>
-          <button mat-flat-button color="primary" (click)="saveMenu()">{{ 'Uložit menu' | translate }}</button>
+          <button mat-flat-button color="primary" (click)="saveMenu()">{{ 'button.saveMenu' | translate }}</button>
         </div> 
       </as-split-area>
       <as-split-area size="70" #area2="asSplitArea">

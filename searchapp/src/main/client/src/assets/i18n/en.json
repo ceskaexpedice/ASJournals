@@ -322,22 +322,6 @@
 			"de": "german"
 		}
 	},
-	"button": {
-		"Yes": "Yes",
-		"No": "No",
-		"showFilters": "Show filters",
-		"showResults": "Show results",
-		"zoomIn": "Zoom in",
-		"zoomOut": "Zoom out",
-		"share": "Share",
-		"download": "Download",
-		"upload": "Upload",
-		"save": "Uložit",
-		"close": "Zavřít",
-		"addUuid": "Add UUID",
-		"deleteUuid": "Delete UUID",
-		"selectFile": "Select file"
-	},
 	"role": {
 		"abr": "Abridger",
 		"acp": "Art copyist",
@@ -619,9 +603,31 @@
 			"changeSaved": "An error occurred while saving the change"
 		}
 	},
+	"button": {
+		"Yes": "Yes",
+		"No": "No",
+		"showFilters": "Show filters",
+		"showResults": "Show results",
+		"zoomIn": "Zoom in",
+		"zoomOut": "Zoom out",
+		"share": "Share",
+		"download": "Download",
+		"upload": "Upload",
+		"save": "Uložit",
+		"close": "Zavřít",
+		"addUuid": "Add UUID",
+		"deleteUuid": "Delete UUID",
+		"selectFile": "Select file",
+		"saveMenu": "Save menu",
+		"delete": "Delete",
+		"moveUp": "Move up",
+		"moveDown": "Move down"
+	},
 	"desc": {
 		"articles": "Articles",
 		"error": "Error",
-		"enterUuid": "Enter UUID"
+		"enterUuid": "Enter UUID",
+		"homePage": "Home page",
+		"footer": "Footer"
 	}
 }

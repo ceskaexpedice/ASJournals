@@ -322,22 +322,6 @@
 			"de": "německy"
 		}
 	},
-	"button": {
-		"Yes": "Ano",
-		"No": "Ne",
-		"showFilters": "Zobrazit filtry",
-		"showResults": "Zobrazit výsledky",
-		"zoomIn": "Minimalizovat",
-		"zoomOut": "Maximalizovat",
-		"share": "Sdílet",
-		"download": "Stáhnout",
-		"upload": "Nahrát",
-		"save": "Uložit",
-		"close": "Zavřít",
-		"addUuid": "Přidat UUID",
-		"deleteUuid": "Smazat UUID",
-		"selectFile": "Vybrat soubor"
-	},
 	"role": {
 		"abr": "Zkracovač",
 		"acp": "Kopírování uměleckých děl",
@@ -619,9 +603,31 @@
 			"changeSaved": "Při ukládání změny došlo k chybě"
 		}
 	},
+	"button": {
+		"Yes": "Ano",
+		"No": "Ne",
+		"showFilters": "Zobrazit filtry",
+		"showResults": "Zobrazit výsledky",
+		"zoomIn": "Minimalizovat",
+		"zoomOut": "Maximalizovat",
+		"share": "Sdílet",
+		"download": "Stáhnout",
+		"upload": "Nahrát",
+		"save": "Uložit",
+		"close": "Zavřít",
+		"addUuid": "Přidat UUID",
+		"deleteUuid": "Smazat UUID",
+		"selectFile": "Vybrat soubor",
+		"saveMenu": "Uložit menu",
+		"delete": "Smazat",
+		"moveUp": "Posunout nahoru",
+		"moveDown": "Posunout dolu"
+	},
 	"desc": {
 		"articles": "Články",
 		"error": "Chyba",
-		"enterUuid": "Zadat UUID"
+		"enterUuid": "Zadat UUID",
+		"homePage": "Hlavní stránka",
+		"footer": "Patička"
 	}
 }
