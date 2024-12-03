@@ -142,6 +142,7 @@
 	"Další": "Další",
 	"Výsledky vyhledávání": "Výsledky vyhledávání",
 	"Výsledky řadit": "Výsledky řadit",
+	"Externi odkaz na stare cisla": "Externi odkaz na stare cisla",
 	"od nejnovějšího": "od nejnovějšího",
 	"od nejstaršího": "od nejstaršího",
 	"dle relevance": "dle relevance",
@@ -629,6 +630,9 @@
 		"error": "Chyba",
 		"enterUuid": "Zadat UUID",
 		"homePage": "Hlavní stránka",
-		"footer": "Patička"
+		"footer": "Patička",
+		"issue": "Číslo",
+		"year": "Rok",
+		"volume": "Ročník"
 	}
 }

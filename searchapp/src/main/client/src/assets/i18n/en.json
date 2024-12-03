@@ -141,7 +141,8 @@
 	"Předchozí": "Previous",
 	"Další": "Next",
 	"Výsledky vyhledávání": "Search results",
-	"Výsledky řadit": "sort by",
+	"Výsledky řadit": "Sort by",
+	"Externi odkaz na stare cisla": "External link to old issues",
 	"od nejnovějšího": "newest",
 	"od nejstaršího": "oldest",
 	"dle relevance": "by relevance",
@@ -629,6 +630,9 @@
 		"error": "Error",
 		"enterUuid": "Enter UUID",
 		"homePage": "Home page",
-		"footer": "Footer"
+		"footer": "Footer",
+		"issue": "Issue",
+		"year": "Year",
+		"volume": "Volume"
 	}
 }
