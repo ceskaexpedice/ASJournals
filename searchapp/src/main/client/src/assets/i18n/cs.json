@@ -604,6 +604,17 @@
 			"changeSaved": "Při ukládání změny došlo k chybě"
 		}
 	},
+	"fields": {
+		"_text_": "kdekoliv",
+		"title": "název",
+		"autor": "autor",
+		"keywords": "klíčová slova",
+		"genre": "rubrika",
+		"ocr": "plný text dokumentu"
+	},
+	"combined": {
+		"numberResults": "Zobrazeny výsledky: <strong>{{ val1 }}</strong> z celkového počtu <strong>{{ val2 }}</strong>"
+	},
 	"button": {
 		"Yes": "Ano",
 		"No": "Ne",
@@ -623,7 +634,11 @@
 		"delete": "Smazat",
 		"moveUp": "Posunout nahoru",
 		"moveDown": "Posunout dolu",
-		"resetPassword": "Resetovat heslo"
+		"resetPassword": "Resetovat heslo",
+		"deleteForm": "Vymazat formulář",
+		"addCriterion": "Přidat kritérium",
+		"search": "Hledat",
+		"cancelFilter": "Zrušit filter"
 	},
 	"desc": {
 		"articles": "Články",

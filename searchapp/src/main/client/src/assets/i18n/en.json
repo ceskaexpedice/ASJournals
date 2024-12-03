@@ -604,6 +604,17 @@
 			"changeSaved": "An error occurred while saving the change"
 		}
 	},
+	"fields": {
+		"_text_": "anywhere",
+		"title": "name",
+		"autor": "author",
+		"keywords": "key words",
+		"genre": "section",
+		"ocr": "full text of the document"
+	},
+	"combined": {
+		"numberResults": "Showing results: <strong>{{ val1 }}</strong> of <strong>{{ val2 }}</strong> total"
+	},
 	"button": {
 		"Yes": "Yes",
 		"No": "No",
@@ -623,7 +634,11 @@
 		"delete": "Delete",
 		"moveUp": "Move up",
 		"moveDown": "Move down",
-		"resetPassword": "Reset password"
+		"resetPassword": "Reset password",
+		"deleteForm": "Delete form",
+		"addCriterion": "Add criterion",
+		"search": "Search",
+		"cancelFilter": "Cancel filter"
 	},
 	"desc": {
 		"articles": "Articles",
