@@ -8,13 +8,13 @@
           <mat-radio-button name="sortBy" ngDefaultControl id="by_genre" value="genre">{{ 'admin.by_genre' | translate }}</mat-radio-button>
           <mat-radio-button name="sortBy" id="by_order" value="order">{{ 'admin.by_order' | translate }}</mat-radio-button>
         </mat-radio-group>
-        <button mat-flat-button color="primary" class="app-ml-4" (click)="saveMagazine()">{{ 'Uložit' | translate }}</button>
+        <button mat-flat-button color="primary" class="app-ml-4" (click)="saveMagazine()">{{ 'button.save' | translate }}</button>
       </div>
 
       <div class="app-fxLayout app-row app-center-v app-mb-4">
         <label for="keepLang">{{ 'admin.keepLang_legend' | translate }}:</label>
-        <mat-checkbox id="keepLang" [(ngModel)]="keepLang" class="app-mr-4">Nepřekládat původní názvy článků</mat-checkbox>
-        <button mat-flat-button color="primary" class="app-mr-2" (click)="saveMagazine()">{{ 'Uložit' | translate }}</button>
+        <mat-checkbox id="keepLang" [(ngModel)]="keepLang" class="app-mr-4">{{ 'admin.keepLang' | translate }}</mat-checkbox>
+        <button mat-flat-button color="primary" class="app-mr-2" (click)="saveMagazine()">{{ 'button.save' | translate }}</button>
       </div>
 
       <div class="app-fxLayout app-row app-center-v app-mb-4">
@@ -32,7 +32,7 @@
       </div> -->
       <div>
         <button mat-flat-button color="primary" class="app-mr-2" (click)="setLicences()">{{ 'magazines.nastavit_licenci' | translate }}</button>
-        <button mat-flat-button color="primary" (click)="showResetPwd()">{{ 'Resetovat heslo' | translate }}</button>
+        <button mat-flat-button color="primary" (click)="showResetPwd()">{{ 'button.resetPassword' | translate }}</button>
       </div>
     </fieldset>
   </div>

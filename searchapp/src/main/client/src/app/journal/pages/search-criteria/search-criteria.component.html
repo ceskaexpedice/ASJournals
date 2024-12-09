@@ -2,10 +2,10 @@
   <mat-label>{{ 'q_placeholder' | translate }}</mat-label>
   <input matInput type="text" #input [(ngModel)]="criterium.value" name="cvalue" (keyup.enter)="search()">
   <button mat-stroked-button color="primary" matPrefix [matMenuTriggerFor]="menuPrefix" class="app-ml-4 app-mr-4">
-    {{ criterium.fieldLabel | translate  }}<mat-icon iconPositionEnd>expand_more</mat-icon>
+    {{ "fields." + criterium.field | translate  }}<mat-icon iconPositionEnd>expand_more</mat-icon>
   </button>
   <mat-menu #menuPrefix="matMenu">
-    <button mat-menu-item *ngFor="let field of fields" (click)="setField(criterium, field)">{{ field.label | translate }}</button>
+    <button mat-menu-item *ngFor="let field of fields" (click)="setField(criterium, field)">{{ "fields." + field.field | translate }}</button>
   </mat-menu>
   <div matSuffix class="app-fxLayout app-row app-center-v app-mr-4">
     <button mat-stroked-button color="primary" [matMenuTriggerFor]="menuSufix" class="app-ml-4 app-mr-4">
@@ -14,7 +14,7 @@
     <mat-menu #menuSufix="matMenu">
       <button mat-menu-item *ngFor="let operator of operators" (click)="setOperator(criterium, operator)">{{ operator.label | translate }}</button>
     </mat-menu>
-    <a [matTooltip]="'Zrušit filter' | translate" (click)="removeCriterium(idx)">
+    <a [matTooltip]="'button.cancelFilter' | translate" (click)="removeCriterium(idx)">
       <mat-icon color="primary">cancel</mat-icon>
     </a>
   </div>
@@ -22,10 +22,10 @@
 
 <div class="app-fxLayout app-row app-center-v app-mb-4">
   <div class="app-fxFlex">
-    <button mat-stroked-button color="primary" class="app-mr-2" (click)="addCriterium()"><mat-icon>add</mat-icon>{{ 'přidat kritérium' | translate }}</button>
-    <button mat-stroked-button color="primary" (click)="reset()"><mat-icon>delete_forever</mat-icon>{{' vymazat formulář' | translate }}</button>
+    <button mat-stroked-button color="primary" class="app-mr-2" (click)="addCriterium()"><mat-icon>add</mat-icon>{{ 'button.addCriterion' | translate }}</button>
+    <button mat-stroked-button color="primary" (click)="reset()"><mat-icon>delete_forever</mat-icon>{{'button.deleteForm' | translate }}</button>
   </div>
-  <button mat-flat-button color="primary" (click)="search()"><mat-icon>search</mat-icon>{{ 'vyhledat' | translate }}</button>
+  <button mat-flat-button color="primary" (click)="search()"><mat-icon>search</mat-icon>{{ 'button.search' | translate }}</button>
 </div>
 
 

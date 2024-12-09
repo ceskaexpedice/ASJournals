@@ -6,9 +6,9 @@
     <div class="app-fxFlex app-right app-center-v">
       <h2>
         <span *ngIf="supplement">{{supplement}}</span>
-        <span *ngIf="year">{{'Rok' | translate}} {{year}}</span>
-        <span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span>
-        <span *ngIf="issueNumber"> {{'Číslo' | translate}} {{issueNumber}}</span>
+        <span *ngIf="year">{{'desc.year' | translate}} {{year}}</span>
+        <span *ngIf="volumeNumber">, {{'desc.volume' | translate}} {{volumeNumber}}</span>
+        <span *ngIf="issueNumber"> {{'desc.issue' | translate}} {{issueNumber}}</span>
         <span *ngIf="partName">, {{partName}}</span>
       </h2>
       <!-- <button mat-flat-button color="primary" class="app-mb-6" (click)="gotoArticle()"><mat-icon>menu_book</mat-icon>Prohlizet</button> -->

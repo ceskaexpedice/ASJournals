@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { FilesDialogComponent } from '../../components/files-dialog/files-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 declare var tinymce: any;
@@ -36,7 +37,7 @@ interface MenuItem {
   standalone: true,
   imports: [CommonModule, AngularSplitModule, FormsModule, EditorModule,
     MatCheckboxModule, TranslateModule, MatDividerModule, MatIconModule,
-    MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule],
+    MatButtonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatTooltipModule],
   templateUrl: './admin-interface.component.html',
   styleUrls: ['./admin-interface.component.scss']
 })

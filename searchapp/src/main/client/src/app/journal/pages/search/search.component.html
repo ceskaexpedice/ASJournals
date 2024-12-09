@@ -39,7 +39,7 @@
         <div>
           {{ 'Výsledky řadit' | translate }}:
           <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
-            {{ state.sorts[0].label }}<mat-icon iconPositionEnd>expand_more</mat-icon>
+            {{ state.sorts[0].label | translate }}<mat-icon iconPositionEnd>expand_more</mat-icon>
           </button>
           <mat-menu #menuSort="matMenu">
             <button mat-menu-item *ngFor="let sort of state.sorts" (click)="setSort(sort)">{{ sort.label | translate }}</button>
@@ -51,7 +51,7 @@
 
       <div class="app-fxLayout app-row app-center-v app-mb-4">
         <div class="app-fxFlex">
-          Zobrazeny výsledky: <strong>{{start + 1}} – {{lastResult()}}</strong> z celkového počtu <strong>{{numFound}}</strong>
+          <span [innerHTML]="'combined.numberResults' | translate: {val1: start + 1 + ' - ' + lastResult(), val2: numFound}"></span>
         </div>
       </div>
 

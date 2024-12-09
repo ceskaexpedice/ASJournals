@@ -142,6 +142,7 @@
 	"Další": "Další",
 	"Výsledky vyhledávání": "Výsledky vyhledávání",
 	"Výsledky řadit": "Výsledky řadit",
+	"Externi odkaz na stare cisla": "Externi odkaz na stare cisla",
 	"od nejnovějšího": "od nejnovějšího",
 	"od nejstaršího": "od nejstaršího",
 	"dle relevance": "dle relevance",
@@ -214,7 +215,15 @@
 		"configuration": "Konfigurace",
 		"configuration_archive": "Archiv",
 		"keepLang": "Nepřekládat původní názvy článků",
-		"keepLang_legend": "Názvy článků"
+		"keepLang_legend": "Názvy článků",
+		"add_remove_issue_year": {
+			"legend": "Přidání nebo odebrání čísla nebo ročníku",
+			"info": "Admin rozhraní umožňuje přidávat nove ročníky nebo čísla časopisu pomoci identifikátoru UUID z Digitální knihovny AV ČR.<br />Identifikátor se zadává vždy včetně prefixu \"uuid:\". Napr: {{ val }}"
+		},
+		"addingAnEnvelope": {
+			"legend": "Přidání obálky",
+			"info": "Je očekáván obrázek ve formátu jpg a maximální velikosti 220x317 px."
+		}
 	},
 	"a zároveň": "a zároveň",
 	"nebo": "nebo",
@@ -313,19 +322,6 @@
 			"en": "anglicky",
 			"de": "německy"
 		}
-	},
-	"button": {
-		"Yes": "Ano",
-		"No": "Ne",
-		"showFilters": "Zobrazit filtry",
-		"showResults": "Zobrazit výsledky",
-		"zoomIn": "Minimalizovat",
-		"zoomOut": "Maximalizovat",
-		"share": "Sdílet",
-		"download": "Stáhnout",
-		"upload": "Nahrát",
-		"save": "Uložit",
-		"close": "Zavřít"
 	},
 	"role": {
 		"abr": "Zkracovač",
@@ -608,8 +604,50 @@
 			"changeSaved": "Při ukládání změny došlo k chybě"
 		}
 	},
+	"fields": {
+		"_text_": "kdekoliv",
+		"title": "název",
+		"autor": "autor",
+		"keywords": "klíčová slova",
+		"genre": "rubrika",
+		"ocr": "plný text dokumentu"
+	},
+	"combined": {
+		"numberResults": "Zobrazeny výsledky: <strong>{{ val1 }}</strong> z celkového počtu <strong>{{ val2 }}</strong>"
+	},
+	"button": {
+		"Yes": "Ano",
+		"No": "Ne",
+		"showFilters": "Zobrazit filtry",
+		"showResults": "Zobrazit výsledky",
+		"zoomIn": "Minimalizovat",
+		"zoomOut": "Maximalizovat",
+		"share": "Sdílet",
+		"download": "Stáhnout",
+		"upload": "Nahrát",
+		"save": "Uložit",
+		"close": "Zavřít",
+		"addUuid": "Přidat UUID",
+		"deleteUuid": "Smazat UUID",
+		"selectFile": "Vybrat soubor",
+		"saveMenu": "Uložit menu",
+		"delete": "Smazat",
+		"moveUp": "Posunout nahoru",
+		"moveDown": "Posunout dolu",
+		"resetPassword": "Resetovat heslo",
+		"deleteForm": "Vymazat formulář",
+		"addCriterion": "Přidat kritérium",
+		"search": "Hledat",
+		"cancelFilter": "Zrušit filter"
+	},
 	"desc": {
 		"articles": "Články",
-		"error": "Chyba"
+		"error": "Chyba",
+		"enterUuid": "Zadat UUID",
+		"homePage": "Hlavní stránka",
+		"footer": "Patička",
+		"issue": "Číslo",
+		"year": "Rok",
+		"volume": "Ročník"
 	}
 }

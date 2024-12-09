@@ -5,7 +5,7 @@
       <div>
         {{ 'Výsledky řadit' | translate }}:
         <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
-          {{ currentSort.label }}<mat-icon iconPositionEnd>expand_more</mat-icon>
+          {{ currentSort.label | translate }}<mat-icon iconPositionEnd>expand_more</mat-icon>
         </button>
         <mat-menu #menuSort="matMenu">
           <button mat-menu-item *ngFor="let sort of sorts" (click)="setSort(sort)"  >{{ sort.label | translate }}</button>
@@ -26,7 +26,7 @@
       {{'Starší ročníky najdete v' | translate}} <a [href]="state.currentMagazine.k5url + state.currentMagazine.journal" [title]="'k5_title' | translate" target="_blank">{{'k5_title' | translate}}</a>
     </p>
     <ng-container  *ngIf="state.currentMagazine.showExtLink && isRoot()"></ng-container>
-    <a mat-stroked-button color="primary" [href]="state.currentMagazine.extLinkUrl" [title]="state.currentMagazine.extLinkText" target="_blank"><mat-icon>open_in_new</mat-icon>{{ state.currentMagazine.extLinkText }}</a>
+    <a mat-stroked-button color="primary" [href]="state.currentMagazine.extLinkUrl" [title]="state.currentMagazine.extLinkText" target="_blank"><mat-icon>open_in_new</mat-icon>{{ state.currentMagazine.extLinkText | translate }}</a>
   </div>
 </div>
 
@@ -44,8 +44,17 @@
         </div>
       </div>
       <div class="app-fxFlex" [ngSwitch]="currentItem['model']">
-        <div class="app-fxLayout app-row">
-          <div class="app-fxFlex">
+        <div class="app-fxLayout app-column">
+          <div class="app-pl-4 app-text-right app-mb-4" *ngIf="!isDataNode">
+            {{ 'Výsledky řadit' | translate }}:
+            <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
+              {{ currentSort.label | translate }}<mat-icon iconPositionEnd>expand_more</mat-icon>
+            </button>
+            <mat-menu #menuSort="matMenu">
+              <button mat-menu-item *ngFor="let sort of sorts" (click)="setSort(sort)">{{ sort.label | translate }}</button>
+            </mat-menu>
+          </div>
+          <div class="app-text-right">
             <h1 *ngSwitchCase="'periodical'">
               {{ 'Ročníky' | translate }}
             </h1>
@@ -55,15 +64,6 @@
             <h1 *ngSwitchCase="'periodicalitem'">
               {{currentItem['year']}}<span *ngIf="state.archivItemDetails.volumeNumber">, {{'ročník' | translate}} {{state.archivItemDetails.volumeNumber}}</span><span *ngIf="state.archivItemDetails.issueNumber">, {{'číslo' | translate}} {{state.archivItemDetails.issueNumber}}</span><span *ngIf="state.archivItemDetails.partName">, {{state.archivItemDetails.partName}}</span>
             </h1>
-          </div>
-          <div class="app-pl-4" *ngIf="!isDataNode">
-            {{ 'Výsledky řadit' | translate }}:
-            <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
-              {{ currentSort.label }}<mat-icon iconPositionEnd>expand_more</mat-icon>
-            </button>
-            <mat-menu #menuSort="matMenu">
-              <button mat-menu-item *ngFor="let sort of sorts" (click)="setSort(sort)">{{ sort.label | translate }}</button>
-            </mat-menu>
           </div>
         </div>
         <ng-container *ngIf="!isDataNode">

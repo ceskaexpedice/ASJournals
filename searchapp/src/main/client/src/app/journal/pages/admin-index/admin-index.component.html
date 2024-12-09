@@ -1,14 +1,12 @@
 <div class="app-page-wrapper">
 	<div class="app-container">
 		<fieldset class="app-p-4 app-mb-4">
-			<legend>{{ 'admin.index_add_uuid' | translate }}</legend>
-			<p>
-				Admin rozhraní umožňuje přidávat nove ročníky nebo čísla časopisu pomoci identifikátoru UUID z Digitální knihovny AV ČR.<br />
-				Identifikátor se zadává vždy včetně prefixu "uuid:". Napr: {{ state.currentMagazine.journal }}
+			<legend>{{ 'admin.add_remove_issue_year.legend' | translate }}</legend>
+			<p [innerHTML]="'admin.add_remove_issue_year.info' | translate: {val: state.currentMagazine.journal}">
 			</p>
 			<div class="app-fxLayout app-row app-center-v">
 				<mat-form-field appearance="outline" class="app-fxFlex app-form-field-center-v-fix">
-					<mat-label>{{ 'Zadat uuid' | translate }}</mat-label>
+					<mat-label>{{ 'desc.enterUuid' | translate }}</mat-label>
 					<input matInput type="text" [(ngModel)]="indexUUID" name="indexUUID">
 				</mat-form-field>
 			</div>
@@ -27,21 +25,21 @@
 				</ng-container>
 			</div>
 			<div class="app-mt-4">
-				<button mat-flat-button color="primary" class="app-mr-2" (click)="index()">{{ 'Přidat UUID' | translate }}</button>
-				<button mat-flat-button color="primary" (click)="onDelete()" [disabled]="!indexUUID">{{ 'Smazat UUID' | translate }}</button>
+				<button mat-flat-button color="primary" class="app-mr-2" (click)="index()">{{ 'button.addUuid' | translate }}</button>
+				<button mat-flat-button color="primary" (click)="onDelete()" [disabled]="!indexUUID">{{ 'button.deleteUuid' | translate }}</button>
 			</div>
 		</fieldset>
 
 		<fieldset class="app-p-4 app-mb-4">
-			<legend>{{ 'admin.index_cover' | translate }}</legend>
+			<legend>{{ 'admin.addingAnEnvelope.legend' | translate }}</legend>
 			<p>
-				Je očekáván obrázek ve formátu jpg a maximální velikosti 220x317 px.
+				{{ 'admin.addingAnEnvelope.info' | translate }}.
 			</p>
 			<input type="file" #fileUpload ng2FileSelect [uploader]="coverUploader" style="display:none;" (change)="onFileSelected($event)">
 			<div class="app-fxLayout app-row app-center-v">
 				<mat-form-field appearance="outline" class="app-fxFlex app-form-field-center-v-fix">
 					<input matInput type="text" name="selectedCover" [(ngModel)]="selectedCover">
-					<button matPrefix mat-stroked-button color="primary" class="app-mr-2 app-ml-2" (click)="fileUpload.click()">{{ 'admin.cover' | translate }}: {{ 'Vybrat soubor' | translate }}</button>
+					<button matPrefix mat-stroked-button color="primary" class="app-mr-2 app-ml-2" (click)="fileUpload.click()">{{ 'admin.cover' | translate }}: {{ 'button.selectFile' | translate }}</button>
 				</mat-form-field>
 			</div>
 			<mat-progress-bar mode="determinate" [value]="coverUploader.progress" *ngIf="coverUploader.isUploading"></mat-progress-bar>
