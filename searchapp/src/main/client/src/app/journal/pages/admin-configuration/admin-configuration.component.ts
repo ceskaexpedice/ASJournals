@@ -36,6 +36,7 @@ export class AdminConfigurationComponent {
   licences: any = {};
 
   sortBy = 'genre';
+  defaultView = 'details';
   keepLang: boolean = false;
 
   constructor(
@@ -57,6 +58,8 @@ export class AdminConfigurationComponent {
     if (this.state.currentMagazine.sortByOrder) {
       this.sortBy = 'order';
     }
+
+    this.defaultView = this.state.currentMagazine.defaultView;
 
     this.keepLang = !!this.state.currentMagazine!.keepLang;
 

@@ -16,6 +16,15 @@
         <mat-checkbox id="keepLang" [(ngModel)]="keepLang" class="app-mr-4">Nepřekládat původní názvy článků</mat-checkbox>
         <button mat-flat-button color="primary" class="app-mr-2" (click)="saveMagazine()">{{ 'Uložit' | translate }}</button>
       </div>
+
+      <div class="app-fxLayout app-row app-center-v app-mb-4">
+        <label id="radio-group-sort">{{ 'admin.defaultView' | translate }}:</label>
+        <mat-radio-group aria-label="'admin.defaultView' | translate" [(ngModel)]="defaultView" aria-labelledby="radio-group-sort">
+          <mat-radio-button name="view" ngDefaultControl id="view_details" value="details">{{ 'admin.view_details' | translate }}</mat-radio-button>
+          <mat-radio-button name="view" id="view_pdf" value="pdf">{{ 'admin.view_pdf' | translate }}</mat-radio-button>
+        </mat-radio-group>
+        <button mat-flat-button color="primary" class="app-ml-4" (click)="saveMagazine()">{{ 'Uložit' | translate }}</button>
+      </div>
       <!-- <div class="app-fxLayout app-row app-center-v app-mb-4">
         <mat-form-field appearance="outline" class="app-fxFlex app-mr-4 app-form-field-center-v-fix">
           <input matInput type="text" #input  [placeholder]="'licence_ph' | translate">
