@@ -36,7 +36,7 @@ export class AdminConfigurationComponent {
   licences: any = {};
 
   sortBy = 'genre';
-  defaultView = 'details';
+  defaultView = 'detail';
   keepLang: boolean = false;
 
   constructor(
@@ -59,7 +59,7 @@ export class AdminConfigurationComponent {
       this.sortBy = 'order';
     }
 
-    this.defaultView = this.state.currentMagazine.defaultView;
+    this.defaultView = this.state.currentMagazine.defaultView ? this.state.currentMagazine.defaultView : 'detail';
 
     this.keepLang = !!this.state.currentMagazine!.keepLang;
 
@@ -137,6 +137,7 @@ export class AdminConfigurationComponent {
 
   saveMagazine() {
     this.state.currentMagazine!.sortByOrder = this.sortBy === 'order';
+    this.state.currentMagazine.defaultView = this.defaultView;
     this.state.currentMagazine!.keepLang = this.keepLang;
     this.service.saveMagazine(this.state.currentMagazine!).subscribe(res => {
       if (res.error) {

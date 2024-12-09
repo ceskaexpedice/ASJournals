@@ -20,7 +20,7 @@
       <div class="app-fxLayout app-row app-center-v app-mb-4">
         <label id="radio-group-sort">{{ 'admin.defaultView' | translate }}:</label>
         <mat-radio-group aria-label="'admin.defaultView' | translate" [(ngModel)]="defaultView" aria-labelledby="radio-group-sort">
-          <mat-radio-button name="view" ngDefaultControl id="view_details" value="details">{{ 'admin.view_details' | translate }}</mat-radio-button>
+          <mat-radio-button name="view" ngDefaultControl id="view_detail" value="detail">{{ 'admin.view_detail' | translate }}</mat-radio-button>
           <mat-radio-button name="view" id="view_pdf" value="pdf">{{ 'admin.view_pdf' | translate }}</mat-radio-button>
         </mat-radio-group>
         <button mat-flat-button color="primary" class="app-ml-4" (click)="saveMagazine()">{{ 'Uložit' | translate }}</button>

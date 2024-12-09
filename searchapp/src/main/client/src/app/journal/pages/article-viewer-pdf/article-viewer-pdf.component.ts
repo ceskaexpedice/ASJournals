@@ -44,7 +44,6 @@ export class ArticleViewerPdfComponent {
   }
 
   afterLoad(e: any) {
-    console.log(e)
     //this.numPages = pdf.numPages;
     this.loading = false;
   }

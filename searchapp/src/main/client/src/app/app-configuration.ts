@@ -125,10 +125,16 @@ import { MagazineState } from './magazines/magazine.state';
             .toPromise()
             .then((res: any) => {
                 this.state.currentMagazine = ctx;
+
                 this.state.setConfig(this.config);
                 if (!this.state.currentMagazine.keyword) {
                     this.state.currentMagazine.keyword = [];
                 }
+
+                if (!this.state.currentMagazine.defaultView) {
+                    this.state.currentMagazine.defaultView = 'detail';
+                }
+                this.state.viewerActiveLink = this.state.currentMagazine.defaultView;
                 this.config.setLayout(res);
                 // this.state.stateChanged();
             })

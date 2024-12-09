@@ -223,7 +223,10 @@
 		"addingAnEnvelope": {
 			"legend": "Adding an envelope",
 			"info": "The image is expected to be in jpg format and have a maximum size of 220x317 px."
-		}
+		},
+		"defaultView": "Viewer - default view",
+		"view_detail": "detail",
+		"view_pdf": "PDF"
 	},
 	"a zároveň": "AND",
 	"nebo": "OR",

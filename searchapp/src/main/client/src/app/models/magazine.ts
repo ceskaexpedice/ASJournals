@@ -35,6 +35,6 @@ export class Magazine {
   keepLang: boolean = false;
   checkUpdates: boolean = false;
   languages: string[] = [];
-  defaultView: string; // pdf / details
+  defaultView: string; // pdf / detail
   [key: string]: any;
 }

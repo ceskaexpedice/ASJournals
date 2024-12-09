@@ -104,7 +104,6 @@ export class FreePageComponent implements OnInit {
   }
 
   setImg() {
-    console.log(this.state.imgSrc)
     if (this.state.actualNumber) {
       this.img = this.state.imgSrc;
     }

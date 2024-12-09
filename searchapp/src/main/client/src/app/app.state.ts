@@ -79,7 +79,7 @@ export class AppState {
   viewerJournal: Journal = new Journal();
   viewerPid: string;
   viewerArticle: any;
-  viewerActiveLink = 'detail';
+  viewerActiveLink: string;
 
   archivItemDetails: { year: number, volumeNumber: string, issueNumber: string, partName: any } 
 

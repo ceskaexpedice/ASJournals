@@ -107,6 +107,10 @@ export class AppService {
         if (!this.state.currentMagazine.keyword) {
           this.state.currentMagazine.keyword = [];
         }
+        if (!this.state.currentMagazine.defaultView) {
+          this.state.currentMagazine.defaultView = 'detail';
+        }
+        this.state.viewerActiveLink = this.state.currentMagazine.defaultView;
         this.state.setConfig(res);
         this.config['color'] = ctx.color;
         this.config['journal'] = ctx.journal;
