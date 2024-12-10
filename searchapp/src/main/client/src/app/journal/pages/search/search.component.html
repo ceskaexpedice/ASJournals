@@ -1,10 +1,10 @@
 
 <div class="app-container">
   <nav mat-tab-nav-bar [tabPanel]="tabPanel">
-    <a mat-tab-link routerLink="cokoliv" [active]="isRouteActive('cokoliv')">{{ 'cokoliv' | translate }}</a>
-    <a mat-tab-link routerLink="autory" [active]="isRouteActive('autory')">{{ 'rejstřík autorů' | translate }}</a>
-    <a mat-tab-link routerLink="rubriky" [active]="isRouteActive('rubriky')">{{ 'rubriky' | translate }}</a>
-    <a mat-tab-link routerLink="keywords" [active]="isRouteActive('keywords')">{{ 'rejstřík klíčových slov' | translate }}</a>
+    <a mat-tab-link routerLink="cokoliv" [active]="isRouteActive('cokoliv')" class="app-text-capitalize">{{ 'cokoliv' | translate }}</a>
+    <a mat-tab-link routerLink="autory" [active]="isRouteActive('autory')" class="app-text-capitalize">{{ 'rejstřík autorů' | translate }}</a>
+    <a mat-tab-link routerLink="rubriky" [active]="isRouteActive('rubriky')" class="app-text-capitalize">{{ 'rubriky' | translate }}</a>
+    <a mat-tab-link routerLink="keywords" [active]="isRouteActive('keywords')" class="app-text-capitalize">{{ 'rejstřík klíčových slov' | translate }}</a>
    </nav>
 </div>
 
@@ -16,7 +16,7 @@
       <mat-card class="app-mb-4">
         <mat-card-content class="app-mb-n4">
           <div class="app-mb-4">
-            <mat-checkbox class="example-margin" name="onlyPeerReviewed" [(ngModel)]="onlyPeerReviewed" (ngModelChange)="setPeerReviewed()">{{ 'pouze v recenzovaných článcích' | translate }}</mat-checkbox>
+            <mat-checkbox name="onlyPeerReviewed" [(ngModel)]="onlyPeerReviewed" (ngModelChange)="setPeerReviewed()">{{ 'pouze v recenzovaných článcích' | translate }}</mat-checkbox>
           </div>
           <div>
             <strong class="app-mr-2">{{ 'Datum publikování' | translate }}:</strong>

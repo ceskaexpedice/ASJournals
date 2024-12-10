@@ -127,7 +127,7 @@
 	"accessCondition": "Přístup k článku",
 	"references": "Seznam použité literatury",
 	"recenzovaný článek": "recenzovaný článek",
-	"pouze v recenzovaných článcích": "pouze v recenzovaných článcích",
+	"pouze v recenzovaných článcích": "Pouze v recenzovaných článcích",
 	"nerecenzovaný článek": "nerecenzovaný článek",
 	"Trvalý odkaz": "Trvalý odkaz",
 	"Datum publikování": "Datum publikování",
@@ -189,7 +189,6 @@
 		"directory": "Adresář",
 		"editorsNote": "Editorial"
 	},
-	"Available from": "Dostupné také z",
 	"print": "tisk",
 	"admin": {
 		"Upload": "Nahrát",
@@ -651,6 +650,8 @@
 		"footer": "Patička",
 		"issue": "Číslo",
 		"year": "Rok",
-		"volume": "Ročník"
+		"volume": "Ročník",
+		"citation": "Citace",
+		"availableAlsoFrom": "Dostupné také z"
 	}
 }

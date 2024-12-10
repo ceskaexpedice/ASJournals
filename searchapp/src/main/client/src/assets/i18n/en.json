@@ -5,7 +5,7 @@
 	"q_keywords_placeholder": "Search keywords...",
 	"ČASOPIS": "JOURNAL",
 	"k5_title": "Digital Library of the CAS",
-	"Starší ročníky najdete v": "Older issues you can find in the",
+	"Starší ročníky najdete v": "Older volumes can be found in",
 	"Zpět na ročníky": "Back to volumes",
 	"přidat kritérium": "add criterium",
 	"vymazat formulář": "reset form",
@@ -127,7 +127,7 @@
 	"accessCondition": "Access condition",
 	"references": "References",
 	"recenzovaný článek": "peer reviewed",
-	"pouze v recenzovaných článcích": "only in peer reviewed articles",
+	"pouze v recenzovaných článcích": "Only in peer reviewed articles",
 	"nerecenzovaný článek": "non peer reviewed",
 	"Trvalý odkaz": "Permanent link",
 	"Datum publikování": "Published date",
@@ -189,7 +189,6 @@
 		"directory": "Directory",
 		"editorsNote":"Editorial"
 	},
-	"Available from": "Available also from",
 	"print": "print page",
 	"admin": {
 		"Upload": "Upload",
@@ -268,7 +267,7 @@
 		"titulek_en": "Title (English)",
 		"obrazek": "Image",
 		"vydavatel": "Publisher",
-		"oblast": "Genre",
+		"oblast": "Field",
 		"pridat_oblast": "Add genre",
 		"smazat_oblast": "Remove genre",
 		"pristup": "Access",
@@ -279,7 +278,7 @@
 		"popis_angl": "Description (english)",
 		"pridat_editora": "Add editor",
 		"id": "Id",
-		"typ": "Tyoe",
+		"typ": "Type",
 		"jmeno": "Name",
 		"web": "Web",
 		"adresa": "Address",
@@ -651,6 +650,8 @@
 		"footer": "Footer",
 		"issue": "Issue",
 		"year": "Year",
-		"volume": "Volume"
+		"volume": "Volume",
+		"citation": "Citation",
+		"availableAlsoFrom": "Available also from"
 	}
 }

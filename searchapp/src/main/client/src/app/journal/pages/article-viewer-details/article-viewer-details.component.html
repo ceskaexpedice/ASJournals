@@ -2,9 +2,9 @@
   
   <app-article-info [article]="state.viewerArticle" [journal]="state.viewerJournal"></app-article-info>
 
-  <h2 class="app-headline app-mt-4">{{ 'Citace (ISO 690)' | translate }}</h2>
+  <h2 class="app-headline app-mt-4">{{ 'desc.citation' | translate }} (ISO 690)</h2>
   <p [innerHtml] = "citace"></p>
-  <p>{{'Available from' | translate}}:<br />
+  <p>{{ 'desc.availableAlsoFrom' | translate }}:<br />
     <a [href]="location" target="_blank">{{location}}</a>
   </p>
   

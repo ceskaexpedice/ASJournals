@@ -83,8 +83,8 @@ export class BreadcrumbComponent {
       this.crumbs.push({ link: 'archiv', label: this.appService.translateKey('menu.archiv_') });
       if (this.state.archivItemDetails?.year) {
         this.state.archivPosition = this.state.archivItemDetails.year +
-        (this.state.archivItemDetails.volumeNumber ? ', ' + 'ročník' + ' ' + this.state.archivItemDetails.volumeNumber : '') +
-        (this.state.archivItemDetails.issueNumber ? ' / ' + 'číslo' + ' ' + this.state.archivItemDetails.issueNumber : '') +
+        (this.state.archivItemDetails.volumeNumber ? ', ' + this.appService.translateKey('ročník') + ' ' + this.state.archivItemDetails.volumeNumber : '') +
+        (this.state.archivItemDetails.issueNumber ? ' / ' + this.appService.translateKey('číslo') + ' ' + this.state.archivItemDetails.issueNumber : '') +
         (this.state.archivItemDetails.partName ? this.state.archivItemDetails.partName : '');
         this.crumbs.push({ link: 'archiv', label: this.state.archivPosition });
       }
@@ -107,8 +107,8 @@ export class BreadcrumbComponent {
     if (this.page === 'archiv' && this.state.archivItemDetails?.year) {
 
       this.state.archivPosition = this.state.archivItemDetails.year +
-      (this.state.archivItemDetails.volumeNumber ? ', ' + 'ročník' + ' ' + this.state.archivItemDetails.volumeNumber : '') +
-      (this.state.archivItemDetails.issueNumber ? ' / ' + 'číslo' + ' ' + this.state.archivItemDetails.issueNumber : '') +
+      (this.state.archivItemDetails.volumeNumber ? ', ' + this.appService.translateKey('ročník') + ' ' + this.state.archivItemDetails.volumeNumber : '') +
+      (this.state.archivItemDetails.issueNumber ? ' / ' + this.appService.translateKey('číslo') + ' ' + this.state.archivItemDetails.issueNumber : '') +
       (this.state.archivItemDetails.partName ? this.state.archivItemDetails.partName : '');
 
       // this.crumbs.push({ link: 'home', label: this.appService.translateKey('menu.home_') });
