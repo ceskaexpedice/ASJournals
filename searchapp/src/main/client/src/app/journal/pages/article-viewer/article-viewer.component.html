@@ -24,12 +24,12 @@
   </div> 
   <div class="app-fxFlex app-fxLayout" [ngClass]="state.isFull ? null : 'app-pb-4 app-pl-4 app-pr-4'">
     <div class="app-fxFlex app-fxLayout app-row" [ngClass]="state.isFull ? 'app-container-fluid ' : 'app-container'">
-      <div class="app-left app-fxLayout app-column" *ngIf="!state.isFull">
+      <div class="app-left app-fxLayout app-column" *ngIf="!state.isFull && windowSize > breakpoint">
         <div class="app-fxFlex app-oa-y app-items-wrapper app-pt-4 app-pb-4 app-pr-4">
           <app-article-viewer-articles></app-article-viewer-articles>
         </div>
       </div>
-      <div class="app-right app-fxFlex app-fxLayout app-column">  
+      <div class="app-right app-fxFlex app-fxLayout app-column" [class.app-pt-4]="state.viewerActiveLink == 'articles'" [ngClass]="state.viewerActiveLink === 'detail' && windowSize < breakpoint ? 'app-ml-n4 app-mr-n4' : null ">  
         <mat-tab-nav-panel #tabPanel class="app-fxFlex app-oa-y">
           <router-outlet></router-outlet>
         </mat-tab-nav-panel>
