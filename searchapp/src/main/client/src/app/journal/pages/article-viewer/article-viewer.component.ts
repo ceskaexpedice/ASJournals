@@ -133,7 +133,7 @@ export class ArticleViewerComponent implements OnInit {
       this.state.viewerArticle.hasReferences = refs.length > 0;
       if (this.state.viewerArticle.hasReferences) {
         refs.forEach(ref => {
-          // console.log(ref)
+          console.log(ref)
           // const ref = JSON.parse(JSON.stringify(refOrig).replaceAll('mods:', ''));
           let doi = '';
           if (ref['mods:identifier'] && ref['mods:identifier'].type === 'doi') {
@@ -155,7 +155,7 @@ export class ArticleViewerComponent implements OnInit {
             }${ref['mods:originInfo']?.['mods:place']?.['mods:placeTerm']['content'] ? ' ' + ref['mods:originInfo']['mods:place']['mods:placeTerm']['content'] + ':' : ''
 
             }${ref['mods:originInfo']?.['mods:publisher'] ? ' ' + ref['mods:originInfo']['mods:publisher']
-              : ''}${ref['mods:originInfo']?.['mods:dateIssued'] ? ', ' + ref['mods:originInfo']['mods:dateIssued'] : ' '}`
+              : ''}${ref['mods:originInfo']?.['mods:dateIssued'] ? ', ' + ref['mods:originInfo']['mods:dateIssued']  + '. ': ''}`
             if (ref['mods:relatedItem']?.type === 'host') {
               let name2 = this.makeName(ref['mods:relatedItem']).join('; ').trim();
               if (name2 !== '') {
