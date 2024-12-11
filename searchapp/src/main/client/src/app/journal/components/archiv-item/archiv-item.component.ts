@@ -24,6 +24,7 @@ export class ArchivItemComponent implements OnInit {
 
   supplement: string | null = null;
   year: string | null = null;
+  dateIssued: any;
   volumeNumber: string | null = null;
   issueNumber: string | null = null;
   partName: string | null = null;
@@ -45,6 +46,7 @@ export class ArchivItemComponent implements OnInit {
     if (this.item['model'] === 'periodicalvolume') {
 
       this.year = this.item.year;
+      this.dateIssued = JSON.parse(this.item.dateIssued)[0];
       if (mods['mods:titleInfo']) {
         this.volumeNumber = mods['mods:titleInfo']['mods:partNumber'];
       } else {

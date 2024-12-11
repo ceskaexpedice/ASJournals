@@ -132,8 +132,13 @@ public class Searcher {
                     } else {
                         doc.put("oblast_cs", new JSONArray());
                     }
-                    
                 } 
+                if (!doc.has("extLinkUrl_cs")) {
+                    doc.put("extLinkUrl_cs", doc.optString("extLinkUrl", ""));
+                }
+                if (!doc.has("extLinkText_cs")) {
+                    doc.put("extLinkText_cs", doc.optString("extLinkText", ""));
+                }
 //                if (!doc.has("keyword_cs")) {
 //                    if (doc.has("keywords")) {
 //                        doc.put("keyword_cs", doc.optJSONArray("keywords"));

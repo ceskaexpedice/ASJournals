@@ -26,7 +26,7 @@
       {{'Starší ročníky najdete v' | translate}} <a [href]="state.currentMagazine.k5url + state.currentMagazine.journal" [title]="'k5_title' | translate" target="_blank">{{'k5_title' | translate}}</a>
     </p>
     <ng-container  *ngIf="state.currentMagazine.showExtLink && isRoot()"></ng-container>
-    <a mat-stroked-button color="primary" [href]="state.currentMagazine.extLinkUrl" [title]="state.currentMagazine.extLinkText" target="_blank"><mat-icon>open_in_new</mat-icon>{{ state.currentMagazine.extLinkText | translate }}</a>
+    <a mat-stroked-button color="primary" [href]="state.currentMagazine['extLinkUrl_' + state.currentLang]"  [title]="state.currentMagazine['extLinkText_' + state.currentLang]" target="_blank"><mat-icon>open_in_new</mat-icon>{{ state.currentMagazine['extLinkText_' + state.currentLang] }}</a>
   </div>
 </div>
 
@@ -59,10 +59,10 @@
               {{ 'Ročníky' | translate }}
             </h1>
             <h1 *ngSwitchCase="'periodicalvolume'">
-              {{ currentItem['year'] }}<span *ngIf="state.archivItemDetails.volumeNumber">, {{ 'ročník' | translate }} {{ state.archivItemDetails.volumeNumber }}</span>
+              {{ currentItem['year'] ? currentItem['year'] : currentItem['dateIssuedFormated']}}<span *ngIf="state.archivItemDetails.volumeNumber">, {{ 'ročník' | translate }} {{ state.archivItemDetails.volumeNumber }}</span>
             </h1>
             <h1 *ngSwitchCase="'periodicalitem'">
-              {{currentItem['year']}}<span *ngIf="state.archivItemDetails.volumeNumber">, {{'ročník' | translate}} {{state.archivItemDetails.volumeNumber}}</span><span *ngIf="state.archivItemDetails.issueNumber">, {{'číslo' | translate}} {{state.archivItemDetails.issueNumber}}</span><span *ngIf="state.archivItemDetails.partName">, {{state.archivItemDetails.partName}}</span>
+              {{currentItem['year'] ? currentItem['year'] : currentItem['dateIssuedFormated']}}<span *ngIf="state.archivItemDetails.volumeNumber">, {{'ročník' | translate}} {{state.archivItemDetails.volumeNumber}}</span><span *ngIf="state.archivItemDetails.issueNumber">, {{'číslo' | translate}} {{state.archivItemDetails.issueNumber}}</span><span *ngIf="state.archivItemDetails.partName">, {{state.archivItemDetails.partName}}</span>
             </h1>
           </div>
         </div>
