@@ -79,6 +79,13 @@ export class ArchivComponent implements OnInit {
           this.currentPid = '';
           this.initData();
         }
+
+        
+
+       setTimeout(() => {
+          document.getElementById('scroller').scrollTop = 0;
+        }, 10);
+
       });
       // this.state.archivPosition = null;
       // this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
@@ -162,7 +169,9 @@ export class ArchivComponent implements OnInit {
         }
         this.setDetails();
       }
-      this.currentItem['dateIssuedFormated'] = JSON.parse(this.currentItem['dateIssued'])[0];
+      if (this.currentItem['dateIssued']) {
+        this.currentItem['dateIssuedFormated'] = JSON.parse(this.currentItem['dateIssued'])[0];
+      }
       if (!this.cache.hasOwnProperty(this.currentPid)) {
         this.service.getChildren(this.currentPid).subscribe(res => {
           this.isDataNode = res[0]['datanode'];
@@ -279,18 +288,11 @@ export class ArchivComponent implements OnInit {
   }
 
   initData() {
-    //if (this.state.actualNumber) {
       if (!this.currentPid) {
         this.setItems(this.state.currentMagazine['journal']);
       } else {
         this.setItems(this.currentPid);
       }
-    //} else {
-      //this.router.navigate(['home']);
-      // setTimeout(() => {
-      //   this.initData();
-      // }, 100);
-    //}
   }
 
   isHiddenByGenre(genres: string[]) {

@@ -4,7 +4,7 @@
       <app-navbar [isMobile]="isMobile" (sidenavClose)="sidenav.close()"></app-navbar>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content  id="scroller" >
     <div class="app-fxLayout app-column app-fill">
       <header *ngIf="!state.isFull">
         <app-heading></app-heading>
