@@ -151,11 +151,12 @@ export class ArticleViewerComponent implements OnInit {
             let name = this.makeName(ref).join('; ').trim();
             let note = `${name}.  
             ${ref['mods:titleInfo']?.['mods:title'] ? ref['mods:titleInfo']['mods:title'] : ''
-
             }${ref['mods:originInfo']?.['mods:place']?.['mods:placeTerm']['content'] ? ' ' + ref['mods:originInfo']['mods:place']['mods:placeTerm']['content'] + ':' : ''
-
             }${ref['mods:originInfo']?.['mods:publisher'] ? ' ' + ref['mods:originInfo']['mods:publisher']
-              : ''}${ref['mods:originInfo']?.['mods:dateIssued'] ? ', ' + ref['mods:originInfo']['mods:dateIssued']  + '. ': ''}`
+              : ''}${ref['mods:originInfo']?.['mods:dateIssued'] ? ', ' + ref['mods:originInfo']['mods:dateIssued']  : ''}`
+            if (ref['mods:titleInfo']?.['mods:title'] || ref['mods:originInfo']?.['mods:place']?.['mods:placeTerm']['content'] || ref['mods:originInfo']?.['mods:publisher']) {
+              note += '. ';
+            }
             if (ref['mods:relatedItem']?.type === 'host') {
               let name2 = this.makeName(ref['mods:relatedItem']).join('; ').trim();
               if (name2 !== '') {
