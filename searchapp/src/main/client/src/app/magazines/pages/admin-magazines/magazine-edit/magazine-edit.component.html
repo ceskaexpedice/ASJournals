@@ -38,10 +38,7 @@
     <mat-checkbox id="checkUpdates" name="checkUpdates" [(ngModel)]="mag.checkUpdates">{{ 'magazines.checkUpdates' | translate }}&#160;&#160;</mat-checkbox>
   </div>
 
-  <div class="app-fxFlex-3x">
-    <mat-checkbox id="showExtLink" name="showExtLink" [(ngModel)]="mag.showExtLink">{{ 'magazines.showExtLink' | translate }}</mat-checkbox>
-  </div>
-  <div class="app-fxFlex-3x">
+  <!-- <div class="app-fxFlex-3x">
     <mat-form-field  class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.extLinkUrl' | translate }}</mat-label>
       <input matInput id="extLinkUrl" name="extLinkUrl" type="text" [(ngModel)]="mag.extLinkUrl">
@@ -52,7 +49,7 @@
       <mat-label>{{ 'magazines.extLinkText' | translate }}</mat-label>
       <input matInput id="extLinkText" name="extLinkText" type="text" [(ngModel)]="mag.extLinkText">
     </mat-form-field>
-  </div>
+  </div> -->
 
   <div class="app-fxFlex-25">
     <mat-form-field class="app-w-100" appearance="outline">
@@ -69,18 +66,25 @@
     </span>
   </div>
 
-  <!-- <div class="app-fxFlex-2x">
-    <mat-form-field class="app-w-100" appearance="outline">
-      <mat-label>{{ 'magazines.titulek' | translate }}</mat-label>
-      <input matInput id="title" type="text" [(ngModel)]="mag.title">
-    </mat-form-field>
+
+  <div class="app-fxFlex-1x">
+    <mat-checkbox id="showExtLink" name="showExtLink" [(ngModel)]="mag.showExtLink">{{ 'magazines.showExtLink' | translate }}</mat-checkbox>
   </div>
-  <div class="app-fxFlex-2x">
-    <mat-form-field class="app-w-100" appearance="outline">
-      <mat-label>{{ 'magazines.podtitulek' | translate }}</mat-label>
-      <input matInput id="subtitle" type="text" [(ngModel)]="mag.subtitle">
-    </mat-form-field>
-  </div> -->
+
+  <ng-container *ngFor="let lang of mag.languages">
+    <div class="app-fxFlex-2x">
+      <mat-form-field class="app-w-100" appearance="outline">
+        <mat-label>{{ 'magazines.extLinkUrl' | translate }} {{ 'magazines.lang.' + lang | translate }}</mat-label>
+        <input matInput [id]="'extLinkUrl' + lang" type="text" [(ngModel)]="mag['extLinkUrl_'+lang]">
+      </mat-form-field>
+    </div>
+    <div class="app-fxFlex-2x">
+      <mat-form-field class="app-w-100" appearance="outline">
+        <mat-label>{{ 'magazines.extLinkText' | translate }} {{ 'magazines.lang.' + lang | translate }}</mat-label>
+        <input matInput [id]="'extLinkText' + lang" type="text" [(ngModel)]="mag['extLinkText_'+lang]">
+      </mat-form-field>
+    </div>
+  </ng-container>
 
   <ng-container *ngFor="let lang of mag.languages">
     <div class="app-fxFlex-2x">
@@ -95,7 +99,8 @@
         <input matInput [id]="'subtitle' + lang" type="text" [(ngModel)]="mag['subtitle_'+lang]">
       </mat-form-field>
     </div>
-</ng-container>
+  </ng-container>
+  <hr/>
 
   <div class="app-fxFlex-3x">
     <mat-form-field class="app-w-100" appearance="outline">
