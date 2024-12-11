@@ -6,6 +6,7 @@
     <h2><a [routerLink]="['.', {pid:item['pid']}]" queryParamsHandling="preserve"> 
     <span *ngIf="supplement">{{supplement}}</span>
     <span *ngIf="year">{{'Rok' | translate}} {{year}}</span>
+    <span *ngIf="!year">{{'desc.year' | translate}} {{ dateIssued }}</span>
     <span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span>
     <span *ngIf="issueNumber"> {{'číslo' | translate}} {{issueNumber}}</span>
     <span *ngIf="partName">, {{partName}}</span></a></h2>
