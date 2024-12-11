@@ -152,18 +152,18 @@ export class ArticleViewerComponent implements OnInit {
             let note = `${name}.  
             ${ref['mods:titleInfo']?.['mods:title'] ? ref['mods:titleInfo']['mods:title'] : ''
 
-            }${ref['mods:originInfo']?.['mods:place']['mods:placeTerm']['content'] ? ' ' + ref['mods:originInfo']['mods:place']['mods:placeTerm']['content'] + ':' : ''
+            }${ref['mods:originInfo']?.['mods:place']?.['mods:placeTerm']['content'] ? ' ' + ref['mods:originInfo']['mods:place']['mods:placeTerm']['content'] + ':' : ''
 
             }${ref['mods:originInfo']?.['mods:publisher'] ? ' ' + ref['mods:originInfo']['mods:publisher']
-              : ''}${ref['mods:originInfo']?.['mods:dateIssued'] ? ', ' + ref['mods:originInfo']['mods:dateIssued'] : ''}. `
+              : ''}${ref['mods:originInfo']?.['mods:dateIssued'] ? ', ' + ref['mods:originInfo']['mods:dateIssued'] : ' '}`
             if (ref['mods:relatedItem']?.type === 'host') {
               let name2 = this.makeName(ref['mods:relatedItem']).join('; ').trim();
               if (name2 !== '') {
                 name2 = name2 + '.'
               }
-              note += `In: ${name2}
+              note += `${ref['mods:part'] ? 'In:' : ''} ${name2}
                           ${ref['mods:relatedItem']['mods:titleInfo']['mods:title'] ? 
-                            ref['mods:relatedItem']['mods:titleInfo']['mods:title'] + '.' : 
+                            ref['mods:relatedItem']['mods:titleInfo']['mods:title'] + '. ' : 
                             ''}
                             ${ref['mods:relatedItem']['mods:originInfo']?.['mods:place']?.['mods:placeTerm']['content'] ? 
                             ref['mods:relatedItem']['mods:originInfo']['mods:place']['mods:placeTerm'].content : 
@@ -179,7 +179,7 @@ export class ArticleViewerComponent implements OnInit {
                                     ', č. ' + ref['mods:relatedItem']['mods:part']['mods:detail']['mods:number'] : 
                                     ''}${ref['mods:part']?.['mods:extent'] ? 
                                   ', s. ' + ref['mods:part']['mods:extent']['mods:start'] +
-                                  '-' + ref['mods:part']['mods:extent']['mods:end'] : 
+                                  '-' + (ref['mods:part']['mods:extent']['mods:end'] ? ref['mods:part']['mods:extent']['mods:end'] : '') : 
                                   ''}.
                             `;
             }

@@ -59,10 +59,10 @@
               {{ 'Ročníky' | translate }}
             </h1>
             <h1 *ngSwitchCase="'periodicalvolume'">
-              {{ currentItem['year'] }}<span *ngIf="state.archivItemDetails.volumeNumber">, {{ 'ročník' | translate }} {{ state.archivItemDetails.volumeNumber }}</span>
+              {{ currentItem['year'] ? currentItem['year'] : currentItem['dateIssuedFormated']}}<span *ngIf="state.archivItemDetails.volumeNumber">, {{ 'ročník' | translate }} {{ state.archivItemDetails.volumeNumber }}</span>
             </h1>
             <h1 *ngSwitchCase="'periodicalitem'">
-              {{currentItem['year']}}<span *ngIf="state.archivItemDetails.volumeNumber">, {{'ročník' | translate}} {{state.archivItemDetails.volumeNumber}}</span><span *ngIf="state.archivItemDetails.issueNumber">, {{'číslo' | translate}} {{state.archivItemDetails.issueNumber}}</span><span *ngIf="state.archivItemDetails.partName">, {{state.archivItemDetails.partName}}</span>
+              {{currentItem['year'] ? currentItem['year'] : currentItem['dateIssuedFormated']}}<span *ngIf="state.archivItemDetails.volumeNumber">, {{'ročník' | translate}} {{state.archivItemDetails.volumeNumber}}</span><span *ngIf="state.archivItemDetails.issueNumber">, {{'číslo' | translate}} {{state.archivItemDetails.issueNumber}}</span><span *ngIf="state.archivItemDetails.partName">, {{state.archivItemDetails.partName}}</span>
             </h1>
           </div>
         </div>

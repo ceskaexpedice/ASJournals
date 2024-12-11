@@ -162,7 +162,7 @@ export class ArchivComponent implements OnInit {
         }
         this.setDetails();
       }
-
+      this.currentItem['dateIssuedFormated'] = JSON.parse(this.currentItem['dateIssued'])[0];
       if (!this.cache.hasOwnProperty(this.currentPid)) {
         this.service.getChildren(this.currentPid).subscribe(res => {
           this.isDataNode = res[0]['datanode'];
