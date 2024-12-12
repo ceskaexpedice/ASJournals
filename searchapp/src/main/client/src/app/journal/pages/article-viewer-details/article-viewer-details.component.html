@@ -1,11 +1,11 @@
-<div class="app-p-4 app-text-content">
+<div class="app-p-4 app-text-content app-text-break-all">
   
   <app-article-info [article]="state.viewerArticle" [journal]="state.viewerJournal"></app-article-info>
 
   <h2 class="app-headline app-mt-4">{{ 'desc.citation' | translate }} (ISO 690)</h2>
   <p [innerHtml]="citace"></p>
   
-  <p class="app-text-break-all">
+  <p>
     {{ 'desc.availableAlsoFrom' | translate }}:<br />
     <a [href]="location" target="_blank">{{ location }}</a>
   </p>
