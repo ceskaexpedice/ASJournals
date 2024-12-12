@@ -3,14 +3,18 @@
   <app-article-info [article]="state.viewerArticle" [journal]="state.viewerJournal"></app-article-info>
 
   <h2 class="app-headline app-mt-4">{{ 'desc.citation' | translate }} (ISO 690)</h2>
-  <p [innerHtml] = "citace"></p>
-  <p>{{ 'desc.availableAlsoFrom' | translate }}:<br />
-    <a [href]="location" target="_blank">{{location}}</a>
+  <p [innerHtml]="citace"></p>
+  
+  <p>
+    {{ 'desc.availableAlsoFrom' | translate }}:<br />
+    <a [href]="location" target="_blank" class="app-text-break-all">{{ location }}</a>
   </p>
   
   <h2 *ngIf="state.viewerArticle?.hasReferences" class="app-headline app-mt-4">{{ 'references' | translate }}</h2>
   <p *ngIf="state.viewerArticle?.hasReferences">
-    <ng-container *ngFor="let ref of state.viewerArticle.references">{{ ref }} <br/> </ng-container>
+    <ng-container *ngFor="let ref of state.viewerArticle.references">
+      {{ ref }}<br />
+    </ng-container>
   </p>
 </div>
 

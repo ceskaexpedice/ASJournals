@@ -130,6 +130,10 @@ hr {
   text-transform: capitalize;
 }
 
+.app-text-break-all {
+  word-break: break-all;
+}
+
 .app-text-cutter {
   white-space: nowrap;
   overflow: hidden;
