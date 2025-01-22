@@ -173,11 +173,11 @@ export class JournalComponent {
       url = this.document.location.origin;
   }
     this.meta.addTags([
-      { name: 'description', content: this.state.currentMagazine.desc },
+      { name: 'description', content: this.state.currentMagazine['desc_' + this.state.currentLang] },
       { name: 'author', content: this.state.currentMagazine.vydavatel },
-      { name: 'keywords', content: this.state.currentMagazine.keyword.join(',') },
-      { property: 'og:title', content: this.state.currentMagazine.title }, // <meta property="og:title" content="Your appealing title here" />
-      { property: 'og:description', content: this.state.currentMagazine.desc },
+      { name: 'keywords', content: this.state.currentMagazine['keyword_' + this.state.currentLang].join(',') },
+      { property: 'og:title', content: this.state.currentMagazine['title_' + this.state.currentLang] }, // <meta property="og:title" content="Your appealing title here" />
+      { property: 'og:description', content: this.state.currentMagazine['desc_' + this.state.currentLang] },
       { property: 'og:image', content: url + this.state.imgSrc },
     ]);
   }
