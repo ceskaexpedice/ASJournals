@@ -9,7 +9,7 @@
       <div class="app-right app-fxFlex">
         <p [innerHTML]="home_text"></p>
         <ng-container *ngIf="showNews()">
-          <h2 class="app-headline">{{ 'Aktuálně' | translate }}</h2>
+          <h2 class="app-headline">{{ 'home_news' | translate }}</h2>
           <app-free-text [page]="'news'"></app-free-text>
         </ng-container>
         <ng-container *ngIf="showDb()">
