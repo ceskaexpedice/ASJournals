@@ -36,20 +36,12 @@ export class FreeTextComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(this.appService.langSubject.subscribe(
       () => {
+        console.log(this.id)
         this.getText();
       }
     ));
 
-    if (!this.page) {
-      this.subscriptions.push(this.router.events.subscribe(val => {
-        if (val instanceof NavigationEnd) {
-          this.id = val.url.substring(1);
-          if (this.state.currentLang) {
-            this.getText();
-          }
-        }
-      }));
-    } else {
+    if (this.page) {
         this.id = this.page;
         this.getText();
     }
@@ -64,8 +56,10 @@ export class FreeTextComponent implements OnInit, OnDestroy {
   }
 
   getText() {
-    this.appService.getText(this.id!).subscribe(t => {
+      console.log(this.id)
+    this.appService.getText(this.id).subscribe(t => {
       this.text = this.sanitizer.bypassSecurityTrustHtml(t);
+      console.log(this.text)
     });
   }
 
