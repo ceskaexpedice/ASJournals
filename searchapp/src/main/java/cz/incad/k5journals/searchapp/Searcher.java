@@ -84,12 +84,24 @@ public class Searcher {
                     .setSort(sort, SolrQuery.ORDER.asc)
                     .setFacet(true)
                     .setFacetMinCount(1)
-                    .addFacetField("pristup", "{!key=oblast}oblast_" + lang, "{!key=keyword}keyword_" + lang, "vydavatel")
+                    .addFacetField("{!key=pristup}pristup", "{!key=oblast}oblast_" + lang, "{!key=keyword}keyword_" + lang, "{!key=vydavatel}vydavatel")
                     .setParam("json.nl", "arrarr");
 
             if (request.getParameter("sortDir") != null) {
                 query.setSort(sort, SolrQuery.ORDER.valueOf(request.getParameter("sortDir")));
             }
+            
+            if (request.getParameter("vydavatel") != null) {
+                for (String fq : request.getParameterValues("vydavatel")) {
+                    query.addFilterQuery("{!tag=vydavatel}vydavatel:\"" + fq + "\"");
+                }
+            } 
+            
+            if (request.getParameter("pristup") != null) {
+                for (String fq : request.getParameterValues("pristup")) {
+                    query.addFilterQuery("{!tag=pristup}pristup:\"" + fq + "\"");
+                }
+            } 
             
             if (request.getParameter("keywords") != null) {
                 for (String fq : request.getParameterValues("keywords")) {
@@ -105,9 +117,6 @@ public class Searcher {
             
             if (request.getParameter("oblast") != null) {
                 for (String fq : request.getParameterValues("oblast")) {
-//                    String fqlang = fq.split("_")[0];
-//                    String o = fq.split("_", 2)[1];
-//                    query.addFilterQuery("{!tag=oblast}oblast_" + fqlang + ":\"" + o + "\"");
                     query.addFilterQuery("{!tag=oblast}oblast_" + lang + ":\"" + fq + "\"");
                 }
             }
