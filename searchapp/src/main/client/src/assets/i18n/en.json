@@ -17,6 +17,7 @@
   "pristup": "Access",
   "oblast":"Genre",
   "keywords":"Keywords",
+  "keyword":"Keyword",
 	"journal_uuid":"Title root uuid",
   "showTitleLabel":"Show word 'JOURNAL'",
   "Color": "Colour",
