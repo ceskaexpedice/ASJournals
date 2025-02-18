@@ -36,7 +36,6 @@ export class FreeTextComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(this.appService.langSubject.subscribe(
       () => {
-        console.log(this.id)
         this.getText();
       }
     ));
@@ -56,10 +55,8 @@ export class FreeTextComponent implements OnInit, OnDestroy {
   }
 
   getText() {
-      console.log(this.id)
     this.appService.getText(this.id).subscribe(t => {
       this.text = this.sanitizer.bypassSecurityTrustHtml(t);
-      console.log(this.text)
     });
   }
 

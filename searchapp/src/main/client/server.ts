@@ -47,10 +47,11 @@ export function app(): express.Express {
   let apiServer = 'http://localhost:8080/';
   if (args.length > 2) {
     apiServer = args[2];
+    console.log('Using api server: ' + apiServer);
   } else {
-    console.log('Api server paramater missing. Start nodejs process as "node server/main.js "http://apiserverurl"');
-    console.log('Using default: ' + apiServer);
-    // process.exit();
+    console.log('Api server paramater missing. Please, start nodejs process as "node server/main.js "http://apiserverurl"');
+    // console.log('Using default: ' + apiServer);
+    process.exit();
   }
   server.use(express.urlencoded({ extended: true }));
   server.use(express.json());

@@ -31,7 +31,7 @@ import { MagazineState } from './magazines/magazine.state';
             if (args.length > 2) {
                 this.server = args[2];
             } else {
-                this.server = 'http://localhost:8080';
+                this.server = 'http://localhost:9083';
             }
         }
     }
@@ -43,7 +43,7 @@ import { MagazineState } from './magazines/magazine.state';
     public load(): Promise<any> {
         const url = this.server + '/api/assets/config.json';
 
-        console.log('loading config... ');
+        console.log('loading config... ' + url);
         const promise = this.http.get(url)
             .toPromise()
             .then(cfg => {
@@ -95,7 +95,7 @@ import { MagazineState } from './magazines/magazine.state';
     getMagazines() {
         let url = this.server + '/api/search/get_magazines';
 
-        console.log('loading magazines...');
+        console.log('loading magazines...' + url);
         return this.http.get(url)
             .toPromise()
             .then((res: any) => {

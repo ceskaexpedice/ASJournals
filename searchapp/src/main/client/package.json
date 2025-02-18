@@ -9,7 +9,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev:ssr": "ng run client:serve-ssr",
-    "serve:ssr": "node dist/server/main.js",
+    "serve:ssr": "node dist/server/main.js http://localhost:9083/",
     "build:ssr": "ng build && ng run client:server",
     "prerender": "ng run client:prerender"
   },

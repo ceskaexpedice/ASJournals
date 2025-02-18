@@ -31,6 +31,8 @@ export class AppService {
   public _searchSubject = new Subject();
   public searchSubject: Observable<any> = this._searchSubject.asObservable();
 
+  server: string = '';
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     @Inject(DOCUMENT) private document: Document,
@@ -42,7 +44,17 @@ export class AppService {
     private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {
+
+    if (!isPlatformBrowser(platformId)) {
+      const args = process.argv;
+      if (args.length > 2) {
+        this.server = args[2];
+      } else {
+        this.server = 'http://localhost:9083';
+    }
+    }
+  }
 
   showSnackBar(s: string, r: string = '', error: boolean = false) {
     const right = r !== '' ? this.translate.instant(r) : '';
@@ -73,19 +85,18 @@ export class AppService {
 
   private get<T>(url: string, params: HttpParams = new HttpParams(), responseType?: any): Observable<T> {
     const options = { params, responseType, withCredentials: true };
-    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
 
-    return this.http.get<T>(`${server}/api/${url}`, options)
-      .pipe(catchError(err => { return this.handleError(err) }));
+
+    return this.http.get<T>(`${this.server}/api/${url}`, options)
+      .pipe(catchError(err => { return this.handleError(err, url) }));
   }
 
   private post(url: string, obj: any, params: HttpParams = new HttpParams()) {
-    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
-    return this.http.post<any>(`${server}/api/${url}`, obj, { params })
-      .pipe(catchError(this.handleError));
+    return this.http.post<any>(`${this.server}/api/${url}`, obj, { params })
+    .pipe(catchError(err => { return this.handleError(err, url) }));
   }
 
-  private handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse, url: string) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
@@ -93,7 +104,7 @@ export class AppService {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
       console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
+        `Backend for ${url} returned code ${error.status}, body was: `, error.error);
     }
     // Return an observable with a user-facing error message.
     return throwError(
@@ -300,7 +311,8 @@ export class AppService {
   }
 
   getChildren(pid: string, dir: string = 'desc'): Observable<any> {
-    let url = 'api/search/journal/select';
+    //let url = 'api/search/journal/select';
+    let url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams().set('q', '*:*').set('fq', 'parents:"' + pid + '"')
       .set('wt', 'json').set('sort', 'year ' + dir + ',dateIssued ' + dir + ',idx ' + dir).set('rows', '500');
 
@@ -329,7 +341,8 @@ export class AppService {
 
 
   getPeriodicalItems(pid: string) {
-    let url = 'search/journal/select';
+    // let url = 'search/journal/select';
+    let url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams()
       .set('q', '*')
       .append('fq', 'model:periodicalitem')
@@ -662,7 +675,6 @@ export class AppService {
 
   saveText(id: string, text: string, menu: string): Observable<string> {
 
-    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
     let url = 'texts';
 
     let params = new HttpParams()
@@ -928,7 +940,7 @@ export class AppService {
     this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
 
     if (model === 'periodical') {
-      
+
     } else if (model === 'periodicalvolume') {
 
       if (mods['mods:originInfo']) {

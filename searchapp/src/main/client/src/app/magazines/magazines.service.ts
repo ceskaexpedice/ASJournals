@@ -9,9 +9,6 @@ import { catchError, map } from 'rxjs/operators';
 import { Magazine } from '../models/magazine';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { isPlatformBrowser } from '@angular/common';
-import { error } from 'console';
-import { get } from 'http';
-import server from 'server';
 
 @Injectable()
 export class MagazinesService {
@@ -19,6 +16,7 @@ export class MagazinesService {
   //Observe language
   public _langSubject = new Subject();
   public langSubject: Observable<any> = this._langSubject.asObservable();
+  server: string = '';
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
@@ -26,20 +24,25 @@ export class MagazinesService {
     private translate: TranslateService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private http: HttpClient) { }
+    private http: HttpClient) { 
+      if (!isPlatformBrowser(platformId)) {
+        const args = process.argv;
+        if (args.length > 2) {
+          this.server = args[2];
+        } else {
+          this.server = 'http://localhost:9083';
+      }
+      }
+    }
 
   private get<T>(url: string, params: HttpParams = new HttpParams(), responseType?: any): Observable<T> {
     const options = { params, responseType, withCredentials: true };
-
-    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
-
-    return this.http.get<T>(`${server}/api/${url}`, options)
+    return this.http.get<T>(`${this.server}/api/${url}`, options)
       .pipe(catchError(err => { return this.handleError(err, url) }));
   }
 
   private post(url: string, obj: any, params: HttpParams = new HttpParams()) {
-    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
-    return this.http.post<any>(`${server}/api/${url}`, obj, { params })
+    return this.http.post<any>(`${this.server}/api/${url}`, obj, { params })
       .pipe(catchError(err => { return this.handleError(err, url) }));
     //.pipe(catchError(this.handleError));
   }
@@ -77,7 +80,6 @@ export class MagazinesService {
 
   saveText(id: string, text: string): Observable<string> {
 
-    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
     let url = 'texts';
 
     let params = new HttpParams()

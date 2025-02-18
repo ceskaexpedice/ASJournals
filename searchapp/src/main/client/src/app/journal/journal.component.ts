@@ -57,11 +57,9 @@ export class JournalComponent {
     private route: ActivatedRoute) { }
 
   getColor() {
-    console.log(document.getElementsByTagName('html')[0].getAttribute('style'));
 
     const a = this._computePaletteColors('--palette-primary-', '#cccc00');// + this.state.currentMagazine.color);
     this._setStyle(a);
-    console.log(a)
 
   }
 
@@ -164,11 +162,12 @@ export class JournalComponent {
     let url = '';
     if (isPlatformServer(this.platformId)) {
       let req = this.injector.get(REQUEST);
-      console.log("locales from crawlers: " + req.headers["accept-language"]);
-      console.log("host: " + req.get('host'));
-      console.log("headers: ", req.headers);
-      url = 'http://' + req.headers['x-forwarded-host'];
-      console.log(url);
+      //console.log("locales from crawlers: " + req.headers["accept-language"]);
+      //console.log("host: " + req.get('host'));
+      //console.log("headers: ", req.headers);
+      // url = 'http://' + req.headers['x-forwarded-host'];
+      url = 'http://' + (req.headers['x-forwarded-host'] ? req.headers['x-forwarded-host'] : req.headers['host']) ;
+      // console.log(url);
   } else {
       url = this.document.location.origin;
   }
