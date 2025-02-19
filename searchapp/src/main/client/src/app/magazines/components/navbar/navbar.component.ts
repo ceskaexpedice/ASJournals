@@ -1,10 +1,16 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, RouterModule, TranslateModule, MatToolbarModule, MatIconModule, MatButtonModule],
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
@@ -37,6 +43,18 @@ export class NavbarComponent implements OnInit {
   // sidenav fuction
   public onToggleSidenav = () => {
     this.sidenavToggle.emit();
+  }
+
+  
+
+  changeLang(lang: string) {
+    // this.translate.use(lang);
+
+    this.service.changeLang(lang);
+
+    let p: any = {};
+    p['lang'] = lang;
+    this.router.navigate([], { relativeTo: this.route, queryParams: p, queryParamsHandling: "merge" });
   }
 
 }

@@ -9,8 +9,8 @@ export class AppState {
   private _stateSubject = new Subject();
   public stateChangedSubject: Observable<any> = this._stateSubject.asObservable();
 
-  private _titleSubject = new Subject();
-  public titleChangedSubject: Observable<any> = this._titleSubject.asObservable();
+  // private _titleSubject = new Subject();
+  // public titleChangedSubject: Observable<any> = this._titleSubject.asObservable();
 
   private _classSubject = new Subject();
   public classChangedSubject: Observable<any> = this._classSubject.asObservable();
@@ -27,10 +27,10 @@ export class AppState {
   private _journalsSubject: ReplaySubject<any> = new ReplaySubject(2);
   public journalsInitilized: Observable<any> = this._journalsSubject.asObservable();
 
-  //Holds client configuration
-  config: any;
-  //ctx: {ctx: string, color: string, journal: string, showTitleLabel: boolean, licence:string};
-  ctx: Magazine | null | undefined= null;
+  private _crumbsSubject = new Subject();
+  public crumbsChangedSubject: Observable<any> = this._crumbsSubject.asObservable();
+
+  currentMagazine: Magazine;
 
   //ctxs: {ctx: string, color: string, journal: string, showTitleLabel: boolean, licence:string}[];
   ctxs: Magazine[] = [];
@@ -50,6 +50,8 @@ export class AppState {
 
   fulltextQuery: string = '';
   hlTerms: string[] = [];
+
+  archivPosition: any;
 
   sorts = [
     {"label": "dle relevance", "field": "score desc"},
@@ -72,8 +74,17 @@ export class AppState {
 
   //Controls full screen viewer
   public isFull: boolean = false;
+  fullSrc: string;  
+  isPdf = false;
+  viewerJournal: Journal = new Journal();
+  viewerPid: string;
+  viewerArticle: any;
+  viewerActiveLink: string;
 
-  public breadcrumbs = [];
+  archivItemDetails: { year: number, volumeNumber: string, issueNumber: string, partName: any } 
+
+
+  public breadcrumbs: any[] = [];
 
   dateMin: number = 2000;
   dateMax: number = 2019;
@@ -121,15 +132,14 @@ export class AppState {
     this.dateRange = [this.dateOd, this.dateDo];
   }
 
-  setConfig(cfg: any) {
-    this.config = cfg;
+  
 
+  setConfig(cfg: any) {
     this.rows = cfg['searchParams']['rows'];
     this.sorts = cfg['sorts'];
     this.currentSort = cfg[0];
-    this.krameriusUrl = this.config['k5'] + this.config['journal'];
-
-    this.imgSrc = this.config['context'] + 'api/img?obalka=true&ctx=' + this.ctx?.ctx + '&uuid=' + this.config['journal'] + '&kramerius_version=' + (this.ctx?.isK7 ? 'k7' : 'k5') + '&thumb=true';
+    this.krameriusUrl = cfg['k5'] + cfg['journal'];
+    this.imgSrc = cfg['context'] + 'api/img?obalka=true&ctx=' + this.currentMagazine.ctx + '&uuid=' + this.currentMagazine.journal + '&kramerius_version=' + (this.currentMagazine?.isK7 ? 'k7' : 'k5') + '&thumb=true';
 
     this._configSubject.next(cfg);
   }
@@ -144,6 +154,11 @@ export class AppState {
   //params
   stateChanged() {
     this._stateSubject.next(this);
+  }
+
+  //params
+  crumbsChanged() {
+    this._crumbsSubject.next(this);
   }
 
   //params
@@ -174,7 +189,7 @@ export class AppState {
 
   setActual(a: Journal | null) {
     this.actualNumber = a;
-    this._titleSubject.next(a);
+    // this._titleSubject.next(a);
     this.stateChanged();
   }
 

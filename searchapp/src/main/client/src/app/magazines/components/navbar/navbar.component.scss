@@ -1,0 +1,89 @@
+@import "../../../../sass/app-theme-default";
+@import "../../../../sass/app-variables";
+@import "../../../../sass/app-mixins";
+
+.mat-toolbar {
+  height: auto;
+  min-height: var(--mat-toolbar-standard-height);
+  
+  a {
+    color: var(--app-color-lightnes);
+  }
+  
+  .app-left {
+    white-space: normal;
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    .app-logo {
+      font-weight: 400;
+      font-size: 24px;
+
+      span {
+        color: rgba(var(--app-color-lightnes-rgb), .6);
+
+        &:not(.app-pipe) {
+          font-weight: 200;
+        }
+
+        &.app-pipe {
+          border-color: rgba(var(--app-color-lightnes-rgb), .6);
+        }
+      }
+
+      &.app-desktop {
+        display: none;
+      }
+  
+      &.app-mobile {
+        display: block;
+      }
+  
+      @media #{$gt-md} {
+        &.app-desktop {
+          display: block;
+        }
+  
+        &.app-mobile {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .app-right {
+    a {
+      &.mat-mdc-button-base{
+        border: none !important;
+
+        &.app-active {
+          background-color: rgba(var(--app-color-lightnes-rgb), .15);
+        }
+
+        .mat-icon {
+          &:not(.app-menu .mat-icon) {
+            @include setIcon($size: 20, $position: sub);
+          }
+        }
+      }
+    }
+
+    &.app-desktop {
+      display: none;
+    }
+
+    &.app-mobile {
+      display: block;
+    }
+
+    @media #{$gt-md} {
+      &.app-desktop {
+        display: block;
+      }
+
+      &.app-mobile {
+        display: none;
+      }
+    }
+  }
+}

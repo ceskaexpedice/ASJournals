@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>{{ 'magazines.resetovat_heslo' | translate }}</h1>
+<div mat-dialog-content class="app-pb-0">
+	<mat-form-field appearance="outline" class="app-w-100">
+		<input matInput name="newPwd" type="text" [(ngModel)]="newPwd" [placeholder]="'magazines.nove_heslo'| translate">
+	</mat-form-field>
+</div>
+<div mat-dialog-actions cdkFocusRegionstart>
+    <button mat-flat-button (click)="resetPwd()" color="primary">{{ 'button.save' | translate }}</button>
+    <button mat-stroked-button mat-dialog-close="false">{{ 'button.close' | translate }}</button>
+</div>

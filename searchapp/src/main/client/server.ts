@@ -1,12 +1,11 @@
 import 'zone.js/node';
 
+import { APP_BASE_HREF } from '@angular/common';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
-import { join } from 'path';
-
-import { AppServerModule } from './src/main.server';
-import { APP_BASE_HREF } from '@angular/common';
-import { existsSync, mkdirSync } from 'fs';
+import { existsSync, mkdirSync  } from 'node:fs';
+import { join } from 'node:path';
+import bootstrap from './src/main.server';
 
 let configDir = '';
 let config: any = {};
@@ -39,32 +38,27 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage:   storage });
 
-
 // The Express app is exported so that it can be used by serverless Functions.
-export function app() {
+export function app(): express.Express {
   const server = express();
-  // const distFolder = join(process.cwd(), '.'); 
-
   const distFolder = existsSync(join(process.cwd(), 'dist/')) ? join(process.cwd(), 'dist/') : join(process.cwd(), '.');
-
   const indexHtml = existsSync(join(distFolder, 'index.ssr.html')) ? 'index.ssr.html' : 'index';
-
   const args = process.argv;
   let apiServer = 'http://localhost:8080/';
   if (args.length > 2) {
     apiServer = args[2];
+    console.log('Using api server: ' + apiServer);
   } else {
-    console.log('Api server paramater missing. Start nodejs process as "node server/main.js "http://apiserverurl"');
-    console.log('Using default: ' + apiServer);
-    // process.exit();
+    console.log('Api server paramater missing. Please, start nodejs process as "node server/main.js "http://apiserverurl"');
+    // console.log('Using default: ' + apiServer);
+    process.exit();
   }
-
   server.use(express.urlencoded({ extended: true }));
   server.use(express.json());
 
-  // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
+  // Our Universal express-engine (found @ https://github.com/angular/universal/tree/main/modules/express-engine)
   server.engine('html', ngExpressEngine({
-    bootstrap: AppServerModule, inlineCriticalCss: false
+    bootstrap
   }));
 
   server.set('view engine', 'html');
@@ -91,7 +85,7 @@ export function app() {
       }
     });
   });
-  
+
   server.get('/api/lf', (req, res) => {
     //res.redirect(apiServer + req.url);
 
@@ -113,14 +107,32 @@ export function app() {
     });
   });
 
+  server.get('/assets/i18n/**', (req, res) => {
+    //res.redirect(apiServer + req.url);
 
-  server.get('/api/**', (req, res) => {
-    request(apiServer + req.url, function (error: any, response: any, body: any) {
+    request({ url: apiServer + req.url, encoding: null }, function (error: any, response: any, body: any) {
       if (error) {
         console.log('error:', error); // Print the error if one occurred and handle it
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
       }
-      //console.log('set-cookie', response['headers']['set-cookie']);
+      if (response.body) {
+        if (response['headers']['content-type']) {
+          res.setHeader('content-type', response['headers']['content-type']);
+        }
+        res.send(response.body);
+      } else {
+        res.send('')
+      }
+    });
+  });
+
+
+  server.get('/api/**', (req, res) => {
+    request({url: apiServer + req.url, headers: req.headers} , function (error: any, response: any, body: any) {
+      if (error) {
+        console.log('error:', error); // Print the error if one occurred and handle it
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+      }
       if (body) {
 
         if (req.url.indexOf('assets/config.json') > 0) {
@@ -146,11 +158,11 @@ export function app() {
   });
 
   server.post('/lf', upload.single('file'), function(req: any, res: any) {
-    console.log(req.body); // form fields
+    // console.log(req.body); // form fields
     /* example output:
     { title: 'abc' }
      */
-    console.log(req.file); 
+    // console.log(req.file); 
     const resp: any = {};
     if (req.query['cover']) {
       resp.msg = 'ok'
@@ -196,6 +208,8 @@ export function app() {
     });
   });
 
+  // Example Express Rest API endpoints
+  // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
     maxAge: '1y'
@@ -209,13 +223,15 @@ export function app() {
   return server;
 }
 
-function run() {
-  const port = process.env.PORT || 4000;
+function run(): void {
+  const host = process.env['HOST'] || 'localhost';
+  // const host = 'localhost';
+  const port = parseInt(process.env['PORT']) || 4000;
 
   // Start up the Node server
   const server = app();
-  server.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
+  server.listen(port, host, () => {
+    console.log(`Node Express server listening on http://${host}:${port}`);
   });
 }
 
@@ -229,4 +245,4 @@ if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
   run();
 }
 
-export * from './src/main.server';
+export default bootstrap;

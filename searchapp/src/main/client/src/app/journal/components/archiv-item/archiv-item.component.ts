@@ -1,9 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { AppState } from 'src/app/app.state';
+import { Configuration } from 'src/app/models/configuration';
 import { AppService } from 'src/app/services/app.service';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, RouterModule, TranslateModule,
+    MatIconModule, MatButtonModule, MatCardModule],
   selector: 'app-archiv-item',
   templateUrl: './archiv-item.component.html',
   styleUrls: ['./archiv-item.component.scss']
@@ -15,6 +24,7 @@ export class ArchivItemComponent implements OnInit {
 
   supplement: string | null = null;
   year: string | null = null;
+  dateIssued: any;
   volumeNumber: string | null = null;
   issueNumber: string | null = null;
   partName: string | null = null;
@@ -22,6 +32,7 @@ export class ArchivItemComponent implements OnInit {
   isbn: string | null = null;
 
   constructor(
+    private config: Configuration,
     private service: AppService,
     private state: AppState,
     private route: ActivatedRoute,
@@ -35,6 +46,7 @@ export class ArchivItemComponent implements OnInit {
     if (this.item['model'] === 'periodicalvolume') {
 
       this.year = this.item.year;
+      this.dateIssued = JSON.parse(this.item.dateIssued)[0];
       if (mods['mods:titleInfo']) {
         this.volumeNumber = mods['mods:titleInfo']['mods:partNumber'];
       } else {
@@ -122,7 +134,7 @@ export class ArchivItemComponent implements OnInit {
 
 
   img() {
-    return this.state.config['context'] + 'api/img?uuid=' + this.item['pid'] + '&kramerius_version=' + this.item['kramerius_version'] + '&thumb=true';
+    return this.config['context'] + 'api/img?uuid=' + this.item['pid'] + '&kramerius_version=' + this.item['kramerius_version'] + '&thumb=true';
   }
 
   gotoArticle() {

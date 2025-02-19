@@ -3,9 +3,12 @@ import {Router, NavigationEnd} from '@angular/router';
 import {Subscription} from 'rxjs';
 import { MagazineState } from '../../magazine.state';
 import { MagazinesService } from '../../magazines.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @Component({
+  standalone: true,
+  imports: [TranslateModule],
   selector: 'app-kontakt',
   templateUrl: './kontakt.component.html',
   styleUrls: ['./kontakt.component.scss']

@@ -1,84 +1,80 @@
-<section class="app-content">
-  <div class="container">
-    <div class="row">
-      <div *ngIf="!isRoot()" class="col-xs-12 col-sm-5 col-md-4 col-lg-3 app-col-left">
-        <div class="app-section">
-          <button type="button" class="btn app-btn-arrow app-btn-arrow-left app-brand lighten-4 app-brand-text" (click)="goToRoot()">
-            {{'Zpět na ročníky' | translate}}
-          </button>
-        </div><!--/.app item -->
-        <div class="app-item-wrapper">
-          <div class="app-item" *ngFor="let item of visibleParentItems" (click)="drillDown(item.pid)">
-            <button class="app-btn-arrow app-btn-arrow-right" [class.app-btn-active]="item.pid === currentPid" [id]="'btn_'+item.pid">
-              <app-archiv-item-left [item]="item" ></app-archiv-item-left>
-            </button>
-          </div><!--/.app item -->
-        </div>
-      </div><!--/.col -->
-
-      <div [class]="isRoot() ? 'col-xs-12 col-sm-12 col-md-9 col-md-offset-3 app-col-right' : 'col-xs-12 col-sm-7 col-md-8 col-lg-9 app-col-right'">
-        <!-- First level -->
-        <div *ngIf="isRoot()" class="app-sort-headline">
-          <div class="row">
-            <div class="col-xs-12 col-sm-6" *ngIf="currentItem">
-              <h2 class="app-font-s42 app-clean-mg" [ngSwitch]="currentItem['model']">
-                <span *ngSwitchCase="'periodical'">
-                  {{'Ročníky' | translate}}
-                </span>
-                <span *ngSwitchCase="'periodicalvolume'">
-                  {{currentItem['year']}}, {{'ročník' | translate}} {{volumeNumber}}
-                </span>
-              </h2>
-            </div><!--/.col -->
-            <div *ngIf="isRoot()" class="col-xs-12 col-sm-6">
-              <ul class="list-unstyled app-select">
-                <li>{{'Výsledky řadit' | translate}}:</li>
-                <li class="dropdown" dropdown>
-                  <a dropdownToggle type="button" class="dropdown-toggle" >{{currentSort.label | translate}} <span class="caret"></span></a>
-                  <ul *dropdownMenu class="dropdown-menu app-clean-border"  role="menu">
-                    <li *ngFor="let s of sorts"><a (click)="setSort(s)">{{s.label | translate}}</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div><!--/.col -->
-          </div><!--/.row -->
-        </div><!--/.first level -->
-        
-        <!-- Second level -->
-        <span *ngIf="!isRoot()">
-          <span *ngIf="currentItem">
-            <h2 class="app-font-s42" [ngSwitch]="currentItem['model']">
-              <span *ngSwitchCase="'periodical'">
-                {{'Ročníky' | translate}}
-              </span>
-              <span *ngSwitchCase="'periodicalvolume'">
-                {{currentItem['year']}}<span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span>
-              </span>
-              <span *ngSwitchCase="'periodicalitem'">
-                {{currentItem['year']}}<span *ngIf="volumeNumber">, {{'ročník' | translate}} {{volumeNumber}}</span><span
-                 *ngIf="issueNumber">, {{'číslo' | translate}} {{issueNumber}}</span><span
-                 *ngIf="partName">, {{partName}}</span>
-              </span>
-            </h2>
-          </span>
-        </span><!--/.second level -->
-        <ng-container *ngIf="!isDataNode">
-          <div *ngFor="let item of items" class="media">
-            <app-archiv-item [item]="item" (drillDown)="drillDown($event)" class="show"></app-archiv-item>
-          </div>
+<div class="app-page-wrapper" *ngIf="isRoot()">
+  <div class="app-container app-small">
+    <div class="app-fxLayout app-row app-fill">
+      <h1 class="app-fxFlex">{{ 'Ročníky' | translate }}</h1>
+      <div>
+        {{ 'Výsledky řadit' | translate }}:
+        <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
+          {{ currentSort.label | translate }}<mat-icon iconPositionEnd>expand_more</mat-icon>
+        </button>
+        <mat-menu #menuSort="matMenu">
+          <button mat-menu-item *ngFor="let sort of sorts" (click)="setSort(sort)"  >{{ sort.label | translate }}</button>
+        </mat-menu>
+      </div>
+    </div>
+    <div>
+      <ng-container *ngIf="!isDataNode">
+        <app-archiv-item *ngFor="let item of items" [item]="item" (drillDown)="drillDown($event)"></app-archiv-item>
+      </ng-container>
+      <ng-container *ngIf="isDataNode">
+        <ng-container *ngFor="let art of items">
+          <app-article-result *ngIf="!isHiddenByGenre(art['genre'])" [article]="art"></app-article-result>
         </ng-container>
-        <ng-container *ngIf="isDataNode">
-          <div *ngFor="let art of items">
+      </ng-container>
+    </div>
+    <p *ngIf="state.currentMagazine.showOldYears && isRoot()">
+      {{'Starší ročníky najdete v' | translate}} <a [href]="state.currentMagazine.k5url + state.currentMagazine.journal" [title]="'k5_title' | translate" target="_blank">{{'k5_title' | translate}}</a>
+    </p>
+    <ng-container  *ngIf="state.currentMagazine.showExtLink && isRoot()"></ng-container>
+    <a mat-stroked-button color="primary" [href]="state.currentMagazine['extLinkUrl_' + state.currentLang]"  [title]="state.currentMagazine['extLinkText_' + state.currentLang]" target="_blank"><mat-icon>open_in_new</mat-icon>{{ state.currentMagazine['extLinkText_' + state.currentLang] }}</a>
+  </div>
+</div>
+
+<div class="app-page-wrapper" *ngIf="!isRoot()">
+  <div class="app-container app-small">
+    <div class="app-fxLayout app-row app-fill app-mobile" *ngIf="currentItem">
+      <div class="app-mr-4 app-left">
+        <button mat-stroked-button color="primary" class="app-mb-4" (click)="goToRoot()">
+          <mat-icon>arrow_back</mat-icon>{{ 'Zpět na ročníky' | translate }}
+        </button>
+        <div class="app-results-wrapper app-mr-8">
+          <div class="app-item app-fxLayout app-row app-p-4" *ngFor="let item of visibleParentItems; let index = index" [class.app-active]="item.pid === currentPid">
+            <app-archiv-item-left [item]="item" (drillDown)="drillDown($event)"></app-archiv-item-left>
+          </div>
+        </div>
+      </div>
+      <div class="app-fxFlex app-right" [ngSwitch]="currentItem['model']">
+        <div class="app-fxLayout app-column">
+          <div class="app-pl-4 app-text-right app-mb-4" *ngIf="!isDataNode">
+            {{ 'Výsledky řadit' | translate }}:
+            <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
+              {{ currentSort.label | translate }}<mat-icon iconPositionEnd>expand_more</mat-icon>
+            </button>
+            <mat-menu #menuSort="matMenu">
+              <button mat-menu-item *ngFor="let sort of sorts" (click)="setSort(sort)">{{ sort.label | translate }}</button>
+            </mat-menu>
+          </div>
+          <div class="app-text-right">
+            <h1 *ngSwitchCase="'periodical'">
+              {{ 'Ročníky' | translate }}
+            </h1>
+            <h1 *ngSwitchCase="'periodicalvolume'">
+              {{ currentItem['year'] ? currentItem['year'] : currentItem['dateIssuedFormated']}}<span *ngIf="state.archivItemDetails.volumeNumber">, {{ 'ročník' | translate }} {{ state.archivItemDetails.volumeNumber }}</span>
+            </h1>
+            <h1 *ngSwitchCase="'periodicalitem'">
+              {{currentItem['year'] ? currentItem['year'] : currentItem['dateIssuedFormated']}}<span *ngIf="state.archivItemDetails.volumeNumber">, {{'ročník' | translate}} {{state.archivItemDetails.volumeNumber}}</span><span *ngIf="state.archivItemDetails.issueNumber">, {{'číslo' | translate}} {{state.archivItemDetails.issueNumber}}</span><span *ngIf="state.archivItemDetails.partName">, {{state.archivItemDetails.partName}}</span>
+            </h1>
+          </div>
+        </div>
+        <ng-container *ngIf="!isDataNode">
+          <app-archiv-item *ngFor="let item of items" [item]="item" (drillDown)="drillDown($event)"></app-archiv-item>
+        </ng-container>
+        <div class="app-items-wrapper app-text-content" *ngIf="isDataNode">
+          <div *ngFor="let art of items" class="app-item">
             <app-article-result *ngIf="!isHiddenByGenre(art['genre'])" [article]="art"></app-article-result>
           </div>
-        </ng-container><!--/.media -->
-        <p *ngIf="state.ctx?.showOldYears && isRoot()">
-          {{'Starší ročníky najdete v' | translate}} <a [href]="state.ctx?.k5url! + state.config?.journal!" [title]="'k5_title' | translate" target="_blank">{{'Digitální knihovně AV ČR' | translate}}</a>
-        </p>
-        <p *ngIf="state.ctx?.showExtLink && isRoot()">
-          <a [href]="state.ctx?.extLinkUrl" [title]="state.ctx?.extLinkText" target="_blank"><i class="glyphicon glyphicon-new-window"></i>&#160;{{ state.ctx?.extLinkText }}</a>
-        </p>
-      </div><!--/.col -->
-    </div><!--./row -->
-  </div><!--/.container -->
-</section><!--/.app-content -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

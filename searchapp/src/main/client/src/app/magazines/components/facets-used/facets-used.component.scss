@@ -1,0 +1,50 @@
+@import "../../../../sass/app-mixins";
+
+
+::ng-deep .mat-mdc-list {
+  .mat-mdc-subheader {
+    border-bottom: 1px solid var(--app-brand-border-color);
+    font-size: 15px;
+    font-weight: 900;
+    color: initial;
+    padding: 0 24px 4px 24px;
+
+    a {
+      color: var(--app-color-warning);
+
+      .mat-icon {
+        @include setIcon(20, var(--app-color-warning));
+      }
+    }
+  }
+
+  .app-list-content-wrapper {
+    .mat-mdc-list-item {
+      height: auto;
+      font-size: 14px;
+
+      .mdc-list-item__primary-text {
+        display: flex;
+        flex-direction: row;
+        white-space: break-spaces;
+        font-size: 14px;
+        line-height: inherit;
+        
+        a {
+          margin-right: var(--app-gap-icon);
+          color: var(--app-color-warning);
+
+          .mat-icon {
+            @include setIcon(20, var(--app-color-warning));
+          }
+        }
+
+        div {
+          span {
+            color: var(--app-gray-6);
+          }
+        }
+      }
+    }
+  }
+}

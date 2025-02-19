@@ -1,0 +1,54 @@
+// --- LAYOUT ---
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  //font-family: "Roboto Condensed", sans-serif !important;;
+}
+
+app-root {
+  magazines-root,
+  app-journal {
+    // sidenav
+    mat-sidenav-container, 
+    mat-sidenav-content, 
+    mat-sidenav {
+      height: 100%;
+    }
+    
+    mat-sidenav {
+      width: var(--app-sidenav-width);
+    }
+
+    main {
+      .app-page-wrapper {
+        @extend .app-p-4;
+      }
+
+      .mat-icon {
+        color: var(--palette-primary-500);
+      }
+    }
+
+    // container
+    .app-container {
+      margin: 0 auto;
+      max-width: var(--app-container);
+      width: 100%;
+      min-width: auto !important;
+
+      &.app-small {
+        max-width: var(--app-container-small);
+      }
+    }
+
+    .app-container-fluid {
+      max-width: 100%;
+    }   
+  }
+}

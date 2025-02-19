@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>{{ 'admin.Files' | translate }}</h1>
+<div mat-dialog-content class="app-container">
+    
+    <div class="app-fxLayout app-row app-center-v">
+    <input type="file" #fileUpload ng2FileSelect [uploader]="uploader" style="display:none;" (change)="onFileSelected($event)">
+        <mat-form-field appearance="outline" class="app-fxFlex app-form-field-center-v-fix">
+            <input matInput type="text" name="selectedFile" [(ngModel)]="selectedFile">
+            <button matPrefix mat-stroked-button color="primary" class="app-mr-2 app-ml-2" (click)="fileUpload.click()">{{ 'Vybrat soubor' | translate }}</button>
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="uploadFile()" >{{ 'Nahrat' | translate }}</button>
+    </div>
+    <mat-progress-bar mode="determinate" [value]="uploader.progress" *ngIf="uploader.isUploading"></mat-progress-bar>
+	
+    <ul>
+        <li *ngFor="let f of fileList"><a (click)="selectFile(f)">{{f}}</a></li>
+    </ul>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-stroked-button [mat-dialog-close]="false">{{ 'magazines.zavrit' | translate }}</button>
+</div>

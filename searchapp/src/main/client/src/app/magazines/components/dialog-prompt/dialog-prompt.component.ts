@@ -1,7 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, FormsModule, TranslateModule, MatFormFieldModule, MatDialogModule, MatInputModule, MatButtonModule],
   selector: 'app-dialog-prompt',
   templateUrl: './dialog-prompt.component.html',
   styleUrls: ['./dialog-prompt.component.scss']

@@ -6,6 +6,7 @@ import { MagazinesService } from '../../magazines.service';
 
 
 @Component({
+  standalone: true,
   selector: 'app-o-projektu',
   templateUrl: './o-projektu.component.html',
   styleUrls: ['./o-projektu.component.scss']

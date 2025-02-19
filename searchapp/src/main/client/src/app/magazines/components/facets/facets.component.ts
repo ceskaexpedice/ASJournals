@@ -4,8 +4,14 @@ import { Subscription } from 'rxjs';
 
 import {MagazineState} from '../../magazine.state';
 import {MagazinesService} from '../../magazines.service';
+import { CommonModule } from '@angular/common';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, TranslateModule, MatExpansionModule, MatIconModule],
   selector: 'app-facets',
   templateUrl: './facets.component.html',
   styleUrls: ['./facets.component.scss']
@@ -52,7 +58,11 @@ export class FacetsComponent implements OnInit {
   addFilter(field: string, value: string){
     if (!this.state.isFacetUsed(field, value)){
       this.service.addFilter(field, value);
+    } else if (this.state.isFacetUsed(field, value)){
+      const idx = this.state.filters.findIndex(f => f.field === field && f.value === value)
+      this.service.removeFilter(field, idx);
     }
   }
+
 
 }

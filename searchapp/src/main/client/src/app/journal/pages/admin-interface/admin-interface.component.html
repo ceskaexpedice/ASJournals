@@ -1,0 +1,82 @@
+
+<div class="app-fxLayout app-column app-fill app-page-wrapper">
+  <div class="app-container">
+    <as-split unit="percent" [direction]="'horizontal'" #split="asSplit" gutterAriaLabel="adjustable divider between two views">
+      <as-split-area size="30" #area1="asSplitArea">
+        <div class="app-pl-4 app-pr-4 app-pt-4">
+          <div class="app-nav">
+            <div>
+              <a (click)="selectPage('home')" [title]="'Hlavní stránka' | translate" [class.app-active]="selectedPage === 'home'">{{ 'desc.homePage' | translate }}</a>
+            </div>
+            <div>
+              <a (click)="selectPage('footer')" [title]="'Patička' | translate" [class.app-active]="selectedPage === 'footer'">{{ 'desc.footer' | translate }}</a>
+            </div>
+            <div *ngFor="let m of pages">
+              <a (click)="selectPage(m.id)" [title]="'menu.' + m.route +'_' | translate" [class.app-active]="selectedPage === m.id">{{ 'menu.' + m.route +'_' | translate }}</a><mat-checkbox [(ngModel)]="m.visible"></mat-checkbox>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <ul class="app-list-unstyled app-p-0 app-nav">
+            <ng-container *ngFor="let m of menu; let last = last; let first = first; let index = index">
+            <li class="app-fxLayout app-row app-center-v">
+              <mat-icon *ngIf="m.added" (click)="removeMenu(index)" class="app-cursor-pointer" [matTooltip]="'button.delete' | translate">delete</mat-icon>
+              <mat-icon *ngIf="!last" (click)="moveDown(menu, index)" class="app-cursor-pointer" [matTooltip]="'button.moveDown' | translate">south</mat-icon>
+              <mat-icon *ngIf="!first" (click)="moveUp(menu, index)" class="app-cursor-pointer" [matTooltip]="'button.moveUp' | translate">north</mat-icon>
+              <a (click)="select(m, null)">{{m.route}}</a>
+              <mat-checkbox [(ngModel)]="m.visible" (change)="changeVisible()" [name]="m.route"></mat-checkbox>
+            </li>
+            <li>
+              <ul class="app-list-unstyled">
+                <li class="app-fxLayout app-row app-center-v" *ngFor="let m1 of m.children; let last2 = last; let first2 = first; let index2 = index">
+                  <mat-icon (click)="remove(m.children, index2)" class="app-cursor-pointer" [matTooltip]="'button.delete' | translate">delete</mat-icon>
+                  <mat-icon *ngIf="!last2" (click)="moveDown(m.children, index2)" class="app-cursor-pointer" [matTooltip]="'button.moveDown' | translate">south</mat-icon>
+                  <mat-icon *ngIf="!first2" (click)="moveUp(m.children, index2)" class="app-cursor-pointer" [matTooltip]="'button.moveUp' | translate">north</mat-icon>
+                  <a (click)="select(m, m1)" [class.app-active]="selected === m1">{{m1.route}}</a>
+                  <mat-checkbox id="m1.route" [(ngModel)]="m1.visible" [name]="m1.route"></mat-checkbox>
+                </li>
+                <li class="app-fxLayout app-row app-center-v">
+                  <a (click)="addChild(m)" class="app-fxLayout app-row app-center-v app-pl-0 app-pr-0"><mat-icon class="app-mr-1">add</mat-icon><strong>{{ 'admin.add_child' | translate }}</strong></a>
+                </li>
+              </ul>
+            </li>
+            </ng-container>
+            
+            <li class="app-fxLayout app-row app-center-v">
+              <a (click)="addMenu()" class="app-fxLayout app-row app-center-v app-pl-0 app-pr-0"><mat-icon class="app-mr-1">add</mat-icon><strong>{{ 'admin.add_menu' | translate }}</strong></a>
+            </li>
+          </ul>
+          <mat-divider></mat-divider>
+          <button mat-flat-button color="primary" (click)="saveMenu()">{{ 'button.saveMenu' | translate }}</button>
+        </div> 
+      </as-split-area>
+      <as-split-area size="70" #area2="asSplitArea">
+        <div class="app-pl-4 app-pt-4" *ngIf="selected || selectedPage">
+          <div class="app-fxLayout app-row app-fill" *ngIf="selected">
+            <mat-form-field appearance="outline" class="app-fxFlex app-mr-2">
+              <mat-label>{{ 'menu.url' | translate }}</mat-label>
+              <input matInput type="text" [(ngModel)]="selected.route" name="route">
+            </mat-form-field>
+            <!-- <mat-form-field appearance="outline" class="app-fxFlex  app-mr-2">
+              <mat-label>{{ 'menu.cs' | translate }}</mat-label>
+              <input matInput type="text" [(ngModel)]="selected.cs" name="cs">
+            </mat-form-field> -->
+            <!-- <mat-form-field appearance="outline" class="app-fxFlex">
+              <mat-label>{{ 'menu.en' | translate }}</mat-label>
+              <input matInput type="text" [(ngModel)]="selected.en" name="en">
+            </mat-form-field> -->
+          </div>
+          <div class="app-fxLayout app-row app-fill" *ngIf="selected">
+            <mat-form-field *ngFor="let lang of state.currentMagazine.languages" appearance="outline" class="app-fxFlex  app-mr-2">
+              <mat-label>{{ 'menu.name' | translate }}  {{ 'magazines.lang.' + lang | translate }}</mat-label>
+              <input matInput type="text" [(ngModel)]="selected[lang]" [name]="'menu'+lang">
+            </mat-form-field>
+          </div>
+          <div class="app-editor-wrapper">
+            <editor *ngIf="tinyInited" name="editor" [(ngModel)]="text" [init]="tinyConfig"></editor>
+          </div>
+        </div>
+      </as-split-area>
+    </as-split>
+  </div>
+</div>
+

@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { Journal } from 'src/app/models/journal.model';
 import { AppService } from 'src/app/services/app.service';
 
@@ -6,6 +8,8 @@ import { AppService } from 'src/app/services/app.service';
 
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, TranslateModule],
   selector: 'app-journal-details',
   templateUrl: './journal-details.component.html',
   styleUrls: ['./journal-details.component.scss']
@@ -25,7 +29,7 @@ export class JournalDetailsComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.journal && !changes.journal.firstChange && changes.journal.currentValue.pid !== changes.journal.previousValue?.pid) {
+    if (changes['journal'] && !changes['journal'].firstChange && changes['journal'].currentValue.pid !== changes['journal'].previousValue?.pid) {
       this.details();
     }
   }

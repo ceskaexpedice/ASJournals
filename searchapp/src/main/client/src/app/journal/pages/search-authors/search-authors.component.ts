@@ -1,16 +1,29 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, RouterModule } from '@angular/router';
 import {HttpParams} from '@angular/common/http';
 import { AppState } from 'src/app/app.state';
 import { Criterium } from 'src/app/models/criterium';
 import { AppService } from 'src/app/services/app.service';
 import { SearchService } from 'src/app/services/search.service';
 import Utils from 'src/app/services/utils';
-
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, RouterModule, TranslateModule, FormsModule,
+    MatFormFieldModule, MatInputModule, MatButtonModule, 
+    MatAutocompleteModule, MatIconModule, MatTooltipModule, MatPaginatorModule],
   selector: 'app-search-authors',
   templateUrl: './search-authors.component.html',
   styleUrls: ['./search-authors.component.scss']
@@ -32,6 +45,8 @@ export class SearchAuthorsComponent implements OnInit, OnDestroy {
   letter: string | null = null;
   page: number = 0;
   totalPages: number = 0;
+
+  isLetterActive: any = [];
 
   constructor(
     private router: Router,
@@ -62,7 +77,6 @@ export class SearchAuthorsComponent implements OnInit, OnDestroy {
 
 
   getAuthors() {
-    if (this.state.config) {
       var params = new HttpParams().set('q', '*:*')
       .set('rows', '0')
       .set('facet', 'true')
@@ -94,14 +108,7 @@ export class SearchAuthorsComponent implements OnInit, OnDestroy {
         this.loaded = true;
 
       });
-    } else {
-
-      this.subscriptions.push(this.state.configSubject.subscribe(
-        () => {
-          this.getAuthors();
-        }
-      ));
-    }
+    
   }
 
   setLetter(l: string | null) {
@@ -112,6 +119,10 @@ export class SearchAuthorsComponent implements OnInit, OnDestroy {
     if (l !== null) {
       this.router.navigate([{ letter: l }], { relativeTo: this.route, queryParamsHandling: "preserve"});
     }
+  }
+
+  pageChanged(e: any) {
+    this.setPage(e.pageIndex);
   }
 
   setPage(p: number) {
@@ -132,6 +143,12 @@ export class SearchAuthorsComponent implements OnInit, OnDestroy {
       }
     });
     return !has;
+  }
+
+  filterAuto() {
+    this.authorsFiltered = [];
+    const filterValue = this.qautor.toLowerCase();
+    this.authorsFiltered = this.authors.filter(autor => autor.val.toLowerCase().includes(filterValue));
   }
 
   filter() {

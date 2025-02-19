@@ -1,0 +1,11 @@
+<div class="app-p-4" class="app-fxLayout app-center-v app-center-h" style="width: 100%; height: 100%;">
+    <ngx-extended-pdf-viewer #pdfViewer *ngIf="state.isPdf && state.fullSrc"
+        [src]="state.fullSrc" 
+        [height]="'100%'" 
+        (pdfLoaded)="afterLoad($event)" 
+        [enablePrint]="false" [showOpenFileButton]="false" 
+        [language]="lang"
+        [useBrowserLocale]="true" style="width: 100%; height: 100%;" ></ngx-extended-pdf-viewer>
+
+    <img *ngIf="!state.isPdf && !loading" [src]="state.fullSrc" alt="" class="img-responsive app-thumb-doc" />
+</div>

@@ -1,15 +1,20 @@
 import {Component, OnInit, Input, ElementRef} from '@angular/core';
 import {Subscription} from 'rxjs';
 
-import {Router} from '@angular/router';
+import {Router, RouterModule} from '@angular/router';
 import { AppState } from 'src/app/app.state';
 import { Criterium } from 'src/app/models/criterium';
 import { Journal } from 'src/app/models/journal.model';
 import { AppService } from 'src/app/services/app.service';
 import Utils from 'src/app/services/utils';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { JournalDetailsComponent } from '../journal-details/journal-details.component';
 
 
 @Component({
+    standalone: true,
+    imports: [CommonModule, RouterModule, TranslateModule, JournalDetailsComponent],
     selector: 'app-article-result',
     templateUrl: './article-result.component.html',
     styleUrls: ['./article-result.component.scss']
@@ -21,6 +26,7 @@ export class ArticleResultComponent implements OnInit {
     langObserver: Subscription= new Subscription();
     rozsah: string | null = null;
     authors: string[] = [];
+    authors_full: {name: string, role: string}[] = [];
     titleInfo: any;
     title: string | null = null;
     subTitle: string | null = null;
@@ -68,6 +74,10 @@ export class ArticleResultComponent implements OnInit {
         //this.authors = Utils.getAutors(mods);
         this.isPeerReviewed = this.article['genre'].indexOf('peer-reviewed') > -1;
         this.authors = this.article['autor'];
+        if (this.article['autor_full']) {
+            this.authors_full = this.article['autor_full'];
+            this.authors = this.authors_full.filter(a => a.role !== 'trl').map(a => a.name);
+        }
         if (this.active) {
             setTimeout(() => {
                 this.elementRef.nativeElement.scrollIntoView();
@@ -89,10 +99,10 @@ export class ArticleResultComponent implements OnInit {
 
         let modsLang = this.langsMap[this.lang];
 
-        if (this.titleInfo.hasOwnProperty('length')) {
+        if (this.titleInfo?.hasOwnProperty('length')) {
             this.title = this.titleInfo[0]["mods:title"];
             for (let i in this.titleInfo) {
-                if (this.titleInfo[i]["lang"] === modsLang && !this.state.ctx?.keepLang) {
+                if (this.titleInfo[i]["lang"] === modsLang && !this.state.currentMagazine?.keepLang) {
                     this.title = this.titleInfo[i]["mods:title"];
                     this.subTitle = this.titleInfo[i]["mods:subTitle"];
                     this.nonSort = this.titleInfo[i]["mods:nonSort"];
@@ -159,7 +169,7 @@ export class ArticleResultComponent implements OnInit {
         c.field = 'autor';
         c.value = s;
         //this.router.navigate(['/hledat/cokoliv', {criteria: JSON.stringify([c]), start: 0}])
-        this.router.navigate(['/'+this.state.ctx?.ctx+'/hledat/cokoliv', {criteria: JSON.stringify([c]), start: 0}],
+        this.router.navigate(['/'+this.state.currentMagazine?.ctx+'/hledat/cokoliv', {criteria: JSON.stringify([c]), start: 0}],
         {queryParamsHandling: "preserve"})
     }
 

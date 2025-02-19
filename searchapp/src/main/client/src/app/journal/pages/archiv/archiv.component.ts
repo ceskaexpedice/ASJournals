@@ -1,12 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Router, ActivatedRoute, Params, RouterModule } from '@angular/router';
 import { AppState } from 'src/app/app.state';
+import { Configuration } from 'src/app/models/configuration';
 import { AppService } from 'src/app/services/app.service';
+import { ArchivItemComponent } from '../../components/archiv-item/archiv-item.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { ArticleResultComponent } from '../../components/article-result/article-result.component';
+import { ArchivItemLeftComponent } from '../../components/archiv-item-left/archiv-item-left.component';
+import { FormsModule } from '@angular/forms';
+import { MatMenuModule } from '@angular/material/menu';
+import Utils from 'src/app/services/utils';
+import { pid } from 'process';
 
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, RouterModule, FormsModule, ArchivItemComponent, ArticleResultComponent, ArchivItemLeftComponent,
+    MatSelectModule, MatInputModule, MatFormFieldModule, TranslateModule, MatIconModule, MatButtonModule, MatMenuModule],
   selector: 'app-archiv',
   templateUrl: './archiv.component.html',
   styleUrls: ['./archiv.component.scss']
@@ -18,16 +34,16 @@ export class ArchivComponent implements OnInit {
   items: any[] = [];
   parentItems: any[] = [];
 
-  visibleItems: number = 3;
+  visibleItems: number = 500;
   visibleParentItems: any[] = [];
   currentParent: string = '';
   cache: any = {};
 
   isDataNode: boolean = false;
 
-  volumeNumber: string | null = null;
-  issueNumber: string | null = null;
-  partName: string | null = null;
+  // volumeNumber: string | null = null;
+  // issueNumber: string | null = null;
+  // partName: string | null = null;
 
   sorts = [
     { label: "od nejnovějšího", dir: "desc" },
@@ -36,6 +52,8 @@ export class ArchivComponent implements OnInit {
   currentSort = this.sorts[0];
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
+    private config: Configuration,
     private service: AppService,
     public state: AppState,
     private route: ActivatedRoute,
@@ -46,23 +64,31 @@ export class ArchivComponent implements OnInit {
 
     this.route.params
       .subscribe((params: Params) => {
-        if (params.pid) {
-          this.currentPid = params.pid;
-          if (this.state.config) {
-            this.setItems(params.pid);
+        if (params['pid']) {
+          this.currentPid = params['pid'];
+          if (this.config) {
+            this.setItems(params['pid']);
           }
         } else {
+          this.state.archivPosition = null;
+          this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
+          setTimeout(()=>{
+            this.state.crumbsChanged();
+          }, 100);
+          
           this.currentPid = '';
           this.initData();
         }
+
+        
+
+       setTimeout(() => {
+          document.getElementById('scroller').scrollTop = 0;
+        }, 10);
+
       });
-
-
-    this.state.configSubject.subscribe(
-      () => {
-        this.initData();
-      }
-    );
+      // this.state.archivPosition = null;
+      // this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
   }
 
   setMainClass() {
@@ -73,14 +99,17 @@ export class ArchivComponent implements OnInit {
   }
 
   isRoot() {
-    return this.state.config && this.currentPid === this.state.config['journal'];
+    return this.currentPid === this.state.currentMagazine['journal'];
   }
 
   goToRoot() {
+    this.state.archivPosition = null;
+    this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
+    //  this.state.stateChanged();
     this.parentItems = [];
-    this.setItems(this.state.config['journal']);
+    this.setItems(this.state.currentMagazine['journal']);
     let p: any = {};
-    p['pid'] = this.state.config['journal'];
+    p['pid'] = this.state.currentMagazine['journal'];
     this.router.navigate(['.', p], { queryParamsHandling: "preserve", relativeTo: this.route });
   }
 
@@ -91,7 +120,13 @@ export class ArchivComponent implements OnInit {
     this.items.sort((a, b) => {
       // return (a['idx'] - b['idx']) * x;
       if (a['model'] === 'periodicalvolume') {
-        return (a['year'] - b['year']) * x;
+        const y = (a['year'] - b['year']) * x;
+        if (y === 0) {
+          return (a['idx'] - b['idx']) * x;
+        } else {
+          return y;
+        }
+
       } else {
         return (a['idx'] - b['idx']) * x;
       }
@@ -103,15 +138,15 @@ export class ArchivComponent implements OnInit {
 
     let p: any = {};
     p['pid'] = pid;
-    //this.router.navigate(['/archiv', p]);
     this.router.navigate(['.', p], { queryParamsHandling: "preserve", relativeTo: this.route });
-    //    this.setItems(pid);
   }
 
   setFocus() {
-    let el = document.getElementById('btn_' + this.currentPid);
-    if (el) {
-      el.focus();
+    if (isPlatformBrowser(this.platformId)) {
+      let el = document.getElementById('btn_' + this.currentPid);
+      if (el) {
+        el.focus();
+      }
     }
   }
 
@@ -121,20 +156,22 @@ export class ArchivComponent implements OnInit {
 
     this.setMainClass();
 
-    this.service.getItem(this.currentPid).subscribe(res => {
-      if (this.currentPid === this.state.config['journal']) {
+    this.service.getItem(this.currentPid, false).subscribe(res => {
+      if (this.currentPid === this.state.currentMagazine['journal']) {
         this.currentItem = { pid: this.currentPid, parents: null, model: 'periodical' };
       } else {
-        this.currentItem = res;
+        this.currentItem = res['doc'];
 
-        if (res['parents'].length > 0) {
-          this.currentParent = res['parents'][0];
+        if (res['doc']['parents'].length > 0) {
+          this.currentParent = res['doc']['parents'][0];
         } else {
           this.currentParent = '';
         }
         this.setDetails();
       }
-
+      if (this.currentItem['dateIssued']) {
+        this.currentItem['dateIssuedFormated'] = JSON.parse(this.currentItem['dateIssued'])[0];
+      }
       if (!this.cache.hasOwnProperty(this.currentPid)) {
         this.service.getChildren(this.currentPid).subscribe(res => {
           this.isDataNode = res[0]['datanode'];
@@ -144,11 +181,11 @@ export class ArchivComponent implements OnInit {
             this.items.sort((a, b) => {
               return a['idx'] - b['idx'];
             });
-          } else if (this.currentItem.model === 'periodicalvolume'){
+          } else if (this.currentItem.model === 'periodicalvolume') {
             this.items.sort((a, b) => {
               const mods1 = JSON.parse(a['mods']);
               const mods2 = JSON.parse(b['mods']);
-              
+
               let dateIssued1: string = a.dateIssued.padStart(7, '0');
               let dateIssued2: string = b.dateIssued.padStart(7, '0');
 
@@ -251,18 +288,11 @@ export class ArchivComponent implements OnInit {
   }
 
   initData() {
-    if (this.state.actualNumber) {
       if (!this.currentPid) {
-        this.setItems(this.state.config['journal']);
+        this.setItems(this.state.currentMagazine['journal']);
       } else {
         this.setItems(this.currentPid);
       }
-    } else {
-      //this.router.navigate(['home']);
-      setTimeout(() => {
-        this.initData();
-      }, 100);
-    }
   }
 
   isHiddenByGenre(genres: string[]) {
@@ -270,53 +300,69 @@ export class ArchivComponent implements OnInit {
   }
 
   setDetails() {
-    let mods = JSON.parse(this.currentItem['mods']);
-    if (this.currentItem['model'] === 'periodicalvolume') {
-
-      if (mods['mods:originInfo']) {
-        //this.year = mods['mods:originInfo']['mods:dateIssued'];
-        if (mods['mods:titleInfo']) {
-          this.volumeNumber = mods['mods:titleInfo']['mods:partNumber'];
-        }
-      } else {
-        //podpora pro starsi mods. ne podle zadani
-        if (mods['part'] && mods['part']['date']) {
-          //this.year = mods['part']['date'];
-        } else if (mods['mods:part'] && mods['mods:part']['mods:date']) {
-          //this.year = mods['mods:part']['mods:date'];
-        }
-
-        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
-          this.issueNumber = mods['part']['detail']['number'];
-        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
-          this.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
-        }
-      }
-    } else if (this.currentItem['model'] === 'periodicalitem') {
-      if (mods['mods:originInfo']) {
-        //this.year = mods['mods:originInfo']['mods:dateIssued'];
-        if (mods['mods:titleInfo']) {
-          this.issueNumber = mods['mods:titleInfo']['mods:partNumber'];
-          this.partName = mods['mods:titleInfo']['mods:partName'];
-        }
-      } else {
-console.log(mods)
-
-        //podpora pro starsi mods. ne podle zadani
-        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
-          this.issueNumber = mods['part']['detail']['number'];
-        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
-          this.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
-        }
-
-
-      }
-    }
+    this.service.details(this.currentItem['mods'], this.currentItem['model'], this.currentItem['parents'][0]);
+    this.state.crumbsChanged();
   }
+
+  // setDetails2() {
+  //   const mods = this.currentItem['mods'];
+  //   if (this.currentItem['model'] === 'periodical') {
+  //     this.state.archivPosition = null;
+  //     this.state.stateChanged();
+  //     return;
+  //   } else if (this.currentItem['model'] === 'periodicalvolume') {
+
+  //     if (mods['mods:originInfo']) {
+  //       //this.year = mods['mods:originInfo']['mods:dateIssued'];
+  //       if (mods['mods:titleInfo']) {
+  //         this.volumeNumber = mods['mods:titleInfo']['mods:partNumber'];
+  //       }
+  //     } else {
+  //       //podpora pro starsi mods. ne podle zadani
+  //       if (mods['part'] && mods['part']['date']) {
+  //         //this.year = mods['part']['date'];
+  //       } else if (mods['mods:part'] && mods['mods:part']['mods:date']) {
+  //         //this.year = mods['mods:part']['mods:date'];
+  //       }
+
+  //       if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+  //         this.issueNumber = mods['part']['detail']['number'];
+  //       } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+  //         this.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
+  //       }
+  //     }
+  //   } else if (this.currentItem['model'] === 'periodicalitem') {
+  //     if (mods['mods:originInfo']) {
+  //       //this.year = mods['mods:originInfo']['mods:dateIssued'];
+  //       if (mods['mods:titleInfo']) {
+  //         this.issueNumber = mods['mods:titleInfo']['mods:partNumber'];
+  //         this.partName = mods['mods:titleInfo']['mods:partName'];
+  //       }
+  //     } else {
+
+  //       //podpora pro starsi mods. ne podle zadani
+  //       if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+  //         this.issueNumber = mods['part']['detail']['number'];
+  //       } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+  //         this.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
+  //       }
+
+
+  //     }
+  //   }
+
+  //   this.state.archivPosition = this.currentItem['year'] +
+  //     (this.volumeNumber ? ', ' + this.service.translateKey('ročník') + ' ' + this.volumeNumber : '') +
+  //     (this.issueNumber ? ' / ' + this.service.translateKey('číslo') + ' ' + this.issueNumber : '') +
+  //     (this.partName ? this.partName : '');
+
+  //   this.state.stateChanged();
+
+  // }
 
 
   img(pid: string, kramerius_version: string) {
-    return this.state.config['context'] + 'api/img?uuid=' + pid + '&kramerius_version=' + kramerius_version + '&thumb=true';
+    return this.config['context'] + 'api/img?uuid=' + pid + '&kramerius_version=' + kramerius_version + '&thumb=true';
   }
 
 }

@@ -1,0 +1,24 @@
+@import "../../../../sass/app-mixins";
+
+
+::ng-deep .mat-mdc-list-item {
+  background-color: transparent !important;
+
+  &:before {
+    background-color: transparent !important;
+  }
+
+  &.app-active {
+    background-color: var(--app-gray-1) !important;
+    font-weight: bold;
+    border-radius: 0;
+
+    .mdc-list-item__primary-text {
+      color: var(--palette-primary-500) !important;
+    }
+  }
+
+  .mat-icon {
+    @include setIcon(20, inherit, sub);
+  } 
+}

@@ -1,0 +1,9 @@
+.app-facet-item {
+  .mat-icon {
+    $size: 18;
+    vertical-align: sub;
+    font-size: #{$size}px;
+    height: #{$size}px;
+    width: #{$size}px;  
+  }
+}

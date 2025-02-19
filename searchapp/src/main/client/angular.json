@@ -1,8 +1,5 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "cli": {
-    "analytics": "eb9fd217-d3c0-4f6d-97de-3f3a9a2853f8"
-  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -10,10 +7,14 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "standalone": true
         },
-        "@schematics/angular:application": {
-          "strict": true
+        "@schematics/angular:directive": {
+          "standalone": true
+        },
+        "@schematics/angular:pipe": {
+          "standalone": true
         }
       },
       "root": "",
@@ -26,22 +27,24 @@
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              { "glob": "**/*", "input": "node_modules/bootstrap-sass/assets/stylesheets", "output": "/assets/sass/" },
               { "glob": "**/*", "input": "node_modules/tinymce", "output": "/tinymce/" },
               { "glob": "**/*", "input": "src/tinymce/langs", "output": "/tinymce/langs/" },
-              { "glob": "**/*", "input": "node_modules/nouislider/distribute", "output": "/assets/sass/" }
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-extended-pdf-viewer/assets/",
+                "output": "assets/"
+              }
             ],
             "styles": [
-              "src/styles.scss",
-              {
-                "input": "src/styles-magazines.scss", "bundleName": "magazines"
-              }
+              "src/styles.scss"
             ],
             "scripts": [
               "node_modules/tinymce/tinymce.min.js"
@@ -49,30 +52,16 @@
           },
           "configurations": {
             "production": {
-              "optimization": {
-                "scripts": true,
-                "styles": {
-                  "minify": true,
-                  "inlineCritical": false
-                },
-                "fonts": true
-              },
               "budgets": [
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "3mb"
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
-                  "maximumError": "4kb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "maximumError": "400kb"
                 }
               ],
               "outputHashing": "all"
@@ -109,10 +98,11 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
@@ -124,7 +114,6 @@
             "scripts": []
           }
         },
-        
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
@@ -135,18 +124,14 @@
           },
           "configurations": {
             "production": {
-              "outputHashing": "media",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ]
+              "outputHashing": "media"
             },
             "development": {
+              "buildOptimizer": false,
               "optimization": false,
               "sourceMap": true,
-              "extractLicenses": false
+              "extractLicenses": false,
+              "vendorChunk": true
             }
           },
           "defaultConfiguration": "production"
@@ -187,5 +172,7 @@
       }
     }
   },
-  "defaultProject": "client"
+  "cli": {
+    "analytics": false
+  }
 }

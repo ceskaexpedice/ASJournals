@@ -1,8 +1,8 @@
 <div class="app-container">
-  <mat-tab-group>
+  <mat-tab-group class="app-page-wrapper">
     <mat-tab [label]="'magazines.casopisy' | translate">
-      <div fxLayout="row" fxLayout.lt-md="row wrap" fxLayoutGap.gt-sm="32px" class="app-mt-8">
-        <div fxFlex="350px" fxFlex.lt-md="100%" ngClass.lt-md="app-mb-8">
+      <div class="app-fxLayout app-row app-mt-8">
+        <div class="app-left">
           <button mat-flat-button (click)="addJournal()" color="primary" class="app-w-100 app-text-left app-mb-4"><mat-icon>add</mat-icon>{{ 'magazines.pridat_casopis' | translate }}</button>
           <mat-list role="list" class="app-view-admin">
             <mat-list-item *ngFor="let ctx of state.ctxs" [class.app-active]="currentMag && ctx.ctx === currentMag.ctx" role="listitem" (click)="editCtx(ctx)" class="app-cursor-pointer">
@@ -10,7 +10,7 @@
             </mat-list-item>
           </mat-list>
         </div>
-        <div fxFlex *ngIf="currentMag">
+        <div *ngIf="currentMag" class="app-right app-fxFlex">
           <app-magazine-edit [mag]="currentMag" [editors]="editors"></app-magazine-edit>
           <button mat-flat-button (click)="save()" color="primary" class="app-mr-2">{{ 'magazines.ulozit_casopis' | translate }}</button>
           <button mat-flat-button (click)="setLicences()" color="primary" class="app-mr-2">{{'magazines.nastavit_licenci' | translate}}</button>
@@ -20,8 +20,8 @@
       </div>
     </mat-tab>
     <mat-tab [label]="'magazines.editori' | translate">
-      <div fxLayout="row" fxLayout.lt-md="row wrap" fxLayoutGap.gt-sm="32px" class="app-mt-8">
-        <div fxFlex="350px" fxFlex.lt-md="100%" ngClass.lt-md="app-mb-8">
+      <div class="app-fxLayout app-row app-mt-8">
+        <div class="app-left">
           <button mat-flat-button (click)="addEditor()" color="primary" class="app-w-100 app-text-left app-mb-4"><mat-icon>add</mat-icon>{{ 'magazines.pridat_editora' | translate }}</button>
           <mat-list role="list" class="app-view-admin">
             <mat-list-item *ngFor="let editor of editors" [class.app-active]="currentEditor && currentEditor.id === editor.id" role="listitem" (click)="editEditor(editor)" class="app-cursor-pointer">
@@ -29,7 +29,7 @@
             </mat-list-item>
           </mat-list>
         </div>
-        <div fxFlex *ngIf="currentEditor">
+        <div *ngIf="currentEditor" class="app-right app-fxFlex">
           <app-editor-edit [editor]="currentEditor"></app-editor-edit>
           <button mat-flat-button (click)="saveEditor()" color="primary" class="app-mr-2">{{ 'magazines.ulozit_editora' | translate }}</button>
           <button mat-flat-button (click)="removeEditor()" color="warn" class="app-mr-2">{{ 'magazines.smazat_editora' | translate }}</button>
@@ -37,9 +37,9 @@
          </div>
       </div>
     </mat-tab>
-    <mat-tab *ngIf="magState.user?.isAdmin" [label]="'magazines.sprava_uzivatelu' | translate | translate">
-      <div fxLayout="row" fxLayout.lt-md="row wrap" fxLayoutGap.gt-sm="32px" class="app-mt-8">
-        <div fxFlex="350px" fxFlex.lt-md="100%" ngClass.lt-md="app-mb-8">
+    <mat-tab  [label]="'magazines.sprava_uzivatelu' | translate "><!-- *ngIf="magState.user?.isAdmin" -->
+      <div class="app-fxLayout app-row app-mt-8">
+        <div class="app-left">
           <button mat-flat-button (click)="addUser()" color="primary" class="app-w-100 app-text-left app-mb-4"><mat-icon>add</mat-icon>{{ 'magazines.pridat_uzivatele' | translate }}</button>
           <mat-list role="list" class="app-view-admin">
             <mat-list-item *ngFor="let user of users" [class.app-active]="currentUser && currentUser.username === user.username" role="listitem" (click)="editUser(user)" class="app-cursor-pointer">
@@ -47,7 +47,7 @@
             </mat-list-item>
           </mat-list>
         </div>
-        <div fxFlex *ngIf="currentUser">
+        <div *ngIf="currentUser" class="app-fxFlex app-right">
           <app-user-edit [user]="currentUser"></app-user-edit>
           <button mat-flat-button (click)="saveUser()" color="primary" class="app-mr-2">{{ 'magazines.ulozit_uzivatele' | translate }}</button>
           <button mat-flat-button (click)="resetPwd()" color="primary" class="app-mr-2">{{ 'magazines.resetovat_heslo' | translate }}</button>
@@ -55,6 +55,19 @@
           <button mat-flat-button (click)="cancel()">{{ 'magazines.zrusit' | translate }}</button>
          </div>
       </div>
-    </mat-tab><!--uzivatel, heslo, select s vyberem zurnalu-->
+    </mat-tab>
+    <mat-tab  [label]="'magazines.stranky' | translate ">
+      <div class="app-fxLayout app-row app-mt-8">
+        <div class="app-left">
+          <mat-list role="list" class="app-view-admin">
+            <mat-list-item (click)="selectPage('o-projektu')" [title]="'magazines.o_projektu' | translate" [class.app-active]="selectedPage === 'o-projektu'" class="app-cursor-pointer">{{ 'magazines.o_projektu' | translate }}</mat-list-item>
+            <mat-list-item (click)="selectPage('kontakt')" [title]="'magazines.kontakt' | translate" [class.app-active]="selectedPage === 'kontakt'" class="app-cursor-pointer">{{ 'magazines.kontakt' | translate }}</mat-list-item>
+          </mat-list>
+        </div>
+        <div class="app-fxFlex app-right app-editor-wrapper">
+          <editor *ngIf="tinyInited" name="editor" [(ngModel)]="text" [init]="tinyConfig"></editor>
+        </div>      
+      </div>
+    </mat-tab>
   </mat-tab-group>
 </div>

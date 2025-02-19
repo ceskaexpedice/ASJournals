@@ -1,4 +1,4 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, importProvidersFrom } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, throwError } from 'rxjs';
@@ -7,7 +7,7 @@ import { MagazineState } from './magazine.state';
 import { Router } from '@angular/router';
 import { catchError, map } from 'rxjs/operators';
 import { Magazine } from '../models/magazine';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
@@ -16,6 +16,7 @@ export class MagazinesService {
   //Observe language
   public _langSubject = new Subject();
   public langSubject: Observable<any> = this._langSubject.asObservable();
+  server: string = '';
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
@@ -23,20 +24,25 @@ export class MagazinesService {
     private translate: TranslateService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private http: HttpClient) { }
+    private http: HttpClient) { 
+      if (!isPlatformBrowser(platformId)) {
+        const args = process.argv;
+        if (args.length > 2) {
+          this.server = args[2];
+        } else {
+          this.server = 'http://localhost:9083';
+      }
+      }
+    }
 
   private get<T>(url: string, params: HttpParams = new HttpParams(), responseType?: any): Observable<T> {
     const options = { params, responseType, withCredentials: true };
-
-    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
-
-    return this.http.get<T>(`${server}/api/${url}`, options)
+    return this.http.get<T>(`${this.server}/api/${url}`, options)
       .pipe(catchError(err => { return this.handleError(err, url) }));
   }
 
   private post(url: string, obj: any, params: HttpParams = new HttpParams()) {
-    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
-    return this.http.post<any>(`${server}/api/${url}`, obj, { params })
+    return this.http.post<any>(`${this.server}/api/${url}`, obj, { params })
       .pipe(catchError(err => { return this.handleError(err, url) }));
     //.pipe(catchError(this.handleError));
   }
@@ -72,37 +78,49 @@ export class MagazinesService {
     });
   }
 
+  saveText(id: string, text: string): Observable<string> {
+
+    let url = 'texts';
+
+    let params = new HttpParams()
+      .set('id', id)
+      .set('action', 'SAVE')
+      .set('lang', this.translate.currentLang)
+      .set('ctx', 'magazines');
+
+    const body: any = { text: text }
+
+    return this.post(url, body, params);
+
+  }
+
   getText(id: string): Observable<string> {
     const url = 'texts';
     let params = new HttpParams()
       .set('action', 'LOAD')
       .set('ctx', 'magazines')
       .set('id', id)
-      .set('lang', this.state.currentLang);
+      .set('lang', this.translate.currentLang);
 
     return this.get(url, params, 'text/plain');
   }
 
   //Magazines
   getMagazines(): Observable<any> {
-    var url = 'search/magazines/select';
+    var url = 'search/get_magazines';
     let params = new HttpParams()
-      .set('q', '*')
-      .set('wt', 'json')
-      .set('rows', '50')
-      .set('sort', 'titleCS ' + this.state.currentSortDir)
-      .set('json.nl', 'arrarr')
-      .set('facet', 'true')
-      .set('facet.mincount', '1')
-      .append('facet.field', 'pristup')
-      .append('facet.field', 'oblast')
-      .append('facet.field', 'vydavatel')
-      .append('facet.field', 'keywords');
+    .set('lang', this.state.currentLang)
+    .set('sortDir', this.state.currentSortDir);
 
-    for (let i in this.state.filters) {
-      let f: { field: string, value: string } = this.state.filters[i];
-      params = params.append('fq', f.field + ':"' + f.value + '"');
-    }
+      // for (let i in this.state.filters) {
+      //   let f: { field: string, value: string } = this.state.filters[i];
+      //   params = params.append('fq', f.field + ':"' + f.value + '"');
+      // }
+      
+      for (let i in this.state.filters) {
+        let f: { field: string, value: string } = this.state.filters[i];
+        params = params.append(f.field, f.value);
+      }
 
     this.state.clear();
 
@@ -110,19 +128,10 @@ export class MagazinesService {
   }
 
   getEditorMagazines(id: string): Observable<any> {
-    var url = 'search/magazines/select';
+    var url = 'search/get_magazines';
     let params = new HttpParams()
-      .set('q', 'vydavatel_id:"' + id + '"')
-      .set('wt', 'json')
-      .set('indent', 'true')
-      .set('rows', '50')
-      .set('sort', 'titleCS ' + this.state.currentSortDir)
-      .set('json.nl', 'arrarr')
-      .set('facet', 'true')
-      .set('facet.mincount', '1')
-      .append('facet.field', 'pristup')
-      .append('facet.field', 'oblast')
-      .append('facet.field', 'keywords');
+      .set('fq', 'vydavatel_id:"' + id + '"')
+      .set('sortDir', this.state.currentSortDir);
 
     for (let i in this.state.filters) {
       let f: { field: string, value: string } = this.state.filters[i];
@@ -142,19 +151,11 @@ export class MagazinesService {
 
 
   getEditors(): Observable<any> {
-    var url = 'search/editors/select';
-    let params = new HttpParams().set('q', '*')
-      .set('wt', 'json')
-      .set('rows', '50')
-      .set('json.nl', 'arrntv')
-      .set('sort', 'id asc')
-      .set('facet', 'true')
-      .set('facet.mincount', '1')
-      .append('facet.field', 'typ');
+    var url = 'search/get_editors';
 
     this.state.clear();
 
-    return this.get(url, params).pipe(
+    return this.get(url).pipe(
       map((response) => {
         this.state.setEditors(response);
         return this.state;
@@ -299,13 +300,29 @@ export class MagazinesService {
 
   public addFilter(field: string, value: string) {
     const p: any = {};
-    p[field] = value;
+    p[field] = [value];
+    for (let i in this.state.filters){
+      if (this.state.filters[i].field === field && this.state.filters[i].value !== value){
+        p[field].push(this.state.filters[i].value);
+      }
+    }
+    console.log()
     this.router.navigate([], { queryParams: p, queryParamsHandling: 'merge' });
   }
 
   removeFilter(field: string, idx: number) {
+    this.state.filters.splice(idx, 1);
+    const fs = this.state.filters.filter(f => f.field === field)
     const p: any = {};
-    p[field] = null;
+    if (fs.length === 0) {
+      p[field] = null;
+    } else {
+      p[field] = [];
+      for (let i in fs){
+          p[field].push(fs[i].value);
+      }
+    }
+    
     this.router.navigate([], { queryParams: p, queryParamsHandling: 'merge' });
   }
 

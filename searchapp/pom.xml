@@ -7,13 +7,13 @@
   <version>2.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>k5journals</name>
+  <name>ASjournals</name>
 
   <properties>
     <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <context.name>/</context.name>
-    <context2.name>/k5journals/</context2.name>
+    <context2.name>/asjournals/</context2.name>
     <skipNg>false</skipNg>
   </properties>
     

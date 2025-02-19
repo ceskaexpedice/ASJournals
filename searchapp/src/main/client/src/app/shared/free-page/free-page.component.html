@@ -1,0 +1,15 @@
+<div class="app-page-wrapper">
+  <div class="app-container">
+    <div class="app-text-right app-mb-4">
+      <button mat-stroked-button (click)="print()" color="primary"><mat-icon>print</mat-icon>{{ 'print' | translate }}</button>
+    </div>
+    <div class="app-fxLayout app-row app-fill">
+      <div class="app-left app-mr-8">
+        <a [routerLink]="['/', state.currentMagazine!.ctx, 'home']" queryParamsHandling="preserve" [title]="'Seznam článků z nejnovějšího čísla' | translate">
+          <img [src]="img" [alt]="" onerror="this.src='assets/img/thumb-no-image.png'" />
+        </a>
+      </div>
+      <div class="app-right app-fxFlex" [innerHTML]="text | safeHtml"></div>
+    </div>
+  </div>
+</div>

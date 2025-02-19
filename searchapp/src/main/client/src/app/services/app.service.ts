@@ -13,8 +13,10 @@ import Utils from './utils';
 import { Subject, Observable, of, throwError } from 'rxjs';
 import { catchError, expand, map } from 'rxjs/operators';
 import { Magazine } from '../models/magazine';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { FreePageComponent } from '../journal/components/free-page/free-page.component';
+import { DOCUMENT, UpperCasePipe, isPlatformBrowser } from '@angular/common';
+import { FreePageComponent } from '../shared/free-page/free-page.component';
+import { Configuration } from '../models/configuration';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 declare var xml2json: any;
 
@@ -29,20 +31,44 @@ export class AppService {
   public _searchSubject = new Subject();
   public searchSubject: Observable<any> = this._searchSubject.asObservable();
 
+  server: string = '';
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     @Inject(DOCUMENT) private document: Document,
+    private snackBar: MatSnackBar,
+    private config: Configuration,
     private state: AppState,
     private search: SearchService,
     private translate: TranslateService,
     private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {
+
+    if (!isPlatformBrowser(platformId)) {
+      const args = process.argv;
+      if (args.length > 2) {
+        this.server = args[2];
+      } else {
+        this.server = 'http://localhost:9083';
+    }
+    }
+  }
+
+  showSnackBar(s: string, r: string = '', error: boolean = false) {
+    const right = r !== '' ? this.translate.instant(r) : '';
+    const clazz = error ? 'app-snackbar-error' : 'app-snackbar-success';
+    this.snackBar.open(this.translate.instant(s), right, {
+      duration: 2000,
+      verticalPosition: 'top',
+      panelClass: clazz
+    });
+  }
 
   findMenuItem(route: string) {
-    for (let i = 0; i < this.state.config.layout.menu.length; i++) {
-      const m = this.state.config.layout.menu[i];
+    for (let i = 0; i < this.config.layout.menu.length; i++) {
+      const m = this.config.layout.menu[i];
       if (route === ('/' + m.route)) {
         return m;
       } else if (m.children.length > 0) {
@@ -59,19 +85,18 @@ export class AppService {
 
   private get<T>(url: string, params: HttpParams = new HttpParams(), responseType?: any): Observable<T> {
     const options = { params, responseType, withCredentials: true };
-    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
 
-    return this.http.get<T>(`${server}/api/${url}`, options)
-      .pipe(catchError(err => { return this.handleError(err) }));
+
+    return this.http.get<T>(`${this.server}/api/${url}`, options)
+      .pipe(catchError(err => { return this.handleError(err, url) }));
   }
 
   private post(url: string, obj: any, params: HttpParams = new HttpParams()) {
-    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
-    return this.http.post<any>(`${server}/api/${url}`, obj, { params })
-      .pipe(catchError(this.handleError));
+    return this.http.post<any>(`${this.server}/api/${url}`, obj, { params })
+    .pipe(catchError(err => { return this.handleError(err, url) }));
   }
 
-  private handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse, url: string) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
@@ -79,7 +104,7 @@ export class AppService {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
       console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
+        `Backend for ${url} returned code ${error.status}, body was: `, error.error);
     }
     // Return an observable with a user-facing error message.
     return throwError(
@@ -89,24 +114,27 @@ export class AppService {
   getJournalConfig(ctx: Magazine) {
     return this.get('texts?action=GET_CONFIG&ctx=' + ctx.ctx).pipe(
       map(res => {
-        this.state.ctx = ctx;
-        if (!this.state.ctx.keywords) {
-          this.state.ctx.keywords = [];
+        this.state.currentMagazine = ctx;
+        if (!this.state.currentMagazine.keyword) {
+          this.state.currentMagazine.keyword = [];
         }
+        if (!this.state.currentMagazine.defaultView) {
+          this.state.currentMagazine.defaultView = 'detail';
+        }
+        this.state.viewerActiveLink = this.state.currentMagazine.defaultView;
         this.state.setConfig(res);
-        this.state.config['color'] = ctx.color;
-        this.state.config['journal'] = ctx.journal;
-        this.state.config['showTitleLabel'] = ctx.showTitleLabel;
-        // setTimeout(() => {
-        //   console.log('switching 1')
-        this.switchStyle();
-        // }, 5000);
+        this.config['color'] = ctx.color;
+        this.config['journal'] = ctx.journal;
+        this.config['showTitleLabel'] = ctx.showTitleLabel;
+
+        //this.switchStyle();
+
         this.findActual();
         this.getKeywords();
         this.getGenres();
         this.state.stateChanged();
 
-        const menu = this.state.config.layout.menu;
+        const menu = this.config.layout.menu;
         menu.forEach((m: any) => {
           const r = this.router.config.find((ro: any) => ro.path === ':ctx' && ro.children);
           if (r && r.children && r.children.length > 0) {
@@ -130,11 +158,11 @@ export class AppService {
   //   this.state.ctxs.push(ctx);
   //   return this.get('texts?action=ADD_JOURNAL&ctxs=' + JSON.stringify(this.state.ctxs)).pipe(
   //     map(res => {
-  //       this.state.ctx = ctx;
+  //       this.state.currentMagazine = ctx;
   //       this.state.setConfig(res);
-  //       this.state.config['color'] = ctx.color;
-  //       this.state.config['journal'] = ctx.journal;
-  //       this.state.config['showTitleLabel'] = ctx.showTitleLabel;
+  //       this.config['color'] = ctx.color;
+  //       this.config['journal'] = ctx.journal;
+  //       this.config['showTitleLabel'] = ctx.showTitleLabel;
   //       setTimeout(() => {
   //         console.log('switching 2')
   //         this.switchStyle();
@@ -188,14 +216,14 @@ export class AppService {
   }
 
   switchStyle() {
-    let exists: boolean = this.findStyle(this.state.ctx!.ctx);
+    let exists: boolean = this.findStyle(this.state.currentMagazine!.ctx);
     if (!exists) {
       const link = this.document.createElement('link');
-      link.href = '/api/theme?ctx=' + this.state.ctx!.ctx + '&color=' + this.state.config['color']; // insert url in between quotes
+      link.href = '/api/theme?ctx=' + this.state.currentMagazine!.ctx + '&color=' + this.config['color']; // insert url in between quotes
       link.rel = 'stylesheet';
       link.type = 'text/css';
-      link.id = 'css-theme-' + this.state.ctx!.ctx;
-      link.title = this.state.ctx?.ctx!;
+      link.id = 'css-theme-' + this.state.currentMagazine!.ctx;
+      link.title = this.state.currentMagazine?.ctx!;
       link.disabled = true;
       this.document.getElementsByTagName('head')[0].appendChild(link);
     }
@@ -204,7 +232,7 @@ export class AppService {
     for (let i = 0; i < links.length; i++) {
       let link = links[i];
       if (link.rel.indexOf('stylesheet') != -1 && link.title) {
-        if (link.title === this.state.ctx?.ctx) {
+        if (link.title === this.state.currentMagazine?.ctx) {
           link.disabled = false;
           exists = true;
         } else {
@@ -219,20 +247,8 @@ export class AppService {
   }
 
   getMagazines(): Observable<any> {
-    let url = 'search/magazines/select';
-    const params = new HttpParams()
-      .set('q', '*')
-      .set('wt', 'json')
-      .set('rows', '50')
-      .set('sort', 'titleCS asc')
-      .set('json.nl', 'arrarr')
-      .set('facet', 'true')
-      .set('facet.mincount', '1')
-      .append('facet.field', 'pristup')
-      .append('facet.field', 'oblast')
-      .append('facet.field', 'keywords');
-
-    return this.get(url, params);
+    let url = 'search/get_magazines';
+    return this.get(url);
   }
 
   getJournals() {
@@ -241,14 +257,14 @@ export class AppService {
 
   saveJournalConfig() {
 
-    this.state.config['color'] = this.state.ctx?.color;
-    this.state.config['journal'] = this.state.ctx?.journal;
-    this.state.config['showTitleLabel'] = this.state.ctx?.showTitleLabel;
+    this.config['color'] = this.state.currentMagazine?.color;
+    this.config['journal'] = this.state.currentMagazine?.journal;
+    this.config['showTitleLabel'] = this.state.currentMagazine?.showTitleLabel;
 
     const params = new HttpParams()
       .set('journals', JSON.stringify({ 'journals': this.state.ctxs }))
-      .set('cfg', JSON.stringify(this.state.config))
-      .set('ctx', this.state.ctx?.ctx!);
+      .set('cfg', JSON.stringify(this.config))
+      .set('ctx', this.state.currentMagazine?.ctx!);
     return this.get('texts?action=SAVE_JOURNALS', params);
   }
 
@@ -258,7 +274,7 @@ export class AppService {
 
   changeLang(lang: string) {
     this.state.currentLang = lang;
-
+    this.translate.setDefaultLang('cs');
     this.translate.use(lang).subscribe(() => {
       this._langSubject.next(lang);
     });
@@ -268,34 +284,35 @@ export class AppService {
     return this.translate.instant(key);
   }
 
-  getItem(pid: string): Observable<any> {
-    let url = this.state.config['context'] + 'search/journal/select';
+  getItem(pid: string, withParent: boolean): Observable<any> {
+    let url = this.config['context'] + 'search/get_pid';
     const params = new HttpParams()
-      .set('q', 'pid:"' + pid + '"')
-      .set('wt', 'json');
-
+      .set('pid', pid)
+      .set('withParent', withParent);
     return this.get(url, params)
-      .pipe(
-        map((response: any) => {
-          return response['response']['docs'][0];
-        })
-      )
+    // return this.get(url, params)
+    //   .pipe(
+    //     map((response: any) => {
+    //       return response['response']['docs'][0];
+    //     })
+    //   )
   }
 
   getItemK5(pid: string): Observable<any> {
-    let url = this.state.config['api_point'] + '/item/' + pid;
+    let url = this.config['api_point'] + '/item/' + pid;
 
     return this.get(url);
   }
 
   getChildrenApi(pid: string): Observable<any> {
-    let url = this.state.config['api_point'] + '/item/' + pid + '/children';
+    let url = this.config['api_point'] + '/item/' + pid + '/children';
 
     return this.get(url);
   }
 
   getChildren(pid: string, dir: string = 'desc'): Observable<any> {
-    let url = 'api/search/journal/select';
+    //let url = 'api/search/journal/select';
+    let url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams().set('q', '*:*').set('fq', 'parents:"' + pid + '"')
       .set('wt', 'json').set('sort', 'year ' + dir + ',dateIssued ' + dir + ',idx ' + dir).set('rows', '500');
 
@@ -304,13 +321,16 @@ export class AppService {
         const childs = response['response']['docs'];
         if (childs.length > 0 && !childs[0]['datanode']) {
           childs.sort((a: any, b: any) => {
+            if (!a.dateIssued || !b.dateIssued) {
+              return 0;
+            }
             let dateIssued1 = a.dateIssued.padStart(7, '0');
             let dateIssued2 = b.dateIssued.padStart(7, '0');
-            
+
             dateIssued1 = dateIssued1.split('.').reverse().join('');
             dateIssued2 = dateIssued2.split('.').reverse().join('');
 
-              return dateIssued2 - dateIssued1;
+            return dateIssued2 - dateIssued1;
           });
         }
         return childs;
@@ -321,7 +341,8 @@ export class AppService {
 
 
   getPeriodicalItems(pid: string) {
-    let url = 'search/journal/select';
+    // let url = 'search/journal/select';
+    let url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams()
       .set('q', '*')
       .append('fq', 'model:periodicalitem')
@@ -335,13 +356,9 @@ export class AppService {
 
   }
 
-  //  getActual(): Observable<Journal> {
-  //    return this.getJournalByPid(this.state.config['journal'], this.state.config['model']);
-  //  }
-
   getJournal(pid: string): Observable<Journal> {
 
-    let url = this.state.config['context'] + 'search/journal/select';
+    let url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams()
       .set('q', 'pid:"' + pid + '"')
       .set('wt', 'json')
@@ -373,7 +390,7 @@ export class AppService {
 
   getJournalK5(pid: string): Observable<Journal> {
 
-    let url = this.state.config['api_point'] + '/item/' + pid;
+    let url = this.config['api_point'] + '/item/' + pid;
 
 
     return this.get(url).pipe(
@@ -399,7 +416,7 @@ export class AppService {
   }
 
   //  getJournalByPid(pid: string, model: string): Observable<Journal> {
-  //    var url = this.state.config['api_point'] + '/item/' + pid + '/children';
+  //    var url = this.config['api_point'] + '/item/' + pid + '/children';
   //
   //    return this.get(url).map((response: Response) => {
   //      let childs: any[] = response.json();
@@ -470,10 +487,11 @@ export class AppService {
 
   getArticles(pid: string): Observable<any[]> {
 
-    let url = this.state.config['context'] + 'search/journal/select';
+    let url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams()
       .set('q', '*:*')
-      .set('fq', 'parents:"' + pid + '"')
+      .append('fq', 'parents:"' + pid + '"')
+      .append('fq', 'datanode:true')
       .set('wt', 'json')
       .set('sort', 'idx asc')
       .set('rows', '500');
@@ -484,7 +502,7 @@ export class AppService {
   getArticles2(pid: string): Observable<any[]> {
     const getRange = (pid: string): Observable<any> => {
 
-      let url = this.state.config['context'] + 'search/journal/select';
+      let url = this.config['context'] + 'search/journal/select';
       const params = new HttpParams()
         .set('q', '*:*')
         .set('fq', 'parents:"' + pid + '"')
@@ -537,7 +555,7 @@ export class AppService {
     if (this.modsCache.hasOwnProperty(pid)) {
       return of(this.modsCache[pid]);
     }
-    const url = this.state.config['context'] + 'search/journal/select';
+    const url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams()
       .set('q', '*:*')
       .set('fq', 'pid:"' + pid + '"')
@@ -554,7 +572,7 @@ export class AppService {
   }
 
   setViewed(pid: string): Observable<any> {
-    const url = this.state.config['context'] + 'index';
+    const url = this.config['context'] + 'index';
     const params = new HttpParams()
       .set('action', 'SET_VIEW')
       .set('pid', pid);
@@ -562,7 +580,7 @@ export class AppService {
   }
 
   getViewed(pid: string): Observable<number> {
-    const url = this.state.config['context'] + 'search/views/select';
+    const url = this.config['context'] + 'search/views/select';
     const params = new HttpParams().set('q', '*:*')
       .set('fq', 'pid:"' + pid + '"')
       .set('wt', 'json')
@@ -582,7 +600,7 @@ export class AppService {
 
 
   getModsK5(pid: string): Observable<any> {
-    const url = this.state.config['api_point'] + '/item/' + pid + '/streams/BIBLIO_MODS';
+    const url = this.config['api_point'] + '/item/' + pid + '/streams/BIBLIO_MODS';
     return this.get(url).pipe(
       map((res: any) => {
         return JSON.parse(xml2json(res.text(), ''))['mods:modsCollection']['mods:mods'];
@@ -591,7 +609,7 @@ export class AppService {
   }
 
   getSiblings(pid: string): Observable<any> {
-    const url = this.state.config['context'] + 'search/journal/select';
+    const url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams()
       .set('q', 'pid:"' + pid + '"')
       .set('wt', 'json')
@@ -606,7 +624,7 @@ export class AppService {
   }
 
   getSiblingsk5(pid: string): Observable<any> {
-    const url = this.state.config['api_point'] + '/item/' + pid + '/siblings';
+    const url = this.config['api_point'] + '/item/' + pid + '/siblings';
     return this.get(url).pipe(
       map((res: any) => {
 
@@ -616,7 +634,7 @@ export class AppService {
   }
 
   getUploadedFiles(): Observable<any> {
-    let url = 'lf?action=LIST&ctx=' + this.state.ctx?.ctx;
+    let url = 'lf?action=LIST&ctx=' + this.state.currentMagazine?.ctx;
 
     return this.get(url).pipe(
       catchError((error: any) => of('error gettting content: ' + error))
@@ -627,23 +645,26 @@ export class AppService {
     let url = 'texts';
     let params = new HttpParams()
       .set('action', 'LOAD')
-      .set('ctx', this.state.ctx?.ctx!)
+      .set('ctx', this.state.currentMagazine?.ctx!)
       .set('id', id)
       .set('lang', this.state.currentLang);
 
-    return this.get(url, params, 'text').pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError((error: any) => of('error gettting content: ' + error))
-    )
+    return this.get(url, params, 'text')
+      .pipe(
+        map((response: any) => {
+          return response;
+        }),
+        catchError((error: any) => of('error gettting content: ' + error))
+      )
   }
 
-  getCitace(uuid: string): Observable<string> {
+  getCitace(uuid: string, server: string): Observable<string> {
     let url = 'index';
     let params = new HttpParams()
       .set('action', 'CITATION')
-      .set('uuid', uuid);
+      .set('uuid', uuid)
+      .set('server', server)
+      .set('k7', this.state.currentMagazine?.isK7 + '');
     return this.get(url, params, 'text').pipe(
       map((response: any) => {
         return response;
@@ -654,7 +675,6 @@ export class AppService {
 
   saveText(id: string, text: string, menu: string): Observable<string> {
 
-    const server = isPlatformBrowser(this.platformId) ? '' : 'http://localhost:8080';
     let url = 'texts';
 
     let params = new HttpParams()
@@ -662,7 +682,7 @@ export class AppService {
       .set('id', id)
       .set('action', 'SAVE')
       .set('lang', this.state.currentLang)
-      .set('ctx', this.state.ctx?.ctx!);
+      .set('ctx', this.state.currentMagazine?.ctx!);
 
     // if (menu) {
     //   params = params.set('menu', menu);
@@ -688,7 +708,7 @@ export class AppService {
 
     let params = new HttpParams()
       .set('action', 'SAVE_MENU')
-      .set('ctx', this.state.ctx?.ctx!)
+      .set('ctx', this.state.currentMagazine?.ctx!)
       .set('menu', menu);
 
     return this.get(url, params);
@@ -697,7 +717,7 @@ export class AppService {
   }
 
   getMagazine(web: string) {
-    const url = this.state.config['context'] + 'search/magazines/select';
+    const url = this.config['context'] + 'search/magazines/select';
     const params = new HttpParams()
       .set('q', 'web:"' + web + '"')
       .set('wt', 'json');
@@ -740,15 +760,14 @@ export class AppService {
 
   }
 
+  getIndexStatus() {
+    return this.get('index?action=GET_STATUS');
+  }
+
   delete(uuid: string) {
     let url = 'index?action=DELETE_PID&pid=' + uuid;
 
-    return this.get(url).pipe(
-      map((response: any) => {
-        return response.json();
-      }),
-      catchError((error: any) => of('deleting uuid: ' + error))
-    )
+    return this.get(url);
 
   }
 
@@ -771,7 +790,7 @@ export class AppService {
           if (this.state.redirectUrl.startsWith('/')) {
             this.router.navigate([this.state.redirectUrl], { queryParamsHandling: 'preserve' });
           } else {
-            this.router.navigate([this.state.ctx ? this.state.ctx.ctx : '/admin'], { queryParamsHandling: 'preserve' });
+            this.router.navigate([this.state.currentMagazine ? this.state.currentMagazine.ctx : '/admin'], { queryParamsHandling: 'preserve' });
           }
         }
       }
@@ -787,7 +806,7 @@ export class AppService {
     let params = new HttpParams()
       .set('user', this.state.loginuser!)
       .set('pwd', this.state.loginpwd!)
-      .set('ctx', this.state.ctx?.ctx!)
+      .set('ctx', this.state.currentMagazine?.ctx!)
       .set('action', 'LOGIN');
     return this.get(url, params);
 
@@ -804,7 +823,7 @@ export class AppService {
       this.state.loginuser = '';
       this.state.loginpwd = '';
       this.state.logged = false;
-      this.router.navigate([this.state.ctx ? this.state.ctx.ctx : '/home'], { queryParamsHandling: 'preserve' });
+      this.router.navigate([this.state.currentMagazine ? this.state.currentMagazine.ctx : '/home'], { queryParamsHandling: 'preserve' });
     });
   }
 
@@ -818,10 +837,10 @@ export class AppService {
   }
 
   isHiddenByGenre(genres: string[]) {
-    //console.log(this.state.config['hiddenGenres'], genres);
+    //console.log(this.config['hiddenGenres'], genres);
     for (const g in genres) {
       //console.log(g);
-      if (this.state.config['hiddenGenres'].indexOf(genres[g]) > -1) {
+      if (this.config['hiddenGenres'].indexOf(genres[g]) > -1) {
         return true;
       }
     }
@@ -832,10 +851,11 @@ export class AppService {
   pidActual: string | null | undefined;
   findActual() {
     this.pidActual = null;
-    this.findActualByPid(this.state.config['journal']);
+    this.findActualByPid(this.state.currentMagazine['journal']);
   }
 
   findActualByPid(pid: string) {
+    //console.log(pid)
     this.getChildren(pid).subscribe((res: any) => {
       if (res.length === 0) {
         this.state.setActual(null);
@@ -846,7 +866,7 @@ export class AppService {
         this.getJournal(pid).subscribe(a => {
           this.state.setActual(a);
           this.getArticles(this.state.actualNumber!['pid']!).subscribe((res: any) => {
-            this.state.actualNumber!.setArticles(res, this.state.config['mergeGenres']);
+            this.state.actualNumber!.setArticles(res, this.config['mergeGenres']);
             //this.service.getMods(this.state.actualNumber['pid']).subscribe(mods => this.state.actualNumber.mods = mods);
             this.state.stateChanged();
           });
@@ -869,6 +889,7 @@ export class AppService {
     this.search.search(params).subscribe((res: any) => {
       this.state.keywords = [];
 
+
       for (const i in res['facet_counts']['facet_fields']['keywords_facet']) {
         const val: string = res['facet_counts']['facet_fields']['keywords_facet'][i][0];
         if (val && val !== '') {
@@ -876,6 +897,7 @@ export class AppService {
           this.state.keywords.push({ val: val, val_lower: val_lower, valq: '"' + val + '"' });
         }
       }
+
 
       this.state.keywords.sort((a, b) => {
         return a.val_lower.localeCompare(b.val_lower, 'cs');
@@ -888,8 +910,8 @@ export class AppService {
     //Rok jako stats
     let params = new HttpParams()
       .set('q', '*:*')
-      .set('fq', '-genre:""')
-      .set('fq', 'model:article')
+      .append('fq', '-genre:""')
+      .append('fq', 'model:article')
       .set('rows', '0')
       .set('facet', 'true')
       .set('facet.field', 'genre')
@@ -912,6 +934,69 @@ export class AppService {
 
     });
 
+  }
+
+  details(mods: any, model: string, parent: string) {
+    this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
+
+    if (model === 'periodical') {
+
+    } else if (model === 'periodicalvolume') {
+
+      if (mods['mods:originInfo']) {
+        this.state.archivItemDetails.year = mods['mods:originInfo']['mods:dateIssued'];
+        if (mods['mods:titleInfo']) {
+          this.state.archivItemDetails.volumeNumber = mods['mods:titleInfo']['mods:partNumber'];
+        }
+      } else {
+        //podpora pro starsi mods. ne podle zadani
+        if (mods['part'] && mods['part']['date']) {
+          this.state.archivItemDetails.year = mods['part']['date'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:date']) {
+          this.state.archivItemDetails.year = mods['mods:part']['mods:date'];
+        }
+
+        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+          this.state.archivItemDetails.issueNumber = mods['part']['detail']['number'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+          this.state.archivItemDetails.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
+        }
+      }
+    } else if (model === 'periodicalitem') {
+      if (mods['mods:originInfo']) {
+        if (mods['mods:titleInfo']) {
+          this.state.archivItemDetails.issueNumber = mods['mods:titleInfo']['mods:partNumber'];
+          this.state.archivItemDetails.partName = mods['mods:titleInfo']['mods:partName'];
+        }
+      } else if (mods['mods:titleInfo']) {
+        this.state.archivItemDetails.issueNumber = mods['mods:titleInfo']['mods:partNumber'];
+        this.state.archivItemDetails.partName = mods['mods:titleInfo']['mods:partName'];
+
+      } else {
+        //podpora pro starsi mods. ne podle zadani
+        if (mods['part'] && mods['part']['date']) {
+          this.state.archivItemDetails.year = mods['part']['date'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:date']) {
+          this.state.archivItemDetails.year = mods['mods:part']['mods:date'];
+        }
+
+        if (mods['part'] && mods['part']['detail'] && mods['part']['detail']['number']) {
+          this.state.archivItemDetails.issueNumber = mods['part']['detail']['number'];
+        } else if (mods['mods:part'] && mods['mods:part']['mods:detail'] && mods['mods:part']['mods:detail']['mods:number']) {
+          this.state.archivItemDetails.issueNumber = mods['mods:part']['mods:detail']['mods:number'];
+        }
+      }
+      this.getMods(parent).subscribe((parentMods: any) => {
+        if (parentMods['mods:originInfo']) {
+          this.state.archivItemDetails.year = parentMods['mods:originInfo']['mods:dateIssued'];
+          if (parentMods['mods:titleInfo']) {
+            this.state.archivItemDetails.volumeNumber = parentMods['mods:titleInfo']['mods:partNumber'];
+          }
+          this.state.crumbsChanged();
+        }
+      });
+
+    }
   }
 
 

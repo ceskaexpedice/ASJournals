@@ -1,3 +1,6 @@
+/**
+ * Represents one configured magazine 
+ *  */
 export class Magazine {
   ctx: string | undefined = undefined;
   journal: string | undefined = undefined;
@@ -12,15 +15,17 @@ export class Magazine {
   
   title: string | undefined = undefined;
   subtitle: string | undefined = undefined;
+  title_en: string | undefined = undefined;
+  subtitle_en: string | undefined = undefined;
   img: string | undefined = undefined;
   k5url: string | undefined = undefined;
   vydavatel: string | undefined = undefined;
   vydavatel_id: string | undefined = undefined;
-  oblast: string | undefined = undefined;
+  oblast: string[] = [];
   issn: string | undefined = undefined;
   pristup: string | undefined = undefined;
   kontakt: string | undefined = undefined;
-  keywords: string[] = [];
+  keyword: string[] = [];
   desc: string | undefined = undefined;
   desc_en: string | undefined = undefined;
   web: string | undefined = undefined;
@@ -29,4 +34,7 @@ export class Magazine {
   sortByOrder: boolean = false;
   keepLang: boolean = false;
   checkUpdates: boolean = false;
+  languages: string[] = [];
+  defaultView: string; // pdf / detail
+  [key: string]: any;
 }

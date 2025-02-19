@@ -1,0 +1,23 @@
+@import "../../../../sass/app-theme-default";
+@import "../../../../sass/app-variables";
+
+.app-fxLayout {
+  flex-flow: wrap;
+
+  .app-fxFlex {
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  
+  @media #{$gt-xs} {
+    .app-fxFlex {
+      flex: 1 1 1e-09px; 
+      box-sizing: border-box;
+
+      &:not(:last-child) {
+        margin-right: 32px;
+      }
+    }
+  }
+}

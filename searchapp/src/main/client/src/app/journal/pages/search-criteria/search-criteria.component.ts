@@ -1,14 +1,30 @@
 import {Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import {Router, ActivatedRoute, Params, RouterModule} from '@angular/router';
 import {Observable, Subscription} from 'rxjs';
 
-import {TranslateService} from '@ngx-translate/core';
-import {TypeaheadMatch} from 'ngx-bootstrap/typeahead';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
+// import {TypeaheadMatch} from 'ngx-bootstrap/typeahead';
 import { AppState } from 'src/app/app.state';
 import { Criterium } from 'src/app/models/criterium';
 import { AppService } from 'src/app/services/app.service';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormsModule } from '@angular/forms';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, RouterModule, FormsModule,
+            MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatMenuModule, 
+            TranslateModule, MatCardModule, MatCheckboxModule, MatPaginatorModule, MatTooltipModule
+  ],
   selector: 'app-search-criteria',
   templateUrl: './search-criteria.component.html',
   styleUrls: ['./search-criteria.component.scss']
@@ -38,6 +54,8 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
   genretr: string = '';
   genre: string | null = null;
 
+  isSiteCountActive: any = [];
+
   constructor(
     public state: AppState,
     private service: AppService,
@@ -47,12 +65,12 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.isSiteCountActive[10] = true;
     this.criteria.push(new Criterium());
-    this.route.params
-      .subscribe((params: Params) => {
-        if (params.criteria) {
+    this.route.params.subscribe((params: Params) => {
           this.criteria = [];
-          let j = JSON.parse(params.criteria);
+        if (params['criteria']) {
+          let j = JSON.parse(params['criteria']);
           for (let i in j) {
             let c: Criterium = new Criterium();
 
@@ -64,18 +82,8 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
               this.genretr = this.translate.instant('genre.'+this.genre);
             }
           }
-
-          //this.onSearch.emit(this.criteria);
-          if (this.state.config) {
-            this.service.searchFired(this.criteria);
-          } else {
-
-            this.subscriptions.push(this.state.configSubject.subscribe(() => {
-              this.service.searchFired(this.criteria);
-            }
-            ));
-          }
         }
+          this.service.searchFired(this.criteria);
       });
 
     this.subscriptions.push(this.service.langSubject.subscribe(val => {
@@ -91,8 +99,9 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
     this.subscriptions = [];
   }
 
-  setField(criterium: Criterium, field: string) {
-    criterium.field = field;
+  setField(criterium: Criterium, field: {field: string, label: string}) {
+    criterium.field = field.field;
+    criterium.fieldLabel = field.label;
   }
 
   getLabel(criterium: Criterium): string {
@@ -105,8 +114,9 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
     return 'kdekoliv';
   }
 
-  setOperator(criterium: Criterium, val: string) {
-    criterium.operator = val;
+  setOperator(criterium: Criterium, op: {val: string, label: string}) {
+    criterium.operator = op.val;
+    criterium.operatorLabel = op.label;
   }
 
   getOperator(criterium: Criterium): string {
@@ -145,11 +155,11 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
     this.router.navigate([p], {relativeTo: this.route, queryParamsHandling: "preserve"});
   }
 
-  searchGenres(e: TypeaheadMatch , cr: Criterium) {
-    cr.value = e.item['val'];
-    this.genre = this.translate.instant('genre.'+e.item['val']);
-    this.search();
-  }
+  // searchGenres(e: TypeaheadMatch , cr: Criterium) {
+  //   cr.value = e.item['val'];
+  //   this.genre = this.translate.instant('genre.'+e.item['val']);
+  //   this.search();
+  // }
 
   setGenres() {
     this.genres = [];

@@ -1,26 +1,53 @@
 import {Component, OnInit, OnDestroy, ViewChild, ElementRef} from '@angular/core';
 
-import {Router, ActivatedRoute, Params, NavigationStart, NavigationEnd} from '@angular/router';
+import {Router, ActivatedRoute, Params, NavigationStart, NavigationEnd, RouterModule} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {NouisliderComponent} from 'ng2-nouislider';
+// import {NouisliderComponent} from 'ng2-nouislider';
 
 import {HttpParams} from '@angular/common/http';
 import { AppState } from 'src/app/app.state';
 import { Criterium } from 'src/app/models/criterium';
 import { AppService } from 'src/app/services/app.service';
 import { SearchService } from 'src/app/services/search.service';
+import { CommonModule } from '@angular/common';
+import { Configuration } from 'src/app/models/configuration';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+import { ArticleResultComponent } from '../../components/article-result/article-result.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
+import { PaginatorI18n } from '../../components/paginator/paginator-i18n';
 
-
+export function createCustomMatPaginatorIntl(
+  translateService: TranslateService
+  ) {return new PaginatorI18n(translateService);}
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterModule, TranslateModule, ArticleResultComponent,
+    MatInputModule, MatButtonModule, MatCardModule, MatCheckboxModule,
+    MatTabsModule, MatPaginatorModule, MatIconModule, MatMenuModule, MatDividerModule],
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
+  providers: [
+    {
+      provide: MatPaginatorIntl, deps: [TranslateService],
+      useFactory: createCustomMatPaginatorIntl
+    }
+  ]
 })
 export class SearchComponent implements OnInit, OnDestroy {
 
   @ViewChild('results') results: ElementRef | null = null;
-  @ViewChild('dateSlider') public dateSlider: NouisliderComponent| null = null;
+  // @ViewChild('dateSlider') public dateSlider: NouisliderComponent| null = null;
   docs: any[] = [];
   numFound: number = 0;
   totalPages: number = 0;
@@ -47,6 +74,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   };
 
   constructor(
+    private config: Configuration,
     private service: AppService,
     public state: AppState,
     private router: Router,
@@ -64,19 +92,14 @@ export class SearchComponent implements OnInit, OnDestroy {
 
         let j = JSON.parse(date);
         this.changeRangeFormValue(j[0], j[1]);
-        if (this.state.config) {
+        if (this.config) {
           //this.search([]);
-        } else {
-          let sss = this.state.configSubject.subscribe(() => {
-
-            //this.search([]);
-            sss.unsubscribe();
-          });
-        }
+        } 
 
       }
     }
   }
+  
 
   ngOnInit() {
 
@@ -88,6 +111,52 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.getStats();
     this.subscriptions.push(this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
+        this.processParams();
+      } else if (val instanceof NavigationStart) {
+
+      }
+    }));
+    this.processParams();
+    this.subscriptions.push(this.route.params
+      .subscribe((params: Params) => {
+        if (params['start']) {
+          this.start = +params['start'];
+        }
+        if (params['rows']) {
+          this.rows = +params['rows'];
+        }
+        if (params['onlyPeerReviewed']) {
+          this.onlyPeerReviewed = params['onlyPeerReviewed'] === 'true';
+        }
+        if (params['sort']) {
+          let s= params['sort'];
+          for (let i in this.state.sorts) {
+            //console.log(this.state.sorts[i].field);
+            if (this.state.sorts[i].field === s) {
+              this.currentSort = this.state.sorts[i];
+              break
+            }
+          }
+        }
+        if (params['date']) {
+          let j = JSON.parse(params['date']);
+          this.changeRangeFormValue(j[0], j[1]);
+        }
+      }));
+
+    this.subscriptions.push(this.service.searchSubject.subscribe((criteria: Criterium[]) => {
+      this.search(criteria);
+    }));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s: Subscription) => {
+      s.unsubscribe();
+    });
+    this.subscriptions = [];
+  }
+
+  processParams() {
         if (this.route.snapshot.firstChild?.params.hasOwnProperty('start')) {
           this.start = +this.route.snapshot.firstChild.params['start'];
         }
@@ -110,31 +179,6 @@ export class SearchComponent implements OnInit, OnDestroy {
         }
 
         this.setDateFilter();
-      } else if (val instanceof NavigationStart) {
-
-      }
-    }));
-    this.subscriptions.push(this.route.params
-      .subscribe((params: Params) => {
-        if (params.start) {
-          this.start = +params.start;
-        }
-        if (params.date) {
-          let j = JSON.parse(params.date);
-          this.changeRangeFormValue(j[0], j[1]);
-        }
-      }));
-
-    this.subscriptions.push(this.service.searchSubject.subscribe((criteria: Criterium[]) => {
-      this.search(criteria);
-    }));
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach((s: Subscription) => {
-      s.unsubscribe();
-    });
-    this.subscriptions = [];
   }
 
   showResults() {
@@ -187,7 +231,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     //Add date filter
-    params = params.append('fq', 'year:[' + this.state.dateOd + ' TO ' + this.state.dateDo + ']');
+    
+    params = params.append('fq', 'year:[' + (this.state.dateOd ? this.state.dateOd : '*') + ' TO ' + (this.state.dateDo ? this.state.dateDo : '*') + ']');
 
 
     //Add onlyPeerReviewed
@@ -222,7 +267,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   getStats() {
-    if (this.state.config) {
+    if (this.config) {
       if (!this.hasDateFilter) {
         this.state.dateMin = 2000;
         this.state.dateMax = 2019;
@@ -237,13 +282,13 @@ export class SearchComponent implements OnInit, OnDestroy {
 
       this.searchService.search(params).subscribe((res: any) => {
         if (res.hasOwnProperty('stats') && res['stats']['stats_fields'].hasOwnProperty('year')) {
-          console.log(res['stats']['stats_fields']['year']);
           this.state.dateMin = res['stats']['stats_fields']['year']['min'];
           this.state.dateMax = res['stats']['stats_fields']['year']['max'];
           if (!this.hasDateFilter) {
             this.state.dateOd = this.state.dateMin;
             this.state.dateDo = this.state.dateMax;
             this.state.dateRange = [this.state.dateOd, this.state.dateDo];
+            // this.state.dateRange = [this.state.dateOd ? this.state.dateOd : 0, this.state.dateDo ? this.state.dateDo : 3000];
             this.sliderConfig.range = this.state.dateRange;
           }
           //this.dateForm = this.formBuilder.group({ 'range': [[this.dateMin, this.dateMax]] });
@@ -251,13 +296,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         }
 
       });
-    } else {
-      this.subscriptions.push(this.state.configSubject.subscribe(
-        () => {
-          this.getStats();
-        }
-      ));
-    }
+    } 
   }
 
   changeRangeFormValue(dateOd: number, dateDo: number) {
@@ -269,6 +308,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   dateChange() {
     this.onDateChange([this.state.dateOd, this.state.dateDo]);
   }
+  
   onDateChange(e: any) {
     if (e) {
       this.changeRangeFormValue(e[0], e[1]);
@@ -282,6 +322,14 @@ export class SearchComponent implements OnInit, OnDestroy {
     return;
   }
 
+  pageChanged(e: any) {
+    if (e.pageSize !== this.rows) {
+      this.setRows(e.pageSize);
+    } else {
+      this.setPage(e.pageIndex);
+    }
+    
+  }
 
   setPage(page: number) {
     this.start = page * this.rows;
@@ -315,5 +363,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.router.navigate(['cokoliv', p], {relativeTo: this.route, queryParamsHandling: "preserve"});
   }
 
-
+  isRouteActive(currentRoute: string): boolean {
+    return this.router.isActive(this.router.createUrlTree([currentRoute], {relativeTo: this.route}).toString(), true);
+  }
 }

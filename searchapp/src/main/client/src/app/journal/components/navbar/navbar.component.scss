@@ -1,0 +1,31 @@
+.mat-toolbar {  
+  .app-left {
+    &.app-desktop {
+      display: none;
+    }
+
+    &.app-mobile {
+      display: block;
+    }
+    
+    @media only screen and (min-width: 1070px) {
+      &.app-desktop {
+        display: block;
+
+        .mat-mdc-menu-trigger {
+          .mat-icon {
+            margin-right: -2px !important;
+          }
+        }
+      }
+
+      &.app-mobile {
+        display: none;
+      }
+    }
+  }
+
+  .app-active {
+    background-color: rgba(var(--app-color-lightnes-rgb), .15);
+  }
+}

@@ -1,18 +1,16 @@
 {
     "context": "/",
     "defaultLang": "cs",
+    "server_url": "",
     "api_point": "k5api",
-    "journal": "uuid:fc144bf1-8d61-4f4b-80f9-e4a772db32dc",
-    "model": "periodicalvolume",
     "sort_field": "datum_end",
+    "color": "#0097a7",
     "k5": "https://kramerius.lib.cas.cz/client/handle/",
-    "showTitleLabel": true,
-    "defCtx_": {"ctx":"kad", "color": "CFCCCC", "journal": "uuid:fc144bf1-8d61-4f4b-80f9-e4a772db32dc", "showTitleLabel": true},
-    "color": "CCCCCC",
     "searchParams": {
         "rows": 20
     },
-
+    "facetFields": ["pristup", "oblast", "vydavatel", "keyword"],
+    "languages": ["cs", "en"],
     "sorts": [
         {
             "label": "dle relevance",
@@ -208,9 +206,10 @@
         "index",
         "advertisement",
         "unspecified"],
-    "mergeGenres": {
+        "mergeGenres": {
             "titulní list": "title page",
             "věnování": "dedication",
             "adresář": "directory"
         }
+
 }

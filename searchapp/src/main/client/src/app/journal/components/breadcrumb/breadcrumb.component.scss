@@ -1,0 +1,16 @@
+@import "../../../../sass/app-mixins";
+
+.app-breadcrumb {
+  background-color: var(--app-gray-2);
+  height: var(--app-breadcrumb-height);
+  font-size: var(--app-breadcrumb-font-size);
+
+  .mat-icon {
+    @include setIcon($size: 18, $position: sub);
+  }
+
+  .app-separator {
+    margin: 0 8px;
+    color: var(--app-gray-5);
+  }
+}

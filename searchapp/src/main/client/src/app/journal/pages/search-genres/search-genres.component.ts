@@ -1,13 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Router, ActivatedRoute,  } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule,  } from '@angular/router';
 import {HttpParams} from '@angular/common/http';
 import { AppState } from 'src/app/app.state';
 import { Criterium } from 'src/app/models/criterium';
 import { AppService } from 'src/app/services/app.service';
 import { SearchService } from 'src/app/services/search.service';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, RouterModule, TranslateModule],
   selector: 'app-search-genres',
   templateUrl: './search-genres.component.html',
   styleUrls: ['./search-genres.component.scss']
@@ -38,7 +42,6 @@ export class SearchGenresComponent implements OnInit, OnDestroy {
   }
 
   getGenres() {
-    if (this.state.config) {
       var params = new HttpParams()
       .set('q', '*:*')
       .set('fq', '-genre:""')
@@ -63,14 +66,6 @@ export class SearchGenresComponent implements OnInit, OnDestroy {
         });
 
       });
-    } else {
-
-      this.subscriptions.push(this.state.configSubject.subscribe(
-        () => {
-          this.getGenres();
-        }
-      ));
-    }
   }
 
   search(genre: string | null) {

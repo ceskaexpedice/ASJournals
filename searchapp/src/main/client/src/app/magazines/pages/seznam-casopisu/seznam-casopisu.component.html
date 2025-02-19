@@ -1,14 +1,20 @@
-<div class="app-container">
-  <div fxLayout="row" fxLayout.lt-md="row wrap" fxLayoutGap.gt-sm="32px">
-    <div fxFlex="350px" fxFlex.lt-md="100%">
-      <app-facets-used></app-facets-used>
-      <app-facets *ngIf="state.facets.length > 0"></app-facets>
-    </div>
-    <div fxFlex>
-      <app-sort-bar></app-sort-bar>
-      <app-seznam-item *ngFor="let resultItem of state.magazines" [resultItem]="resultItem"></app-seznam-item>
+<div class="app-fxLayout app-column app-fill app-oh">
+  <div class="app-toolbar">
+    <a (click)="setFacetView()" class="app-fxLayout app-center-v">
+      <mat-icon class="app-mr-1">{{ isFacetActive ? 'filter_alt_off' : 'filter_alt' }}</mat-icon>
+      <span>{{ isFacetActive ? ('button.showResults' | translate) : ('button.showFilters' | translate) }}</span>
+    </a>
+  </div>
+  <div class="app-fxFlex app-oa-y">
+    <div class="app-fxFlex app-fxLayout app-row app-page-wrapper app-container" [ngClass]="isFacetActive ? 'app-mobile-facet-active' : 'app-mobile-result-active'">
+      <div class="app-left app-mb-4">
+        <app-facets-used></app-facets-used>
+        <app-facets *ngIf="state.facets.length > 0"></app-facets>
+      </div>
+      <div class="app-right app-fxFlex">
+        <app-sort-bar></app-sort-bar>
+        <app-seznam-item *ngFor="let resultItem of state.magazines" [resultItem]="resultItem"></app-seznam-item>
+      </div>
     </div>
   </div>
 </div>
-
-

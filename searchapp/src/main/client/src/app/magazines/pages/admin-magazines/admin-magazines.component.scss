@@ -1,3 +1,24 @@
-a.active{
-  text-decoration: underline;
+@import "../../../../sass/app-theme-default";
+@import "../../../../sass/app-variables";
+
+.app-fxLayout {
+  flex-flow: wrap;
+
+  .app-left {
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  @media #{$gt-sm} {
+    .app-left {
+      margin-right: 16px;
+      flex-flow: nowrap;
+      flex: 1 1 350px;
+      box-sizing: border-box;
+      max-width: 350px;
+      min-width: 350px;
+    }
+  }
 }

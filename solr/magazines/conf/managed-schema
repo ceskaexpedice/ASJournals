@@ -55,6 +55,8 @@
       
     <field name="title" type="string" indexed="true" stored="true" multiValued="false" />
     <field name="subtitle" type="string" indexed="true" stored="true" multiValued="false" />
+    <field name="title_en" type="string" indexed="true" stored="true" multiValued="false" />
+    <field name="subtitle_en" type="string" indexed="true" stored="true" multiValued="false" />
     <field name="titleCS" type="collatedCS" indexed="true" stored="true" multiValued="false" docValues="true" />
     <field name="img" type="string" indexed="false" stored="true" multiValued="false" />
     <field name="k5url" type="string" indexed="false" stored="true" multiValued="false" />
@@ -65,6 +67,7 @@
     <field name="desc" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="desc_en" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="web" type="string" indexed="true" stored="true" multiValued="false"/>
+    <field name="languages" type="string" indexed="true" stored="true" multiValued="true" />
 	
     <!-- k5, k7 -->
     <field name="kramerius_version" type="string" indexed="true" stored="true" multiValued="false" />
@@ -80,7 +83,7 @@
     
     <!-- pro facety -->
     <field name="pristup" type="string" indexed="true" stored="true" multiValued="false" docValues="true"/>
-    <field name="oblast" type="string" indexed="true" stored="true" multiValued="false" docValues="true"/>
+    <field name="oblast" type="string" indexed="true" stored="true" multiValued="true" docValues="true"/>
     <field name="keywords" type="string" indexed="true" stored="true" multiValued="true" docValues="true"/>
     
     <!-- pro UI -->
@@ -91,6 +94,11 @@
     <field name="color" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="showTitleLabel" type="boolean" indexed="true" stored="true" multiValued="false"/>
     <field name="showOldYears" type="boolean" indexed="true" stored="true" multiValued="false"/>
+	
+    <dynamicField name="title_*" type="string" indexed="true" stored="true" multiValued="false"/>
+    <dynamicField name="subtitle_*" type="string" indexed="true" stored="true" multiValued="false"/>
+    <dynamicField name="desc_*" type="string" indexed="true" stored="true" multiValued="false"/>
+    <dynamicField name="oblast_*" type="string" indexed="true" stored="true" multiValued="true"/>
     
     <!-- Only enabled in the "schemaless" data-driven example (assuming the client
          does not know what fields may be searched) because it's very expensive to index everything twice. -->

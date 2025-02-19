@@ -1,6 +1,6 @@
 <div class="app-container">
-  <div *ngIf="state.config" fxLayout="row" fxLayout.lt-sm="row wrap" fxLayoutGap.gt-xs="32px">
-    <div fxFlex fxFlex.lt-sm="100%" *ngFor="let vydavatel of state.editorsType">
+  <div *ngIf="state.config" class="app-fxLayout app-row app-page-wrapper">
+    <div *ngFor="let vydavatel of state.editorsType; let last = last" class="app-fxFlex">
       <h2>{{ vydavatel }}</h2>
       <ul>
         <li *ngFor="let item of state.editors[vydavatel]">

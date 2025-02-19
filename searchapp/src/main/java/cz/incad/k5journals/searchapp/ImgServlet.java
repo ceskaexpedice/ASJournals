@@ -129,7 +129,7 @@ public class ImgServlet extends HttpServlet {
       }
     }
 
-    LOGGER.log(Level.FINE, "requesting url {0}", imgPoint);
+    LOGGER.log(Level.INFO, "requesting url {0}", imgPoint);
     Map<String, String> reqProps = new HashMap<>();
     InputStream inputStream = RESTHelper.inputStream(imgPoint, reqProps);
     

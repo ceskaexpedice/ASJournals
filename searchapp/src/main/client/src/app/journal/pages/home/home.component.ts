@@ -1,12 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/app.state';
+import { Configuration } from 'src/app/models/configuration';
 import { Journal } from 'src/app/models/journal.model';
 import { AppService } from 'src/app/services/app.service';
+import { FreeTextComponent } from '../../components/free-text/free-text.component';
 
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, RouterModule, MatButtonModule, MatDividerModule, MatIconModule, TranslateModule,
+  FreeTextComponent],
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
@@ -26,35 +36,34 @@ export class HomeComponent implements OnInit {
   routeObserver: Subscription = new Subscription;
 
   constructor(
+    private config: Configuration,
     private service: AppService,
     public state: AppState,
     private router: Router
-  ) {
-
-    //this.actualNumber = this.store.select<Journal>('actual');
-  }
+  ) {}
 
   ngOnDestroy() {
     //this.langObserver.unsubscribe();
     this.routeObserver.unsubscribe();
   }
+  
 
   ngOnInit() {
-    this.home_text = this.state.config.home; 
+    if (this.state.currentLang === 'en') {
+      this.home_text = this.config.home_en; 
+    } else {
+      this.home_text = this.config.home_cs; 
+    }
+    
     this.setData();
-    //this.service.getText('home').subscribe(t => this.home_text = t);
     this.state.stateChangedSubject.subscribe(
       () => {
         this.setData();
-        this.service.getText('home').subscribe(t => this.home_text = t);
       }
     );
 
     this.routeObserver = this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
-        const url = this.router.url.substring(1);
-        let route = url.substring(url.indexOf(this.state.ctx?.ctx!) + this.state.ctx?.ctx?.length!);
-        route = route.split('?')[0]; // remove lang param
         if (this.state.currentLang) {
           this.service.getText('home').subscribe(t => this.home_text = t);
         }
@@ -64,12 +73,12 @@ export class HomeComponent implements OnInit {
   }
 
   showDb() {
-    const db =  this.state.config.layout.pages.find((m:any) => m.route === 'db');
+    const db =  this.config.layout.pages.find((m:any) => m.id === 'db');
     return db && db.visible
   }
 
   showNews() {
-    const db =  this.state.config.layout.pages.find((m:any) => m.route === 'news');
+    const db =  this.config.layout.pages.find((m:any) => m.id === 'news');
     return db && db.visible
   }
 

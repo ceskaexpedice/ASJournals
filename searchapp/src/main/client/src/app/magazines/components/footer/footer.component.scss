@@ -1,0 +1,20 @@
+footer {
+  padding: 16px;
+  display: block;
+  color: var(--app-footer-color);
+  background-color: var(--app-footer-bg);
+  font-size: var( --app-footer-font-size);
+
+  .app-left {
+    a {
+      margin-left: 4px;
+    }
+  }
+
+  .app-right {  
+    .app-logo-inovatika {
+      height: 16px;
+      vertical-align: text-bottom;
+    }
+  }
+}

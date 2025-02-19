@@ -45,6 +45,10 @@ public class I18n {
     String filename = locale+".json";
 
     File fdef = new File(InitServlet.DEFAULT_I18N_DIR + File.separator + filename);
+    
+    if (!fdef.exists()) {
+        fdef = new File(InitServlet.DEFAULT_I18N_DIR + File.separator + "cs.json");
+    }
 
     String json = FileUtils.readFileToString(fdef, "UTF-8");
     JSONObject def = new JSONObject(json);

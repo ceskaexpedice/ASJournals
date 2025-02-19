@@ -1,0 +1,52 @@
+<div class="app-page-wrapper">
+	<div class="app-container">
+		<fieldset class="app-p-4 app-mb-4">
+			<legend>{{ 'admin.add_remove_issue_year.legend' | translate }}</legend>
+			<p [innerHTML]="'admin.add_remove_issue_year.info' | translate: {val: state.currentMagazine.journal}">
+			</p>
+			<div class="app-fxLayout app-row app-center-v">
+				<mat-form-field appearance="outline" class="app-fxFlex app-form-field-center-v-fix">
+					<mat-label>{{ 'desc.enterUuid' | translate }}</mat-label>
+					<input matInput type="text" [(ngModel)]="indexUUID" name="indexUUID">
+				</mat-form-field>
+			</div>
+			<mat-progress-bar mode="indeterminate" *ngIf="workStatus.status === 'indexing'" class="app-mb-2"></mat-progress-bar>
+			<div *ngIf="workStatus.status !== 'none'" class="app-color-primary">
+				<ng-container *ngIf="workStatus.status === 'indexing'">
+					{{ 'admin.indexing' | translate }} {{ workStatus['currentUuid'] }}.
+					<ng-container *ngIf="workStatus['indexed']">{{ 'admin.num_docs' | translate }}: {{ workStatus['indexed'] }}</ng-container> 
+				</ng-container>
+				<ng-container *ngIf="workStatus.status === 'finished'">
+					{{ 'admin.finished' | translate }} {{ workStatus['currentUuid'] }}. 
+					<ng-container *ngIf="workStatus['indexed']">{{ 'admin.num_docs' | translate }}: {{ workStatus['indexed'] }}</ng-container> 
+				</ng-container>
+				<ng-container *ngIf="workStatus.status === 'delete_finished'">
+					{{ 'admin.delete_finished' | translate }} {{ workStatus['currentUuid'] }}. 
+				</ng-container>
+			</div>
+			<div class="app-mt-4">
+				<button mat-flat-button color="primary" class="app-mr-2" (click)="index()">{{ 'button.addUuid' | translate }}</button>
+				<button mat-flat-button color="primary" (click)="onDelete()" [disabled]="!indexUUID">{{ 'button.deleteUuid' | translate }}</button>
+			</div>
+		</fieldset>
+
+		<fieldset class="app-p-4 app-mb-4">
+			<legend>{{ 'admin.addingAnEnvelope.legend' | translate }}</legend>
+			<p>
+				{{ 'admin.addingAnEnvelope.info' | translate }}.
+			</p>
+			<input type="file" #fileUpload ng2FileSelect [uploader]="coverUploader" style="display:none;" (change)="onFileSelected($event)">
+			<div class="app-fxLayout app-row app-center-v">
+				<mat-form-field appearance="outline" class="app-fxFlex app-form-field-center-v-fix">
+					<input matInput type="text" name="selectedCover" [(ngModel)]="selectedCover">
+					<button matPrefix mat-stroked-button color="primary" class="app-mr-2 app-ml-2" (click)="fileUpload.click()">{{ 'admin.cover' | translate }}: {{ 'button.selectFile' | translate }}</button>
+				</mat-form-field>
+			</div>
+			<mat-progress-bar mode="determinate" [value]="coverUploader.progress" *ngIf="coverUploader.isUploading"></mat-progress-bar>
+			<button mat-flat-button color="primary" (click)="uploadCover()" class="app-mt-4">{{ 'button.upload' | translate }}</button>
+			<div class="app-color-primary app-mt-4">
+				<img [src]="state.imgSrc + '&t=' + t" onerror="this.src='assets/img/thumb-no-image.png'"  />
+			</div>
+		</fieldset>
+	</div>
+</div>

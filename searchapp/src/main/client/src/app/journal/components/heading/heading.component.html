@@ -1,0 +1,14 @@
+<div class="app-container">
+  <div class="app-p-4 app-heading">
+    <h1 class="app-m-0">
+      <a routerLink="home" queryParamsHandling="preserve" title="Home" > 
+        <span *ngIf="state.currentMagazine.showTitleLabel">{{ 'ČASOPIS' | translate }} </span>
+        <span class="app-title">{{ state.currentMagazine['title_' + state.currentLang] }}</span>
+        <ng-container *ngIf="state.currentMagazine['subtitle_' + state.currentLang]">
+          <span class="app-pipe"></span>
+          <span class="app-subtitle">{{ state.currentMagazine['subtitle_' + state.currentLang] }}</span>
+        </ng-container>
+      </a>
+    </h1>
+  </div>
+</div>

@@ -1,12 +1,21 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AppState } from 'src/app/app.state';
 
 import {MagazineState} from '../../magazine.state';
 import {MagazinesService} from '../../magazines.service';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatDividerModule} from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, RouterModule, TranslateModule, MatToolbarModule, MatIconModule, MatCardModule, MatTooltipModule, MatDividerModule, MatButtonModule],
   selector: 'app-seznam-item',
   templateUrl: './seznam-item.component.html',
   styleUrls: ['./seznam-item.component.scss']

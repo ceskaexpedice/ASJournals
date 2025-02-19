@@ -1,28 +1,30 @@
 <mat-card class="app-mb-4">
-  <div fxLayout="row" fxLayoutGap="16px">
-    <div class="app-left">
-      <a routerLink="/{{resultItem.ctx}}" queryParamsHandling="preserve" [matTooltip]="resultItem.title" matTooltipPosition="above" >
+  <div class="app-fxLayout app-row app-p-4 app-mb-n4">
+    <div class="app-left app-mr-4">
+      <a [href]="resultItem.ctx" queryParamsHandling="preserve" matTooltipPosition="above" target="_blank" >
         <img [src]="resultItem.img" alt="thumb" />
       </a>
     </div>
     <div class="app-right">
-      <mat-card-title>{{ resultItem.title }}</mat-card-title>
+      <mat-card-title>{{ resultItem['title_'+translate.currentLang] }}</mat-card-title>
       <div>
         <label class="app-label">{{ 'magazines.vydavatel' | translate }}: </label>
         <a [routerLink]="['/magazines/vydavatel', resultItem.vydavatel_id]" queryParamsHandling="preserve" [title]="resultItem.vydavatel">{{ resultItem.vydavatel }}</a>
       </div>
       <div>
         <label class="app-label">{{ 'magazines.oblast' | translate }}: </label>
-        <a (click)="addFilter('oblast', resultItem.oblast)" [title]="resultItem.oblast">{{ resultItem.oblast }}</a>
+        <span *ngFor="let oblast of resultItem['oblast_' + translate.currentLang]; let last=last">
+          <a (click)="addFilter('oblast', oblast)" [title]="oblast">{{ oblast }}</a><span *ngIf="!last">, </span> 
+        </span>
       </div>
       <div>
         <label class="app-label">ISSN: </label>
         {{ resultItem.issn }}
       </div>
       <div>
-        <label class="app-label">{{ 'magazines.keywords' | translate }}: </label>
-        <span *ngFor="let keyword of resultItem.keywords">
-          <a (click)="addFilter('keywords', keyword)" [title]="keyword">{{ keyword }}</a>, 
+        <label class="app-label">{{ 'magazines.keyword' | translate }}: </label>
+        <span *ngFor="let keyword of resultItem['keyword_' + translate.currentLang]; let last=last">
+          <a (click)="addFilter('keyword', keyword)" [title]="keyword">{{ keyword }}</a><span *ngIf="!last">, </span> 
         </span>
       </div>
       <div>
@@ -35,13 +37,13 @@
       </div>
     </div>
   </div>
-  <mat-card-content class="app-collapse" [class.app-in]="showingDetail"><!--*ngIf="showingDetail"-->
+  <mat-card-content class="app-collapse" [class.app-in]="showingDetail" *ngIf="showingDetail"><!--*ngIf="showingDetail"-->
     <mat-divider></mat-divider>
-    {{ translate.currentLang === 'en' ? resultItem.desc_en :  resultItem.desc }}
+    {{ resultItem['desc_' + translate.currentLang] }}
   </mat-card-content>
-  <mat-card-actions fxLayout="row" fxLayoutGap="32px">
-    <div fxFlex>
-      <a mat-flat-button [href]="resultItem.ctx" [matTooltip]="resultItem.ctx" matTooltipPosition="above" target="_blank">
+  <mat-card-actions class="app-fxLayout app-row">
+    <div class="app-fxFlex">
+      <a mat-flat-button [href]="resultItem.ctx" target="_blank">
         <mat-icon>link</mat-icon> {{ 'magazines.vstup_na_web' | translate }}
       </a>
     </div>
