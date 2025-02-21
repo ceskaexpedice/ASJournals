@@ -25,9 +25,11 @@
     <p *ngIf="state.currentMagazine.showOldYears && isRoot()">
       {{'Starší ročníky najdete v' | translate}} <a [href]="state.currentMagazine.k5url + state.currentMagazine.journal" [title]="'k5_title' | translate" target="_blank">{{'k5_title' | translate}}</a>
     </p>
-    <ng-container  *ngIf="state.currentMagazine.showExtLink && isRoot()"></ng-container>
-    <a mat-stroked-button color="primary" [href]="state.currentMagazine['extLinkUrl_' + state.currentLang]"  [title]="state.currentMagazine['extLinkText_' + state.currentLang]" target="_blank"><mat-icon>open_in_new</mat-icon>{{ state.currentMagazine['extLinkText_' + state.currentLang] }}</a>
+    <ng-container  *ngIf="state.currentMagazine.showExtLink && isRoot()">
+      <a mat-stroked-button color="primary" [href]="state.currentMagazine['extLinkUrl_' + state.currentLang]"  [title]="state.currentMagazine['extLinkText_' + state.currentLang]" target="_blank"><mat-icon>open_in_new</mat-icon>{{ state.currentMagazine['extLinkText_' + state.currentLang] }}</a>
+    </ng-container>
   </div>
+    
 </div>
 
 <div class="app-page-wrapper" *ngIf="!isRoot()">
