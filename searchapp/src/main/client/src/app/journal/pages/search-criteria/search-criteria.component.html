@@ -1,5 +1,5 @@
 <mat-form-field class="app-w-100" appearance="outline"  *ngFor="let criterium of criteria; let last=last; let idx = index">
-  <mat-label>{{ 'q_placeholder' | translate }}</mat-label>
+  <mat-label class="app-text-cutter">{{ 'q_placeholder' | translate }}</mat-label>
   <input matInput type="text" #input [(ngModel)]="criterium.value" name="cvalue" (keyup.enter)="search()">
   <button mat-stroked-button color="primary" matPrefix [matMenuTriggerFor]="menuPrefix" class="app-ml-4 app-mr-4">
     {{ "fields." + criterium.field | translate  }}<mat-icon iconPositionEnd>expand_more</mat-icon>
