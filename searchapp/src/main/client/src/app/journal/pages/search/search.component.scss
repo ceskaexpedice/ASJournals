@@ -9,6 +9,12 @@
   @media only screen and (max-width: 700px) {
     .mat-mdc-floating-label {
       width: 110px;
-     }
-   }
+    }
+  }
+
+  @media only screen and (max-width: 480px) {
+    .mat-mdc-floating-label {
+      width: 40px;
+    }
+  }
 }
