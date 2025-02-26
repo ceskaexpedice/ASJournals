@@ -1,10 +1,10 @@
 <div class="app-page-wrapper" *ngIf="isRoot()">
   <div class="app-container app-small">
-    <div class="app-fxLayout app-row app-fill">
-      <h1 class="app-fxFlex">{{ 'Ročníky' | translate }}</h1>
+    <div class="app-fxLayout app-row app-fill app-mb-4 app-mobile">
+      <h1 class="app-fxFlex app-m-0">{{ 'Ročníky' | translate }}</h1>
       <div>
-        {{ 'Výsledky řadit' | translate }}:
-        <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
+        <span class="app-mr-2">{{ 'Výsledky řadit' | translate }}:</span>
+        <button mat-stroked-button color="primary" [matMenuTriggerFor]="menuSort">
           {{ currentSort.label | translate }}<mat-icon iconPositionEnd>expand_more</mat-icon>
         </button>
         <mat-menu #menuSort="matMenu">
