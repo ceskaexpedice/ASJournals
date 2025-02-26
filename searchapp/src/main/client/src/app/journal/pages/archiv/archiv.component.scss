@@ -19,7 +19,7 @@
   .app-fxLayout {
     @media only screen and (max-width: 599px) {
       &.app-mobile {
-        display: block !important;
+        flex-direction: column;
     
         .app-left {
           margin-bottom: 16px;
@@ -28,6 +28,10 @@
           .app-results-wrapper {
             margin-right: 0 !important;
           }
+        }
+
+        &.app-flex-flow-reverese {
+          flex-flow: column-reverse;
         }
       }
     }
