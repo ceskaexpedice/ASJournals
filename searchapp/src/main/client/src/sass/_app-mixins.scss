@@ -43,7 +43,7 @@
     &.app-#{$alert} {
       text-align: center;
       color: $color;
-      border-color: rgba($color, .2);
+      border-color: rgba($color, .2) !important;
       background-color: rgba($color, .1) !important;
 
       .mat-icon {
