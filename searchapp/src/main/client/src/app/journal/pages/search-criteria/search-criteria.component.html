@@ -1,6 +1,6 @@
-<mat-form-field class="app-w-100" appearance="outline"  *ngFor="let criterium of criteria; let last=last; let idx = index">
-  <mat-label class="app-text-cutter">{{ 'q_placeholder' | translate }}</mat-label>
-  <input matInput type="text" #input [(ngModel)]="criterium.value" name="cvalue" (keyup.enter)="search()">
+<mat-form-field class="app-w-100 app-form-field" appearance="outline"  *ngFor="let criterium of criteria; let last=last; let idx = index">
+  <!-- <mat-label class="app-text-cutter">{{ 'q_placeholder' | translate }}</mat-label> -->
+  <input matInput type="text" #input [(ngModel)]="criterium.value" name="cvalue" (keyup.enter)="search()" [placeholder]="'q_placeholder' | translate" class="app-text-cutter">
   <button mat-stroked-button color="primary" matPrefix [matMenuTriggerFor]="menuPrefix" class="app-ml-4 app-mr-4">
     {{ "fields." + criterium.field | translate  }}<mat-icon iconPositionEnd>expand_more</mat-icon>
   </button>
@@ -20,12 +20,12 @@
   </div>
 </mat-form-field>
 
-<div class="app-fxLayout app-row app-center-v app-mb-4">
-  <div class="app-fxFlex">
+<div class="app-fxLayout app-row app-center-v app-mb-4 app-mobile-row">
+  <div class="app-fxFlex app-left">
     <button mat-stroked-button color="primary" class="app-mr-2" (click)="addCriterium()"><mat-icon>add</mat-icon>{{ 'button.addCriterion' | translate }}</button>
     <button mat-stroked-button color="primary" (click)="reset()"><mat-icon>delete_forever</mat-icon>{{'button.deleteForm' | translate }}</button>
   </div>
-  <button mat-flat-button color="primary" (click)="search()"><mat-icon>search</mat-icon>{{ 'button.search' | translate }}</button>
+  <button class="app-right" mat-flat-button color="primary" (click)="search()"><mat-icon>search</mat-icon>{{ 'button.search' | translate }}</button>
 </div>
 
 

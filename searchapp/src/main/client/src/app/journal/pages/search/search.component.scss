@@ -5,16 +5,17 @@
   }
 }
 
-::ng-deep {
-  @media only screen and (max-width: 700px) {
-    .mat-mdc-floating-label {
-      width: 110px;
-    }
-  }
+@media only screen and (max-width: 700px) {
+  .app-mobile-row {
+    display: flex;
+    flex-direction: column;
 
-  @media only screen and (max-width: 480px) {
-    .mat-mdc-floating-label {
-      width: 40px;
+    strong {
+      margin-bottom: 16px;
+    }
+
+    .mat-mdc-form-field {
+      margin-right: 0 !important;
     }
   }
 }
