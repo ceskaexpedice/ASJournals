@@ -100,7 +100,6 @@
       </mat-form-field>
     </div>
   </ng-container>
-  <hr/>
 
   <div class="app-fxFlex-3x">
     <mat-form-field class="app-w-100" appearance="outline">
@@ -124,6 +123,7 @@
       </mat-select>
     </mat-form-field>
   </div>
+
   <div class="app-fxFlex-2x">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.pristup' | translate }}</mat-label>
@@ -139,7 +139,7 @@
   
   
   <ng-container *ngFor="let lang of mag.languages">
-    <div class="app-fxFlex-25">
+    <div class="app-fxFlex-30">
       <mat-form-field class="app-w-100" appearance="outline">
         <mat-label>{{ 'magazines.oblast' | translate }}  {{ 'magazines.lang.' + lang | translate }}</mat-label>
         <input matInput type="text" [name]="'newOblast' + lang" [id]="'newOblast' + lang" [(ngModel)]="newOblast[lang]" />
@@ -148,33 +148,33 @@
         </button>
       </mat-form-field>
     </div>
-    <div class="app-fxFlex app-fxFlex-75 app-center-v">
+    <div class="app-fxFlex app-fxFlex-70 app-center-v">
       <span *ngFor="let k of mag['oblast_'+lang]; let idx = index; let last = last;" class="app-keyword">
         <label class="app-label">{{ k }}</label><a (click)="removeOblast(idx, lang)" [matTooltip]="'magazines.smazat_oblast' | translate"><mat-icon>clear</mat-icon></a><span class="app-pipe app-in-element" *ngIf="!last"></span>
       </span>
     </div>
-</ng-container>
+  </ng-container>
 
 
-<ng-container *ngFor="let lang of mag.languages">
+  <ng-container *ngFor="let lang of mag.languages">
+    <div class="app-fxFlex-30">
+      <mat-form-field class="app-w-100" appearance="outline">
+        <mat-label>{{ 'magazines.klicove_slovo' | translate }}  {{ 'magazines.lang.' + lang | translate }}</mat-label>
+        <input matInput type="text" [name]="'newKeyword' + lang" [id]="'newKeyword' + lang" [(ngModel)]="newKeyword[lang]" />
+        <button matSuffix mat-icon-button (click)="addKeyword(lang)" [matTooltip]="'magazines.pridat_klicove_slovo' | translate">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="app-fxFlex app-fxFlex-70 app-center-v">
+      <span *ngFor="let k of mag['keyword_'+lang]; let idx = index; let last = last;" class="app-keyword">
+        <label class="app-label">{{ k }}</label><a (click)="removeKeyword(idx, lang)" [matTooltip]="'magazines.smazat_klicove_slovo' | translate"><mat-icon>clear</mat-icon></a><span class="app-pipe app-in-element" *ngIf="!last"></span>
+      </span>
+    </div>
+  </ng-container>
+
+  <!-- 
   <div class="app-fxFlex-25">
-    <mat-form-field class="app-w-100" appearance="outline">
-      <mat-label>{{ 'magazines.klicove_slovo' | translate }}  {{ 'magazines.lang.' + lang | translate }}</mat-label>
-      <input matInput type="text" [name]="'newKeyword' + lang" [id]="'newKeyword' + lang" [(ngModel)]="newKeyword[lang]" />
-      <button matSuffix mat-icon-button (click)="addKeyword(lang)" [matTooltip]="'magazines.pridat_klicove_slovo' | translate">
-        <mat-icon>add</mat-icon>
-      </button>
-    </mat-form-field>
-  </div>
-  <div class="app-fxFlex app-fxFlex-75 app-center-v">
-    <span *ngFor="let k of mag['keyword_'+lang]; let idx = index; let last = last;" class="app-keyword">
-      <label class="app-label">{{ k }}</label><a (click)="removeKeyword(idx, lang)" [matTooltip]="'magazines.smazat_klicove_slovo' | translate"><mat-icon>clear</mat-icon></a><span class="app-pipe app-in-element" *ngIf="!last"></span>
-    </span>
-  </div>
-</ng-container>
-
-
-  <!-- <div class="app-fxFlex-25">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.klicove_slovo' | translate }}</mat-label>
       <input matInput type="text" name="newKeyword" id="newKeyword" [(ngModel)]="newKeyword" />
@@ -182,7 +182,8 @@
         <mat-icon>add</mat-icon>
       </button>
     </mat-form-field>
-  </div> -->
+  </div>
+  -->
 
   <div class="app-fxFlex app-fxFlex-75 app-center-v">
     <span *ngFor="let k of mag.keyword; let idx = index; let last = last;" class="app-keyword">

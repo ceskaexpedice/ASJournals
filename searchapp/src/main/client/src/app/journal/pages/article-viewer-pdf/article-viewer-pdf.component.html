@@ -4,7 +4,7 @@
         [height]="'100%'" 
         (pdfLoaded)="afterLoad($event)" 
         [enablePrint]="false" [showOpenFileButton]="false" 
-        [language]="lang"
+        [language]="lang" [textLayer]="true" [handTool]="false"
         [useBrowserLocale]="true" style="width: 100%; height: 100%;" ></ngx-extended-pdf-viewer>
 
     <img *ngIf="!state.isPdf && !loading" [src]="state.fullSrc" alt="" class="img-responsive app-thumb-doc" />

@@ -196,15 +196,31 @@ hr {
   }
 
   .app-fxFlex-25 {
-    flex: 1 1 calc(25% - 16px);
+    $app-width: 25%;
+    flex: 1 1 calc($app-width - 16px);
     box-sizing: border-box;
-    min-width: calc(25% - 16px);
+    min-width: calc($app-width - 16px);
   }
 
   .app-fxFlex-75 {
-    flex: 1 1 calc(75% - 16px);
+    $app-width: 75%;
+    flex: 1 1 calc($app-width - 16px);
     box-sizing: border-box;
-    min-width: calc(75% - 16px);
+    min-width: calc($app-width - 16px);
+  }
+
+  .app-fxFlex-30 {
+    $app-width: 30%;
+    flex: 1 1 calc($app-width - 16px);
+    box-sizing: border-box;
+    min-width: calc($app-width - 16px);
+  }
+
+  .app-fxFlex-70 {
+    $app-width: 70%;
+    flex: 1 1 calc($app-width - 16px);
+    box-sizing: border-box;
+    min-width: calc($app-width - 16px);
   }
 }
 

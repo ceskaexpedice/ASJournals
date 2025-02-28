@@ -124,10 +124,10 @@ export class ArticleViewerComponent implements OnInit {
   setReferences() {
     this.state.viewerArticle.references = [];
     let relatedItem = this.mods['relatedItem'] || this.mods['mods:relatedItem'];
-    if (!Array.isArray(relatedItem)) {
-      relatedItem = [relatedItem];
-    }
     if (relatedItem) {
+      if (!Array.isArray(relatedItem)) {
+        relatedItem = [relatedItem];
+      }
       const refs: any[] = relatedItem.filter((r: any) => r.type === 'references');
       this.state.viewerArticle.hasReferences = refs.length > 0;
       if (this.state.viewerArticle.hasReferences) {

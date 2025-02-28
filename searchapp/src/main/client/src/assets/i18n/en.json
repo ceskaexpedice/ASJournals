@@ -18,6 +18,7 @@
   "oblast":"Genre",
   "keywords":"Keywords",
   "keyword":"Keyword",
+  "vydavatel": "Publisher",
 	"journal_uuid":"Title root uuid",
   "showTitleLabel":"Show word 'JOURNAL'",
   "Color": "Colour",

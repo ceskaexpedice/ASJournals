@@ -18,7 +18,7 @@
           <div class="app-mb-4">
             <mat-checkbox name="onlyPeerReviewed" [(ngModel)]="onlyPeerReviewed" (ngModelChange)="setPeerReviewed()">{{ 'pouze v recenzovaných článcích' | translate }}</mat-checkbox>
           </div>
-          <div>
+          <div class="app-mobile-row">
             <strong class="app-mr-2">{{ 'Datum publikování' | translate }}:</strong>
             <mat-form-field appearance="outline" class="app-mr-2">
               <mat-label>{{ 'od roku' | translate }}</mat-label>
@@ -34,9 +34,9 @@
 
       <ng-container *ngIf="showResults()">
               
-      <div class="app-fxLayout app-row app-center-v">
-        <h1 class="app-fxFlex app-m-0">{{ 'Výsledky vyhledávání' | translate }}</h1>
-        <div>
+      <div class="app-fxLayout app-row app-center-v app-mobile-row">
+        <h1 class="app-fxFlex app-m-0 app-left">{{ 'Výsledky vyhledávání' | translate }}</h1>
+        <div class="app-right">
           {{ 'Výsledky řadit' | translate }}:
           <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
             {{ state.sorts[0].label | translate }}<mat-icon iconPositionEnd>expand_more</mat-icon>
