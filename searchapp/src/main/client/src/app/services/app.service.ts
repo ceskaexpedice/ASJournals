@@ -39,7 +39,6 @@ export class AppService {
     private snackBar: MatSnackBar,
     private config: Configuration,
     private state: AppState,
-    private search: SearchService,
     private translate: TranslateService,
     private http: HttpClient,
     private router: Router,
@@ -877,6 +876,12 @@ export class AppService {
     });
   }
 
+  search(params : HttpParams) {
+    let p = params.append('fq', 'root_pid:"' + this.state.currentMagazine.journal + '"');
+    var url = 'search/journal/select';    
+    return this.get(url, p);
+  }
+
   getKeywords() {
     let params = new HttpParams()
       .set('q', '*:*')
@@ -886,7 +891,7 @@ export class AppService {
       .set('facet.mincount', '1')
       .set('facet.limit', '-1')
       .set('facet.sort', 'index');
-    this.search.search(params).subscribe((res: any) => {
+    this.search(params).subscribe((res: any) => {
       this.state.keywords = [];
 
 
@@ -917,7 +922,7 @@ export class AppService {
       .set('facet.field', 'genre')
       .set('facet.mincount', '1')
       .set('facet.sort', 'index');
-    this.search.search(params).subscribe((res: any) => {
+    this.search(params).subscribe((res: any) => {
 
       this.state.genres = [];
       for (const i in res['facet_counts']['facet_fields']['genre']) {
