@@ -109,9 +109,9 @@ export class ArticleResultComponent implements OnInit {
                 }
             }
         } else {
-            this.title = this.titleInfo["mods:title"];
-            this.subTitle = this.titleInfo["mods:subTitle"];
-            this.nonSort = this.titleInfo["mods:nonSort"];
+            this.title = this.titleInfo?.["mods:title"];
+            this.subTitle = this.titleInfo?.["mods:subTitle"];
+            this.nonSort = this.titleInfo?.["mods:nonSort"];
         }
     }
     

@@ -3,6 +3,7 @@ package cz.incad.k5journals.searchapp;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -15,10 +16,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.io.IOUtils;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.common.SolrDocumentList;
 import org.json.JSONException;
 
 /**
@@ -27,153 +30,179 @@ import org.json.JSONException;
  */
 public class ImgServlet extends HttpServlet {
 
-  public static final Logger LOGGER = Logger.getLogger(Options.class.getName());
+    public static final Logger LOGGER = Logger.getLogger(Options.class.getName());
 
-  /**
-   * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-   * methods.
-   *
-   * @param request servlet request
-   * @param response servlet response
-   * @throws ServletException if a servlet-specific error occurs
-   * @throws IOException if an I/O error occurs
-   */
-  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
-    try {
-      response.addHeader("Access-Control-Allow-Origin", "*");
-      if (request.getParameter("obalka") != null) {
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            response.addHeader("Access-Control-Allow-Origin", "*");
+            if (request.getParameter("obalka") != null) {
 
-        String ctx = request.getParameter("ctx");
-        String path = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "cover.jpeg";
-        File f = new File(path);
-        if (f.exists()) {
-          response.setHeader("content-type", "image/jpeg");
-          try (OutputStream out = response.getOutputStream()) {
-            // response.setContentType("image/jpeg");
-            BufferedImage bi = ImageIO.read(f);
+                String ctx = request.getParameter("ctx");
+                String path = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "cover.jpeg";
+                File f = new File(path);
+                if (f.exists()) {
+                    response.setHeader("content-type", "image/jpeg");
+                    try (OutputStream out = response.getOutputStream()) {
+                        // response.setContentType("image/jpeg");
+                        BufferedImage bi = ImageIO.read(f);
 
-            BufferedImage nbi = new BufferedImage(
-                    bi.getWidth(),
-                    bi.getHeight(),
-                    BufferedImage.TYPE_INT_RGB);
+                        BufferedImage nbi = new BufferedImage(
+                                bi.getWidth(),
+                                bi.getHeight(),
+                                BufferedImage.TYPE_INT_RGB);
 
-            nbi.createGraphics()
-                    .drawImage(bi,
-                            0,
-                            0,
-                            Color.WHITE,
-                            null);
+                        nbi.createGraphics()
+                                .drawImage(bi,
+                                        0,
+                                        0,
+                                        Color.WHITE,
+                                        null);
 
-            ImageIO.write(nbi, "jpg", out);
-          }
-        } else {
-          getFromUrl(request, response);
+                        ImageIO.write(nbi, "jpg", out);
+                    }
+                } else {
+                    getFromUrl(request, response);
+                }
+            } else {
+
+                getFromUrl(request, response);
+            }
+
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
         }
-      } else {
-
-        getFromUrl(request, response);
-      }
-
-    } catch (IOException ex) {
-      LOGGER.log(Level.SEVERE, null, ex);
-    } catch (JSONException ex) {
-      LOGGER.log(Level.SEVERE, null, ex);
     }
-  }
-
-  private void getFromUrl(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-    // Check if uuid is in our index
-    Options opts = Options.getInstance();
-    String pid = request.getParameter("uuid");
-    try (SolrClient solr = new HttpSolrClient.Builder(String.format("%s%s",
-            opts.getString("solr.host", "http://localhost:8983/solr/"),
-            "journal")).build()) {
-      String q = "pid:\"" + pid + "\"";
-      long num = solr.query(new SolrQuery(q)).getResults().getNumFound();
-      if (num == 0) {
-        LOGGER.log(Level.WARNING, "Not in index {0}", pid);
-        return;
-      }
-    } catch (SolrServerException | IOException ex) {
-      LOGGER.log(Level.SEVERE, null, ex);
-      return;
+    
+    public static String pdfPath(String pid) {
+        String filename = InitServlet.CONFIG_DIR + File.separator + "slovoaslovesnost" + File.separator + "pdf"
+                + File.separator;
+        filename += pid.substring(pid.length() - 2, pid.length()) + File.separator;
+        new File(filename).mkdirs();  
+        return filename + pid.replaceFirst("uuid:", "") + ".pdf";
     }
- 
-    //response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+
+    private void getFromUrl(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        // Check if uuid is in our index
+        Options opts = Options.getInstance();
+        boolean isSaS = false;
+        String sasId = null;
+        String pid = request.getParameter("uuid");
+        try (SolrClient solr = new HttpSolrClient.Builder(String.format("%s%s",
+                opts.getString("solr.host", "http://localhost:8983/solr/"),
+                "journal")).build()) {
+            String q = "pid:\"" + pid + "\"";
+            SolrDocumentList docs = solr.query(new SolrQuery(q)).getResults();
+            long num = docs.getNumFound();
+            if (num == 0) {
+                LOGGER.log(Level.WARNING, "Not in index {0}", pid);
+                return;
+            }
+            if (docs.get(0).containsKey("isSaS")) {
+            isSaS = (boolean) docs.get(0).getFirstValue("isSaS");
+            sasId = (String) docs.get(0).getFirstValue("externalUrl");
+            }
+        } catch (SolrServerException | IOException ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            return;
+        }
+
+        //response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 //    response.addHeader("Access-Control-Allow-Methods", "GET, POST");
 //    response.addHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-    String imgPoint;
+        String imgPoint;
 
-    String thumb = request.getParameter("thumb");
-      if (thumb != null) {
-        response.setContentType("image/jpeg");
-      } else {
-        response.setContentType("application/pdf");
-      }
-      
-    if ("k7".equals(request.getParameter("kramerius_version"))) {
-      imgPoint = opts.getString("api.point.k7")
-              + "/items/" + pid + "/image";
-      if (thumb != null) {
-        imgPoint += "/thumb"; 
-      }
-    } else {
-      imgPoint = opts.getString("img.point");
-      imgPoint += "?uuid=" + pid;
-      if (thumb != null) {
-        imgPoint += "&stream=IMG_THUMB&action=SCALE&scaledHeight=140";
-      } else {
-        imgPoint += "&stream=IMG_FULL&action=GETRAW";
-      }
+        String thumb = request.getParameter("thumb");
+        if (thumb != null) {
+            response.setContentType("image/jpeg");
+        } else {
+            response.setContentType("application/pdf");
+        }
+
+        if (isSaS && request.getParameter("isSaS") == null) {
+            String filename = pdfPath(pid);
+            File f = new File(filename);
+            if (f.exists()) {
+                try (OutputStream out = response.getOutputStream()) {
+                    IOUtils.copy(new FileInputStream(f), out);
+                }
+            } else {
+                LOGGER.log(Level.INFO, "File {0} doesn't exist", filename);
+            }
+            return;
+        } else if ("k7".equals(request.getParameter("kramerius_version"))) {
+            imgPoint = opts.getString("api.point.k7")
+                    + "/items/" + pid + "/image";
+            if (thumb != null) {
+                imgPoint += "/thumb";
+            }
+        } else {
+            imgPoint = opts.getString("img.point");
+            imgPoint += "?uuid=" + pid;
+            if (thumb != null) {
+                imgPoint += "&stream=IMG_THUMB&action=SCALE&scaledHeight=140";
+            } else {
+                imgPoint += "&stream=IMG_FULL&action=GETRAW";
+            }
+        }
+
+        LOGGER.log(Level.INFO, "requesting url {0}", imgPoint);
+        Map<String, String> reqProps = new HashMap<>();
+        InputStream inputStream = RESTHelper.inputStream(imgPoint, reqProps);
+
+        org.apache.commons.io.IOUtils.copy(inputStream, response.getOutputStream());
+
     }
 
-    LOGGER.log(Level.INFO, "requesting url {0}", imgPoint);
-    Map<String, String> reqProps = new HashMap<>();
-    InputStream inputStream = RESTHelper.inputStream(imgPoint, reqProps);
-    
-    org.apache.commons.io.IOUtils.copy(inputStream, response.getOutputStream());
-
-  }
-
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-  /**
-   * Handles the HTTP <code>GET</code> method.
-   *
-   * @param request servlet request
-   * @param response servlet response
-   * @throws ServletException if a servlet-specific error occurs
-   * @throws IOException if an I/O error occurs
-   */
-  @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
-    processRequest(request, response);
-  }
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
-  /**
-   * Handles the HTTP <code>POST</code> method.
-   *
-   * @param request servlet request
-   * @param response servlet response
-   * @throws ServletException if a servlet-specific error occurs
-   * @throws IOException if an I/O error occurs
-   */
-  @Override
-  protected void doPost(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
-    processRequest(request, response);
-  }
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
-  /**
-   * Returns a short description of the servlet.
-   *
-   * @return a String containing servlet description
-   */
-  @Override
-  public String getServletInfo() {
-    return "Short description";
-  }// </editor-fold>
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
 }

@@ -273,7 +273,9 @@ export class ArticleViewerComponent implements OnInit {
           this.downloadFilename = this.state.viewerPid;
           this.loading = false;
         }
+
         this.state.fullSrc = this.config['context'] + 'api/img?uuid=' + this.state.viewerPid + '&kramerius_version=' + res['doc']['kramerius_version'];
+        
         this.mods = this.state.viewerArticle['mods'];
         this.setReferences();
 
