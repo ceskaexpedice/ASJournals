@@ -72,23 +72,23 @@ export class ArchivComponent implements OnInit {
         } else {
           this.state.archivPosition = null;
           this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
-          setTimeout(()=>{
+          setTimeout(() => {
             this.state.crumbsChanged();
           }, 100);
-          
+
           this.currentPid = '';
           this.initData();
         }
 
-        
 
-       setTimeout(() => {
+
+        setTimeout(() => {
           document.getElementById('scroller').scrollTop = 0;
         }, 10);
 
       });
-      // this.state.archivPosition = null;
-      // this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
+    // this.state.archivPosition = null;
+    // this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
   }
 
   setMainClass() {
@@ -170,11 +170,15 @@ export class ArchivComponent implements OnInit {
         this.setDetails();
       }
       if (this.currentItem['dateIssued']) {
-        this.currentItem['dateIssuedFormated'] = JSON.parse(this.currentItem['dateIssued'])[0];
+        try {
+          this.currentItem['dateIssuedFormated'] = JSON.parse(this.currentItem['dateIssued'])[0];
+        } catch (e) {
+          this.currentItem['dateIssuedFormated'] = this.currentItem['dateIssued'];
+        }
       }
       if (!this.cache.hasOwnProperty(this.currentPid)) {
         this.service.getChildren(this.currentPid).subscribe(res => {
-          this.isDataNode = res[0]['datanode'];
+          this.isDataNode = res.length > 0 && res[0]['datanode'];
 
           this.items = res;
           if (this.isDataNode) {
@@ -233,7 +237,7 @@ export class ArchivComponent implements OnInit {
         });
       } else {
         this.items = this.cache[this.currentPid]['items'];
-        this.isDataNode = this.items[0]['datanode'];
+        this.isDataNode = this.items.length > 0 && this.items[0]['datanode'];
         let p = this.cache[this.currentPid]['parent'];
         if (this.cache.hasOwnProperty(p)) {
           this.parentItems = this.cache[p]['items'];
@@ -288,11 +292,11 @@ export class ArchivComponent implements OnInit {
   }
 
   initData() {
-      if (!this.currentPid) {
-        this.setItems(this.state.currentMagazine['journal']);
-      } else {
-        this.setItems(this.currentPid);
-      }
+    if (!this.currentPid) {
+      this.setItems(this.state.currentMagazine['journal']);
+    } else {
+      this.setItems(this.currentPid);
+    }
   }
 
   isHiddenByGenre(genres: string[]) {

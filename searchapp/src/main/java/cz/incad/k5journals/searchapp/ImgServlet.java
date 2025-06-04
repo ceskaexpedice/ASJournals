@@ -132,7 +132,7 @@ public class ImgServlet extends HttpServlet {
         }
 
         if (isSaS && request.getParameter("isSaS") == null) {
-            String filename = pdfPath(pid);
+            String filename = pdfPath(sasId);
             File f = new File(filename);
             if (f.exists()) {
                 try (OutputStream out = response.getOutputStream()) {

@@ -313,7 +313,8 @@ export class AppService {
     //let url = 'api/search/journal/select';
     let url = this.config['context'] + 'search/journal/select';
     const params = new HttpParams().set('q', '*:*').set('fq', 'parents:"' + pid + '"')
-      .set('wt', 'json').set('sort', 'year ' + dir + ',dateIssued ' + dir + ',idx ' + dir).set('rows', '500');
+      // .set('wt', 'json').set('sort', 'year ' + dir + ',dateIssued ' + dir + ',idx ' + dir).set('rows', '500');
+      .set('wt', 'json').set('sort', 'year ' + dir + ',idx ' + dir).set('rows', '500');
 
     return this.get(url, params).pipe(
       map((response: any) => {

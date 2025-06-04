@@ -114,7 +114,7 @@ export default class Utils {
   public static getRozsah(mods: any): string | null {
     let ret = null;
     let part;
-    if (mods['mods:part'] && mods['mods:part']['mods:extent']) {
+    if (mods['mods:part'] && mods['mods:part']) {
       part = mods['mods:part'];
     } else if (mods['mods:relatedItem'] && mods['mods:relatedItem']['mods:part']) {
       part = mods['mods:relatedItem']['mods:part'];

@@ -86,10 +86,10 @@ export class AppState {
 
   public breadcrumbs: any[] = [];
 
-  dateMin: number = 2000;
-  dateMax: number = 2019;
-  dateOd: number = 2000;
-  dateDo: number = 2019;
+  dateMin: number = 1900;
+  dateMax: number = (new Date()).getFullYear();
+  dateOd: number = 1900;
+  dateDo: number = (new Date()).getFullYear();
   dateRange: number[] = [0, 1];
 
   public route: string = '';

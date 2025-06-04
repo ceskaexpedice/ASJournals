@@ -271,7 +271,7 @@ export class ArticleViewerComponent implements OnInit {
         } else {
           this.state.isPdf = false;
           this.downloadFilename = this.state.viewerPid;
-          this.loading = false;
+          this.loading = false; 
         }
 
         this.state.fullSrc = this.config['context'] + 'api/img?uuid=' + this.state.viewerPid + '&kramerius_version=' + res['doc']['kramerius_version'];
