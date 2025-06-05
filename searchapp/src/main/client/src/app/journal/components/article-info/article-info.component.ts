@@ -122,7 +122,7 @@ export class ArticleInfoComponent implements OnInit {
             }
         }
 
-        this.isPeerReviewed = this.article['genre'].indexOf('peer-reviewed') > -1;
+        this.isPeerReviewed = this.article['genre']?.indexOf('peer-reviewed') > -1;
 
         this.licence = this.state.currentMagazine?.licence;
         

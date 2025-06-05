@@ -72,7 +72,7 @@ export class ArticleResultComponent implements OnInit {
         this.setDetails();
         //this.setNames(mods);
         //this.authors = Utils.getAutors(mods);
-        this.isPeerReviewed = this.article['genre'].indexOf('peer-reviewed') > -1;
+        this.isPeerReviewed = this.article['genre']?.indexOf('peer-reviewed') > -1;
         this.authors = this.article['autor'];
         if (this.article['autor_full']) {
             this.authors_full = this.article['autor_full'];
