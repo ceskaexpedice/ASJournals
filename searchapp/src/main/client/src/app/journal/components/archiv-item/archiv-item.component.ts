@@ -134,11 +134,13 @@ export class ArchivItemComponent implements OnInit {
 
 
   img() {
-    if (this.item['isSaS']) {
-      return this.config['context'] + 'api/img?uuid=' + this.item['firstPagePid'] + '&kramerius_version=' + this.item['kramerius_version'] + '&isSaS=true&thumb=true';
-    } else {
-      return this.config['context'] + 'api/img?uuid=' + this.item['pid'] + '&kramerius_version=' + this.item['kramerius_version'] + '&thumb=true';
-    }
+    // if (this.item['isSaS']) {
+    //   return this.config['context'] + 'api/img?uuid=' + this.item['pid'] + '&kramerius_version=' + this.item['kramerius_version'] + '&isSaS=true&thumb=true';
+    // } else {
+    // }
+      return this.config['context'] + 'api/img?uuid=' + this.item['pid'] 
+      + '&kramerius_version=' + this.item['kramerius_version'] 
+      + '&thumb=true' + (this.item['isSaS'] ? '&isSaS=true' : '');
     
 
   }

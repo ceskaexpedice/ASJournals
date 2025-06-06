@@ -85,8 +85,8 @@ public class ImgServlet extends HttpServlet {
         }
     }
     
-    public static String pdfPath(String pid) {
-        String filename = InitServlet.CONFIG_DIR + File.separator + "slovoaslovesnost" + File.separator + "pdf"
+    public static String pdfPath(String pid) throws IOException {
+        String filename = InitServlet.CONFIG_DIR + File.separator + Options.getInstance().getString("sas_context") + File.separator + "pdf"
                 + File.separator;
         filename += pid.substring(pid.length() - 2, pid.length()) + File.separator;
         new File(filename).mkdirs();  
@@ -111,8 +111,8 @@ public class ImgServlet extends HttpServlet {
                 return;
             }
             if (docs.get(0).containsKey("isSaS")) {
-            isSaS = (boolean) docs.get(0).getFirstValue("isSaS");
-            sasId = (String) docs.get(0).getFirstValue("externalUrl");
+                isSaS = (boolean) docs.get(0).getFirstValue("isSaS");
+                sasId = (String) docs.get(0).getFirstValue("firstPagePid");
             }
         } catch (SolrServerException | IOException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
@@ -142,6 +142,12 @@ public class ImgServlet extends HttpServlet {
                 LOGGER.log(Level.INFO, "File {0} doesn't exist", filename);
             }
             return;
+        } else if (isSaS && Boolean.parseBoolean(request.getParameter("isSaS"))) {
+            imgPoint = opts.getString("api.point.k7")
+                    + "/items/" + sasId + "/image";
+            if (thumb != null) {
+                imgPoint += "/thumb";
+            }
         } else if ("k7".equals(request.getParameter("kramerius_version"))) {
             imgPoint = opts.getString("api.point.k7")
                     + "/items/" + pid + "/image";

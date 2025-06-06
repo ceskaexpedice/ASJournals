@@ -11,5 +11,6 @@
     "de": "ger",
     "en": "eng"
   }, 
-  "citation_server": "http://citace.kramerius.cloud/v1/kramerius?format=html&url="
+  "citation_server": "http://citace.kramerius.cloud/v1/kramerius?format=html&url=",
+  "sas_context": "slovoaslovesnost"
 }
