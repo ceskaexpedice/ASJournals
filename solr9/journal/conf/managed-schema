@@ -109,6 +109,7 @@
 
     <!-- Fields for Slovo a Slovesnost archive -->
     <field name="isSaS" type="boolean" indexed="true" stored="true" multiValued="false"/>
+    <field name="pid_israndom" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="externalUrl" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="firstPagePid" type="string" indexed="true" stored="true" multiValued="false"/>
 	

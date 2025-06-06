@@ -69,4 +69,9 @@
 		<strong>{{'Licence' | translate}}:</strong>
 		{{ licence }}
 	</div>
+	<div *ngIf="article.isSaS">
+		<a mat-stroked-button color="primary" [href]="state.currentMagazine['k5url'] + article.firstPagePid"  target="_blank">
+			<strong>{{'Zobrazit v Digitální knihovně AV ČR' | translate}}</strong>
+		</a>
+	</div>
 </ng-container>
