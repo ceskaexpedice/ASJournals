@@ -85,8 +85,8 @@ public class ImgServlet extends HttpServlet {
         }
     }
     
-    public static String pdfPath(String pid) throws IOException {
-        String filename = InitServlet.CONFIG_DIR + File.separator + Options.getInstance().getString("sas_context") + File.separator + "pdf"
+    public static String pdfPath(String pid, String ctx) throws IOException {
+        String filename = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "pdf" 
                 + File.separator;
         filename += pid.substring(pid.length() - 2, pid.length()) + File.separator;
         new File(filename).mkdirs();  
@@ -132,7 +132,7 @@ public class ImgServlet extends HttpServlet {
         }
 
         if (isSaS && request.getParameter("isSaS") == null) {
-            String filename = pdfPath(sasId);
+            String filename = pdfPath(sasId, request.getParameter("ctx"));
             File f = new File(filename);
             if (f.exists()) {
                 try (OutputStream out = response.getOutputStream()) {

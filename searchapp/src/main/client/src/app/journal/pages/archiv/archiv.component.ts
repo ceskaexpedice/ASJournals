@@ -366,7 +366,10 @@ export class ArchivComponent implements OnInit {
 
 
   img(pid: string, kramerius_version: string) {
-    return this.config['context'] + 'api/img?uuid=' + pid + '&kramerius_version=' + kramerius_version + '&thumb=true';
+    return this.config['context'] + 'api/img?uuid=' + pid 
+    + '&ctx=' + this.state.currentMagazine.ctx 
+    + '&kramerius_version=' + kramerius_version 
+    + '&thumb=true';
   }
 
 }

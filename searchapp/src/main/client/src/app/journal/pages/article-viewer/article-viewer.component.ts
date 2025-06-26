@@ -274,7 +274,9 @@ export class ArticleViewerComponent implements OnInit {
           this.loading = false; 
         }
 
-        this.state.fullSrc = this.config['context'] + 'api/img?uuid=' + this.state.viewerPid + '&kramerius_version=' + res['doc']['kramerius_version'];
+        this.state.fullSrc = this.config['context'] + 'api/img?uuid=' + this.state.viewerPid 
+        + '&ctx=' + this.state.currentMagazine.ctx 
+        + '&kramerius_version=' + res['doc']['kramerius_version'];
         
         this.mods = this.state.viewerArticle['mods'];
         this.setReferences();
