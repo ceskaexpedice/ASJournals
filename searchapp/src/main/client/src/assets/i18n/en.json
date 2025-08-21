@@ -24,6 +24,7 @@
   "Color": "Colour",
 	"home": "Home",
 	"home_news": "Currently",
+	"home_db": "The journal is indexed in the following databases",
 	"paginator": {
 		"desc": {
 		  "Číslo stránky": "Page number",
@@ -239,7 +240,7 @@
 		"title_mobil": "AS Journals",
 		"online_casopisy_mobil": "online magazines",
 		"navigace": "Navigation",
-		"seznam_casopisu": "List of magazines",
+		"seznam_casopisu": "Journals",
 		"o_projektu": "About project",
 		"vydavatele": "Publishers",
 		"kontakt": "Contact",

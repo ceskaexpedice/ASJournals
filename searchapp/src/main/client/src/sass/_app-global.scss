@@ -341,3 +341,10 @@ fieldset {
   }
 }
 
+footer {
+  a {
+    color: var(--palette-primary-100) !important;
+    text-decoration: underline;
+  }
+}
+

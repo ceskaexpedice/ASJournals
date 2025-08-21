@@ -130,7 +130,7 @@ export class MagazinesService {
   getEditorMagazines(id: string): Observable<any> {
     var url = 'search/get_magazines';
     let params = new HttpParams()
-      .set('fq', 'vydavatel_id:"' + id + '"')
+      .set('vydavatel_id', id)
       .set('sortDir', this.state.currentSortDir);
 
     for (let i in this.state.filters) {

@@ -24,6 +24,7 @@
 	"Color": "Barva",	
 	"home": "Hlavní stránka",
 	"home_news": "Aktuálně",
+	"home_db": "Časopis je zařazen v databázích",
 	"paginator": {
 		"desc": {
 		  "Číslo stránky": "Číslo stránky",
