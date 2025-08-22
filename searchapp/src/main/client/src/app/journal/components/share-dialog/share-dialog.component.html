@@ -6,7 +6,7 @@
     </p>
     <p *ngIf="data.doi">
         <span style="width: 8%;">DOI: </span>
-        <input [value]="'dx.doi.org/' + data.doi" type="text" [size]="data.doi.length + 10" style="width: 90%;" />
+        <input [value]="'https://doi.org/' + data.doi" type="text" [size]="data.doi.length + 10" style="width: 90%;" />
     </p>
 </div>
 <div mat-dialog-actions cdkFocusRegionstart>
