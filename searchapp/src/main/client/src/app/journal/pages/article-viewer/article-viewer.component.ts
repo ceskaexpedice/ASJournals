@@ -371,7 +371,11 @@ export class ArticleViewerComponent implements OnInit {
     const rozsah = Utils.getRozsah(this.state.viewerArticle.mods);
     if (rozsah !== null) {
       tags.push({ name: 'citation_firstpage', content: rozsah.split('-')[0].trim() });
-      tags.push({ name: 'citation_lastpage', content: rozsah.split('-')[1].trim() });
+      if (rozsah.split('-').length > 1) {
+        tags.push({ name: 'citation_lastpage', content: rozsah.split('-')[1].trim() });
+      } else {
+        tags.push({ name: 'citation_lastpage', content: rozsah.split('-')[0].trim() });
+      }
     }
 
     tags.push(

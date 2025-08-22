@@ -44,7 +44,7 @@
 
 	<div *ngIf="rozsah">
 		<strong>{{ 'Rozsah stran' | translate }}:</strong>
-		{{ 'rozsah_zkratka' | translate }} {{ rozsah }}
+		{{ rozsah.toString().includes('–') ? ('rozsah_zkratka' | translate) : ('rozsah_zkratka_singular' | translate) }} {{ rozsah }}
 	</div>
 
 	<div *ngIf="doi">

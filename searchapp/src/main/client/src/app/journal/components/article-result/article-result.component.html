@@ -16,7 +16,7 @@
   <div>
     <app-journal-details *ngIf="parentJournal" [journal]="parentJournal"></app-journal-details>
     <ng-container *ngIf="rozsah">
-      <span class="app-pipe"></span>{{ 'rozsah_zkratka' | translate }} <span>{{ rozsah }}</span>
+      <span class="app-pipe"></span>{{ rozsah.toString().includes('–') ? ('rozsah_zkratka' | translate) : ('rozsah_zkratka_singular' | translate) }} <span>{{ rozsah }}</span>
     </ng-container>
   </div>
 </div>

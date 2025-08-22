@@ -126,13 +126,17 @@ export default class Utils {
       for (const i in part) {
         if (part[i].hasOwnProperty('mods:extent')) {
 
-          ret = part[i]['mods:extent']['mods:start'] +
-            '-' + part[i]['mods:extent']['mods:end'];
+          ret = part[i]['mods:extent']['mods:start'].toString();
+          if (part[i]['mods:extent']['mods:end'] !== part[i]['mods:extent']['mods:start']) {
+            ret += '–' + part[i]['mods:extent']['mods:end'];
+          }
         }
       }
     } else if (part['mods:extent']) {
-      ret = part['mods:extent']['mods:start'] +
-        '-' + part['mods:extent']['mods:end'];
+      ret = part['mods:extent']['mods:start'].toString();
+          if (part['mods:extent']['mods:end'] !== part['mods:extent']['mods:start']) {
+            ret += '–' + part['mods:extent']['mods:end'];
+          }
     }
     return ret;
   }
