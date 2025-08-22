@@ -82,6 +82,8 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
               this.genretr = this.translate.instant('genre.'+this.genre);
             }
           }
+        } else {
+          this.addCriterium();
         }
           this.service.searchFired(this.criteria);
       });

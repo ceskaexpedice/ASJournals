@@ -90,7 +90,7 @@
 		"archiv_": "Archiv",
 		"hledat_": "Vyhledat",
 		"hledat": {
-			"cokoliv_": "Cokoliv",
+			"cokoliv_": "Vše",
 			"autory_": "Rejstřík autorů",
 			"rubriky_": "Rubriky",
 			"keywords_": "Rejstřík klíčových slov"
@@ -137,10 +137,10 @@
 	"od roku": "od roku",
 	"do roku": "do roku",
 	"Vyhledat": "Vyhledat",
-	"cokoliv": "cokoliv",
-	"rejstřík autorů": "rejstřík autorů",
-	"rubriky": "rubriky",
-	"rejstřík klíčových slov": "rejstřík klíčových slov",
+	"Cokoliv": "Vše",
+	"Rejstřík autorů": "Rejstřík autorů",
+	"Rubriky": "Rubriky",
+	"Rejstřík klíčových slov": "Rejstřík klíčových slov",
 	"Předchozí": "Předchozí",
 	"Další": "Další",
 	"Výsledky vyhledávání": "Výsledky vyhledávání",
@@ -610,7 +610,7 @@
 		}
 	},
 	"fields": {
-		"_text_": "kdekoliv",
+		"_text_": "Ve všech polích",
 		"title": "název",
 		"autor": "autor",
 		"keywords": "klíčová slova",
