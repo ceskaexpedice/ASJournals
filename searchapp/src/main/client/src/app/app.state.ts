@@ -34,6 +34,7 @@ export class AppState {
 
   //ctxs: {ctx: string, color: string, journal: string, showTitleLabel: boolean, licence:string}[];
   ctxs: Magazine[] = [];
+  editors: {id: string, name: string, name_en: string}[];
 
   username = '';
   loginuser: string | undefined;
@@ -168,8 +169,9 @@ export class AppState {
 
   //params
   setJournals(res: any) {
-    this.ctxs = res['response']['docs'];
+    this.ctxs = res['magazines']['response']['docs'];
     this.ctxs.forEach((m: Magazine) => m.isK7 = m.kramerius_version === 'k7');
+    this.editors = res['editors']['response']['docs'];
     //this.ctxs = res["journals"];
     //this.ctx = this.ctxs[0];
     this._journalsSubject.next(this);

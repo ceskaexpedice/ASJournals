@@ -11,7 +11,7 @@
       </mat-card-title>
       <div>
         <label class="app-label">{{ 'magazines.vydavatel' | translate }}: </label>
-        <a [routerLink]="['/magazines/vydavatel', resultItem.vydavatel_id]" queryParamsHandling="preserve" [title]="resultItem.vydavatel">{{ resultItem.vydavatel }}</a>
+        <a [routerLink]="['/magazines/vydavatel', resultItem.vydavatel_id]" queryParamsHandling="preserve" [title]="resultItem.vydavatel">{{ editorName(resultItem.vydavatel_id) }}</a>
       </div>
       <div>
         <label class="app-label">{{ 'magazines.oblast' | translate }}: </label>

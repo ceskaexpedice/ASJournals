@@ -100,6 +100,7 @@ import { MagazineState } from './magazines/magazine.state';
             .toPromise()
             .then((res: any) => {
                 this.state.setJournals(res);
+                this.magState.setEditors(res['editors']);
                 console.log('magazines loaded');
                 const path = this.document.location.pathname.split("/")[1]
                 if (path && path !== 'magazines') {

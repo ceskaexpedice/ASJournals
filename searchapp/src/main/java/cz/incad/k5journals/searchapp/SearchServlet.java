@@ -68,7 +68,10 @@ public class SearchServlet extends HttpServlet {
         GET_MAGAZINES {
             @Override
             JSONObject doPerform(HttpServletRequest request, HttpServletResponse response) throws Exception {
-                return Searcher.getMagazines(request);
+                JSONObject ret = new JSONObject();
+                ret.put("magazines", Searcher.getMagazines(request));
+                ret.put("editors", Searcher.getEditors(request));
+                return ret;
             }
         },
         GET_EDITORS {
