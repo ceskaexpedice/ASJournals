@@ -84,7 +84,7 @@ public class Searcher {
                     .setSort(sort, SolrQuery.ORDER.asc)
                     .setFacet(true)
                     .setFacetMinCount(1)
-                    .addFacetField("{!key=pristup}pristup", "{!key=oblast}oblast_" + lang, "{!key=keyword}keyword_" + lang, "{!key=vydavatel}vydavatel")
+                    .addFacetField("{!key=pristup}pristup", "{!key=oblast}oblast_" + lang, "{!key=keyword}keyword_" + lang, "{!key=vydavatel}vydavatel_id")
                     .setParam("json.nl", "arrarr");
 
             if (request.getParameter("sortDir") != null) {

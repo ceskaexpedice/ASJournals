@@ -142,8 +142,8 @@ export class MagazinesService {
 
     return this.get(url, params).pipe(
       map((response: any) => {
-        this.state.magazines = response['response']['docs'];
-        this.state.setFacets(response['facet_counts']['facet_fields']);
+        this.state.magazines = response['magazines']['response']['docs'];
+        this.state.setFacets(response['magazines']['facet_counts']['facet_fields']);
         return this.state;
       })
     )

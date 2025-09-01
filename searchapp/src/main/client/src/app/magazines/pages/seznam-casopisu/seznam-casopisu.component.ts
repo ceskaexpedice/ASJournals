@@ -77,7 +77,7 @@ export class SeznamCasopisuComponent implements OnInit {
     this.service.getMagazines().subscribe((response: any) => {
       this.state.magazines = response['magazines']['response']['docs'];
       this.state.magazines.forEach((m: Magazine) => m.isK7 = m.kramerius_version === 'k7');
-      this.state.setFacets(response['facet_counts']['facet_fields']);
+      this.state.setFacets(response['magazines']['facet_counts']['facet_fields']);
     });
   }
 
