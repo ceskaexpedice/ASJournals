@@ -49,7 +49,7 @@
 
 	<div *ngIf="doi">
 		<strong>{{'DOI' | translate}}: </strong>
-		<a [href]="'https://doi.org/' + doi">{{ doi }}</a>
+		<a target="_blank" [href]="'https://doi.org/' + doi">{{ doi }}</a>
 	</div>
 
 	<div>
