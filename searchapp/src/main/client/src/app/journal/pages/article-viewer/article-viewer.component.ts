@@ -136,7 +136,7 @@ export class ArticleViewerComponent implements OnInit {
           // const ref = JSON.parse(JSON.stringify(refOrig).replaceAll('mods:', ''));
           let doi = '';
           if (ref['mods:identifier'] && ref['mods:identifier'].type === 'doi') {
-            doi = 'DOI: ' +  ref['mods:identifier'].content + '.';
+            doi = 'DOI: <a target="_blank" href="https://doi.org/'+ ref['mods:identifier'].content +'">' +  ref['mods:identifier'].content + '</a>.';
           }
           let isbn = '';
           if (ref['mods:identifier'] && ref['mods:identifier'].type === 'isbn') {
