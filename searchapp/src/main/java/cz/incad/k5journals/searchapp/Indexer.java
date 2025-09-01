@@ -1,7 +1,6 @@
 package cz.incad.k5journals.searchapp;
 
 import cz.incad.FormatUtils;
-import static cz.incad.k5journals.searchapp.IndexerK7.LOGGER;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;

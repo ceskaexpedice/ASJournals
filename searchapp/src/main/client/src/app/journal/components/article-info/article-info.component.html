@@ -48,8 +48,8 @@
 	</div>
 
 	<div *ngIf="doi">
-		<strong>{{'DOI' | translate}}:</strong>
-		{{ doi }}
+		<strong>{{'DOI' | translate}}: </strong>
+		<a [href]="'https://doi.org/' + doi">{{ doi }}</a>
 	</div>
 
 	<div>
