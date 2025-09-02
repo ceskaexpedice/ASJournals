@@ -91,8 +91,8 @@ public class Searcher {
                 query.setSort(sort, SolrQuery.ORDER.valueOf(request.getParameter("sortDir")));
             }
             
-            if (request.getParameter("vydavatel_id") != null) {
-                for (String fq : request.getParameterValues("vydavatel_id")) {
+            if (request.getParameter("vydavatel") != null) {
+                for (String fq : request.getParameterValues("vydavatel")) {
                     query.addFilterQuery("{!tag=vydavatel}vydavatel_id:\"" + fq + "\"");
                 }
             } 
