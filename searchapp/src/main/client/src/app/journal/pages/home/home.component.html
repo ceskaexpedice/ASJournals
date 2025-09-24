@@ -14,8 +14,8 @@
         </ng-container>
         <ng-container *ngIf="showDb()">
           <mat-divider></mat-divider>
-          <strong>Časopis je zařazen v databázích:</strong>
-          <app-free-text [page]="'db'"></app-free-text>
+          <strong>{{ 'home_db' | translate }}:</strong>
+          <app-free-text [page]="'home_db'"></app-free-text>
         </ng-container>
       </div>
     </div>

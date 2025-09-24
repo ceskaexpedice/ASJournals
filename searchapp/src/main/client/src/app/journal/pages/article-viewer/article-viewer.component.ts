@@ -132,11 +132,11 @@ export class ArticleViewerComponent implements OnInit {
       this.state.viewerArticle.hasReferences = refs.length > 0;
       if (this.state.viewerArticle.hasReferences) {
         refs.forEach(ref => {
-          console.log(ref)
+          // console.log(ref)
           // const ref = JSON.parse(JSON.stringify(refOrig).replaceAll('mods:', ''));
           let doi = '';
           if (ref['mods:identifier'] && ref['mods:identifier'].type === 'doi') {
-            doi = 'DOI: ' +  ref['mods:identifier'].content + '.';
+            doi = 'DOI: <a target="_blank" href="https://doi.org/'+ ref['mods:identifier'].content +'">' +  ref['mods:identifier'].content + '</a>.';
           }
           let isbn = '';
           if (ref['mods:identifier'] && ref['mods:identifier'].type === 'isbn') {
@@ -162,20 +162,20 @@ export class ArticleViewerComponent implements OnInit {
                 name2 = name2 + '.'
               }
               note += `${ref['mods:part'] ? 'In:' : ''} ${name2}
-                          ${ref['mods:relatedItem']['mods:titleInfo']['mods:title'] ? 
+                          ${ref['mods:relatedItem']['mods:titleInfo']?.['mods:title'] ? 
                             ref['mods:relatedItem']['mods:titleInfo']['mods:title'] + '. ' : 
                             ''}
                             ${ref['mods:relatedItem']['mods:originInfo']?.['mods:place']?.['mods:placeTerm']['content'] ? 
                             ref['mods:relatedItem']['mods:originInfo']['mods:place']['mods:placeTerm'].content : 
-                            ''}${ref['mods:relatedItem']['mods:originInfo']['mods:publisher'] ? ': ' + ref['mods:relatedItem']['mods:originInfo']['mods:publisher'] 
-                              : ''}${ref['mods:relatedItem']['mods:originInfo']['mods:publisher'] && ref['mods:relatedItem']['mods:originInfo']['mods:dateIssued'] ?
-                               ', ' : ''}${ref['mods:relatedItem']['mods:originInfo']['mods:dateIssued'] ? ref['mods:relatedItem']['mods:originInfo']['mods:dateIssued'] 
+                            ''}${ref['mods:relatedItem']['mods:originInfo']?.['mods:publisher'] ? ': ' + ref['mods:relatedItem']['mods:originInfo']['mods:publisher'] 
+                              : ''}${ref['mods:relatedItem']['mods:originInfo']?.['mods:publisher'] && ref['mods:relatedItem']['mods:originInfo']?.['mods:dateIssued'] ?
+                               ', ' : ''}${ref['mods:relatedItem']['mods:originInfo']?.['mods:dateIssued'] ? ref['mods:relatedItem']['mods:originInfo']['mods:dateIssued'] 
                               : ''}${ref['mods:relatedItem']['mods:part']?.['mods:detail'] && Array.isArray(ref['mods:relatedItem']['mods:part']['mods:detail']) ? 
                                 ', roč. ' + ref['mods:relatedItem']['mods:part']['mods:detail'].find((d:any) => d.type === 'volume')['mods:number'] +
                                 ', č. ' + ref['mods:relatedItem']['mods:part']['mods:detail'].find((d:any) => d.type === 'issue')['mods:number'] : 
-                                ''}${ref['mods:relatedItem']['mods:part']?.['mods:detail'] && ref['mods:relatedItem']['mods:part']['mods:detail']['type'] === 'volume' ? 
+                                ''}${ref['mods:relatedItem']['mods:part']?.['mods:detail'] && ref['mods:relatedItem']['mods:part']?.['mods:detail']['type'] === 'volume' ? 
                                   ', roč. ' + ref['mods:relatedItem']['mods:part']['mods:detail']['mods:number'] : 
-                                  ''}${ref['mods:relatedItem']['mods:part']?.['mods:detail'] && ref['mods:relatedItem']['mods:part']['mods:detail']['type'] === 'issue' ? 
+                                  ''}${ref['mods:relatedItem']['mods:part']?.['mods:detail'] && ref['mods:relatedItem']['mods:part']?.['mods:detail']['type'] === 'issue' ? 
                                     ', č. ' + ref['mods:relatedItem']['mods:part']['mods:detail']['mods:number'] : 
                                     ''}${ref['mods:part']?.['mods:extent'] ? 
                                   ', s. ' + ref['mods:part']['mods:extent']['mods:start'] +
@@ -271,9 +271,13 @@ export class ArticleViewerComponent implements OnInit {
         } else {
           this.state.isPdf = false;
           this.downloadFilename = this.state.viewerPid;
-          this.loading = false;
+          this.loading = false; 
         }
-        this.state.fullSrc = this.config['context'] + 'api/img?uuid=' + this.state.viewerPid + '&kramerius_version=' + res['doc']['kramerius_version'];
+
+        this.state.fullSrc = this.config['context'] + 'api/img?uuid=' + this.state.viewerPid 
+        + '&ctx=' + this.state.currentMagazine.ctx 
+        + '&kramerius_version=' + res['doc']['kramerius_version'];
+        
         this.mods = this.state.viewerArticle['mods'];
         this.setReferences();
 
@@ -367,7 +371,11 @@ export class ArticleViewerComponent implements OnInit {
     const rozsah = Utils.getRozsah(this.state.viewerArticle.mods);
     if (rozsah !== null) {
       tags.push({ name: 'citation_firstpage', content: rozsah.split('-')[0].trim() });
-      tags.push({ name: 'citation_lastpage', content: rozsah.split('-')[1].trim() });
+      if (rozsah.split('-').length > 1) {
+        tags.push({ name: 'citation_lastpage', content: rozsah.split('-')[1].trim() });
+      } else {
+        tags.push({ name: 'citation_lastpage', content: rozsah.split('-')[0].trim() });
+      }
     }
 
     tags.push(

@@ -4,7 +4,7 @@
       <h2>{{ vydavatel }}</h2>
       <ul>
         <li *ngFor="let item of state.editors[vydavatel]">
-          <a [routerLink]="['../vydavatel', item.id]" queryParamsHandling="preserve" [title]="item.name">{{ item.name }}</a>
+          <a [routerLink]="['../vydavatel', item.id]" queryParamsHandling="preserve" [title]="item.name">{{ state.currentLang === 'en' ? item.name_en : item.name}}</a>
         </li>
       </ul>
     </div>

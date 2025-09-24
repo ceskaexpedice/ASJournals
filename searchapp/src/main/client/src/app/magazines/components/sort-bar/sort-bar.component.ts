@@ -21,8 +21,8 @@ export class SortBarComponent implements OnInit {
   setSort(dir: string){
     this.state.currentSortDir = dir;
     this.service.getMagazines().subscribe((response: any) => {
-      this.state.magazines = response['response']['docs'];
-      this.state.setFacets(response['facet_counts']['facet_fields']);
+      this.state.magazines = response['magazines']['response']['docs'];
+      this.state.setFacets(response['magazines']['facet_counts']['facet_fields']);
     });
   }
 

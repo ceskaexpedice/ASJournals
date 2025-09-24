@@ -45,8 +45,12 @@ export class ArchivItemComponent implements OnInit {
     let mods = JSON.parse(this.item['mods']);
     if (this.item['model'] === 'periodicalvolume') {
 
+    
       this.year = this.item.year;
-      this.dateIssued = JSON.parse(this.item.dateIssued)[0];
+      if (this.item.dateIssued) {
+        this.dateIssued = JSON.parse(this.item.dateIssued)[0];
+      }
+      
       if (mods['mods:titleInfo']) {
         this.volumeNumber = mods['mods:titleInfo']['mods:partNumber'];
       } else {
@@ -134,7 +138,12 @@ export class ArchivItemComponent implements OnInit {
 
 
   img() {
-    return this.config['context'] + 'api/img?uuid=' + this.item['pid'] + '&kramerius_version=' + this.item['kramerius_version'] + '&thumb=true';
+      return this.config['context'] + 'api/img?uuid=' + this.item['pid'] 
+      + '&ctx=' + this.state.currentMagazine.ctx 
+      + '&kramerius_version=' + this.item['kramerius_version'] 
+      + '&thumb=true' + (this.item['isSaS'] ? '&isSaS=true' : '');
+    
+
   }
 
   gotoArticle() {

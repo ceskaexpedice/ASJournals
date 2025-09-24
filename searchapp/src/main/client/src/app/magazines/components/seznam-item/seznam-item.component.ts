@@ -51,4 +51,14 @@ export class SeznamItemComponent implements OnInit {
   showDetail() {
     this.showingDetail = !this.showingDetail;
   }
+
+  editorName(id: string) {
+    const ed = this.state.editorsList.find((e:any) => e.id === id);
+    if (this.state.currentLang === 'en') {
+      return ed?.name_en ? ed.name_en : ed.name;
+    } else {
+      return ed ? ed.name : id;
+    }
+    
+  }
 }

@@ -114,7 +114,7 @@ export default class Utils {
   public static getRozsah(mods: any): string | null {
     let ret = null;
     let part;
-    if (mods['mods:part'] && mods['mods:part']['mods:extent']) {
+    if (mods['mods:part']) {
       part = mods['mods:part'];
     } else if (mods['mods:relatedItem'] && mods['mods:relatedItem']['mods:part']) {
       part = mods['mods:relatedItem']['mods:part'];
@@ -124,15 +124,19 @@ export default class Utils {
 
     if (part.hasOwnProperty('length')) {
       for (const i in part) {
-        if (part[i].hasOwnProperty('mods:extent')) {
+        if (part[i].hasOwnProperty('mods:extent') && part[i]['type'] === 'pageNumber') {
 
-          ret = part[i]['mods:extent']['mods:start'] +
-            '-' + part[i]['mods:extent']['mods:end'];
+          ret = part[i]['mods:extent']['mods:start'].toString();
+          if (part[i]['mods:extent']['mods:end'] !== part[i]['mods:extent']['mods:start']) {
+            ret += '–' + part[i]['mods:extent']['mods:end'];
+          }
         }
       }
     } else if (part['mods:extent']) {
-      ret = part['mods:extent']['mods:start'] +
-        '-' + part['mods:extent']['mods:end'];
+      ret = part['mods:extent']['mods:start'].toString();
+          if (part['mods:extent']['mods:end'] !== part['mods:extent']['mods:start']) {
+            ret += '–' + part['mods:extent']['mods:end'];
+          }
     }
     return ret;
   }

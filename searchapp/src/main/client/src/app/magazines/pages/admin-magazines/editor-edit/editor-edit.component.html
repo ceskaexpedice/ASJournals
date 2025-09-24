@@ -11,10 +11,16 @@
       <input matInput id="editor_typ" name="editor_typ" type="text" [(ngModel)]="editor.typ">
     </mat-form-field>
   </div>
-  <div class="app-fxFlex-3x">
+  <div class="app-fxFlex-2x">
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.jmeno' | translate }}</mat-label>
       <input matInput id="editor_name" name="editor_name" type="text" [(ngModel)]="editor.name" required><span class="validity"></span>
+    </mat-form-field>
+  </div>
+  <div class="app-fxFlex-2x">
+    <mat-form-field class="app-w-100" appearance="outline">
+      <mat-label>{{ 'magazines.jmeno_en' | translate }}</mat-label>
+      <input matInput id="editor_name_en" name="editor_name_en" type="text" [(ngModel)]="editor.name_en" required><span class="validity"></span>
     </mat-form-field>
   </div>
   <div class="app-fxFlex-2x">

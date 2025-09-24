@@ -10,11 +10,12 @@ import { CommonModule } from '@angular/common';
 import { Configuration } from 'src/app/models/configuration';
 import { TranslateModule } from '@ngx-translate/core';
 import { JournalDetailsComponent } from '../journal-details/journal-details.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
     standalone: true,
-    imports: [CommonModule, RouterModule, TranslateModule, JournalDetailsComponent],
+    imports: [CommonModule, RouterModule, TranslateModule, JournalDetailsComponent, MatIconModule],
     selector: 'app-article-info',
     templateUrl: './article-info.component.html',
     styleUrls: ['./article-info.component.scss']
@@ -122,7 +123,7 @@ export class ArticleInfoComponent implements OnInit {
             }
         }
 
-        this.isPeerReviewed = this.article['genre'].indexOf('peer-reviewed') > -1;
+        this.isPeerReviewed = this.article['genre']?.indexOf('peer-reviewed') > -1;
 
         this.licence = this.state.currentMagazine?.licence;
         
@@ -158,6 +159,8 @@ export class ArticleInfoComponent implements OnInit {
         
         if (this.titleInfo.hasOwnProperty('length')) {
             this.title = this.titleInfo[0]["mods:title"];
+            this.subTitle = this.titleInfo[0]["mods:subTitle"];
+            this.nonSort = this.titleInfo[0]["mods:nonSort"];
             for (let i in this.titleInfo) {
                 if (this.titleInfo[i]["lang"] === modsLang) {
                     this.title = this.titleInfo[i]["mods:title"];

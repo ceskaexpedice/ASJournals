@@ -9,7 +9,12 @@
         <a [matTooltip]="'Odstranit tento filtr'" matTooltipPosition="above" (click)="removeFilter(facetUsed.field, idx)" class="app-mr-1"><mat-icon>clear</mat-icon></a>
         <div>
           <span>{{ facetUsed.field | translate }}: </span>
+          <ng-container *ngIf="facetUsed.field === 'vydavatel'">
+          {{ editorName(facetUsed.value) }}
+         </ng-container>
+          <ng-container *ngIf="facetUsed.field !== 'vydavatel'">
           {{ facetUsed.value }}
+         </ng-container>
         </div>
       </mat-list-item>
     </div>

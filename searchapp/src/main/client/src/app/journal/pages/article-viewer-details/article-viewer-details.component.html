@@ -1,4 +1,4 @@
-<div class="app-p-4 app-text-content app-text-break-all">
+<div class="app-p-4 app-text-content">
   
   <app-article-info [article]="state.viewerArticle" [journal]="state.viewerJournal"></app-article-info>
 
@@ -13,7 +13,7 @@
   <h2 *ngIf="state.viewerArticle?.hasReferences" class="app-headline app-mt-4">{{ 'references' | translate }}</h2>
   <p *ngIf="state.viewerArticle?.hasReferences">
     <ng-container *ngFor="let ref of state.viewerArticle.references">
-      {{ ref }}<br />
+      <div [innerHTML]="ref"></div>
     </ng-container>
   </p>
 </div>

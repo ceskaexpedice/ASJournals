@@ -72,7 +72,7 @@ export class ArticleResultComponent implements OnInit {
         this.setDetails();
         //this.setNames(mods);
         //this.authors = Utils.getAutors(mods);
-        this.isPeerReviewed = this.article['genre'].indexOf('peer-reviewed') > -1;
+        this.isPeerReviewed = this.article['genre']?.indexOf('peer-reviewed') > -1;
         this.authors = this.article['autor'];
         if (this.article['autor_full']) {
             this.authors_full = this.article['autor_full'];
@@ -101,6 +101,8 @@ export class ArticleResultComponent implements OnInit {
 
         if (this.titleInfo?.hasOwnProperty('length')) {
             this.title = this.titleInfo[0]["mods:title"];
+            this.subTitle = this.titleInfo[0]["mods:subTitle"];
+            this.nonSort = this.titleInfo[0]["mods:nonSort"];
             for (let i in this.titleInfo) {
                 if (this.titleInfo[i]["lang"] === modsLang && !this.state.currentMagazine?.keepLang) {
                     this.title = this.titleInfo[i]["mods:title"];
@@ -109,9 +111,9 @@ export class ArticleResultComponent implements OnInit {
                 }
             }
         } else {
-            this.title = this.titleInfo["mods:title"];
-            this.subTitle = this.titleInfo["mods:subTitle"];
-            this.nonSort = this.titleInfo["mods:nonSort"];
+            this.title = this.titleInfo?.["mods:title"];
+            this.subTitle = this.titleInfo?.["mods:subTitle"];
+            this.nonSort = this.titleInfo?.["mods:nonSort"];
         }
     }
     

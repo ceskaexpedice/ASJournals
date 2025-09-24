@@ -54,6 +54,7 @@
     <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
       
     <field name="name" type="string" indexed="true" stored="true" multiValued="false" />
+    <field name="name_en" type="string" indexed="true" stored="true" multiValued="false" />
     <field name="nameCs" type="collatedCS" indexed="false" stored="true" multiValued="false" />
     <field name="typ" type="string" indexed="false" stored="true" multiValued="false" docValues="true" />
     <field name="adresa" type="string" indexed="true" stored="true" multiValued="false"/>

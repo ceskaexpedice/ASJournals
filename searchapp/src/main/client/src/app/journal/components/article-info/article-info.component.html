@@ -44,12 +44,12 @@
 
 	<div *ngIf="rozsah">
 		<strong>{{ 'Rozsah stran' | translate }}:</strong>
-		{{ 'rozsah_zkratka' | translate }} {{ rozsah }}
+		{{ rozsah.toString().includes('–') ? ('rozsah_zkratka' | translate) : ('rozsah_zkratka_singular' | translate) }} {{ rozsah }}
 	</div>
 
 	<div *ngIf="doi">
-		<strong>{{'DOI' | translate}}:</strong>
-		{{ doi }}
+		<strong>{{'DOI' | translate}}: </strong>
+		<a target="_blank" [href]="'https://doi.org/' + doi">{{ doi }}</a>
 	</div>
 
 	<div>
@@ -68,5 +68,10 @@
 	<div *ngIf="!accessCondition">
 		<strong>{{'Licence' | translate}}:</strong>
 		{{ licence }}
+	</div>
+	<div *ngIf="article.isSaS">
+		<a mat-stroked-button color="primary" [href]="state.currentMagazine['k5url'] + article.firstPagePid"  target="_blank">
+			<strong>{{'Zobrazit v Digitální knihovně AV ČR' | translate}}</strong>
+		</a>
 	</div>
 </ng-container>

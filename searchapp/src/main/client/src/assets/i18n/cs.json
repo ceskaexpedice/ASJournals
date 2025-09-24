@@ -24,6 +24,7 @@
 	"Color": "Barva",	
 	"home": "Hlavní stránka",
 	"home_news": "Aktuálně",
+	"home_db": "Časopis je zařazen v databázích",
 	"paginator": {
 		"desc": {
 		  "Číslo stránky": "Číslo stránky",
@@ -89,7 +90,7 @@
 		"archiv_": "Archiv",
 		"hledat_": "Vyhledat",
 		"hledat": {
-			"cokoliv_": "Cokoliv",
+			"cokoliv_": "Vše",
 			"autory_": "Rejstřík autorů",
 			"rubriky_": "Rubriky",
 			"keywords_": "Rejstřík klíčových slov"
@@ -123,6 +124,7 @@
 	"Rubrika": "Rubrika",
 	"Rozsah stran": "Rozsah stran",
 	"rozsah_zkratka": "s.",
+	"rozsah_zkratka_singular": "s.",
 	"Licence": "Licence",
 	"licence_ph": "název licence",
 	"Status recenzování": "Status recenzování",
@@ -136,10 +138,10 @@
 	"od roku": "od roku",
 	"do roku": "do roku",
 	"Vyhledat": "Vyhledat",
-	"cokoliv": "cokoliv",
-	"rejstřík autorů": "rejstřík autorů",
-	"rubriky": "rubriky",
-	"rejstřík klíčových slov": "rejstřík klíčových slov",
+	"Cokoliv": "Vše",
+	"Rejstřík autorů": "Rejstřík autorů",
+	"Rubriky": "Rubriky",
+	"Rejstřík klíčových slov": "Rejstřík klíčových slov",
 	"Předchozí": "Předchozí",
 	"Další": "Další",
 	"Výsledky vyhledávání": "Výsledky vyhledávání",
@@ -609,7 +611,7 @@
 		}
 	},
 	"fields": {
-		"_text_": "kdekoliv",
+		"_text_": "Ve všech polích",
 		"title": "název",
 		"autor": "autor",
 		"keywords": "klíčová slova",

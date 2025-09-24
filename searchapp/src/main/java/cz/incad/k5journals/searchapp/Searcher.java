@@ -84,7 +84,7 @@ public class Searcher {
                     .setSort(sort, SolrQuery.ORDER.asc)
                     .setFacet(true)
                     .setFacetMinCount(1)
-                    .addFacetField("{!key=pristup}pristup", "{!key=oblast}oblast_" + lang, "{!key=keyword}keyword_" + lang, "{!key=vydavatel}vydavatel")
+                    .addFacetField("{!key=pristup}pristup", "{!key=oblast}oblast_" + lang, "{!key=keyword}keyword_" + lang, "{!key=vydavatel}vydavatel_id")
                     .setParam("json.nl", "arrarr");
 
             if (request.getParameter("sortDir") != null) {
@@ -93,7 +93,7 @@ public class Searcher {
             
             if (request.getParameter("vydavatel") != null) {
                 for (String fq : request.getParameterValues("vydavatel")) {
-                    query.addFilterQuery("{!tag=vydavatel}vydavatel:\"" + fq + "\"");
+                    query.addFilterQuery("{!tag=vydavatel}vydavatel_id:\"" + fq + "\"");
                 }
             } 
             
@@ -207,10 +207,13 @@ public class Searcher {
                     while (parentPid != null && !parentPid.isBlank()) {
                         JSONObject pdoc = getByPid(parentPid);
                         parentDoc.put("doc", pdoc);
-                        parentPid = null;
-                        if (pdoc.has("parents")) {
+                        
+                        if (pdoc.has("parents") && !pdoc.getJSONArray("parents").getString(0).equals(parentPid)) {
                             parentPid = pdoc.getJSONArray("parents").getString(0);
+                            
                             parentDoc.put("parent", new JSONObject());
+                        } else {
+                            parentPid = null;
                         }
                         parentDoc = parentDoc.optJSONObject("parent");
                         if (parentDoc == null) {
