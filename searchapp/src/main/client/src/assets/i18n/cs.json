@@ -165,6 +165,7 @@
 	"Přihlásit": "Přihlásit",
 	"Odhlásit": "Odhlásit",
 	"genre": {
+		"": "Články",
 		"news": "Zprávy",
 		"table of content": "Obsah",
 		"advertisement": "Reklama",
@@ -191,7 +192,13 @@
 		"title page": "Titulní list",
 		"adresář": "Adresář",
 		"directory": "Adresář",
-		"editorsNote": "Editorial"
+		"editorsNote": "Editorial",
+		"chronicle": "Kronika",
+		"medailonek" : "Medailonky",
+		"nekrolog" : "Nekrology",
+		"obálka": "Obálka",
+		"discussion": "Diskuse",
+		"tiráž": "Tiráž"
 	},
 	"print": "tisk",
 	"admin": {

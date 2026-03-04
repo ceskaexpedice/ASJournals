@@ -165,6 +165,7 @@
 	"Přihlásit": "Log in",
 	"Odhlásit": "Logout",
 	"genre": {
+		"": "Articles",
 		"news": "News",
 		"table of content": "Table of content",
 		"advertisement": "Advertisement",
@@ -191,7 +192,13 @@
 		"title page": "Title page",
 		"adresář": "Directory",
 		"directory": "Directory",
-		"editorsNote":"Editorial"
+		"editorsNote":"Editorial",
+		"chronicle": "Chronicles",
+		"medailonek" : "Medailonky",
+		"nekrolog" : "Nekrology",
+		"obálka": "Obálka",
+		"discussion": "Discussion",
+		"tiráž": "Tiráž"
 	},
 	"print": "print page",
 	"admin": {
