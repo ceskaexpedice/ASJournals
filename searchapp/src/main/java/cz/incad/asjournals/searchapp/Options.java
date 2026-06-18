@@ -1,4 +1,4 @@
-package cz.incad.k5journals.searchapp;
+package cz.incad.asjournals.searchapp;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class Options {
     String path = InitServlet.CONFIG_DIR + File.separator + "config.json";
     
     //Get server options
-    File fserver = FileUtils.toFile(Options.class.getResource("/cz/incad/k5journals/searchapp/server_config.json"));
+    File fserver = FileUtils.toFile(Options.class.getResource("/cz/incad/asjournals/searchapp/server_config.json"));
     String sjson = FileUtils.readFileToString(fserver, "UTF-8");
     server_conf = new JSONObject(sjson);
     

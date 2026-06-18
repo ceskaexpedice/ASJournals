@@ -1,4 +1,4 @@
-package cz.incad.k5journals.searchapp;
+package cz.incad.asjournals.searchapp;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class InitServlet extends HttpServlet {
     public static final Logger LOGGER = Logger.getLogger(InitServlet.class.getName());
 
     //Directory where cant override configuration  
-    public static final String APP_DIR_KEY = "k5journals_app_dir";
+    public static final String APP_DIR_KEY = "asjournals_app_dir";
 
     //Directory where cant override configuration  
     public static String CONFIG_DIR = ".asjournals";

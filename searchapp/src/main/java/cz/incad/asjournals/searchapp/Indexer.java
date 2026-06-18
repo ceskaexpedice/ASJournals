@@ -1,4 +1,4 @@
-package cz.incad.k5journals.searchapp;
+package cz.incad.asjournals.searchapp;
 
 import cz.incad.FormatUtils;
 import java.io.BufferedReader;

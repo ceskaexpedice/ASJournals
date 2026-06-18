@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.incad.k5journals.searchapp;
+package cz.incad.asjournals.searchapp;
 
-import static cz.incad.k5journals.searchapp.IndexerK7.LOGGER;
+import static cz.incad.asjournals.searchapp.IndexerK7.LOGGER;
 import java.io.IOException;
 import java.util.TimerTask;
 import java.util.logging.Level;
