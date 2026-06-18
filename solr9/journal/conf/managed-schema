@@ -99,7 +99,7 @@
     <field name="isRecenzovany" type="boolean" indexed="true" stored="true" multiValued="false"/>
     <field name="ocr" type="text_cz" indexed="true" stored="true" multiValued="false"/>
     
-    <field name="mods" type="string" indexed="false" stored="true" multiValued="false"/>
+    <field name="mods" type="string_big" indexed="false" stored="true" multiValued="false"/>
     
     <field name="_text_" type="text_cz" indexed="true" stored="false" multiValued="true"/>
     <field name="_text_nolemmas" type="text_lowercase" indexed="true" stored="false" multiValued="true"/>
@@ -211,6 +211,11 @@
   <fieldType name="random" class="solr.RandomSortField" indexed="true"/>
   <fieldType name="rank" class="solr.RankField"/>
   <fieldType name="string" class="solr.StrField" sortMissingLast="true" docValues="true"/>
+  <fieldType name="string_big" class="solr.TextField" omitNorms="true" sortMissingLast="true">
+    <analyzer>
+      <tokenizer class="solr.KeywordTokenizerFactory"/>
+    </analyzer>
+  </fieldType>
   <fieldType name="string_lowercase" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
       <tokenizer class="solr.KeywordTokenizerFactory"/>

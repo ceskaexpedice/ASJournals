@@ -54,12 +54,11 @@ public class InitServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
 
-        if (getServletContext().getInitParameter("def_config_dir") != null) {
-            DEFAULT_CONFIG_DIR = getServletContext().getInitParameter("def_config_dir");
-        }
+//        if (getServletContext().getInitParameter("def_config_dir") != null) {
+//            DEFAULT_CONFIG_DIR = getServletContext().getInitParameter("def_config_dir");
+//        }
 
         DEFAULT_CONFIG_FILE = getServletContext().getRealPath(DEFAULT_CONFIG_DIR) + File.separator + DEFAULT_CONFIG_FILE;
-        //System.out.println("-----> " + DEFAULT_CONFIG_FILE);
         DEFAULT_I18N_DIR = getServletContext().getRealPath(DEFAULT_I18N_DIR);
 
         if (System.getProperty(APP_DIR_KEY) != null) {

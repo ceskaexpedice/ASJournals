@@ -1,6 +1,5 @@
 {
   "solr.host": "http://localhost:8983/solr/",
-  "k5.host": "http://localhost/search",
   "krameriusUrl": "https://kramerius.lib.cas.cz",
   "api.point": "http://localhost/search/api/v5.0",
   "api.point.k7": "https://kramerius.lib.cas.cz/search/api/client/v7.0",
