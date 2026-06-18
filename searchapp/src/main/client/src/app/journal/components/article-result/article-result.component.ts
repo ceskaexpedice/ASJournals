@@ -138,7 +138,6 @@ export class ArticleResultComponent implements OnInit {
         //name/type="personal"	namepart/type="family"
         //name/type="personal"	namePart/type"given"
       
-      //https://journals.lib.cas.cz/k5journals/article/uuid%3A2aabc1e5-c217-4a71-846f-95bf0ba9d94b
       
       //http://localhost:4200/article/uuid%3A2aabc1e5-c217-4a71-846f-95bf0ba9d94b
       if (this.article.pid === 'uuid:2aabc1e5-c217-4a71-846f-95bf0ba9d94b'){

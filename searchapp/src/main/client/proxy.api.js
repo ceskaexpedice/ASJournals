@@ -12,7 +12,7 @@ const PROXY_CONFIG = {
     },
     "/api/**": {
         "target": "http://localhost:8080/api",
-        //"target": "https://k5journals.inovatika.dev/api",
+        //"target": "https://asjournals.inovatika.dev/api",
         "changeOrigin": true,
         "secure": false,
         "logLevel": "debug",

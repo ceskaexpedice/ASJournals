@@ -62,7 +62,7 @@ export class BreadcrumbComponent {
 
   setPage(url: string) {
     this.page = url.split(";")[0];
-    //page is /k5journals/journal/dalsi/veci
+    //page is /asjournals/journal/dalsi/veci
     this.page = this.page.split("/").slice(1).join("/");
     if (url.split(";").length > 1) {
       this.params = url.split(";")[1];
