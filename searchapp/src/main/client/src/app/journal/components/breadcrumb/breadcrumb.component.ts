@@ -140,8 +140,6 @@ export class BreadcrumbComponent {
       // this.crumbs.push({ link: 'archiv', label: this.state.archivPosition });
 
     }
-
-    // console.log(this.crumbs)
   }
 
 }
