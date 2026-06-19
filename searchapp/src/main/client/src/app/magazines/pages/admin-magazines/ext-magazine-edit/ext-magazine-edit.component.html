@@ -1,61 +1,18 @@
 <div class="app-fxLayout app-row app-wrap app-layout-wrap-16" *ngIf="mag">
-  <div class="app-fxFlex-3x" *ngIf="!mag.isExternal" >
-    <mat-form-field class="app-w-100" appearance="outline">
-      <mat-label>{{ 'magazines.context' | translate }}</mat-label>
-      <input matInput id="ctx" name="ctx" type="text" [(ngModel)]="mag.ctx" required><span class="validity"></span>
-    </mat-form-field>
-  </div>
-  <div class="app-fxFlex-3x" *ngIf="mag.isExternal" >
+
+  <div class="app-fxFlex-2x" >
     <mat-form-field class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.extLinkUrl' | translate }}</mat-label>
       <input matInput id="ctx" name="ctx" type="text" [(ngModel)]="mag.ctx" required><span class="validity"></span>
     </mat-form-field>
   </div>
-  <div class="app-fxFlex-3x">
-    <mat-form-field class="app-w-100" appearance="outline">
-      <mat-label>{{ 'magazines.url_kramerius' | translate }}</mat-label>
-      <input matInput id="k5url" name="k5url" type="text" [(ngModel)]="mag.k5url">
-    </mat-form-field>
-  </div>
-  <div class="app-fxFlex-3x">
-    <mat-form-field class="app-w-100" appearance="outline">
-      <mat-label>{{ 'magazines.root_uuid_titulu' | translate }}</mat-label>
-      <input matInput id="journal_uuid" name="journal_uuid" type="text" [(ngModel)]="mag.journal">
-    </mat-form-field>
-  </div>
-
-  <div class="app-fxFlex-3x">
-    <mat-form-field class="app-w-100" appearance="outline">
-      <!-- <mat-icon matInput-prefix [style.color]="'#'+mag.color" >application</mat-icon> -->
-      <mat-label>{{ 'magazines.barva' | translate }}</mat-label>
-      <input matInput id="color" name="color" type="text" [(ngModel)]="mag.color">
-    </mat-form-field>
-  </div>
-  <div class="app-fxFlex-3x">
+  
+  <div class="app-fxFlex-2x">
     <mat-form-field  class="app-w-100" appearance="outline">
       <mat-label>{{ 'magazines.licence' | translate }}</mat-label>
       <input matInput id="licence" name="licence" type="text" [(ngModel)]="mag.licence">
     </mat-form-field>
   </div>
-  <div class="app-fxFlex-3x">
-    <mat-checkbox id="showTitleLabel" name="showTitleLabel" [(ngModel)]="mag.showTitleLabel">{{ 'magazines.ukazat_slovo_casopis' | translate }}</mat-checkbox>
-    <mat-checkbox id="showOldYears" name="showOldYears" [(ngModel)]="mag.showOldYears">{{ 'magazines.ukazat_starsi_rocniky' | translate }}</mat-checkbox><br/>
-    <mat-checkbox id="kVersion" name="kVersion" [(ngModel)]="mag.isK7">{{ 'magazines.isK7' | translate }}&#160;&#160;</mat-checkbox><br/>
-    <mat-checkbox id="checkUpdates" name="checkUpdates" [(ngModel)]="mag.checkUpdates">{{ 'magazines.checkUpdates' | translate }}&#160;&#160;</mat-checkbox>
-  </div>
-
-  <!-- <div class="app-fxFlex-3x">
-    <mat-form-field  class="app-w-100" appearance="outline">
-      <mat-label>{{ 'magazines.extLinkUrl' | translate }}</mat-label>
-      <input matInput id="extLinkUrl" name="extLinkUrl" type="text" [(ngModel)]="mag.extLinkUrl">
-    </mat-form-field>
-  </div>
-  <div class="app-fxFlex-3x">
-    <mat-form-field class="app-w-100" appearance="outline">
-      <mat-label>{{ 'magazines.extLinkText' | translate }}</mat-label>
-      <input matInput id="extLinkText" name="extLinkText" type="text" [(ngModel)]="mag.extLinkText">
-    </mat-form-field>
-  </div> -->
 
   <div class="app-fxFlex-25">
     <mat-form-field class="app-w-100" appearance="outline">
@@ -71,26 +28,6 @@
       <label class="app-label">{{ k }}</label><a (click)="removeLanguage(idx)" [matTooltip]="'magazines.smazat_jazyk' | translate"><mat-icon>clear</mat-icon></a><span class="app-pipe app-in-element" *ngIf="!last"></span>
     </span>
   </div>
-
-
-  <div class="app-fxFlex-1x">
-    <mat-checkbox id="showExtLink" name="showExtLink" [(ngModel)]="mag.showExtLink">{{ 'magazines.showExtLink' | translate }}</mat-checkbox>
-  </div>
-
-  <ng-container *ngFor="let lang of mag.languages">
-    <div class="app-fxFlex-2x">
-      <mat-form-field class="app-w-100" appearance="outline">
-        <mat-label>{{ 'magazines.extLinkUrl' | translate }} {{ 'magazines.lang.' + lang | translate }}</mat-label>
-        <input matInput [id]="'extLinkUrl' + lang" type="text" [(ngModel)]="mag['extLinkUrl_'+lang]">
-      </mat-form-field>
-    </div>
-    <div class="app-fxFlex-2x">
-      <mat-form-field class="app-w-100" appearance="outline">
-        <mat-label>{{ 'magazines.extLinkText' | translate }} {{ 'magazines.lang.' + lang | translate }}</mat-label>
-        <input matInput [id]="'extLinkText' + lang" type="text" [(ngModel)]="mag['extLinkText_'+lang]">
-      </mat-form-field>
-    </div>
-  </ng-container>
 
   <ng-container *ngFor="let lang of mag.languages">
     <div class="app-fxFlex-2x">
@@ -115,7 +52,7 @@
   </div>
   <div class="app-fxFlex-3x">
     <mat-form-field class="app-w-100" appearance="outline">
-      <mat-label>{{ 'Issn' | translate }}</mat-label>
+      <mat-label>{{ 'ISSN' | translate }}</mat-label>
       <input matInput type="text" [(ngModel)]="mag.issn" id="issn"  name="issn"  />
     </mat-form-field>
   </div>

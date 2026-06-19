@@ -3,7 +3,7 @@
     <mat-tab [label]="'magazines.casopisy' | translate">
       <div class="app-fxLayout app-row app-mt-8">
         <div class="app-left">
-          <button mat-flat-button (click)="addJournal()" color="primary" class="app-w-100 app-text-left app-mb-4"><mat-icon>add</mat-icon>{{ 'magazines.pridat_casopis' | translate }}</button>
+          <button mat-flat-button (click)="addJournal(false)" color="primary" class="app-w-100 app-text-left app-mb-4"><mat-icon>add</mat-icon>{{ 'magazines.pridat_casopis' | translate }}</button>
           <mat-list role="list" class="app-view-admin">
             <mat-list-item *ngFor="let ctx of state.ctxs" [class.app-active]="currentMag && ctx.ctx === currentMag.ctx" role="listitem" (click)="editCtx(ctx)" class="app-cursor-pointer">
               <a><mat-icon>menu_book</mat-icon>{{ ctx.ctx || ctx.title }}</a>
@@ -15,6 +15,24 @@
           <button mat-flat-button (click)="save()" color="primary" class="app-mr-2">{{ 'magazines.ulozit_casopis' | translate }}</button>
           <button mat-flat-button (click)="setLicences()" color="primary" class="app-mr-2">{{'magazines.nastavit_licenci' | translate}}</button>
           <button mat-flat-button (click)="removeJournal()" color="warn" class="app-mr-2">{{ 'magazines.smazat_casopis' | translate }}</button>
+          <button mat-flat-button (click)="cancel()">{{ 'magazines.zrusit' | translate }}</button>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab [label]="'magazines.ext_casopisy' | translate">
+      <div class="app-fxLayout app-row app-mt-8">
+        <div class="app-left">
+          <button mat-flat-button (click)="addJournal(true)" color="primary" class="app-w-100 app-text-left app-mb-4"><mat-icon>add</mat-icon>{{ 'magazines.pridat_casopis' | translate }}</button>
+          <mat-list role="list" class="app-view-admin">
+            <mat-list-item *ngFor="let ctx of state.externalMagazines" [class.app-active]="currentExtMag && ctx.ctx === currentExtMag.ctx" role="listitem" (click)="editCtx(ctx)" class="app-cursor-pointer">
+              <a><mat-icon>menu_book</mat-icon>{{ ctx.ctx || ctx.title }}</a>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <div *ngIf="currentExtMag" class="app-right app-fxFlex">
+          <app-ext-magazine-edit [mag]="currentExtMag" [editors]="editors"></app-ext-magazine-edit>
+          <button mat-flat-button (click)="saveExt()" color="primary" class="app-mr-2">{{ 'magazines.ulozit_casopis' | translate }}</button>
+          <button mat-flat-button (click)="removeExtJournal()" color="warn" class="app-mr-2">{{ 'magazines.smazat_casopis' | translate }}</button>
           <button mat-flat-button (click)="cancel()">{{ 'magazines.zrusit' | translate }}</button>
         </div>
       </div>

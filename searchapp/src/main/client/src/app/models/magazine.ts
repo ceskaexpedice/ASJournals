@@ -36,5 +36,8 @@ export class Magazine {
   checkUpdates: boolean = false;
   languages: string[] = [];
   defaultView: string; // pdf / detail
+
+  isExternal: boolean = false;
+
   [key: string]: any;
 }

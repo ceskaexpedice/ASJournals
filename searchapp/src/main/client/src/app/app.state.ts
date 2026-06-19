@@ -33,7 +33,9 @@ export class AppState {
   currentMagazine: Magazine;
 
   //ctxs: {ctx: string, color: string, journal: string, showTitleLabel: boolean, licence:string}[];
+  allMagazines: Magazine[] = [];
   ctxs: Magazine[] = [];
+  externalMagazines: Magazine[] = [];
   editors: {id: string, name: string, name_en: string}[];
 
   username = '';
@@ -169,8 +171,10 @@ export class AppState {
 
   //params
   setJournals(res: any) {
-    this.ctxs = res['magazines']['response']['docs'];
+    this.allMagazines = res['magazines']['response']['docs'];
+    this.ctxs = this.allMagazines.filter((m) => !m.isExternal);
     this.ctxs.forEach((m: Magazine) => m.isK7 = m.kramerius_version === 'k7');
+    this.externalMagazines = this.allMagazines.filter((m) => m.isExternal);
     this.editors = res['editors']['response']['docs'];
     //this.ctxs = res["journals"];
     //this.ctx = this.ctxs[0];

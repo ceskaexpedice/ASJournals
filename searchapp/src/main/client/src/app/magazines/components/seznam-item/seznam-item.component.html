@@ -2,7 +2,7 @@
   <div class="app-fxLayout app-row app-p-4 app-mb-n4">
     <div class="app-left app-mr-4">
       <a [href]="resultItem.ctx" queryParamsHandling="preserve" matTooltipPosition="above" target="_blank" >
-        <img [src]="resultItem.img" alt="thumb" />
+        <img [src]="resultItem.img" alt="thumb" style="max-width: 90px;" />
       </a>
     </div>
     <div class="app-right">
@@ -46,7 +46,7 @@
   <mat-card-actions class="app-fxLayout app-row">
     <div class="app-fxFlex">
       <a mat-flat-button [href]="resultItem.ctx" target="_blank">
-        <mat-icon>link</mat-icon> {{ 'magazines.vstup_na_web' | translate }}
+        <mat-icon>{{ resultItem.isExternal ? 'open_in_new' : 'link' }}</mat-icon> {{ (resultItem.isExternal ? 'magazines.vstup_na_externi_web' : 'magazines.vstup_na_web') | translate }}
       </a>
     </div>
     <div>

@@ -66,7 +66,6 @@
     <field name="kontakt" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="desc" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="desc_en" type="string" indexed="true" stored="true" multiValued="false"/>
-    <field name="web" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="languages" type="string" indexed="true" stored="true" multiValued="true" />
     <field name="defaultView" type="string" indexed="true" stored="true" multiValued="false"/>
 	
@@ -95,6 +94,10 @@
     <field name="color" type="string" indexed="true" stored="true" multiValued="false"/>
     <field name="showTitleLabel" type="boolean" indexed="true" stored="true" multiValued="false"/>
     <field name="showOldYears" type="boolean" indexed="true" stored="true" multiValued="false"/>
+
+    <!-- Externi casopisy https://github.com/ceskaexpedice/ASJournals/issues/218-->
+    <field name="isExternal" type="boolean" indexed="true" stored="true" multiValued="false"/>
+    <field name="web" type="string" indexed="true" stored="true" multiValued="false"/>
 	
     <dynamicField name="title_*" type="string" indexed="true" stored="true" multiValued="false"/>
     <dynamicField name="subtitle_*" type="string" indexed="true" stored="true" multiValued="false"/>

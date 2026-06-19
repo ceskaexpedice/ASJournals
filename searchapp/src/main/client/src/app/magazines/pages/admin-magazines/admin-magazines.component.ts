@@ -1,7 +1,7 @@
-import {Component, OnInit, NgZone} from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
-import {Router, RouterModule} from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AppState } from 'src/app/app.state';
 import { Magazine } from 'src/app/models/magazine';
 import { User } from 'src/app/models/user';
@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MagazineEditComponent } from './magazine-edit/magazine-edit.component';
 import { EditorEditComponent } from './editor-edit/editor-edit.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
@@ -24,13 +24,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { AngularSplitModule } from 'angular-split';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { Subscription } from 'rxjs';
+import { ExtMagazineEditComponent } from './ext-magazine-edit/ext-magazine-edit.component';
 
 declare var tinymce: any;
 
 @Component({
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, TranslateModule, AngularSplitModule, EditorModule,
-    MagazineEditComponent, EditorEditComponent, UserEditComponent,
+    MagazineEditComponent, ExtMagazineEditComponent, EditorEditComponent, UserEditComponent,
     MatButtonModule, MatFormFieldModule, MatListModule, MatSelectModule, MatIconModule, MatTabsModule, MatDialogModule],
   selector: 'app-admin-magazines',
   templateUrl: './admin-magazines.component.html',
@@ -39,6 +40,7 @@ declare var tinymce: any;
 export class AdminMagazinesComponent implements OnInit {
 
   currentMag: Magazine | null = null;
+  currentExtMag: Magazine | null = null;
   tinyConfig: any;
   tinyInited = false;
   text: string | null = null;
@@ -62,17 +64,17 @@ export class AdminMagazinesComponent implements OnInit {
     name: string,
     adresa: string,
     web: string
-  }[]  = [];
+  }[] = [];
 
-  currentUser?:  User;
+  currentUser?: User;
 
   users: User[] = [];
 
   editing: string = 'journals';
 
-  
+
   subscriptions: Subscription[] = [];
-  
+
   constructor(
     private ngZone: NgZone,
     private translate: TranslateService,
@@ -80,9 +82,9 @@ export class AdminMagazinesComponent implements OnInit {
     public state: AppState,
     public magState: MagazineState,
     private service: MagazinesService,
-    private router: Router) {}
+    private router: Router) { }
 
-    
+
 
   ngOnDestroy() {
     this.subscriptions.forEach((s: Subscription) => {
@@ -95,7 +97,7 @@ export class AdminMagazinesComponent implements OnInit {
   ngOnInit() {
     this.getEditors();
     this.getUses();
-    
+
     this.initTiny();
 
     this.service.langSubject.subscribe(() => {
@@ -105,20 +107,20 @@ export class AdminMagazinesComponent implements OnInit {
       }, 100);
     });
   }
-  
-  getEditors(){
+
+  getEditors() {
     this.service.getEditors().subscribe(state => {
       this.editors = state['editorsList'];
       this.currentMag = JSON.parse(JSON.stringify(this.state.ctxs[0]));
       if (this.editors.length > 0) {
         this.currentEditor = JSON.parse(JSON.stringify(this.editors[0]));
       }
-      
-      
+
+
     });
   }
-  
-  getUses(){
+
+  getUses() {
     this.service.getUsers().subscribe(res => {
       this.users = res['response']['docs'];
       this.currentUser = JSON.parse(JSON.stringify(this.users[0]));
@@ -162,27 +164,45 @@ export class AdminMagazinesComponent implements OnInit {
     });
   }
 
-  addJournal() {
+  addJournal(isExternal: boolean) {
 
     let newctx = new Magazine();
-    newctx.ctx = 'novy_nazev_v_url';
+    newctx.isExternal = isExternal;
+    if (isExternal) {
+      newctx.ctx = 'url_externiho_casopisu';
+      newctx.languages.push('cs');
+    } else {
+      newctx.ctx = 'novy_nazev_v_url';
+    }
+
     newctx.color = "CCCCCC";
     newctx.journal = 'uuid:';
     newctx.showTitleLabel = true;
     newctx.licence = 'CC-BY-SA';
 
-    this.currentMag = newctx;
+    if (isExternal) {
+      this.currentExtMag = newctx;
+    } else {
+      this.currentMag = newctx;
+    }
   }
 
   editCtx(mag: Magazine) {
-    this.currentMag = JSON.parse(JSON.stringify(mag));
+
+    if (mag.isExternal) {
+      this.currentExtMag = JSON.parse(JSON.stringify(mag));
+    } else {
+      this.currentMag = JSON.parse(JSON.stringify(mag));
+    }
+
+    
   }
 
   editEditor(editor: any) {
     this.currentEditor = JSON.parse(JSON.stringify(editor));
   }
 
-  
+
 
   addUser() {
     this.currentUser = {
@@ -210,10 +230,10 @@ export class AdminMagazinesComponent implements OnInit {
   }
 
   resetPwd() {
-    
+
     const dialogRef = this.dialog.open(DialogPromptComponent, {
       width: '700px',
-      data: {caption: 'nove_heslo', label: 'nove_heslo'},
+      data: { caption: 'nove_heslo', label: 'nove_heslo' },
       panelClass: 'app-register-dialog'
     });
 
@@ -261,8 +281,29 @@ export class AdminMagazinesComponent implements OnInit {
 
     this.service.saveMagazine(this.currentMag!).subscribe(res => {
       this.service.getMagazines().subscribe(res2 => {
-        this.state.ctxs = res2['response']['docs'];
+        this.state.allMagazines = res2['magazines']['response']['docs'];
+        this.state.ctxs = this.state.allMagazines.filter((m) => !m.isExternal);
         this.state.ctxs.forEach((m: Magazine) => m.isK7 = m.kramerius_version === 'k7');
+        this.state.externalMagazines = this.state.allMagazines.filter((m) => m.isExternal);
+        this.service.showSnackBar('snackbar.success.changeSaved');
+      });
+    });
+  }
+
+
+  saveExt() {
+    if (!this.currentExtMag || this.currentExtMag.ctx === '') {
+      //error
+      alert('Context is required');
+      return;
+    }
+
+    this.service.saveMagazine(this.currentExtMag!).subscribe(res => {
+      this.service.getMagazines().subscribe(res2 => {
+        this.state.allMagazines = res2['magazines']['response']['docs'];
+        this.state.ctxs = this.state.allMagazines.filter((m) => !m.isExternal);
+        this.state.ctxs.forEach((m: Magazine) => m.isK7 = m.kramerius_version === 'k7');
+        this.state.externalMagazines = this.state.allMagazines.filter((m) => m.isExternal);
         this.service.showSnackBar('snackbar.success.changeSaved');
       });
     });
@@ -272,10 +313,26 @@ export class AdminMagazinesComponent implements OnInit {
     var c = confirm('Delete journal "' + this.currentMag?.ctx + '"?');
     if (c == true) {
       this.service.deleteMagazine(this.currentMag?.ctx!).subscribe(res => {
-        this.service.getMagazines().subscribe(res2 => {
-          // this.state.setJournals(res);
-          
-          this.state.ctxs = res2['response']['docs'];
+          this.service.getMagazines().subscribe(res2 => {
+          this.state.allMagazines = res2['magazines']['response']['docs'];
+          this.state.ctxs = this.state.allMagazines.filter((m) => !m.isExternal);
+          this.state.ctxs.forEach((m: Magazine) => m.isK7 = m.kramerius_version === 'k7');
+          this.state.externalMagazines = this.state.allMagazines.filter((m) => m.isExternal);
+          this.service.showSnackBar('snackbar.success.changeSaved');
+        });
+      });
+    }
+  }
+
+  removeExtJournal() {
+    var c = confirm('Delete journal "' + this.currentExtMag?.ctx + '"?');
+    if (c == true) {
+      this.service.deleteMagazine(this.currentExtMag?.ctx!).subscribe(res => {
+          this.service.getMagazines().subscribe(res2 => {
+          this.state.allMagazines = res2['magazines']['response']['docs'];
+          this.state.ctxs = this.state.allMagazines.filter((m) => !m.isExternal);
+          this.state.ctxs.forEach((m: Magazine) => m.isK7 = m.kramerius_version === 'k7');
+          this.state.externalMagazines = this.state.allMagazines.filter((m) => m.isExternal);
           this.service.showSnackBar('snackbar.success.changeSaved');
         });
       });
@@ -284,6 +341,7 @@ export class AdminMagazinesComponent implements OnInit {
 
   cancel() {
     this.currentMag = null;
+    this.currentExtMag = null;
     this.currentEditor = null;
   }
 
