@@ -716,33 +716,42 @@ public class Indexer {
 
     private void setGenre(SolrInputDocument idoc, JSONObject mods) {
 
-        //String prefix = "mods:";
         Object o = mods.opt("mods:genre");
-//        boolean hasMain = false;
         if (o != null) {
             if (o instanceof JSONArray) {
                 JSONArray ja = (JSONArray) o;
+                String aut = null;
+                String type = null;
+                String gaut = null;
                 for (int i = 0; i < ja.length(); i++) {
                     Object go = ja.get(i);
                     if (go instanceof JSONObject) {
-                        String g = ja.getJSONObject(i).optString("type");
-                        if (g != null && !"".equals(g)) {
-//                            if ("main article".equals(g) && !hasMain) {
-                            idoc.addField("genre", g);
-//                                hasMain = true;
-//                            }
+                        type = ja.getJSONObject(i).optString("type");
+                        aut = ja.getJSONObject(i).optString("authority");
+                        if (aut != null && "asjournals".equals(aut)) {
+                          gaut = type;
+                          //  idoc.addField("genre", g);
+                        } else if (type != null && !"".equals(type)) {
+                          //  idoc.addField("genre", g);
                         }
                     } else if (go instanceof String) {
                         if ("article".equals((String) go)) {
                             idoc.addField("genre", "article");
-//                            hasMain = true;
                         }
                     }
+                }
+                if (aut != null && "asjournals".equals(aut)) {
+                    idoc.addField("genre", gaut);
+                } else if (type != null && !"".equals(type)) {
+                    idoc.addField("genre", type);
                 }
 
             } else if (o instanceof JSONObject) {
                 String g = ((JSONObject) o).optString("type");
-                if (g != null) {
+                String aut = ((JSONObject) o).optString("authority");
+                if (aut != null && "asjournals".equals(aut)) {
+                    idoc.addField("genre", g);
+                } if (g != null) {
                     idoc.addField("genre", g);
                 } else {
                     idoc.addField("genre", "unspecified");
