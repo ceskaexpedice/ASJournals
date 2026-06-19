@@ -84,7 +84,7 @@ export class AppState {
   viewerArticle: any;
   viewerActiveLink: string;
 
-  archivItemDetails: { year: number, volumeNumber: string, issueNumber: string, partName: any } 
+  archivItemDetails: { year: number, volumeNumber: string, issueNumber: string, partName: any, model_pid: {[model: string]: string} } 
 
 
   public breadcrumbs: any[] = [];

@@ -86,7 +86,21 @@ export class BreadcrumbComponent {
         (this.state.archivItemDetails.volumeNumber ? ', ' + this.appService.translateKey('ročník') + ' ' + this.state.archivItemDetails.volumeNumber : '') +
         (this.state.archivItemDetails.issueNumber ? ' / ' + this.appService.translateKey('číslo') + ' ' + this.state.archivItemDetails.issueNumber : '') +
         (this.state.archivItemDetails.partName ? this.state.archivItemDetails.partName : '');
-        this.crumbs.push({ link: 'archiv', label: this.state.archivPosition });
+
+        
+
+      if (this.state.archivItemDetails.volumeNumber) {
+        const rocnik = this.state.archivItemDetails.year + ' ' + this.appService.translateKey('ročník') + ' ' + this.state.archivItemDetails.volumeNumber;
+        this.crumbs.push({ link: 'archiv', params: {pid:this.state.archivItemDetails.model_pid['periodicalvolume']}, label: rocnik });
+      }
+
+      if (this.state.archivItemDetails.issueNumber) {
+        const label = this.appService.translateKey('číslo') + ' ' + this.state.archivItemDetails.issueNumber;
+        this.crumbs.push({ link: 'archiv', params: {pid:this.state.archivItemDetails.model_pid['periodicalitem']}, label: label });
+      }
+
+
+        //this.crumbs.push({ link: 'archiv', label: this.state.archivPosition });
       }
     } else if (this.page !== 'search') {
       let parts = this.page.split('?')[0].split('/');
@@ -111,9 +125,23 @@ export class BreadcrumbComponent {
       (this.state.archivItemDetails.issueNumber ? ' / ' + this.appService.translateKey('číslo') + ' ' + this.state.archivItemDetails.issueNumber : '') +
       (this.state.archivItemDetails.partName ? this.state.archivItemDetails.partName : '');
 
-      // this.crumbs.push({ link: 'home', label: this.appService.translateKey('menu.home_') });
-      this.crumbs.push({ link: 'archiv', label: this.state.archivPosition });
+      if (this.state.archivItemDetails.volumeNumber) {
+        const rocnik = this.state.archivItemDetails.year + ' ' + this.appService.translateKey('ročník') + ' ' + this.state.archivItemDetails.volumeNumber;
+        const pid = 
+        this.crumbs.push({ link: 'archiv', params: {pid:this.state.archivItemDetails.model_pid['periodicalvolume']}, label: rocnik });
+      }
+
+      if (this.state.archivItemDetails.issueNumber) {
+        const label = this.appService.translateKey('číslo') + ' ' + this.state.archivItemDetails.issueNumber;
+        this.crumbs.push({ link: 'archiv', params: {pid:this.state.archivItemDetails.model_pid['periodicalitem']}, label: label });
+      }
+      
+
+      // this.crumbs.push({ link: 'archiv', label: this.state.archivPosition });
+
     }
+
+    // console.log(this.crumbs)
   }
 
 }

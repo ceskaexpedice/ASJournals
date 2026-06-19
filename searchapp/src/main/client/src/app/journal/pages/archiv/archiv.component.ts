@@ -71,7 +71,7 @@ export class ArchivComponent implements OnInit {
           }
         } else {
           this.state.archivPosition = null;
-          this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
+          this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null, model_pid: {} };
           setTimeout(() => {
             this.state.crumbsChanged();
           }, 100);
@@ -104,7 +104,7 @@ export class ArchivComponent implements OnInit {
 
   goToRoot() {
     this.state.archivPosition = null;
-    this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
+    this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null, model_pid: {} };
     //  this.state.stateChanged();
     this.parentItems = [];
     this.setItems(this.state.currentMagazine['journal']);
@@ -304,7 +304,9 @@ export class ArchivComponent implements OnInit {
   }
 
   setDetails() {
-    this.service.details(this.currentItem['mods'], this.currentItem['model'], this.currentItem['parents'][0]);
+    console.log(this.currentItem)
+    this.service.details(this.currentItem['mods'], this.currentItem['model'], this.currentItem['parents'][0],
+       this.currentItem['pid_paths'][0], this.currentItem['model_paths'][0]);
     this.state.crumbsChanged();
   }
 

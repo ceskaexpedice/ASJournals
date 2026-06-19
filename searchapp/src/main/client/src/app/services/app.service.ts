@@ -942,8 +942,16 @@ export class AppService {
 
   }
 
-  details(mods: any, model: string, parent: string) {
-    this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null };
+  details(mods: any, model: string, parent: string, pid_path: string, model_path: string) {
+
+    const pids = pid_path.split('/');
+    const models: string[] = model_path.split('/');
+    const model_pid: {[model: string]: string} = {};
+    for (let i = 0; i < models.length; i++) {
+      model_pid[models[i]] = pids[i]; 
+    }
+
+    this.state.archivItemDetails = { year: null, volumeNumber: null, issueNumber: null, partName: null, model_pid };
 
     if (model === 'periodical') {
 
