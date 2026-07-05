@@ -21,7 +21,7 @@ export class Journal{
     
   }
   
-  setArticles(res1: any, mergeGenres: any) {
+  setArticles(res1: any, mergeGenres: any, hiddenGenres: string[]) {
     if(!res1 || !res1.hasOwnProperty('response')){ 
       return; 
     }
@@ -53,7 +53,8 @@ export class Journal{
                   this.genresObject[genre]['articles'] = [];
                   this.genresObject[genre]['articles'].push(art);
                 }
-                this.genresObject[genre]['visible'] = this.isGenreVisible(genre);
+                //this.genresObject[genre]['visible'] = this.isGenreVisible(genre);
+                this.genresObject[genre]['visible'] = !hiddenGenres.includes(genre);
               //}
 
           

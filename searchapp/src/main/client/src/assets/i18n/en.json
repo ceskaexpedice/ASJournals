@@ -224,6 +224,7 @@
 		"index_cover": "Přidání obálky",
 		"configuration": "Konfigurace",
 		"configuration_archive": "Archive",
+		"configuration_genres": "Visible genres",
 		"keepLang": "Don't translate articles titles",
 		"keepLang_legend": "Article titles",
 		"add_remove_issue_year": {

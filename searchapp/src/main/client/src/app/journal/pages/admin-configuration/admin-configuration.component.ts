@@ -19,6 +19,9 @@ import Utils from 'src/app/services/utils';
 import { LicencesDialogComponent } from '../../components/licences-dialog/licences-dialog.component';
 import { ResetPwdDialogComponent } from '../../components/reset-pwd-dialog/reset-pwd-dialog.component';
 import { error } from 'console';
+import { AngularSplitModule } from "angular-split";
+import { SearchService } from 'src/app/services/search.service';
+import { HttpParams } from '@angular/common/http';
 
 
 @Component({
@@ -26,7 +29,7 @@ import { error } from 'console';
   standalone: true,
   imports: [CommonModule, FileUploadModule, TranslateModule, FormsModule,
     MatFormFieldModule, MatInputModule, MatCheckboxModule, MatButtonModule,
-    MatDividerModule, MatRadioModule, MatProgressBarModule, MatDialogModule],
+    MatDividerModule, MatRadioModule, MatProgressBarModule, MatDialogModule, AngularSplitModule],
   templateUrl: './admin-configuration.component.html',
   styleUrls: ['./admin-configuration.component.scss']
 })
@@ -39,11 +42,14 @@ export class AdminConfigurationComponent {
   defaultView = 'detail';
   keepLang: boolean = false;
 
+  genres: {label: string, selected: boolean}[] = [];
+
   constructor(
     public dialog: MatDialog,
-    private config: Configuration,
+    public config: Configuration,
     public state: AppState,
     private service: AppService,
+    private searchService: SearchService,
     private router: Router,
     private route: ActivatedRoute
     ) { }
@@ -63,7 +69,41 @@ export class AdminConfigurationComponent {
 
     this.keepLang = !!this.state.currentMagazine!.keepLang;
 
+    this.getGenres();
+
   }
+
+  getGenres() {
+        var params = new HttpParams()
+        .set('q', '*:*')
+        .set('fq', '-genre:""')
+        .set('fq', 'model:article')
+        .set('rows', '0')
+        .set('facet', 'true')
+        .set('facet.field', 'genre')
+        .set('facet.mincount', '1')
+        .set('facet.sort', 'index');
+        this.searchService.search(params).subscribe((res: any) => {
+  
+          this.genres= [];
+          for(let i in res['facet_counts']['facet_fields']['genre']){
+            const label = res['facet_counts']['facet_fields']['genre'][i][0];
+            let genre = {
+              label: label,
+              selected: !this.config.layout['hiddenGenres'].includes(label)
+            };
+            
+            this.genres.push(genre);
+              
+          }
+          this.genres.sort((a, b) => {
+            return a.label.localeCompare(b.label, 'cs');
+          });
+
+          console.log(this.config.layout)
+  
+        });
+    }
 
 
   getChildren(pid: string, item: any) {
@@ -140,6 +180,21 @@ export class AdminConfigurationComponent {
     this.state.currentMagazine.defaultView = this.defaultView;
     this.state.currentMagazine!.keepLang = this.keepLang;
     this.service.saveMagazine(this.state.currentMagazine!).subscribe(res => {
+      if (res.error) {
+        this.service.showSnackBar('snackbar.error.changeSaved', 'desc.error', true);
+      } else {
+        this.service.showSnackBar('snackbar.success.changeSaved');
+      }
+    });
+  }
+
+  saveLayout() {
+
+    const m = JSON.stringify({ menu: this.config.layout.menu, pages: this.config.layout.pages,
+      hiddenGenres: this.genres.filter(g => !g.selected).map(g => g.label)
+     });
+
+    this.service.saveMenu(m).subscribe((res: any) => {
       if (res.error) {
         this.service.showSnackBar('snackbar.error.changeSaved', 'desc.error', true);
       } else {

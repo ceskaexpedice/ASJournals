@@ -297,7 +297,7 @@ export class ArticleViewerComponent implements OnInit {
           //this.state.viewerJournal.mods = mods;
 
           this.service.getArticles(parentPid).subscribe((res: any) => {
-            this.state.viewerJournal.setArticles(res, this.config['mergeGenres']);
+            this.state.viewerJournal.setArticles(res, this.config['mergeGenres'],[...this.config.hiddenGenres, ...this.config.layout.hiddenGenres]);
           });
 
           //});

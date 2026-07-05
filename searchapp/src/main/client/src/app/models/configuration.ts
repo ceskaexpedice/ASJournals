@@ -31,6 +31,9 @@ export class Configuration {
 
   setLayout(layout: any) {
     this.layout = layout;
+    if (!this.layout.hiddenGenres) {
+      this.layout.hiddenGenres = [];
+    }
     this.home_cs = layout.home_cs;
     this.home_en = layout.home_en;
   }

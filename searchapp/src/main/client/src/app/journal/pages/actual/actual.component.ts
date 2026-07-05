@@ -86,6 +86,7 @@ export class ActualComponent implements OnInit {
   }
 
   isHiddenByGenre(genres: string[]) {
+    
     return this.service.isHiddenByGenre(genres);
   }
 
