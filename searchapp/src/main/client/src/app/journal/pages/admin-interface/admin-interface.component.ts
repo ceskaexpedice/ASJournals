@@ -243,7 +243,7 @@ export class AdminInterfaceComponent {
   }
 
   saveMenu() {
-    const m = JSON.stringify({ menu: this.menu, pages: this.pages });
+    const m = JSON.stringify({ menu: this.menu, pages: this.pages, hiddenGenres: this.config.layout.hiddenGenres });
 
     this.service.saveMenu(m).subscribe((res: any) => {
       this.saved = !res.hasOwnProperty('error');
