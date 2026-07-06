@@ -101,7 +101,8 @@ export class SearchKeywordsComponent implements OnInit, OnDestroy {
     let has = false;
     this.state.keywords.forEach((el) => {
       let k: string = el.val[0];
-      if (k.toLocaleLowerCase().charAt(0) === l.toLocaleLowerCase()) {
+      const first = l === 'CH' ? k.toLocaleLowerCase().substring(0, 2) : k.toLocaleLowerCase().charAt(0);
+      if (first === l.toLocaleLowerCase()) {
         has = true;
         return;
       }
@@ -130,13 +131,16 @@ export class SearchKeywordsComponent implements OnInit, OnDestroy {
 
       this.state.keywords.forEach((el) => {
         let k: string = el.val;
-        let first: string = k.toLocaleLowerCase().charAt(0);
+        const first = this.letter === 'CH' ? k.toLocaleLowerCase().substring(0, 2) : k.toLocaleLowerCase().charAt(0);
         if (this.letter === '0-9') {
           if (Number.isInteger(parseInt(first))) {
             this.keywordsFiltered.push(el);
           }
         } else {
-          if (Utils.removeDiacritics(first) === this.letter?.toLocaleLowerCase()) {
+          // if (Utils.removeDiacritics(first) === this.letter?.toLocaleLowerCase()) {
+          //   this.keywordsFiltered.push(el);
+          // }
+          if (first === this.letter?.toLocaleLowerCase()) {
             this.keywordsFiltered.push(el);
           }
         }

@@ -99,16 +99,16 @@ export class AppState {
 
   public keywords: any[] = [];
   public genres: {val: string, tr: string, valq: string}[] = [];
-
+//A, Á, B, C, Č, D, Ď, E, É, Ě, F, G, H, Ch, I, Í, J, K, L, M, N, Ň, O, Ó, P, Q, R, Ř, S, Š, T, Ť, U, Ú, Ů, V, W, X, Y, Ý, Z, Ž.
   public letters = [
     'A',
     'B',
-    'C',
-    'D',
+    'C', 'Č', 
+    'D', 'Ď',
     'E',
     'F',
     'G',
-    'H',
+    'H', 'CH', 
     'I',
     'J',
     'K',
@@ -118,15 +118,15 @@ export class AppState {
     'O',
     'P',
     'Q',
-    'R',
-    'S',
+    'R', 'Ř',
+    'S', 'Š',
     'T',
     'U',
     'V',
     'W',
     'X',
     'Y',
-    'Z'
+    'Z', 'Ž'
   ];
 
   resetDates() {

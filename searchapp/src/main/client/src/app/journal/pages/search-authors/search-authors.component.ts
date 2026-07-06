@@ -88,9 +88,6 @@ export class SearchAuthorsComponent implements OnInit, OnDestroy {
       this.searchService.search(params).subscribe((res: any) => {
         this.authors = [];
         for (let i in res['facet_counts']['facet_fields']['autor_facet']) {
-//          this.authors.push(res['facet_counts']['facet_fields']['autor_facet'][i][0]);
-          
-          
           let val: string = res['facet_counts']['facet_fields']['autor_facet'][i][0];
           if(val && val !== ''){
             let val_lower: string = val.toLocaleLowerCase(); 
@@ -136,8 +133,10 @@ export class SearchAuthorsComponent implements OnInit, OnDestroy {
     }
     let has = false;
     this.authors.forEach((el) => {
-      let k: string = el.val[0];
-      if (k.toLocaleLowerCase().charAt(0) === l.toLocaleLowerCase()) {
+      let k: string = el.val;
+      const first = l === 'CH' ? k.toLocaleLowerCase().substring(0, 2) : k.toLocaleLowerCase().charAt(0);
+      
+      if (first === l.toLocaleLowerCase()) {
         has = true;
         return;
       }
@@ -154,11 +153,13 @@ export class SearchAuthorsComponent implements OnInit, OnDestroy {
   filter() {
     this.authorsFiltered = [];
     if (this.letter !== null) {
-
       this.authors.forEach((el) => {
-        //        console.log(el);
         let k: string = el.val;
-        if (Utils.removeDiacritics(k.toLocaleLowerCase().charAt(0))  === this.letter?.toLocaleLowerCase()) {
+        const first = this.letter === 'CH' ? k.toLocaleLowerCase().substring(0, 2) : k.toLocaleLowerCase().charAt(0);
+        // if (Utils.removeDiacritics(k.toLocaleLowerCase().charAt(0))  === this.letter?.toLocaleLowerCase()) {
+        //   this.authorsFiltered.push(el);
+        // }
+        if (first  === this.letter?.toLocaleLowerCase()) {
           this.authorsFiltered.push(el);
         }
       });

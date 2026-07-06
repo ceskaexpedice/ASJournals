@@ -885,11 +885,12 @@ export class AppService {
   }
 
   getKeywords() {
+    const facetName = 'keywords'; //'keywords_facet'
     let params = new HttpParams()
       .set('q', '*:*')
       .set('rows', '0')
       .set('facet', 'true')
-      .set('facet.field', 'keywords_facet')
+      .set('facet.field', facetName)
       .set('facet.mincount', '1')
       .set('facet.limit', '-1')
       .set('facet.sort', 'index');
@@ -897,8 +898,8 @@ export class AppService {
       this.state.keywords = [];
 
 
-      for (const i in res['facet_counts']['facet_fields']['keywords_facet']) {
-        const val: string = res['facet_counts']['facet_fields']['keywords_facet'][i][0];
+      for (const i in res['facet_counts']['facet_fields'][facetName]) {
+        const val: string = res['facet_counts']['facet_fields'][facetName][i][0];
         if (val && val !== '') {
           const val_lower: string = val.toLocaleLowerCase();
           this.state.keywords.push({ val: val, val_lower: val_lower, valq: '"' + val + '"' });
