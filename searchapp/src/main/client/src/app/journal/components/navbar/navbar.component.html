@@ -31,9 +31,13 @@
       <a *ngIf="!state.logged && isMobile !== true" mat-flat-button color="primary" routerLink="prihlaseni" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'Přihlásit' | translate" (click)="isMobile ? onSidenavClose() : null">{{ 'Přihlásit' | translate }}</a>
       <a *ngIf="state.logged && isMobile !== true" mat-flat-button color="primary" (click)="appservice.logout()" [title]="'Odhlásit' | translate">{{ 'Odhlásit' | translate }}</a>
 
-      <a mat-flat-button *ngIf="isMobile !== true" color="primary" [matMenuTriggerFor]="langMenu" [title]="translate.currentLang">{{ translate.currentLang | translate }}</a>
+      <a mat-flat-button *ngIf="isMobile !== true" color="primary" [matMenuTriggerFor]="langMenu" [title]="translate.currentLang">
+        <mat-icon>language</mat-icon>
+        {{ translate.currentLang | translate }}
+        <mat-icon iconPositionEnd>expand_more</mat-icon>
+      </a>
       <mat-menu #langMenu="matMenu">
-        <a mat-menu-item *ngFor="let lang of state.currentMagazine.languages" (click)="changeLang(lang)">{{ lang | translate }}</a>
+        <a mat-menu-item *ngFor="let lang of state.currentMagazine.languages" (click)="changeLang(lang)">{{ lang }} | {{ 'lang.'+lang | translate }}</a>
       </mat-menu>
     </div>
   </div>

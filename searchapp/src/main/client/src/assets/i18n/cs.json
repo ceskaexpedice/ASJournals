@@ -332,12 +332,7 @@
 		"jazyky": "Jazyky",
 		"pridat_jazyk": "Přidat jazyk",
 		"smazat_jazyk": "Smazat jazyk",
-		"stranky": "Stránky",
-		"lang": {
-			"cs": "česky",
-			"en": "anglicky",
-			"de": "německy"
-		}
+		"stranky": "Stránky"
 	},
 	"role": {
 		"abr": "Zkracovač",
@@ -667,5 +662,10 @@
 		"volume": "Ročník",
 		"citation": "Citace",
 		"availableAlsoFrom": "Dostupné také z"
+	},
+	"lang": {
+		"cs": "Česky",
+		"en": "English",
+		"de": "Deutch"
 	}
 }

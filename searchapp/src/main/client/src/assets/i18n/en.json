@@ -667,5 +667,10 @@
 		"volume": "Volume",
 		"citation": "Citation",
 		"availableAlsoFrom": "Available also from"
+	},
+	"lang": {
+		"cs": "Česky",
+		"en": "English",
+		"de": "Deutch"
 	}
 }
