@@ -376,11 +376,15 @@ public class IndexServlet extends HttpServlet {
 
                 resp.setContentType("text/plain;charset=UTF-8");
                 Options opts = Options.getInstance();
-                String url = opts.getString("citation_server", 
-                        "http://citace.rychtar.cloud/v1/kramerius?format=html&url=")
-                        + req.getParameter("server")
-                        + "&uuid=" + req.getParameter("uuid") 
-                        + "&k7=" + Boolean.valueOf(req.getParameter("k7"));
+//                String url = opts.getString("citation_server", 
+//                        "http://citace.rychtar.cloud/v1/kramerius?format=html&url=")
+//                        + req.getParameter("server")
+//                        + "&uuid=" + req.getParameter("uuid") 
+//                        + "&k7=" + Boolean.valueOf(req.getParameter("k7"));
+                String url = opts.getString("citation_server")
+                        + opts.getString("krameriusUrl")
+                        + "&exp=" + req.getParameter("exp")
+                        + "&uuid=" + req.getParameter("uuid");
                 // System.out.println(url);
                 InputStream inputStream = RESTHelper.inputStream(url);
                 org.apache.commons.io.IOUtils.copy(inputStream, resp.getOutputStream());

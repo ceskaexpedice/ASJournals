@@ -10,6 +10,7 @@
     "de": "ger",
     "en": "eng"
   }, 
-  "citation_server": "http://citace.kramerius.cloud/v1/kramerius?format=html&url=",
+  "citation_server_old": "http://citace.kramerius.cloud/v1/kramerius?format=html&url=",
+  "citation_server": "https://citace.ceskadigitalniknihovna.cz/api/v1?format=html&lang=cs&url=",
   "sas_context": "slovoaslovesnost"
 }

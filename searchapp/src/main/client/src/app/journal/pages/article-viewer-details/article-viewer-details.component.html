@@ -2,7 +2,13 @@
   
   <app-article-info [article]="state.viewerArticle" [journal]="state.viewerJournal"></app-article-info>
 
-  <h2 class="app-headline app-mt-4">{{ 'desc.citation' | translate }} (ISO 690)</h2>
+  <h2 class="app-headline app-mt-4">{{ 'desc.citation' | translate }} 
+    <mat-select (selectionChange)="getCitace()" name="exp" [(ngModel)]="exp" style="width: 20%; display: inline">
+        <mat-option [value]="'iso690'">ISO 690</mat-option>
+        <mat-option [value]="'mla'">MLA</mat-option>
+        <mat-option [value]="'bibtex'">BibTeX</mat-option>
+        <mat-option [value]="'ris'">RIS</mat-option>
+      </mat-select></h2>
   <p [innerHtml]="citace"></p>
   
   <p>

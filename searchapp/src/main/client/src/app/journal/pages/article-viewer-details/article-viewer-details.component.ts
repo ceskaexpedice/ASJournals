@@ -6,11 +6,13 @@ import { Configuration } from 'src/app/models/configuration';
 import { AppService } from 'src/app/services/app.service';
 import { ArticleInfoComponent } from '../../components/article-info/article-info.component';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MatSelectModule } from "@angular/material/select";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-article-viewer-details',
   standalone: true,
-  imports: [CommonModule, TranslateModule, ArticleInfoComponent],
+  imports: [CommonModule, TranslateModule, ArticleInfoComponent, MatSelectModule, FormsModule],
   templateUrl: './article-viewer-details.component.html',
   styleUrls: ['./article-viewer-details.component.scss']
 })
@@ -18,6 +20,8 @@ export class ArticleViewerDetailsComponent {
   
   citace: string | null = null;
   location: string;
+  exp = 'iso690';
+
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -39,7 +43,7 @@ export class ArticleViewerDetailsComponent {
 
   getCitace() {
     this.citace = '';
-    this.service.getCitace(this.state.viewerPid!, this.state.currentMagazine.k5url).subscribe(resp => {
+    this.service.getCitace(this.state.viewerPid!, this.state.currentMagazine.k5url, this.exp).subscribe(resp => {
       this.citace = resp;
       this.location = this.document.location.href;
     });

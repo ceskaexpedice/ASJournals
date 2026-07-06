@@ -658,18 +658,18 @@ export class AppService {
       )
   }
 
-  getCitace(uuid: string, server: string): Observable<string> {
+  getCitace(uuid: string, server: string, exp: string): Observable<string> {
     let url = 'index';
     let params = new HttpParams()
       .set('action', 'CITATION')
       .set('uuid', uuid)
       .set('server', server)
-      .set('k7', this.state.currentMagazine?.isK7 + '');
+      .set('exp', exp);
     return this.get(url, params, 'text').pipe(
       map((response: any) => {
         return response;
       }),
-      catchError((error: any) => of('error gettting citation: ' + error))
+      catchError((error: any) => of('Citaci článku se nepovedlo vygenerovat.'))
     )
   }
 
