@@ -28,7 +28,7 @@ export class ArticleInfoComponent implements OnInit {
 
     rozsah: string | null = null;
     authors: string[] = [];
-    authors_full: {name: string, role: string}[] = [];
+    authors_full: {name: string, role: string, affiliation?: string, orcid?: string}[] = [];
 
     titleInfo: any;
     title: string | null = null;

@@ -649,7 +649,7 @@ public class IndexerK7 {
             prefix = "";
             o = mods.opt("name");
         }
-        // System.out.println(mods);
+        //System.out.println(o);
         if (o instanceof JSONObject) {
             JSONObject jo = (JSONObject) o;
             // if (jo.has("type") && "personal".equals(jo.getString("type")) && jo.has(prefix + "namePart")) {
@@ -663,6 +663,17 @@ public class IndexerK7 {
                 if (jo.has(prefix + "role")) {
                     String role = jo.getJSONObject(prefix + "role").getJSONObject(prefix + "roleTerm").getString("content");
                     af.put("role", role);
+                }
+                if (jo.has(prefix + "affiliation")) {
+                    String affiliation = jo.optString(prefix + "affiliation");
+                    af.put("affiliation", affiliation);
+                }
+                if (jo.has(prefix + "nameIdentifier")) {
+                  JSONObject nameIdentifier = jo.optJSONObject(prefix + "nameIdentifier");
+                  if (nameIdentifier != null && "orcid".equals(nameIdentifier.optString("type"))) {
+                    String orcid = nameIdentifier.getString("content");
+                    af.put("orcid", orcid);
+                  }
                 }
                 idoc.addField("autor_full", af.toString());
             }
@@ -680,6 +691,17 @@ public class IndexerK7 {
                     if (jo.has(prefix + "role")) {
                         String role = jo.getJSONObject(prefix + "role").getJSONObject(prefix + "roleTerm").getString("content");
                         af.put("role", role);
+                    }
+                    if (jo.has(prefix + "affiliation")) {
+                        String affiliation = jo.optString(prefix + "affiliation");
+                        af.put("affiliation", affiliation);
+                    }
+                    if (jo.has(prefix + "nameIdentifier")) {
+                      JSONObject nameIdentifier = jo.optJSONObject(prefix + "nameIdentifier");
+                      if (nameIdentifier != null && "orcid".equals(nameIdentifier.optString("type"))) {
+                        String orcid = nameIdentifier.getString("content");
+                        af.put("orcid", orcid);
+                      }
                     }
                     idoc.addField("autor_full", af.toString());
                 }
