@@ -9,7 +9,7 @@
     "searchParams": {
         "rows": 20
     },
-    "facetFields": ["pristup", "oblast", "vydavatel", "keyword"],
+    "facetFields": ["vydavatel", "oblast", "keyword"],
     "languages": ["cs", "en"],
     "sorts": [
         {

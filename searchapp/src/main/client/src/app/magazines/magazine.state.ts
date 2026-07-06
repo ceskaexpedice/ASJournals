@@ -66,7 +66,13 @@ import { Magazine } from '../models/magazine';
     let fields = this.config.facetFields;
     for (let i = 0; i < fields.length; i++){
       //this.facets.push({field: fields[i], values: facets[fields[i]].filter(f => !this.facetUsed(fields[i], f))});
-      this.facets.push({field: fields[i], values: facets[fields[i]]});
+      const values = facets[fields[i]];
+      values.sort((a: any, b: any) => {
+            return a[0].localeCompare(b[0], 'cs');
+          });
+      console.log(values)
+      this.facets.push({field: fields[i], values:values });
+
     }
     this._stateSubject.next(this);
   }
