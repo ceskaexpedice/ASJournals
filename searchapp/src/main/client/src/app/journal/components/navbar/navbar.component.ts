@@ -28,13 +28,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
-  // currentLang: string = 'cs';
   menu: any[] = [];
 
   public isCollapsed: boolean = false;
 
   constructor(
-    private titleService: Title,
     private meta: Meta,
     public config: Configuration,
     public state: AppState,
@@ -44,9 +42,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     public translate: TranslateService,) { }
 
   ngOnInit() {
-    this.subscriptions.push(this.appservice.langSubject.subscribe(val => {
-      // this.currentLang = val;
-    }));
 
       this.menu = this.config.layout.menu;
   }
@@ -56,14 +51,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
     this.subscriptions = [];
   }
-
-  // isVisible(h: string, sub: string) {
-  //   if (this.menu.hasOwnProperty(h)) {
-  //     return this.menu[h][sub];
-  //   } else {
-  //     return false;
-  //   }
-  // }
 
   changeLang(lang: string) {
     this.appservice.changeLang(lang);

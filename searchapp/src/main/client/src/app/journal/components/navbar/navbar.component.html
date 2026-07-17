@@ -7,7 +7,6 @@
           <a mat-flat-button color="primary" [matMenuTriggerFor]="menu1"  routerLinkActive="app-active" [title]="m[state.currentLang]" *ngIf="m.visible && m.children.length > 0" queryParamsHandling="preserve" >
             {{ m[state.currentLang] }} <mat-icon iconPositionEnd>expand_more</mat-icon>
             <mat-menu #menu1="matMenu">
-              <a mat-menu-item [routerLink]="m.route"  queryParamsHandling="preserve" [title]="m[state.currentLang]" (click)="isMobile ? onSidenavClose() : null">{{ m[state.currentLang] }}</a>
               <ng-container *ngFor="let m1 of m.children">
                 <a mat-menu-item *ngIf="m1.visible" [routerLink]="[m.route, m1.route]" routerLinkActive="app-active" queryParamsHandling="preserve" (click)="isMobile ? onSidenavClose() : null">{{ m1[state.currentLang ]}}</a>
               </ng-container>

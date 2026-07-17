@@ -9,9 +9,6 @@ export class AppState {
   private _stateSubject = new Subject();
   public stateChangedSubject: Observable<any> = this._stateSubject.asObservable();
 
-  // private _titleSubject = new Subject();
-  // public titleChangedSubject: Observable<any> = this._titleSubject.asObservable();
-
   private _classSubject = new Subject();
   public classChangedSubject: Observable<any> = this._classSubject.asObservable();
 
@@ -32,7 +29,6 @@ export class AppState {
 
   currentMagazine: Magazine;
 
-  //ctxs: {ctx: string, color: string, journal: string, showTitleLabel: boolean, licence:string}[];
   allMagazines: Magazine[] = [];
   ctxs: Magazine[] = [];
   externalMagazines: Magazine[] = [];
