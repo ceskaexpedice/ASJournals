@@ -23,7 +23,12 @@
         <!-- {{ 'magazines.prihlasit' | translate }} -->
         <mat-icon>login</mat-icon>
       </a>
-      <a mat-flat-button *ngIf="state.logged" (click)="logout()" color="primary" [title]="'magazines.odhlasit' | translate">{{ 'magazines.odhlasit' | translate }}</a>
+      <a mat-flat-button *ngIf="state.logged" (click)="logout()" color="primary"
+        style="padding: 0px; min-width: 32px;"
+        [title]="'magazines.odhlasit' | translate">
+        <!-- {{ 'magazines.odhlasit' | translate }} -->
+        <mat-icon>logout</mat-icon>
+      </a>
 
       <a mat-flat-button color="primary" [matMenuTriggerFor]="langMenu">
         <mat-icon>language</mat-icon>

@@ -27,9 +27,11 @@
     </div>
     <div class="app-right">
       <a *ngIf="state.logged && isMobile !== true" mat-flat-button color="primary" routerLink="admin" routerLinkActive="app-active" queryParamsHandling="preserve" [title]="'Admin' | translate">{{ 'Admin' | translate }}<mat-icon>settings</mat-icon></a>
-      <a *ngIf="!state.logged && isMobile !== true" mat-flat-button color="primary" routerLink="prihlaseni" routerLinkActive="app-active" queryParamsHandling="preserve" 
+      <a *ngIf="!state.logged && isMobile !== true" mat-flat-button 
+        color="primary" routerLink="prihlaseni" routerLinkActive="app-active" queryParamsHandling="preserve" 
         [title]="'Přihlásit' | translate" (click)="isMobile ? onSidenavClose() : null"><mat-icon>login</mat-icon></a>
-      <a *ngIf="state.logged && isMobile !== true" mat-flat-button color="primary" (click)="appservice.logout()" [title]="'Odhlásit' | translate">{{ 'Odhlásit' | translate }}</a>
+      <a *ngIf="state.logged && isMobile !== true" mat-flat-button color="primary" 
+        (click)="appservice.logout()" [title]="'Odhlásit' | translate"><mat-icon>logout</mat-icon></a>
 
       <a mat-flat-button *ngIf="isMobile !== true" color="primary" [matMenuTriggerFor]="langMenu" [title]="translate.currentLang"
         style="padding: 0px; min-width: 32px;">
