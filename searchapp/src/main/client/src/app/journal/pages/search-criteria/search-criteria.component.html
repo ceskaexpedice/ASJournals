@@ -1,13 +1,30 @@
-<mat-form-field class="app-w-100 app-form-field" appearance="outline"  *ngFor="let criterium of criteria; let last=last; let idx = index">
+<div class="app-fxLayout app-row app-center-v app-mb-4 app-mobile-row app-form-field"  *ngFor="let criterium of criteria; let last=last; let idx = index">
   <!-- <mat-label class="app-text-cutter">{{ 'q_placeholder' | translate }}</mat-label> -->
-  <input matInput type="text" #input [(ngModel)]="criterium.value" name="cvalue" (keyup.enter)="search()" [placeholder]="'q_placeholder' | translate" class="app-text-cutter">
+
+  
   <button mat-stroked-button color="primary" matPrefix [matMenuTriggerFor]="menuPrefix" class="app-ml-4 app-mr-4">
     {{ "fields." + criterium.field | translate  }}<mat-icon iconPositionEnd>expand_more</mat-icon>
   </button>
   <mat-menu #menuPrefix="matMenu">
     <button mat-menu-item *ngFor="let field of fields" (click)="setField(criterium, field)">{{ "fields." + field.field | translate }}</button>
   </mat-menu>
-  <div matSuffix class="app-fxLayout app-row app-center-v app-mr-4">
+
+  <ng-container *ngIf="criterium.field === 'genre'">
+    <mat-select  (selectionChange)="search()" name="vydavatel" [(ngModel)]="criterium.value" 
+      style="width: 200px; ">
+      <mat-option *ngFor="let genre of state.genres" [value]="genre.val">
+        {{'genre.'+genre.val | translate }} 
+      </mat-option>
+    </mat-select>
+  </ng-container>
+  <ng-container *ngIf="criterium.field !== 'genre'">
+    <mat-form-field appearance="outline">
+    <input matInput type="text" #input 
+    [(ngModel)]="criterium.value" name="cvalue" (keyup.enter)="search()" [placeholder]="'q_placeholder' | translate" 
+    class="app-text-cutter"></mat-form-field>
+  </ng-container>
+
+  <div matSuffix class="app-fxLayout app-row app-center-v app-mr-4" style="margin-left:auto;">
     <button mat-stroked-button color="primary" [matMenuTriggerFor]="menuSufix" class="app-ml-4 app-mr-4">
       {{ criterium.operatorLabel | translate  }}<mat-icon iconPositionEnd>expand_more</mat-icon>
     </button>
@@ -18,7 +35,7 @@
       <mat-icon color="primary">cancel</mat-icon>
     </a>
   </div>
-</mat-form-field>
+</div>
 
 <div class="app-fxLayout app-row app-center-v app-mb-4 app-mobile-row">
   <div class="app-fxFlex app-left">

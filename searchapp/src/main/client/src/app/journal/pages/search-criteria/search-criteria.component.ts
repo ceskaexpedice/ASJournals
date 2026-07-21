@@ -18,12 +18,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule,
             MatFormFieldModule, MatIconModule, MatInputModule, MatButtonModule, MatMenuModule, 
-            TranslateModule, MatCardModule, MatCheckboxModule, MatPaginatorModule, MatTooltipModule
+            TranslateModule, MatCardModule, MatCheckboxModule, MatPaginatorModule, MatTooltipModule,
+            MatSelectModule
   ],
   selector: 'app-search-criteria',
   templateUrl: './search-criteria.component.html',
@@ -86,12 +88,12 @@ export class SearchCriteriaComponent implements OnInit, OnDestroy {
           this.addCriterium();
         }
           this.service.searchFired(this.criteria);
+    this.setGenres();
       });
 
     this.subscriptions.push(this.service.langSubject.subscribe(val => {
       this.setGenres();
     }));
-    this.setGenres();
   }
 
   ngOnDestroy() {
