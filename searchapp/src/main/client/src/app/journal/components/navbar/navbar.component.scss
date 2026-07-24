@@ -29,3 +29,13 @@
     background-color: rgba(var(--app-color-lightnes-rgb), .15);
   }
 }
+
+::ng-deep .mat-mdc-button-touch-target {
+    width: 48px !important;
+  }
+
+::ng-deep .mat-mdc-focus-indicator {
+    width: 48px !important;
+  }
+
+  
