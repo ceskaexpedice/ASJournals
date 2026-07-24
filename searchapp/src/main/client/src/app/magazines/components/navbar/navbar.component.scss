@@ -87,3 +87,13 @@
     }
   }
 }
+
+
+::ng-deep .app-login {
+   .mat-mdc-button-touch-target {
+    width: 48px !important;
+  }
+   .mat-mdc-button-persistent-ripple {
+    width: 48px !important;
+  }
+}

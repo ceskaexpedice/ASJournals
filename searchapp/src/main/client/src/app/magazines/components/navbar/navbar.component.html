@@ -16,14 +16,17 @@
       <a mat-flat-button routerLink="o-projektu" routerLinkActive="app-active" color="primary" [title]="'magazines.o_projektu' | translate">{{ 'magazines.o_projektu' | translate }}</a>
       <a mat-flat-button routerLink="vydavatele" routerLinkActive="app-active" color="primary" [title]="'magazines.vydavatele' | translate">{{ 'magazines.vydavatele' | translate }}</a>
       <a mat-flat-button routerLink="kontakt" routerLinkActive="app-active" color="primary" [title]="'magazines.kontakt' | translate">{{ 'magazines.kontakt' | translate }}</a>
-      <a mat-flat-button *ngIf="state.logged" routerLink="admin" routerLinkActive="app-active" color="primary" [title]="'magazines.administrace' | translate">{{ 'magazines.administrace' | translate }}</a>
-      <a mat-flat-button *ngIf="!state.logged" routerLink="prihlaseni" routerLinkActive="app-active" color="primary" 
+      <a mat-flat-button *ngIf="state.logged"
+      class="app-login" routerLink="admin" routerLinkActive="app-active" color="primary" [title]="'magazines.administrace' | translate">{{ 'magazines.administrace' | translate }}</a>
+      <a mat-flat-button *ngIf="!state.logged"
+      class="app-login" routerLink="prihlaseni" routerLinkActive="app-active" color="primary" 
         style="padding: 0px; min-width: 32px;"
         [title]="('magazines.prihlasit' | translate) + '. ' + ('magazines.prihlasit_tooltip' | translate)">
         <!-- {{ 'magazines.prihlasit' | translate }} -->
         <mat-icon>login</mat-icon>
       </a>
-      <a mat-flat-button *ngIf="state.logged" (click)="logout()" color="primary"
+      <a mat-flat-button *ngIf="state.logged"
+      class="app-login" (click)="logout()" color="primary"
         style="padding: 0px; min-width: 32px;"
         [title]="'magazines.odhlasit' | translate">
         <!-- {{ 'magazines.odhlasit' | translate }} -->
@@ -32,7 +35,7 @@
 
       <a mat-flat-button color="primary" [matMenuTriggerFor]="langMenu">
         <mat-icon>language</mat-icon>
-        {{ 'lang.' + translate.currentLang | translate }}
+        {{ 'langAbr.' + translate.currentLang | translate }}
         <mat-icon iconPositionEnd>expand_more</mat-icon>
       </a>
       <mat-menu #langMenu="matMenu">
