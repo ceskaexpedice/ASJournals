@@ -40,7 +40,8 @@
         <mat-icon iconPositionEnd>expand_more</mat-icon>
       </a>
       <mat-menu #langMenu="matMenu">
-        <a mat-menu-item *ngFor="let lang of state.currentMagazine.languages" (click)="changeLang(lang)">{{ lang }} | {{ 'lang.'+lang | translate }}</a>
+        <a mat-menu-item *ngFor="let lang of state.currentMagazine.languages" 
+        (click)="changeLang(lang)">{{ 'langAbr.'+lang | translate }} | {{ 'lang.'+lang | translate }}</a>
       </mat-menu>
     </div>
   </div>

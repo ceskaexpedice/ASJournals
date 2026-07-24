@@ -672,5 +672,10 @@
 		"cs": "Česky",
 		"en": "English",
 		"de": "Deutch"
+	},
+	"langAbr": {
+		"cs": "CZE",
+		"en": "ENG",
+		"de": "GER"
 	}
 }
