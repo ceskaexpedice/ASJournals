@@ -28,7 +28,7 @@
     <div class="app-right">
       <a *ngIf="state.logged && isMobile !== true" mat-flat-button color="primary" routerLink="admin" 
       routerLinkActive="app-active"
-      class="app-login" queryParamsHandling="preserve" [title]="'Admin' | translate">{{ 'Admin' | translate }}<mat-icon>settings</mat-icon></a>
+      queryParamsHandling="preserve" [title]="'Admin' | translate">{{ 'Admin' | translate }}<mat-icon>settings</mat-icon></a>
       <a *ngIf="!state.logged && isMobile !== true" mat-flat-button 
         color="primary" routerLink="prihlaseni"
       class="app-login" routerLinkActive="app-active" queryParamsHandling="preserve" 
