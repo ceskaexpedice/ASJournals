@@ -81,9 +81,13 @@ public class IndexServlet extends HttpServlet {
                 JSONObject json = new JSONObject();
                 try {
 
-                    Indexer indexer = new Indexer();
+                    IndexerK7 indexer = new IndexerK7();
                     String pid = req.getParameter("pid");
-                    indexer.setView(pid);
+                    indexer.setView(req.getParameter("pid"), 
+                            req.getParameter("title"), 
+                            req.getParameter("issueNumber"), 
+                            req.getParameter("volumeNumber"), 
+                            req.getParameter("year"));
 
                 } catch (Exception ex) {
                     LOGGER.log(Level.SEVERE, null, ex);

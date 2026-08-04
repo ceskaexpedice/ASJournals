@@ -49,6 +49,10 @@
     <field name="_version_" type="plong" indexed="false" stored="false"/>
     <field name="_root_" type="string" indexed="true" stored="false" docValues="false" />
     <field name="pid" type="string" indexed="true" stored="true" required="true" multiValued="false" />
+    <field name="title" type="string" indexed="true" stored="true" required="true" multiValued="false" />
+    <field name="issueNumber" type="string" indexed="true" stored="true" required="true" multiValued="false" />
+    <field name="volumeNumber" type="string" indexed="true" stored="true" required="true" multiValued="false" />
+    <field name="year" type="string" indexed="true" stored="true" required="true" multiValued="false" />
     <field name="views" type="pint" indexed="true" stored="true" multiValued="false"/>
     
     <uniqueKey>pid</uniqueKey>

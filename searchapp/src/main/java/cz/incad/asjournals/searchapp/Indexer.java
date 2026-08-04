@@ -76,6 +76,7 @@ public class Indexer {
     public void setView(String pid) {
         try {
             SolrClient client = getClient("views");
+            //SolrClient client = getClient("journal");
             SolrInputDocument idoc = new SolrInputDocument();
             idoc.setField("pid", pid);
 
@@ -89,6 +90,10 @@ public class Indexer {
             LOGGER.log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    public void setFromViews() {
+      
     }
 
     /**

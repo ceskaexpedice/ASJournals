@@ -237,7 +237,8 @@
 		},
 		"defaultView": "Viewer - default view",
 		"view_detail": "detail",
-		"view_pdf": "PDF"
+		"view_pdf": "PDF",
+		"exportViews": "Export total article views"
 	},
 	"a zároveň": "AND",
 	"nebo": "OR",

@@ -31,6 +31,7 @@ import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
+import org.json.CDL;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,15 +78,34 @@ public class IndexerK7 {
         return client;
     }
 
-    public void setView(String pid) {
+
+    public void setView(String pid, String title, String issueNumber, String volumeNumber, String year) {
         try {
             SolrClient client = getClient("views");
+            //SolrClient client = getClient("journal");
             SolrInputDocument idoc = new SolrInputDocument();
             idoc.setField("pid", pid);
 
             Map<String, Object> fieldModifier = new HashMap<>(1);
             fieldModifier.put("inc", "1");
-            idoc.addField("views", fieldModifier);  // add the map as the field value
+            idoc.addField("views", fieldModifier);
+            
+            Map<String, Object> tModifier = new HashMap<>(1);
+            tModifier.put("set", title);
+            idoc.addField("title", tModifier);
+            
+            Map<String, Object> iModifier = new HashMap<>(1);
+            iModifier.put("set", issueNumber);
+            idoc.addField("issueNumber", iModifier);
+            
+            Map<String, Object> vModifier = new HashMap<>(1);
+            vModifier.put("set", volumeNumber);
+            idoc.addField("volumeNumber", vModifier);
+            
+            Map<String, Object> yearModifier = new HashMap<>(1);
+            yearModifier.put("set", year);
+            idoc.addField("year", yearModifier);
+            
             client.add(idoc, 10);
             client.commit();
             client.close();
@@ -94,6 +114,71 @@ public class IndexerK7 {
         }
 
     }
+    
+    public JSONObject setFromViews() {
+      JSONObject ret = new JSONObject();
+      try {
+            Options opts = Options.getInstance();
+            String solrhost = opts.getString("solr.host", "http://localhost:8983/solr/")
+                    + "views/export?q=*:*&sort=pid+asc&fl=pid,views";
+
+            LOGGER.log(Level.FINE, "requesting url {0}", solrhost);
+            Map<String, String> reqProps = new HashMap<>();
+            reqProps.put("Content-Type", "application/json");
+            reqProps.put("Accept", "application/json");
+            InputStream inputStream = RESTHelper.inputStream(solrhost, reqProps);
+            JSONObject jo = new JSONObject(org.apache.commons.io.IOUtils.toString(inputStream, "UTF-8"));
+            JSONArray docs = jo.getJSONObject("response").getJSONArray("docs");
+            
+            SolrClient client = getClient("journal");
+            
+            for(int i = 0; i < docs.length(); i++) {
+              JSONObject doc = docs.getJSONObject(i);
+              SolrInputDocument idoc = new SolrInputDocument();
+              idoc.setField("pid", doc.getString("pid"));
+              Map<String, Object> fieldModifier = new HashMap<>(1);
+              fieldModifier.put("set", doc.getInt("views"));
+              idoc.addField("views", fieldModifier);  // add the map as the field value
+              client.add(idoc, 10);
+              ret.append("views", doc.getInt("views"));
+            }
+
+            client.commit();
+            client.close();
+            
+            return jo;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            return ret.put("error", ex);
+        }
+    }
+    
+    public String exportViews() {
+      try {
+            Options opts = Options.getInstance();
+            String solrhost = opts.getString("solr.host", "http://localhost:8983/solr/")
+                    + "views/export?wt=csv&q=*:*&sort=pid+asc&fl=pid,title,issueNumber,volumeNumber,year,views";
+            
+            
+            JSONArray names = new JSONArray("pid,title,issueNumber,volumeNumber,year,views".split(","));
+
+            LOGGER.log(Level.FINE, "requesting url {0}", solrhost);
+            Map<String, String> reqProps = new HashMap<>();
+            reqProps.put("Content-Type", "application/json");
+            reqProps.put("Accept", "application/json");
+            InputStream inputStream = RESTHelper.inputStream(solrhost, reqProps);
+            JSONObject jo = new JSONObject(org.apache.commons.io.IOUtils.toString(inputStream, "UTF-8"));
+            JSONArray docs = jo.getJSONObject("response").getJSONArray("docs");
+            
+            String csv = "pid,title,issueNumber,volumeNumber,year,views\n";
+            csv += CDL.toString(names,docs);
+            return csv;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            return ex.toString();
+        }
+    }
+    
 
     private void writeStatus() {
         try {

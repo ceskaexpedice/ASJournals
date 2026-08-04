@@ -237,7 +237,8 @@
 		},
 		"defaultView": "Prohlížečka - výchozí zobrazení",
 		"view_detail": "detail",
-		"view_pdf": "PDF"
+		"view_pdf": "PDF",
+		"exportViews": "Exportovat celkový počet zobrazení článků"
 	},
 	"a zároveň": "a zároveň",
 	"nebo": "nebo",

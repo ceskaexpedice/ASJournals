@@ -103,6 +103,13 @@ public class SearchServlet extends HttpServlet {
             JSONObject doPerform(HttpServletRequest request, HttpServletResponse response) throws Exception {
                 return Searcher.fromQuery(request);
             }
+        },
+        SET_VIEWS {
+            @Override
+            JSONObject doPerform(HttpServletRequest request, HttpServletResponse response) throws Exception {
+              IndexerK7 indexer = new IndexerK7();
+              return indexer.setFromViews();
+            }
         };
 
         abstract JSONObject doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception;

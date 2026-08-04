@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -119,11 +120,10 @@ public class TextsServlet extends HttpServlet {
         String filename = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "texts"
                 + File.separator + id;
         File f;
-        
+
         JSONObject body = new JSONObject(IOUtils.toString(request.getInputStream(), "UTF-8"));
-        
+
         // JSONObject body = new JSONObject(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
-        
         String text = body.getString("text");
 
         if (lang != null) {
@@ -214,6 +214,17 @@ public class TextsServlet extends HttpServlet {
         out.println(json.toString(2));
       }
     },
+    EXPORT_VIEWS {
+      @Override
+      void doPerform(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        LocalDate ld = LocalDate.now();
+        response.setContentType("text/csv;charset=UTF-8");
+        response.setHeader("Content-Disposition", "filename=asjournals_views_" +  ld.toString() + ".csv");
+        PrintWriter out = response.getWriter();
+        IndexerK7 indexer = new IndexerK7();
+        out.println(indexer.exportViews());
+      }
+    },
     GET_JOURNALS {
       @Override
       void doPerform(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -235,7 +246,7 @@ public class TextsServlet extends HttpServlet {
         String ctx = request.getParameter("ctx");
         JSONObject conf = Options.getInstance().getClientConf();
 
-        JSONObject js = new JSONObject(conf.toString()); 
+        JSONObject js = new JSONObject(conf.toString());
 
         File f = new File(InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "config.json");
 
@@ -264,10 +275,10 @@ public class TextsServlet extends HttpServlet {
         if (fmenu.exists()) {
           js.put("home", FileUtils.readFileToString(fhome, "UTF-8"));
         }
-        
+
         out.println(js.toString(2));
       }
-    }, 
+    },
     GET_LAYOUT {
       @Override
       void doPerform(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -283,8 +294,8 @@ public class TextsServlet extends HttpServlet {
         if (fmenu.exists()) {
           js = new JSONObject(FileUtils.readFileToString(fmenu, "UTF-8"));
         } else {
-            // default menu. 
-            js = Options.getInstance().getClientConf().getJSONObject("layout"); 
+          // default menu. 
+          js = Options.getInstance().getClientConf().getJSONObject("layout");
         }
 
         String home_cs = InitServlet.CONFIG_DIR + File.separator + ctx + File.separator + "texts"
@@ -300,7 +311,7 @@ public class TextsServlet extends HttpServlet {
         if (fhomeen.exists()) {
           js.put("home_en", FileUtils.readFileToString(fhomeen, "UTF-8"));
         }
-        
+
         out.println(js.toString(2));
       }
     };

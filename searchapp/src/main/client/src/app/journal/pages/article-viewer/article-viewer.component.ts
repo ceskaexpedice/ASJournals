@@ -248,9 +248,6 @@ export class ArticleViewerComponent implements OnInit {
     this.settingData = true;
     this.state.fullSrc = null;
     this.loading = true;
-    this.service.setViewed(this.state.viewerPid).subscribe(res => {
-      //console.log('viewed!');
-    });
 
     this.service.getItem(this.state.viewerPid, true).subscribe(res => {
 
@@ -328,10 +325,21 @@ export class ArticleViewerComponent implements OnInit {
         this.router.navigate(['/' + this.state.currentMagazine?.ctx + '/article', this.state.viewerPid, 'pdf'], { queryParamsHandling: 'preserve' });
       }
 
-      console.log(this.state.viewerArticle)
       this.service.details(this.state.viewerJournal['mods'], this.state.viewerJournal['model'], this.state.viewerJournal.parent, 
         this.state.viewerArticle.pid_paths[0], this.state.viewerArticle.model_paths[0]);
       this.state.stateChanged();
+
+    
+    this.service.setViewed(this.state.viewerPid, 
+      this.state.viewerArticle['title'], 
+      this.state.archivItemDetails.issueNumber,
+      this.state.archivItemDetails.volumeNumber,
+      this.state.archivItemDetails.year+''
+    ).subscribe(res => {
+      //console.log('viewed!');
+    });
+
+
 
     });
   }

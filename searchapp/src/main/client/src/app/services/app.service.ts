@@ -571,11 +571,15 @@ export class AppService {
     )
   }
 
-  setViewed(pid: string): Observable<any> {
+  setViewed(pid: string, title: string, issueNumber: string, volumeNumber: string, year: string): Observable<any> {
     const url = this.config['context'] + 'index';
     const params = new HttpParams()
       .set('action', 'SET_VIEW')
-      .set('pid', pid);
+      .set('pid', pid)
+      .set('title', title)
+      .set('issueNumber', issueNumber+'')
+      .set('volumeNumber', volumeNumber+'')
+      .set('year', year+'');
     return this.get(url, params);
   }
 

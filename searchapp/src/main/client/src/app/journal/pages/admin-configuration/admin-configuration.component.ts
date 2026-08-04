@@ -203,4 +203,8 @@ export class AdminConfigurationComponent {
     });
   }
 
+  exportViews() {
+    window.open('/api/texts?action=export_views')
+  }
+
 }
