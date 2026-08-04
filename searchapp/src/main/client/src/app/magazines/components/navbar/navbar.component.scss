@@ -90,6 +90,9 @@
 
 
 ::ng-deep .app-login {
+  padding: 0px; 
+  min-width: 32px;
+
    .mat-mdc-button-touch-target {
     width: 48px !important;
   }

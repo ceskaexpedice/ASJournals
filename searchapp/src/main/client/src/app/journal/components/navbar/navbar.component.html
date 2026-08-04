@@ -38,7 +38,7 @@
         (click)="appservice.logout()" [title]="'Odhlásit' | translate"><mat-icon>logout</mat-icon></a>
 
       <a mat-flat-button *ngIf="isMobile !== true" color="primary" [matMenuTriggerFor]="langMenu" [title]="translate.currentLang"
-        style="padding: 0px; min-width: 32px;">
+        style="min-width: 32px;">
         <mat-icon>language</mat-icon>
         {{ 'langAbr.'+translate.currentLang | translate }}
         <mat-icon iconPositionEnd>expand_more</mat-icon>

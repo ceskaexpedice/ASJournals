@@ -32,11 +32,19 @@
 
 
 ::ng-deep .app-login {
+
+   
+  padding: 0px !important; 
+  min-width: 32px !important;
+
    .mat-mdc-button-touch-target {
-    width: 48px !important;
+    width: 32px !important;
   }
-   .mat-mdc-button-persistent-ripple {
-    width: 48px !important;
+   .mat-mdc-focus-indicator {
+    width: 32px !important;
+  }
+   .mat-mdc-button-ripple {
+    width: 32px !important;
   }
 }
 
