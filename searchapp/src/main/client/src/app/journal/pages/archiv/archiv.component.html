@@ -17,9 +17,26 @@
         <app-archiv-item *ngFor="let item of items" [item]="item" (drillDown)="drillDown($event)"></app-archiv-item>
       </ng-container>
       <ng-container *ngIf="isDataNode">
-        <ng-container *ngFor="let art of items">
+          <ng-container *ngIf="state.currentMagazine.sortByOrder">
+            <ng-container *ngFor="let art of items">
+              <app-article-result *ngIf="!isHiddenByGenre(art['genre'])" [article]="art"></app-article-result>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="!state.currentMagazine.sortByOrder">
+            <ng-container *ngFor="let genre of currentJournal.genres; let lastItem = last">
+              <div *ngIf="currentJournal.genresObject[genre].visible">
+                <h2 class="app-headline">{{'genre.' + genre | translate}}</h2>
+                <app-article-result class="app-item" *ngFor="let art of currentJournal.genresObject[genre].articles" [article]="art" [active]="art.pid === state.viewerPid" [parentJournal]="state.viewerJournal"></app-article-result>
+                <mat-divider *ngIf="!lastItem"></mat-divider>
+              </div>
+            </ng-container>
+          </ng-container>
+
+
+        <!-- <ng-container *ngFor="let art of items">
           <app-article-result *ngIf="!isHiddenByGenre(art['genre'])" [article]="art"></app-article-result>
-        </ng-container>
+        </ng-container> -->
+
       </ng-container>
     </div>
     <p *ngIf="state.currentMagazine.showOldYears && isRoot()">
@@ -71,10 +88,32 @@
         <ng-container *ngIf="!isDataNode">
           <app-archiv-item *ngFor="let item of items" [item]="item" (drillDown)="drillDown($event)"></app-archiv-item>
         </ng-container>
+
+
+
+
         <div class="app-items-wrapper app-text-content" *ngIf="isDataNode">
-          <div *ngFor="let art of items" class="app-item">
+          <ng-container *ngIf="state.currentMagazine.sortByOrder">
+            <div *ngFor="let art of items" class="app-item">
+              <app-article-result *ngIf="!isHiddenByGenre(art['genre'])" [article]="art"></app-article-result>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!state.currentMagazine.sortByOrder">
+            <ng-container *ngFor="let genre of currentJournal.genres; let lastItem = last">
+              <div class="app-item" *ngIf="currentJournal.genresObject[genre].visible">
+                <h2 class="app-headline">{{'genre.' + genre | translate}}</h2>
+                <app-article-result class="app-item" *ngFor="let art of currentJournal.genresObject[genre].articles" [article]="art" [active]="art.pid === state.viewerPid" [parentJournal]="state.viewerJournal"></app-article-result>
+                <mat-divider *ngIf="!lastItem"></mat-divider>
+              </div>
+            </ng-container>
+          </ng-container>
+
+
+
+
+          <!-- <div *ngFor="let art of items" class="app-item">
             <app-article-result *ngIf="!isHiddenByGenre(art['genre'])" [article]="art"></app-article-result>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

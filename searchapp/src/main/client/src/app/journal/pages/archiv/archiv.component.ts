@@ -17,12 +17,14 @@ import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import Utils from 'src/app/services/utils';
 import { pid } from 'process';
+import { MatDividerModule } from "@angular/material/divider";
+import { Journal } from 'src/app/models/journal.model';
 
 
 @Component({
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule, ArchivItemComponent, ArticleResultComponent, ArchivItemLeftComponent,
-    MatSelectModule, MatInputModule, MatFormFieldModule, TranslateModule, MatIconModule, MatButtonModule, MatMenuModule],
+    MatSelectModule, MatInputModule, MatFormFieldModule, TranslateModule, MatIconModule, MatButtonModule, MatMenuModule, MatDividerModule],
   selector: 'app-archiv',
   templateUrl: './archiv.component.html',
   styleUrls: ['./archiv.component.scss']
@@ -33,6 +35,7 @@ export class ArchivComponent implements OnInit {
   currentItem: any;
   items: any[] = [];
   parentItems: any[] = [];
+  currentJournal: Journal = new Journal();
 
   visibleItems: number = 500;
   visibleParentItems: any[] = [];
@@ -156,7 +159,7 @@ export class ArchivComponent implements OnInit {
 
     this.setMainClass();
 
-    this.service.getItem(this.currentPid, false).subscribe(res => {
+    this.service.getItem(this.currentPid, true).subscribe(res => {
       if (this.currentPid === this.state.currentMagazine['journal']) {
         this.currentItem = { pid: this.currentPid, parents: null, model: 'periodical' };
       } else {
@@ -176,6 +179,7 @@ export class ArchivComponent implements OnInit {
           this.currentItem['dateIssuedFormated'] = this.currentItem['dateIssued'];
         }
       }
+      this.currentJournal = Utils.journalFromResp(res['parent']['doc']);
       if (!this.cache.hasOwnProperty(this.currentPid)) {
         this.service.getChildren(this.currentPid).subscribe(res => {
           this.isDataNode = res.length > 0 && res[0]['datanode'];
@@ -185,6 +189,10 @@ export class ArchivComponent implements OnInit {
             this.items.sort((a, b) => {
               return a['idx'] - b['idx'];
             });
+
+            
+            this.currentJournal.setArticles({response: {docs: res}}, this.config['mergeGenres'],[...this.config.hiddenGenres, ...this.config.layout.hiddenGenres]);
+            
           } else if (this.currentItem.model === 'periodicalvolume') {
             this.items.sort((a, b) => {
               const mods1 = JSON.parse(a['mods']);
@@ -304,7 +312,6 @@ export class ArchivComponent implements OnInit {
   }
 
   setDetails() {
-    console.log(this.currentItem)
     this.service.details(this.currentItem['mods'], this.currentItem['model'], this.currentItem['parents'][0],
        this.currentItem['pid_paths'][0], this.currentItem['model_paths'][0]);
     this.state.crumbsChanged();
