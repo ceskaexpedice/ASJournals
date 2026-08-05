@@ -67,6 +67,47 @@ public class Searcher {
         }
         return json;
     }
+    
+    public static JSONObject getMagazine(String ctx) {
+        JSONObject json = new JSONObject();
+        try (HttpSolrClient client = new HttpSolrClient.Builder(Options.getInstance().getString("solr.host")).build()) {
+            SolrQuery query = new SolrQuery("*")
+                    .setRows(1)
+                    .addFilterQuery("ctx:\"" + ctx + "\"")
+                    .setParam("json.nl", "arrarr");
+
+            
+
+            json = json(query, client, "magazines");
+            
+            JSONArray docs = json.getJSONObject("response").getJSONArray("docs");
+            return docs.length() > 0 ? docs.getJSONObject(0) : new JSONObject();
+
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            json.put("error", ex);
+        }
+        return json;
+    }
+    
+    public static JSONObject getMagazineByPid(String pid) {
+        JSONObject json = new JSONObject();
+        try (HttpSolrClient client = new HttpSolrClient.Builder(Options.getInstance().getString("solr.host")).build()) {
+            SolrQuery query = new SolrQuery("*")
+                    .setRows(1)
+                    .addFilterQuery("journal:\"" + pid + "\"");
+
+            json = json(query, client, "magazines");
+            
+            JSONArray docs = json.getJSONObject("response").getJSONArray("docs");
+            return docs.length() > 0 ? docs.getJSONObject(0) : new JSONObject();
+
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            json.put("error", ex);
+        }
+        return json;
+    }
 
     public static JSONObject getMagazines(HttpServletRequest request) {
         JSONObject json = new JSONObject();
@@ -195,13 +236,20 @@ public class Searcher {
     }
 
     public static JSONObject getByPid(HttpServletRequest request) {
+      return getByPid(request.getParameter("pid"), Boolean.parseBoolean(request.getParameter("withParent")));
+    }
+    
+    public static JSONObject getByPid(String pid, boolean withParent) {
         JSONObject json = new JSONObject();
         try  {
-            JSONObject doc = getByPid(request.getParameter("pid"));
+            JSONObject doc = getByPid(pid);
             if (doc != null) {
                 json.put("doc", doc);
-                if (Boolean.parseBoolean(request.getParameter("withParent"))) {
+                if (withParent) {
                     json.put("parent", new JSONObject());
+                    if (!doc.has("parents")) {
+                      return json;
+                    }
                     String parentPid = doc.getJSONArray("parents").getString(0);
                     JSONObject parentDoc = json.getJSONObject("parent");
                     while (parentPid != null && !parentPid.isBlank()) {

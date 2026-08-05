@@ -575,6 +575,7 @@ export class AppService {
     const url = this.config['context'] + 'index';
     const params = new HttpParams()
       .set('action', 'SET_VIEW')
+      .set('ctx', this.state.currentMagazine.ctx)
       .set('pid', pid)
       .set('title', title)
       .set('issueNumber', issueNumber+'')

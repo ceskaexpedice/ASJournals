@@ -82,12 +82,32 @@ public class IndexServlet extends HttpServlet {
                 try {
 
                     IndexerK7 indexer = new IndexerK7();
-                    String pid = req.getParameter("pid");
                     indexer.setView(req.getParameter("pid"), 
+                            req.getParameter("ctx"), 
                             req.getParameter("title"), 
                             req.getParameter("issueNumber"), 
                             req.getParameter("volumeNumber"), 
                             req.getParameter("year"));
+
+                } catch (Exception ex) {
+                    LOGGER.log(Level.SEVERE, null, ex);
+                    json.put("error", ex.toString());
+                }
+                out.println(json.toString(2));
+            }
+        },
+        FIX_VIEW {
+            @Override
+            void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+
+                resp.setContentType("application/json;charset=UTF-8");
+
+                PrintWriter out = resp.getWriter();
+                JSONObject json = new JSONObject();
+                try {
+
+                    IndexerK7 indexer = new IndexerK7();
+                    json = indexer.fixViews();
 
                 } catch (Exception ex) {
                     LOGGER.log(Level.SEVERE, null, ex);
@@ -389,7 +409,7 @@ public class IndexServlet extends HttpServlet {
                         + opts.getString("krameriusUrl")
                         + "&exp=" + req.getParameter("exp")
                         + "&uuid=" + req.getParameter("uuid");
-                // System.out.println(url);
+                System.out.println(url);
                 InputStream inputStream = RESTHelper.inputStream(url);
                 org.apache.commons.io.IOUtils.copy(inputStream, resp.getOutputStream());
             }

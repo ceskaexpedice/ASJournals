@@ -219,10 +219,10 @@ public class TextsServlet extends HttpServlet {
       void doPerform(HttpServletRequest request, HttpServletResponse response) throws Exception {
         LocalDate ld = LocalDate.now();
         response.setContentType("text/csv;charset=UTF-8");
-        response.setHeader("Content-Disposition", "filename=asjournals_views_" +  ld.toString() + ".csv");
+        response.setHeader("Content-Disposition", "filename="+request.getParameter("ctx")+"_views_" +  ld.toString() + ".csv");
         PrintWriter out = response.getWriter();
         IndexerK7 indexer = new IndexerK7();
-        out.println(indexer.exportViews());
+        out.println(indexer.exportViews(request.getParameter("ctx")));
       }
     },
     GET_JOURNALS {

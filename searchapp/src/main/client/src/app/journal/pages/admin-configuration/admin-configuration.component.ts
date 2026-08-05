@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule, UpperCasePipe } from '@angular/common';
+import { CommonModule, DatePipe, UpperCasePipe } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -18,7 +18,6 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import Utils from 'src/app/services/utils';
 import { LicencesDialogComponent } from '../../components/licences-dialog/licences-dialog.component';
 import { ResetPwdDialogComponent } from '../../components/reset-pwd-dialog/reset-pwd-dialog.component';
-import { error } from 'console';
 import { AngularSplitModule } from "angular-split";
 import { SearchService } from 'src/app/services/search.service';
 import { HttpParams } from '@angular/common/http';
@@ -27,7 +26,7 @@ import { HttpParams } from '@angular/common/http';
 @Component({
   selector: 'app-admin-configuration',
   standalone: true,
-  imports: [CommonModule, FileUploadModule, TranslateModule, FormsModule,
+  imports: [CommonModule, FileUploadModule, TranslateModule, FormsModule, DatePipe,
     MatFormFieldModule, MatInputModule, MatCheckboxModule, MatButtonModule,
     MatDividerModule, MatRadioModule, MatProgressBarModule, MatDialogModule, AngularSplitModule],
   templateUrl: './admin-configuration.component.html',
@@ -43,6 +42,7 @@ export class AdminConfigurationComponent {
   keepLang: boolean = false;
 
   genres: {label: string, selected: boolean}[] = [];
+  now = new Date();
 
   constructor(
     public dialog: MatDialog,
