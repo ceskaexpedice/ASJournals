@@ -4,13 +4,11 @@
   "api.point": "http://localhost/search/api/v5.0",
   "api.point.k7": "https://kramerius.lib.cas.cz/search/api/client/v7.0",
   "img.point": "http://localhost/search/img",
-  "handlers": ["select", "full"],
   "langsMap": {
     "cs": "cze",
     "de": "ger",
     "en": "eng"
   }, 
-  "citation_server_old": "http://citace.kramerius.cloud/v1/kramerius?format=html&url=",
   "citation_server": "https://citace.ceskadigitalniknihovna.cz/api/v1?format=html&lang=cs&url=",
   "sas_context": "slovoaslovesnost"
 }
