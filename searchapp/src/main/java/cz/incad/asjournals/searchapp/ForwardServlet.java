@@ -73,9 +73,9 @@ public class ForwardServlet extends HttpServlet {
       //out.print(org.apache.commons.io.IOUtils.toString(inputStream, "UTF8"));
 
     } catch (IOException ex) {
-      LOGGER.log(Level.SEVERE, null, ex);
+      LOGGER.log(Level.SEVERE, "", ex);
     } catch (JSONException ex) {
-      LOGGER.log(Level.SEVERE, null, ex);
+      LOGGER.log(Level.SEVERE, "", ex);
     }
   }
 

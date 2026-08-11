@@ -49,13 +49,13 @@ public class UpdaterTask extends TimerTask {
           }
         }
       } catch (SolrServerException | IOException ex) {
-        LOGGER.log(Level.SEVERE, null, ex);
+        LOGGER.log(Level.SEVERE, "", ex);
       }
       
     } catch (IOException ex) {
-      Logger.getLogger(UpdaterTask.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(UpdaterTask.class.getName()).log(Level.SEVERE, "", ex);
     } catch (JSONException ex) {
-      Logger.getLogger(UpdaterTask.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(UpdaterTask.class.getName()).log(Level.SEVERE, "", ex);
     }
   }
 }

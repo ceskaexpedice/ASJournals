@@ -90,7 +90,7 @@ public class IndexServlet extends HttpServlet {
                             req.getParameter("year"));
 
                 } catch (Exception ex) {
-                    LOGGER.log(Level.SEVERE, null, ex);
+                    LOGGER.log(Level.SEVERE, "", ex);
                     json.put("error", ex.toString());
                 }
                 out.println(json.toString(2));
@@ -110,7 +110,7 @@ public class IndexServlet extends HttpServlet {
                     json = indexer.fixViews();
 
                 } catch (Exception ex) {
-                    LOGGER.log(Level.SEVERE, null, ex);
+                    LOGGER.log(Level.SEVERE, "", ex);
                     json.put("error", ex.toString());
                 }
                 out.println(json.toString(2));
@@ -152,7 +152,7 @@ public class IndexServlet extends HttpServlet {
 
                     //indexer.indexPidAndChildren(req.getParameter("pid"));
                 } catch (Exception ex) {
-                    LOGGER.log(Level.SEVERE, null, ex);
+                    LOGGER.log(Level.SEVERE, "", ex);
                     json.put("error", ex.toString());
                 }
                 out.println(json.toString(2));
@@ -245,7 +245,7 @@ public class IndexServlet extends HttpServlet {
 
                     //indexer.indexPidAndChildren(req.getParameter("pid"));
                 } catch (Exception ex) {
-                    LOGGER.log(Level.SEVERE, null, ex);
+                    LOGGER.log(Level.SEVERE, "", ex);
                     json.put("error", ex.toString());
                 }
                 out.println(json.toString(2));

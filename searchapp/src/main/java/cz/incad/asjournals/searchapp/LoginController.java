@@ -56,7 +56,7 @@ public class LoginController {
       }
       return false;
     } catch (IOException | JSONException ex) {
-      Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, "", ex);
       return false;
     }
   }

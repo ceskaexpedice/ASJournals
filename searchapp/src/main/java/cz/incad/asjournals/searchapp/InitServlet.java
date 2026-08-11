@@ -81,7 +81,7 @@ public class InitServlet extends HttpServlet {
                 timer.scheduleAtFixedRate(task, delay, period);
             }
         } catch (Exception ex) {
-            Logger.getLogger(InitServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InitServlet.class.getName()).log(Level.SEVERE, "", ex);
         }
     }
 

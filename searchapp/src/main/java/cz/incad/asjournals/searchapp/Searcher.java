@@ -38,7 +38,7 @@ public class Searcher {
             jsonResponse = (String) qresp.get("response");
             return new JSONObject(jsonResponse);
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             return new JSONObject().put("error", ex);
         }
     }
@@ -62,7 +62,7 @@ public class Searcher {
             InputStream inputStream = RESTHelper.inputStream(solrhost, reqProps);
             return new JSONObject(org.apache.commons.io.IOUtils.toString(inputStream, "UTF-8"));
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             json.put("error", ex);
         }
         return json;
@@ -84,7 +84,7 @@ public class Searcher {
             return docs.length() > 0 ? docs.getJSONObject(0) : new JSONObject();
 
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             json.put("error", ex);
         }
         return json;
@@ -103,7 +103,7 @@ public class Searcher {
             return docs.length() > 0 ? docs.getJSONObject(0) : new JSONObject();
 
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             json.put("error", ex);
         }
         return json;
@@ -200,7 +200,7 @@ public class Searcher {
             }
 
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             json.put("error", ex);
         }
         return json;
@@ -229,7 +229,7 @@ public class Searcher {
             json = json(query, client, "editors");
 
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             json.put("error", ex);
         }
         return json;
@@ -271,7 +271,7 @@ public class Searcher {
                 }
             } 
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             json.put("error", ex);
         }
         return json;
@@ -290,7 +290,7 @@ public class Searcher {
             } 
 
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             return null;
         }
         return json;

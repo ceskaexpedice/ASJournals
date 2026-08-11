@@ -46,9 +46,9 @@ public class ConfigServlet extends HttpServlet {
       js.put("configDir", InitServlet.CONFIG_DIR + File.separator);
       out.print(mergeCustom(request.getPathInfo(), js).toString(2));
     } catch (IOException ex) {
-      LOGGER.log(Level.SEVERE, null, ex);
+      LOGGER.log(Level.SEVERE, "", ex);
     } catch (JSONException ex) {
-      LOGGER.log(Level.SEVERE, null, ex);
+      LOGGER.log(Level.SEVERE, "", ex);
     }
   } 
 

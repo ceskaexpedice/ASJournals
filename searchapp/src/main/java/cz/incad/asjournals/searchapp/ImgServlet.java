@@ -79,9 +79,9 @@ public class ImgServlet extends HttpServlet {
             }
 
         } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         } catch (JSONException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         }
     }
     
@@ -115,7 +115,7 @@ public class ImgServlet extends HttpServlet {
                 sasId = (String) docs.get(0).getFirstValue("firstPagePid");
             }
         } catch (SolrServerException | IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             return;
         }
 

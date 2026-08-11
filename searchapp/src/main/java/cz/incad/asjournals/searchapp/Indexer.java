@@ -60,9 +60,9 @@ public class Indexer {
             statusFile = new File(InitServlet.CONFIG_DIR + File.separator + "index.json");
             langsMap = opts.getJSONObject("langsMap");
         } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         } catch (JSONException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         }
     }
 
@@ -87,7 +87,7 @@ public class Indexer {
             client.commit();
             client.close();
         } catch (IOException | SolrServerException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         }
 
     }
@@ -118,12 +118,12 @@ public class Indexer {
                     client.commit();
                 } catch (SolrServerException | IOException ex) {
                     LOGGER.log(Level.FINE, "idoc: {0}", idoc);
-                    LOGGER.log(Level.SEVERE, null, ex);
+                    LOGGER.log(Level.SEVERE, "", ex);
                 }
             }
             client.close();
         } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         }
     }
 
@@ -188,10 +188,10 @@ public class Indexer {
             return idoc;
         } catch (JSONException ex) {
             LOGGER.log(Level.FINE, "idoc: {0}", idoc);
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "Error indexing pid: {0}", pid);
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         }
         return null;
     }
@@ -224,7 +224,7 @@ public class Indexer {
             writeStatus();
             client.close();
         } catch (IOException ex) {
-            Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, "", ex);
             response.put("error", ex);
             currentStatus.put("status", "finished");
             currentStatus.put("msg", "error: " + ex);
@@ -297,7 +297,7 @@ public class Indexer {
             ret.put("msg", "deleted " + num + " documents");
         } catch (SolrServerException | IOException ex) {
             ret.put("error", ex);
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         }
         return ret;
 
@@ -341,7 +341,7 @@ public class Indexer {
             String modsXml = org.apache.commons.io.IOUtils.toString(inputStream, Charset.forName("UTF-8"));
             return XML.toJSONObject(modsXml);
         } catch (JSONException | IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             return null;
         }
     }
@@ -373,10 +373,10 @@ public class Indexer {
 
                 idoc.addField("ocr", contents);
             } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, null, e);
+                LOGGER.log(Level.SEVERE, "", e);
             }
         } catch (JSONException | IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         }
     }
 
@@ -391,7 +391,7 @@ public class Indexer {
             InputStream inputStream = RESTHelper.inputStream(k5host, reqProps);
             return new JSONObject(org.apache.commons.io.IOUtils.toString(inputStream, Charset.forName("UTF-8")));
         } catch (JSONException | IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             return null;
         }
     }
@@ -407,7 +407,7 @@ public class Indexer {
             InputStream inputStream = RESTHelper.inputStream(k5host, reqProps);
             return new JSONArray(org.apache.commons.io.IOUtils.toString(inputStream, Charset.forName("UTF-8")));
         } catch (JSONException | IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             return null;
         }
     }
@@ -423,7 +423,7 @@ public class Indexer {
             InputStream inputStream = RESTHelper.inputStream(k5host, reqProps);
             return new JSONArray(org.apache.commons.io.IOUtils.toString(inputStream, Charset.forName("UTF-8")));
         } catch (JSONException | IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             return null;
         }
     }
@@ -594,7 +594,7 @@ public class Indexer {
             }
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "error processing subject {0}", idoc.getFieldValue("pid"));
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         }
 
     }
@@ -892,7 +892,7 @@ public class Indexer {
             ret.put("success", "magazine saved");
         } catch (SolrServerException | IOException ex) {
             ret.put("error", ex);
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         }
         return ret;
     }
@@ -911,7 +911,7 @@ public class Indexer {
             ret.put("success", "editor deleted");
         } catch (SolrServerException | IOException ex) {
             ret.put("error", ex);
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         }
         return ret;
     }
@@ -938,7 +938,7 @@ public class Indexer {
             ret.put("success", "magazine deleted");
         } catch (SolrServerException | IOException ex) {
             ret.put("error", ex);
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         }
         return ret;
     }
@@ -974,7 +974,7 @@ public class Indexer {
             ret.put("success", "magazine saved");
         } catch (SolrServerException | IOException ex) {
             ret.put("error", ex);
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         }
         return ret;
     }
@@ -1010,7 +1010,7 @@ public class Indexer {
             ret.put("success", "user saved");
         } catch (SolrServerException | IOException ex) {
             ret.put("error", ex);
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         }
         return ret;
     }
@@ -1056,7 +1056,7 @@ public class Indexer {
             ret = new JSONObject(result.toString());
 
         } catch (IOException | UnsupportedOperationException | UnsupportedCharsetException | JSONException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             ret.put("error", ex);
         }
 
@@ -1093,7 +1093,7 @@ public class Indexer {
                     index_time = d.toInstant().toString();
                 }
             } catch (Exception ex) {
-                LOGGER.log(Level.SEVERE, null, ex);
+                LOGGER.log(Level.SEVERE, "", ex);
                 return new JSONObject().put("error", ex);
             }
 
@@ -1114,7 +1114,7 @@ public class Indexer {
             }
             return resp;//.getJSONObject("response").getJSONArray("docs").getJSONObject(0);
         } catch (JSONException | IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
             return new JSONObject().put("error", ex);
         }
     }
@@ -1123,7 +1123,7 @@ public class Indexer {
         try {
             FileUtils.writeStringToFile(statusFile, currentStatus.toString(), "UTF-8");
         } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, "", ex);
         }
     }
 }

@@ -77,7 +77,7 @@ public class LoginServlet extends HttpServlet {
                 } catch (Exception ex) {
                     jo.put("logged", false);
                     jo.put("error", ex.toString());
-                    LOGGER.log(Level.SEVERE, null, ex);
+                    LOGGER.log(Level.SEVERE, "", ex);
                 }
                 return jo;
             }
@@ -92,7 +92,7 @@ public class LoginServlet extends HttpServlet {
                 } catch (Exception ex) {
                     jo.put("logged", false);
                     jo.put("error", ex.toString());
-                    LOGGER.log(Level.SEVERE, null, ex);
+                    LOGGER.log(Level.SEVERE, "", ex);
                 }
                 return jo;
             }

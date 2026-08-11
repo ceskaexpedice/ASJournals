@@ -116,7 +116,7 @@ public class UserController {
     } catch (SolrServerException | IOException ex) {
       ret.put("error", ex);
       ret.put("logged", false);
-      LOGGER.log(Level.SEVERE, null, ex);
+      LOGGER.log(Level.SEVERE, "", ex);
     }
     return ret;
   }
@@ -131,7 +131,7 @@ public class UserController {
       ret.put("success", "user deleted");
     } catch (SolrServerException | IOException ex) {
       ret.put("error", ex);
-      LOGGER.log(Level.SEVERE, null, ex);
+      LOGGER.log(Level.SEVERE, "", ex);
     }
     return ret;
   }
@@ -176,7 +176,7 @@ public class UserController {
     } catch (SolrServerException | IOException ex) {
       ret.put("error", ex);
       ret.put("logged", false);
-      LOGGER.log(Level.SEVERE, null, ex);
+      LOGGER.log(Level.SEVERE, "", ex);
     }
     return ret;
   }
