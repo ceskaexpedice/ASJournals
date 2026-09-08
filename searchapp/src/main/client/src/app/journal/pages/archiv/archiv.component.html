@@ -89,9 +89,6 @@
           <app-archiv-item *ngFor="let item of items" [item]="item" (drillDown)="drillDown($event)"></app-archiv-item>
         </ng-container>
 
-
-
-
         <div class="app-items-wrapper app-text-content" *ngIf="isDataNode">
           <ng-container *ngIf="state.currentMagazine.sortByOrder">
             <div *ngFor="let art of items" class="app-item">
@@ -107,13 +104,7 @@
               </div>
             </ng-container>
           </ng-container>
-
-
-
-
-          <!-- <div *ngFor="let art of items" class="app-item">
-            <app-article-result *ngIf="!isHiddenByGenre(art['genre'])" [article]="art"></app-article-result>
-          </div> -->
+          
         </div>
       </div>
     </div>

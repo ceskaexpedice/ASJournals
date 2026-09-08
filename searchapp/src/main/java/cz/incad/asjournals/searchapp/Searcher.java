@@ -246,11 +246,14 @@ public class Searcher {
             if (doc != null) {
                 json.put("doc", doc);
                 if (withParent) {
-                    json.put("parent", new JSONObject());
                     if (!doc.has("parents")) {
                       return json;
                     }
                     String parentPid = doc.getJSONArray("parents").getString(0);
+                    if (parentPid.isBlank()) {
+                      return json;
+                    }
+                    json.put("parent", new JSONObject());
                     JSONObject parentDoc = json.getJSONObject("parent");
                     while (parentPid != null && !parentPid.isBlank()) {
                         JSONObject pdoc = getByPid(parentPid);

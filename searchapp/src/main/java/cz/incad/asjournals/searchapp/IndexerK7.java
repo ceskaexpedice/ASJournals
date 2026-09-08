@@ -944,27 +944,30 @@ public class IndexerK7 {
   }
 
   private void setGenre(SolrInputDocument idoc, JSONObject mods) {
-
-    //String prefix = "mods:";
+    String asJournalsGenre = null;
+    boolean isPeerReviewed = false;
     Object o = mods.opt("mods:genre");
-//        boolean hasMain = false;
     if (o != null) {
       if (o instanceof JSONArray) {
         JSONArray ja = (JSONArray) o;
         for (int i = 0; i < ja.length(); i++) {
           Object go = ja.get(i);
           if (go instanceof JSONObject) {
-            String g = ja.getJSONObject(i).optString("type");
-            if (g != null && !"".equals(g)) {
-//                            if ("main article".equals(g) && !hasMain) {
+            JSONObject genre = (JSONObject)go;
+            String g = genre.optString("type");
+            String authority = genre.optString("authority");
+            if ("asjournals".equals(authority)) {
+              asJournalsGenre = g;
               idoc.addField("genre", g);
-//                                hasMain = true;
-//                            }
+            } else if (g != null && !"".equals(g)) {
+              if ("peer-reviewed".equals(g)) {
+                isPeerReviewed = true;
+              }
+              idoc.addField("genre", g);
             }
           } else if (go instanceof String) {
             if ("article".equals((String) go)) {
               idoc.addField("genre", "article");
-//                            hasMain = true;
             }
           }
         }
@@ -973,6 +976,7 @@ public class IndexerK7 {
         String g = ((JSONObject) o).optString("type");
         if (g != null) {
           idoc.addField("genre", g);
+          isPeerReviewed = "peer-reviewed".equals(g);
         } else {
           idoc.addField("genre", "unspecified");
         }
@@ -983,6 +987,13 @@ public class IndexerK7 {
           idoc.addField("genre", o);
         }
 
+      }
+      
+      if (asJournalsGenre != null) {
+        idoc.setField("genre", asJournalsGenre);
+      }
+      if (isPeerReviewed) {
+        idoc.addField("genre", "peer-reviewed");
       }
     }
   }

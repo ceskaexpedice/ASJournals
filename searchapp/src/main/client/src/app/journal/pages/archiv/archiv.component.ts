@@ -179,7 +179,7 @@ export class ArchivComponent implements OnInit {
           this.currentItem['dateIssuedFormated'] = this.currentItem['dateIssued'];
         }
       }
-      this.currentJournal = Utils.journalFromResp(res['parent']['doc']);
+      this.currentJournal = res['parent'] ? Utils.journalFromResp(res['parent']['doc']) : res['doc'] ;
       if (!this.cache.hasOwnProperty(this.currentPid)) {
         this.service.getChildren(this.currentPid).subscribe(res => {
           this.isDataNode = res.length > 0 && res[0]['datanode'];
