@@ -39,7 +39,7 @@
         <div class="app-right">
           {{ 'Výsledky řadit' | translate }}:
           <button mat-stroked-button color="primary" class="app-ml-2" [matMenuTriggerFor]="menuSort">
-            {{ state.sorts[0].label | translate }}<mat-icon iconPositionEnd>expand_more</mat-icon>
+            {{ state.currentSort.label | translate }}<mat-icon iconPositionEnd>expand_more</mat-icon>
           </button>
           <mat-menu #menuSort="matMenu">
             <button mat-menu-item *ngFor="let sort of state.sorts" (click)="setSort(sort)">{{ sort.label | translate }}</button>

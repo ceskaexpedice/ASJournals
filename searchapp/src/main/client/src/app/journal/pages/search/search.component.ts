@@ -169,6 +169,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             //console.log(this.state.sorts[i].field);
             if (this.state.sorts[i].field === s) {
               this.currentSort = this.state.sorts[i];
+              this.state.currentSort = this.state.sorts[i];
               break
             }
           }
@@ -352,6 +353,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     let p: any = {};
     Object.assign(p, this.route.snapshot.firstChild?.params);
     p['sort'] = this.currentSort.field;
+    this.state.currentSort = s;
     this.router.navigate(['cokoliv', p], {relativeTo: this.route, queryParamsHandling: "preserve"});
   }
 

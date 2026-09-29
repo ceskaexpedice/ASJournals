@@ -136,7 +136,7 @@ export class AppState {
   setConfig(cfg: any) {
     this.rows = cfg['searchParams']['rows'];
     this.sorts = cfg['sorts'];
-    this.currentSort = cfg[0];
+    this.currentSort = this.sorts[0];
     this.krameriusUrl = cfg['k5'] + cfg['journal'];
     this.imgSrc = cfg['context'] + 'api/img?obalka=true&ctx=' + this.currentMagazine.ctx + '&uuid=' + this.currentMagazine.journal + '&kramerius_version=' + (this.currentMagazine?.isK7 ? 'k7' : 'k5') + '&thumb=true';
 
