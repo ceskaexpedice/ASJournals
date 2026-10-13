@@ -70,3 +70,35 @@
     }
   }
 }
+
+
+// --- search criteria form fix height ----
+::ng-deep .app-search-criteria-form {
+  height: 34px;
+
+  .mat-mdc-text-field-wrapper,
+  .mat-mdc-form-field-flex {
+    height: 34px;
+  }
+
+  .mat-mdc-form-field-flex {
+    align-items: center;
+  }
+
+  .mat-mdc-form-field-infix {
+    min-height: 0;
+    height: 34px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .mat-mdc-input-element {
+    height: 34px;
+    line-height: 34px;
+  }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}
