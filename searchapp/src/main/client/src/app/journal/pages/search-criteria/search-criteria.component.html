@@ -11,7 +11,7 @@
 
   <ng-container *ngIf="criterium.field === 'genre'">
     <mat-select  (selectionChange)="search()" name="vydavatel" [(ngModel)]="criterium.value" 
-      style="width: 200px; ">
+      style="width: 220px; border: 1px solid silver; padding: 4px 12px; border-color: var(--mdc-outlined-button-outline-color, rgba(0, 0, 0, 0.12));">
       <mat-option *ngFor="let genre of state.genres" [value]="genre.val">
         {{'genre.'+genre.val | translate }} 
       </mat-option>
