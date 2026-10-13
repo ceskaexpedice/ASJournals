@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 /**
  *
- * @author alber
+ * @author alberto
  */
 public class Searcher {
 

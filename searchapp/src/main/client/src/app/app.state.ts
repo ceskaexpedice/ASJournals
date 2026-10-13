@@ -116,7 +116,7 @@ export class AppState {
     'Q',
     'R', 'Ř',
     'S', 'Š',
-    'T',
+    'T', 'Ť',
     'U',
     'V',
     'W',
