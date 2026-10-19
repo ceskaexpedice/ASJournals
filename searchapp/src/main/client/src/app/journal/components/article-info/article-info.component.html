@@ -16,7 +16,7 @@
 	<div *ngFor="let author of authors_full; let last = last">
 		<strong>{{ (author.role ? 'role.' +  author.role : 'Autor') | translate }}:</strong>
 		{{ author.name }} 
-		<ng-container *ngIf="author.orcid">&#160;<a alt="ORCID iD" [href]="' https://orcid.org/' + author.orcid" target="_blank">
+		<ng-container *ngIf="author.orcid">&#160;<a alt="ORCID iD" [href]="'https://orcid.org/' + author.orcid" target="_blank">
 			<img src="assets/img/ORCID-iD_icon_16x16.png" style="vertical-align: text-bottom;" />
 		</a></ng-container>
 		<ng-container *ngIf="author.affiliation">&#160;<a [href]="author.affiliation" target="_blank">
