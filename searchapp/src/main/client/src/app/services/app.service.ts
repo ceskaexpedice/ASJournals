@@ -845,8 +845,7 @@ export class AppService {
     //console.log(this.config['hiddenGenres'], genres);
     for (const g in genres) {
       //console.log(g);
-      if (this.config['hiddenGenres'].indexOf(genres[g]) > -1 ||
-          this.config.layout['hiddenGenres'].indexOf(genres[g]) > -1) {
+      if (this.config.layout['hiddenGenres'].indexOf(genres[g]) > -1) {
         return true;
       }
     }
@@ -872,7 +871,7 @@ export class AppService {
         this.getJournal(pid).subscribe(a => {
           this.state.setActual(a);
           this.getArticles(this.state.actualNumber!['pid']!).subscribe((res: any) => {
-            this.state.actualNumber!.setArticles(res, this.config['mergeGenres'], [...this.config.hiddenGenres, ...this.config.layout.hiddenGenres]);
+            this.state.actualNumber!.setArticles(res, this.config['mergeGenres'], [...this.config.layout.hiddenGenres]);
             //this.service.getMods(this.state.actualNumber['pid']).subscribe(mods => this.state.actualNumber.mods = mods);
             this.state.stateChanged();
           });

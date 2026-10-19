@@ -191,7 +191,8 @@ export class ArchivComponent implements OnInit {
             });
 
             
-            this.currentJournal.setArticles({response: {docs: res}}, this.config['mergeGenres'],[...this.config.hiddenGenres, ...this.config.layout.hiddenGenres]);
+            //this.currentJournal.setArticles({response: {docs: res}}, this.config['mergeGenres'],[...this.config.hiddenGenres, ...this.config.layout.hiddenGenres]);
+            this.currentJournal.setArticles({response: {docs: res}}, this.config['mergeGenres'],[...this.config.layout.hiddenGenres]);
             
           } else if (this.currentItem.model === 'periodicalvolume') {
             this.items.sort((a, b) => {
