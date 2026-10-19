@@ -94,10 +94,10 @@ export class JournalDetailsComponent implements OnInit {
       }
     } else if (this.journal?.pid) {
       this.appService.getMods(this.journal?.pid!).subscribe(mods => {
-        if (this.journal) {
+        //if (this.journal) {
           this.journal.mods = mods;
           this.details();
-        }
+        //}
       });
     }
     //     Úroveň: Ročník
